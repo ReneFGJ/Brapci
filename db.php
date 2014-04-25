@@ -13,7 +13,7 @@
 	session_start();
 
 	/* Noshow Errors */
-	$debug = 255;
+	$debug = 255; /* $debug = 0; */
 	ini_set('display_errors', $debug);
 	ini_set('error_reporting', $debug);
 	
