@@ -10,10 +10,11 @@
     */
     
 require("db.php");
-require("_class/_class_header.php");
-$hd = new header;
-echo $hd->header();
 
+/* Cabecalho da pagina */
+require("_class/_class_header_bp.php");
+$hd = new header;
+echo $hd->head();
 ?>
 <body>
 	

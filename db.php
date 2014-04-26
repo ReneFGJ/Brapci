@@ -9,15 +9,13 @@
 	 * @subpackage Database connection
     */
     if (!isset($include)) { $include = '_include/'; }
-	else { $include .= '_include'; }
+	else { $include .= '_include/'; }
 
     ob_start();
 	session_start();
 
 	/* Noshow Errors */
-	$debug = 255; 
-	$debug = 0; 
-	
+	$debug = 7; 	
 	
 	ini_set('display_errors', $debug);
 	ini_set('error_reporting', $debug);
@@ -37,16 +35,19 @@
 	header('Content-Type: text/html; charset='.$charset);
 	
 	/* Include */
+	require($include.'_class_msg.php');
+	require($include.'_class_char.php');		
 	require($include.'sisdoc_sql.php');	
 	
 	
 	/* Leituras das Variaveis dd0 a dd99 (POST/GET) */
 	$vars = array_merge($_GET, $_POST);
+	$acao = troca($vars['acao'],"'",'´');
 	for ($k=0;$k < 100;$k++)
 		{
 		$varf='dd'.$k;
 		$varf=$vars[$varf];
-		$dd[$k] = security_post($varf);
+		$dd[$k] = post_security($varf);
 		}	
 	
 	/* Data base */
@@ -58,7 +59,7 @@
 		} else {		
 			if ($install != 1) 
 				{
-				require($db_config);
+				redireciona('__install/index.php');
 				
 				if (!file_exists($file))
 					{
@@ -69,11 +70,10 @@
 						echo 'Contacte o administrador, arquivo de configuração inválido';
 					}
 				
-		}
-	
+		}	
 	}	
-	
-function security_post($s)
+
+function post_security($s)
 	{
 		$s = troca($s,'<','&lt;');
 		$s = troca($s,'>','&gt;');
@@ -81,16 +81,6 @@ function security_post($s)
 		//$s = troca($s,'/','&#x27;');
 		$s = troca($s,"'",'&#x2F;');
 		return($s);		
-	}
-function troca($qutf,$qc,$qt)
-	{
-	if (is_array($qutf))
-		{
-			print_r($qutf);
-			exit;
-		}
-	return(str_replace(array($qc), array($qt),$qutf));
-	}	
-    
+	}    
 ?>
 	

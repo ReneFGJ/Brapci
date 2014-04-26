@@ -101,6 +101,17 @@ class form
 		function editar($cp,$tabela,$post='')
 			{
 				global $dd,$acao,$path,$http;
+				/* Local de salvamento dos dados */
+				if (strpos($tabela,':') > 0)
+					{
+						/* Salva em arquivos */
+						$file = 1;
+					} else {
+						/* Salvar em tabela de base de dados */
+						$file = 0;
+					}
+					
+				/* Campos */
 				$bto = 0;
 				for ($r=0;$r < count($cp);$r++)
 					{
@@ -110,11 +121,13 @@ class form
 					{ array_push($cp,array('$B8','',msg('save'),false,false)); }
 				$this->keyid();
 				array_push($cp,array('$TOKEN','','',True,False));
+				
 				/**
-				 * Recupera informacoes
+				 * Recupera informacoes da tabela do banco de dados
 				 */
 				$recupera = 0;
-				if ((strlen($tabela) > 0) and 
+				if ((strlen($tabela) > 0) and
+						($file == 0) and 
 						(strlen($acao)==0) and 
 						(strlen($dd[0]) > 0) and 
 						(strlen($cp[0][1]) > 0))
@@ -124,12 +137,24 @@ class form
 								if ($line = db_read($rrr)) { $this->line = $line; }
 								$recupera = 1;							
 							}
+
+				/**
+				 * Recupera informacoes do arquivo
+				 */
+				$recupera = 0;
+				if ((strlen($filename) > 0) and
+						($file == 1) and 
+						(strlen($acao)==0))
+							{
+								require($filename);
+								$recupera = 1;							
+							}
+
 				/**
 				 * Processa
 				 */
 				$this->js_submit = '<script>';
 				if (strlen($post)==0) { $post = page(); }
-				
 				$this->saved = 1;
 				$this->rq = '';
 				$sx .= '<form id="formulario" method="post" action="'.$post.'">'.chr(13);
@@ -234,16 +259,74 @@ class form
 						$sa .= $sx; 
 						$sx = $sa;
 					}
-
 				if (($this->saved > 0) and (strlen($acao) > 0))
 					{
 						if (strlen($tabela) > 0)
-							{ $this->save_post($cp,$tabela); }
+							{
+								if ($file == 0)
+									{ $this->save_post($cp,$tabela); }
+								else 
+									{ $this->save_file_post($cp,$tabela); }
+							}
 						//$sx = 'SAVED TABLE '.$tabela.' id = '.$dd[0];
 					} else {
 						$this->saved = 0;
 					}
 				return($sh.$sx);
+			}
+
+		function save_file_post($cp,$tabela)
+			{
+				global $dd,$acao,$path;
+				$type = UpperCaseSql(substr($tabela,0,strpos($tabela,':')));
+				$filename = substr($tabela,strpos($tabela,':')+1,strlen($tabela));
+				
+				switch ($type)
+					{
+					case 'PHP':
+							$file_pre = '<?php'.chr(13).chr(10);
+							$file_pos = '?>';
+							break;
+					default:
+							$file_pre = '';
+							$file_pos = '';
+							break;
+					}
+
+					$sx = '';
+					for ($k=1;$k<100;$k++)
+						{
+							if ((strlen($cp[$k][1])>0) and ($cp[$k][4]==True))
+							{
+								
+								$field = trim($cp[$k][1]);
+								$vlr = trim($dd[$k]);
+								if (strlen($field) > 0)
+									{
+										switch ($type)
+										{
+											case 'PHP':
+												$sx .= $field."='".$vlr."';".chr(13).chr(10);
+												break;
+											case 'CVS':
+												break;
+											default:
+												$sx .= $field."='".$vlr."'".chr(13).chr(10);
+												break;
+										}
+									}	
+							}
+						}
+					$sx = $file_pre . $sx . $file_pos;
+					if (strlen($filename) > 0)
+						{
+							$rlt = fopen($filename,'w+');
+							fwrite($rlt,$sx);
+							fclose($rlt);
+						}
+					$acao=null;
+					$saved=1;
+				return(1);				
 			}
 
 		function save_post($cp,$tabela)
