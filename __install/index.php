@@ -19,11 +19,16 @@ array_push($cp,array('$S50','$db_base','Base de dados',True,True));
 array_push($cp,array('$S50','$db_user','User',True,True));
 array_push($cp,array('$S50','$db_pass','Senha',False,True));
 
+/* Se já existe arquivo de configuracao redireciona para pagina inicial */
 $filename = "../_db/db_mysql_".$ip.".php";
+if (file_exists($filename)) { redireciona('../index.php'); }
+
+
 $tela = $form->editar($cp,'PHP:'.$filename);
 if ($form->saved > 0)
 	{
 		$tela = '<font color="green">Salvo com sucesso!</font>';
+		redireciona('../index.php');
 	} else {
 		
 	}
