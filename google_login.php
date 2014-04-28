@@ -2,8 +2,8 @@
 require("cab.php");
 require($include.'sisdoc_debug.php');
 ########## Google Settings.. Client ID, Client Secret #############
-$google_client_id = '34789478983.apps.googleusercontent.com';
-$google_client_secret = '6r1DSM8kQ2uEMA2Qy9fRz94N';
+$google_client_id = '205743538602-t6i1hj7p090g5jd4u70614vldnhe7143.apps.googleusercontent.com';
+$google_client_secret = 'AMhQ7Vfc7Lpzi_ZVZKq4wbWV';
 $google_redirect_url = 'http://www.brapci.inf.br/';
 $google_developer_key = 'AIzaSyDJO_5uYJdPpi4Bpb0LyGh8QJcOAcXfIak';
 
