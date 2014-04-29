@@ -8,12 +8,20 @@
 * @package INCLUDEs
 * @subpackage sisdoc_char
 */
+
+function nwin($link='',$w=200,$h=50,$resize=1,$scroll=0)
+	{
+		$sx = 'onclick="NewWindow=window.open(\'.$link.\',\'newwin\',\'scrollbars=no,resizable=no,width='+$w+',height='+$h+',top=10,left=10\'); NewWindow.focus(); void(0);} "';
+		return($sx);
+	}
+
+
 function customError($errno, $errstr, $errfile, $errline, $errcontext)
   {
   global $secu,$base,$base_name,$user_log,$debug,$ttsql,$rlt,$sql_query;
   if ($errno != '8')
   		{
-		$email = 'rene@fonzaghi.com.br';
+		$email = 'brapcici@gmail.com';
 		$tee = '<table width="600" bordercolor="#ff0000" border="3" align="center">';
 		$tee .= '<TR><TD bgcolor="#ff0000" align="center"><FONT class="lt2"><FONT COLOR=white><B>ERRO  -['.$base.']-'.$base_name.'-</B></TD></TR>';
 		$tee .= '<TR><TD align="center"><B><TT>';
@@ -47,7 +55,7 @@ function customError($errno, $errstr, $errfile, $errline, $errcontext)
 //		if ($debug == 3) { echo 'Muitas conexÃµes, aguarde....'; }
 		
 	
-		$headers .= 'To: Rene (Monitoramento) <rene@fonzaghi.com.br>' . "\r\n";
+		$headers .= 'To: Brapci (Monitoramento) <brapcici@gmail.com>' . "\r\n";
 		$headers .= 'From: BancoSQL (PG) <rene@sisdoc.com.br>' . "\r\n";
 		$headers .= 'MIME-Version: 1.0' . "\r\n";
 		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";		
@@ -57,6 +65,13 @@ function customError($errno, $errstr, $errfile, $errline, $errcontext)
 		die();
 		}
   } 
+
+////////////////////////////////////////
+function fmt($vlr,$dec)
+	{
+		$vlr = number_format($vlr,$dec,',','.');
+		return($vlr);
+	}	
 
 function redireciona($pg) { redirecina($pg); }
 function redirecina($pg)
@@ -157,7 +172,7 @@ function troca($qutf,$qc,$qt)
 	
 function UpperCaseSQL($d)
 	{
-	$qch1="ÃÃ‰ÃÃ“ÃšÃ¡Ã©Ã­Ã³ÃºÃ Ã¨Ã¬Ã²Ã¹Ã€ÃˆÃŒÃ’Ã™Ã‚ÃŠÃÃ”Ã›Ã¢ÃªÃ®Ã´Ã»Ã‡Ã§Ã¤Ã«Ã¯Ã¶Ã¼Ã„Ã‹ÃÃ–ÃœÃƒÃ•Ã£ÃµÂªÂº";
+	$qch1="ÁÉÍÓÚáéíóúàèìòùÀÈÌÒÙÂÊÎÔÛâêîôûÇçäëïöüÄËÏÖÜÃÕãõªº";
 	$qch2="AEIOUaeiouaeiouAEIOUAEIOUaeiouCcaeiouAEIOUAOAOao";
 	for ($qk=0;$qk < strlen($qch2);$qk++)
 		{
@@ -170,8 +185,8 @@ function UpperCaseSQL($d)
 
 function UpperCase($dx)
 	{
-	$qch1='ÃÃ‰ÃÃ“ÃšÃ¡Ã©Ã­Ã³ÃºÃ Ã¨Ã¬Ã²Ã¹Ã€ÃˆÃŒÃ’Ã™Ã‚ÃŠÃÃ”Ã›Ã¢ÃªÃ®Ã´Ã»Ã‡Ã§Ã¤Ã«Ã¯Ã¶Ã¼Ã„Ã‹ÃÃ–ÃœÃƒÃ•Ã£Ãµ';
-	$qch2='ÃÃ‰ÃÃ“ÃšÃÃ‰ÃÃ“ÃšÃ€ÃˆÃŒÃ’Ã™Ã€ÃˆÃŒÃ’Ã™Ã‚ÃŠÃÃ”Ã›Ã‚ÃŠÃÃ”Ã›Ã‡Ã‡Ã„Ã‹ÃÃ–ÃœÃ„Ã‹ÃÃ–ÃœÃƒÃ•ÃƒÃ•';
+	$qch1='ÁÉÍÓÚáéíóúàèìòùÀÈÌÒÙÂÊÎÔÛâêîôûÇçäëïöüÄËÏÖÜÃÕãõ';
+	$qch2='ÁÉÍÓÚÁÉÍÓÚÀÈÌÒÙÀÈÌÒÙÂÊÎÔÛÂÊÎÔÛÇÇÄËÏÖÜÄËÏÖÜÃÕÃÕ';
 	
 	$dx = strtoupper($dx);
 	
@@ -186,9 +201,8 @@ function UpperCase($dx)
 function LowerCase($d)
 	{
 	$d = $d . ' ';
-	$qch1='ÃÃ‰ÃÃ“ÃšÃ¡Ã©Ã­Ã³ÃºÃ Ã¨Ã¬Ã²Ã¹Ã€ÃˆÃŒÃ’Ã™Ã‚ÃŠÃÃ”Ã›Ã¢ÃªÃ®Ã´Ã»Ã‡Ã§Ã¤Ã«Ã¯Ã¶Ã¼Ã„Ã‹ÃÃ–ÃœÃƒÃ•Ã£Ãµ';
-	$qch2='Ã¡Ã©Ã­Ã³ÃºÃ¡Ã©Ã­Ã³ÃºÃ Ã¨Ã¬Ã²Ã¹Ã Ã¨Ã¬Ã²Ã¹Ã¢ÃªÃ®Ã´Ã»Ã¢ÃªÃ®Ã´Ã»Ã§Ã§Ã¤Ã«Ã¯Ã¶Ã¼Ã¤Ã«Ã¯Ã¶Ã¼Ã£ÃµÃ£Ãµ';
-	
+	$qch1='ÁÉÍÓÚáéíóúàèìòùÀÈÌÒÙÂÊÎÔÛâêîôûÇçäëïöüÄËÏÖÜÃÕãõ';
+	$qch2='áéíóúáéíóúàèìòùàèìòùâêîôûâêîôûççäëïöüäëïöüãõãõ';	
 	$d = strtolower($d);
 	for ($qk=0;$qk < strlen($qch2);$qk++)
 		{
@@ -200,7 +214,7 @@ function LowerCase($d)
 		
 function LowerCaseSQL($d)
 	{
-	$qch1="ÃÃ‰ÃÃ“ÃšÃ¡Ã©Ã­Ã³ÃºÃ Ã¨Ã¬Ã²Ã¹Ã€ÃˆÃŒÃ’Ã™Ã‚ÃŠÃÃ”Ã›Ã¢ÃªÃ®Ã´Ã»Ã‡Ã§Ã¤Ã«Ã¯Ã¶Ã¼Ã„Ã‹ÃÃ–ÃœÃƒÃ•Ã£ÃµÂªÂº";
+	$qch1="ÁÉÍÓÚáéíóúàèìòùÀÈÌÒÙÂÊÎÔÛâêîôûÇçäëïöüÄËÏÖÜÃÕãõªº";
 	$qch2="aeiouaeiouaeiouaeiouaeiouaeiouccaeiouaeiouaoaoao";
 	
 	for ($qk=0;$qk < strlen($qch2);$qk++)
@@ -212,4 +226,162 @@ function LowerCaseSQL($d)
 	return $d;
 	}		
 	
+function char_ISO_Latin_1($ddv)
+	{
+	////// ISO Latin-1 Characters and Control Characters
+	$ddr = '?';
+	if ($ddv == '&#160;') { $ddr = ' '; }
+	if ($ddv == '&#161;') { $ddr = '¡'; }
+	if ($ddv == '&#162;') { $ddr = '¢'; }
+	if ($ddv == '&#163;') { $ddr = '£'; }
+	if ($ddv == '&#164;') { $ddr = '¤'; }
+	if ($ddv == '&#165;') { $ddr = '¥'; }
+	if ($ddv == '&#166;') { $ddr = '¦'; }
+	if ($ddv == '&#167;') { $ddr = '§'; }
+	if ($ddv == '&#168;') { $ddr = '¨'; }
+	if ($ddv == '&#169;') { $ddr = '©'; }
+
+	if ($ddv == '&#170;') { $ddr = 'ª'; }
+	if ($ddv == '&#171;') { $ddr = '«'; }
+	if ($ddv == '&#172;') { $ddr = '¬'; }
+	if ($ddv == '&#173;') { $ddr = ' '; }
+	if ($ddv == '&#174;') { $ddr = '®'; }
+	if ($ddv == '&#175;') { $ddr = '¯'; }
+	if ($ddv == '&#176;') { $ddr = '·'; }
+	if ($ddv == '&#177;') { $ddr = '±'; }
+	if ($ddv == '&#178;') { $ddr = '²'; }
+	if ($ddv == '&#179;') { $ddr = '³'; }
+
+	if ($ddv == '&#180;') { $ddr = '´'; }
+	if ($ddv == '&#181;') { $ddr = 'µ'; }
+	if ($ddv == '&#182;') { $ddr = '¶'; }
+	if ($ddv == '&#183;') { $ddr = '·'; }
+	if ($ddv == '&#184;') { $ddr = '¸'; }
+	if ($ddv == '&#185;') { $ddr = '¹'; }
+	if ($ddv == '&#186;') { $ddr = 'º'; }
+	if ($ddv == '&#187;') { $ddr = '»'; }
+	if ($ddv == '&#188;') { $ddr = '¼'; }
+	if ($ddv == '&#189;') { $ddr = '½'; }
+
+	if ($ddv == '&#190;') { $ddr = '¾'; }
+	if ($ddv == '&#191;') { $ddr = '¿'; }
+	if ($ddv == '&#192;') { $ddr = 'À'; }
+	if ($ddv == '&#193;') { $ddr = 'Á'; }
+	if ($ddv == '&#194;') { $ddr = 'Â'; }
+	if ($ddv == '&#195;') { $ddr = 'Ã'; }
+	if ($ddv == '&#196;') { $ddr = 'Ä'; }
+	if ($ddv == '&#197;') { $ddr = 'Å'; }
+	if ($ddv == '&#198;') { $ddr = 'Æ'; }
+	if ($ddv == '&#199;') { $ddr = 'Ç'; }
+
+	if ($ddv == '&#200;') { $ddr = 'È'; }
+	if ($ddv == '&#201;') { $ddr = 'É'; }
+	if ($ddv == '&#202;') { $ddr = 'Ê'; }
+	if ($ddv == '&#203;') { $ddr = 'Ë'; }
+	if ($ddv == '&#204;') { $ddr = 'Ì'; }
+	if ($ddv == '&#205;') { $ddr = 'Í'; }
+	if ($ddv == '&#206;') { $ddr = 'Î'; }
+	if ($ddv == '&#207;') { $ddr = 'Ï'; }
+	if ($ddv == '&#208;') { $ddr = 'Ğ'; }
+	if ($ddv == '&#209;') { $ddr = 'Ñ'; }
+
+	if ($ddv == '&#210;') { $ddr = 'Ò'; }
+	if ($ddv == '&#211;') { $ddr = 'Ó'; }
+	if ($ddv == '&#212;') { $ddr = 'Ô'; }
+	if ($ddv == '&#213;') { $ddr = 'Õ'; }
+	if ($ddv == '&#214;') { $ddr = 'Ö'; }
+	if ($ddv == '&#215;') { $ddr = '×'; }
+	if ($ddv == '&#216;') { $ddr = 'Ø'; }
+	if ($ddv == '&#217;') { $ddr = 'Ù'; }
+	if ($ddv == '&#218;') { $ddr = 'Ú'; }
+	if ($ddv == '&#219;') { $ddr = 'Û'; }
+
+	if ($ddv == '&#220;') { $ddr = 'Ü'; }
+	if ($ddv == '&#221;') { $ddr = 'İ'; }
+	if ($ddv == '&#222;') { $ddr = 'Ş'; }
+	if ($ddv == '&#223;') { $ddr = 'ß'; }
+	if ($ddv == '&#224;') { $ddr = 'à'; }
+	if ($ddv == '&#225;') { $ddr = 'á'; }
+	if ($ddv == '&#226;') { $ddr = 'â'; }
+	if ($ddv == '&#227;') { $ddr = 'ã'; }
+	if ($ddv == '&#228;') { $ddr = 'ä'; }
+	if ($ddv == '&#229;') { $ddr = 'å'; }
+
+	if ($ddv == '&#230;') { $ddr = 'æ'; }
+	if ($ddv == '&#231;') { $ddr = 'ç'; }
+	if ($ddv == '&#232;') { $ddr = 'è'; }
+	if ($ddv == '&#233;') { $ddr = 'é'; }
+	if ($ddv == '&#234;') { $ddr = 'ê'; }
+	if ($ddv == '&#235;') { $ddr = 'ë'; }
+	if ($ddv == '&#236;') { $ddr = 'ì'; }
+	if ($ddv == '&#237;') { $ddr = 'í'; }
+	if ($ddv == '&#238;') { $ddr = 'î'; }
+	if ($ddv == '&#239;') { $ddr = 'ï'; }
+
+	if ($ddv == '&#240;') { $ddr = 'ğ'; }
+	if ($ddv == '&#241;') { $ddr = 'ñ'; }
+	if ($ddv == '&#242;') { $ddr = 'ò'; }
+	if ($ddv == '&#243;') { $ddr = 'ó'; }
+	if ($ddv == '&#244;') { $ddr = 'ô'; }
+	if ($ddv == '&#245;') { $ddr = 'õ'; }
+	if ($ddv == '&#246;') { $ddr = 'ö'; }
+	if ($ddv == '&#247;') { $ddr = '÷'; }
+	if ($ddv == '&#248;') { $ddr = 'ø'; }
+	if ($ddv == '&#249;') { $ddr = 'ù'; }
+
+	if ($ddv == '&#250;') { $ddr = 'ú'; }
+	if ($ddv == '&#251;') { $ddr = 'û'; }
+	if ($ddv == '&#252;') { $ddr = 'ü'; }
+	if ($ddv == '&#253;') { $ddr = 'ı'; }
+	if ($ddv == '&#254;') { $ddr = 'ş'; }
+	if ($ddv == '&#255;') { $ddr = 'ÿ'; }
+	
+	return($ddr);
+	}
+
+function char_ISO_Latin_2($str)
+{
+	    $codigo_acentos = array(
+	    '/&Agrave;/','/&Aacute;/','/&Acirc;/','/&Atilde;/','/&Auml;/','/&Aring;/',
+	    '/&agrave;/','/&aacute;/','/&acirc;/','/&atilde;/','/&auml;/','/&aring;/',
+	    '/&Ccedil;/',
+	    '/&ccedil;/',
+	    '/&Egrave;/','/&Eacute;/','/&Ecirc;/','/&Euml;/',
+	    '/&egrave;/','/&eacute;/','/&ecirc;/','/&euml;/',
+	    '/&Igrave;/','/&Iacute;/','/&Icirc;/','/&Iuml;/',
+	    '/&igrave;/','/&iacute;/','/&icirc;/','/&iuml;/',
+	    '/&Ntilde;/',
+	    '/&ntilde;/',
+	    '/&Ograve;/','/&Oacute;/','/&Ocirc;/','/&Otilde;/','/&Ouml;/',
+	    '/&ograve;/','/&oacute;/','/&ocirc;/','/&otilde;/','/&ouml;/',
+	    '/&Ugrave;/','/&Uacute;/','/&Ucirc;/','/&Uuml;/',
+	    '/&ugrave;/','/&uacute;/','/&ucirc;/','/&uuml;/',
+	    '/&Yacute;/',
+	    '/&yacute;/','/&yuml;/',
+	    '/&ordf;/',
+	    '/&ordm;/');
+	 
+	    $acentos = array(
+	    'À','Á','Â','Ã','Ä','Å',
+	    'à','á','â','ã','ä','å',
+	    'Ç',
+	    'ç',
+	    'È','É','Ê','Ë',
+	    'è','é','ê','ë',
+	    'Ì','Í','Î','Ï',
+	    'ì','í','î','ï',
+	    'Ñ',
+	    'ñ',
+	    'Ò','Ó','Ô','Õ','Ö',
+	    'ò','ó','ô','õ','ö',
+	    'Ù','Ú','Û','Ü',
+	    'ù','ú','û','ü',
+	    'İ',
+	    'ı','ÿ',
+	    'ª',
+	    'º');
+
+		return preg_replace($codigo_acentos, $acentos, $str);
+}
+
 ?>

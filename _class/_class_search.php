@@ -285,7 +285,7 @@ class search
 
 		function show_article_mini($line)
 			{
-			global $id;
+			global $id, $email;
 			
 			$ar = new article;
 			$js = '<script>'.chr(13).chr(10);
@@ -319,7 +319,7 @@ class search
 				$sx .= '<TR valign="top">';
 				$sx .= '<TD rowspan=1>';
 					
-					/* Marca��o */
+					/* Marcacaoo */
 				$selected = round($line['sel_ativo']);
 				if ($selected == 1) { $selected = 'checked'; } else { $selected = ''; }
 				$jscmd = 'onchange="mark(\'#mt'.trim($cod).'\',this);" ';
@@ -337,6 +337,10 @@ class search
 								
 				$sx .= '<BR>';
 				$sx .= '<img src="img/icone_abstract.png" height="16" style="cursor: pointer;" id="it'.$cod.'" '.$jscmd.' align="left">';
+				/* enviar por e-mail */
+				if (isset($email))
+					{ $sx .= $email->send_to_email($cod,16); }
+				
 				//$sx .= '<TD colspan=3 class="lt0">';
 				$sx .= utf8_encode(trim($line['Author_Analytic']));
 				
