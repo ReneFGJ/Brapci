@@ -1,4 +1,12 @@
 <?php
+
+function ajax_email($link='',$id)
+	{
+		$sx = ' onclick="enviar_email(\''.$link.'\',\'.$id.'\');" ';
+		//$sx = ' onclick="alert(\'ola\');" ';
+		return($sx);
+	}
+	
 class email
 	{
 	var $email = 'brapci@brapci.inf.br';

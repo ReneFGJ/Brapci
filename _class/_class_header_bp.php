@@ -1,15 +1,15 @@
 <?php
 class header
 	{
-	var $charcod = "UTF-8";
-	/* var $charcod = "ISO-8859-1"; */
+	//var $charcod = "UTF-8";
+	var $charcod = "ISO-8859-1"; 
 	var $title = 'Brapci';
 	var $google_id = 'UA-12712904-10';
 	var $login_api = '';
 	
 	function head()
 		{
-		global $LANG, $http;
+		global $LANG, $http, $style_add;
 		$cr = chr(13).chr(10);
 		$pth = $this->path;
 		
@@ -26,12 +26,16 @@ class header
 		/* Style */
 		$style = array('style.css','style_form.css','style_menu.css');
 		for ($r=0;$r < count($style);$r++)
-				{ $sx .= '<link rel="STYLESHEET" type="text/css" href="css/'.$style[$r].'">'.$cr; }
+				{ $sx .= '<link rel="STYLESHEET" type="text/css" href="'.$http.'css/'.$style[$r].'">'.$cr; }
+		/* Style Adicional */
+		if (isset($style_add)) {		
+		for ($r=0;$r < count($style_add);$r++)
+				{ $sx .= '<link rel="STYLESHEET" type="text/css" href="'.$http.'css/'.$style_add[$r].'">'.$cr; } }
 
 		/* Java script */
 		$js = array('jquery.js'); 
 		for ($r=0;$r < count($js);$r++)
-			{ $sx .= '<script type="text/javascript" src="js/'.$js[$r].'"></script>'.$cr; }
+			{ $sx .= '<script type="text/javascript" src="'.$http.'js/'.$js[$r].'"></script>'.$cr; }
 
 
 		/* Icone */

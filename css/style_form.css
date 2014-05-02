@@ -1,0 +1,14 @@
+#basket
+	{
+		border: 0px solid #E0E0E0;
+		width: 100%;
+	}
+#basket_itens
+	{
+		border: 1px solid #E0E0E0;
+		padding: 5px;
+		width: 160px;
+		float: right;
+		margin: 10px;
+		text-align: center;
+	}

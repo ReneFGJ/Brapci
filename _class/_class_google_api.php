@@ -10,8 +10,8 @@
  */
 
 	//include google api files
-	require_once '_class/src_google/Google_Client.php';
-	require_once '_class/src_google/contrib/Google_Oauth2Service.php';
+	require 'src_google/Google_Client.php';
+	require 'src_google/contrib/Google_Oauth2Service.php';
   
 class google_api
 	{
@@ -113,9 +113,9 @@ $google->start();
 	
 if(isset($google->authUrl)) //user is not logged in, show login button
 	{
-		if (!isset($link_login)) { $link_login = ''; }
-		$link_login .= '<a class="login" href="'.$google->authUrl.'">
-		<img src="_class/src_google/img/google-login-button.png" height="30" /></a><nobr>';		
+		if (!isset($google_login_link)) { $google_login_link = ''; }
+		$google_login_link .= '<a class="login" href="'.$google->authUrl.'">
+		<img src="'.$http.'_class/src_google/img/google-login-button.png" height="30" /></a><nobr>';		
 	} else {
 		$user = $google->user;
 		$user_name  = $user['name'];
