@@ -4,10 +4,11 @@
 	 * @author Rene Faustino Gabriel Junior <renefgj@gmail.com> (Analista-Desenvolvedor)
 	 * @copyright Copyright (c) 2014 - sisDOC.com.br
 	 * @access public
-     * @version v0.14.17
+     * @version v0.14.18	
 	 * @package System
 	 * @subpackage Database connection
     */
+    
     if (!isset($include)) { $include = '_include/'; }
 	else { $include .= '_include/'; }
 
@@ -15,10 +16,10 @@
 	session_start();
 
 	/* Noshow Errors */
-	$debug = 7; 	
-	
-	ini_set('display_errors', $debug);
-	ini_set('error_reporting', $debug);
+	$debug = 0; 	
+	if (file_exists('DEBUG')) { $debug1 = 0; $debug2 = 0; }
+	ini_set('display_errors', $debug1);
+	ini_set('error_reporting', $debug2);
 	
 	/* Path Directory */
 	$path_info = trim($_SERVER['PATH_INFO']);
@@ -52,22 +53,23 @@
 	
 	/* Data base */
 	$filename = "_db/db_mysql_".$ip.".php";
+	for ($r=0; $r < 2;$r++)
+		{ if (!file_exists($filename)) { $filename = '../'.$filename; } }
 	if (file_exists($filename))
 		{
 			require($filename);
-
 		} else {		
 			if ($install != 1) 
 				{
-				redireciona('__install/index.php');
-				
+				//redireciona('__install/index.php');
+				echo $filename; exit;
 				if (!file_exists($file))
 					{
-						echo '<H1>Configuração do sistema</h1>';
+						echo '<H1>Configuracao do sistema</h1>';
 						require("db_config.php");
 						exit;
 					} else {
-						echo 'Contacte o administrador, arquivo de configuração inválido';
+						echo 'Contacte o administrador, arquivo de configuracao invalido';
 					}
 				
 		}	

@@ -9,11 +9,6 @@
 * @subpackage sisdoc_char
 */
 
-function nwin($link='',$w=200,$h=50,$resize=1,$scroll=0)
-	{
-		$sx = 'onclick="NewWindow=window.open(\'.$link.\',\'newwin\',\'scrollbars=no,resizable=no,width='+$w+',height='+$h+',top=10,left=10\'); NewWindow.focus(); void(0);} "';
-		return($sx);
-	}
 
 
 function customError($errno, $errstr, $errfile, $errline, $errcontext)
@@ -67,12 +62,6 @@ function customError($errno, $errstr, $errfile, $errline, $errcontext)
   } 
 
 ////////////////////////////////////////
-function fmt($vlr,$dec)
-	{
-		$vlr = number_format($vlr,$dec,',','.');
-		return($vlr);
-	}	
-
 function redireciona($pg) { redirecina($pg); }
 function redirecina($pg)
 	{

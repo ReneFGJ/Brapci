@@ -87,13 +87,12 @@ class publications
 				}
 			
 			$sx = '';
-			$sx .= '<UL class="acoes lt3">';
 			for ($r=0;$r < count($acao);$r++)
 				{
-					$link = '<A HREF="'.page().'?dd0='.$line['ar_codigo'].'&dd10='.$acao[$r][0].'&dd11=ALTERA_STATUS&DD90='.checkpost($line['ar_codigo']).'">';
-					$sx .= '<LI class="botao-geral">'.$link.$acao[$r][1].'</A>'.'</li>'.chr(13).chr(10);
+					$sx .= '<input type="button" value="'.$acao[$r][1].'"
+								onlick="window.location=\''.$acao[$r][0].'&dd11=ALTERA_STATUS&DD90='.checkpost($line['ar_codigo']).'\';"
+								>&nbsp;';
 				}
-			$sx .= '</UL>';
 			return($sx);
 		} 
 	
@@ -245,7 +244,9 @@ class publications
 					{
 					$link = '<A HREF="#" class="link" onclick="newxy2(\'article_ref_edit.php?dd1='.$work.'\',800,200);">';
 					
-					$sx .= '<A name="cited"><BR><font class="link"><a href="#cited" class="link" id="cited_edit">editar referências</A></font>';
+					$sx .= '<A name="cited">
+							<BR>
+							<a href="#cited" class="link" id="cited_edit">editar referências</A></font>';
 					$sx .= ' | ';
 					$sx .= $link.'<font class="link">nova referências</A></font>';
 					}
@@ -255,8 +256,7 @@ class publications
 						$.ajax("article_cited_ajax.php?dd0='.round($this->article_id).'&dd89=cited_edit")
 						 	.done(function(data) { $("#cited").html(data); })
 							.fail(function() { alert("error"); });
-					});
-						
+					});						
 					</script>
 					';						
 
