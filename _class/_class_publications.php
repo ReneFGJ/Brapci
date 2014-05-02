@@ -308,6 +308,7 @@ class publications
 		}
 	function show_files($art)
 		{
+			global $http;
 			$sql = "select * from brapci_article_suporte 
 					where bs_article = '$art'
 					order by bs_type
@@ -318,9 +319,11 @@ class publications
 			$hv = 0; $hpdf = 0;
 			while ($line = db_read($rlt))
 				{
-					if ($line['bs_type'] == 'PDF') { $hpdf = 1; }
+					if (trim($line['bs_type']) == 'PDF') { $hpdf = 1; }
 					$link = '<A HREF="'.trim($line['bs_adress']).'" target="_new">';
+					
 					if ($line['bs_type']!='URL') { $link = ''; }
+					if ($line['bs_type']=='PDF') { $link = '<A HREF="'.$http.trim($line['bs_adress']).'" target="_new">'; }
 					$sx .= '<TR>';
 					$sx .= '<TD class="tabela01" height="30" align="center">';
 					$sx .= $line['bs_type'];
