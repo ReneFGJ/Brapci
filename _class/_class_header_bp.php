@@ -3,6 +3,7 @@ class header
 	{
 	//var $charcod = "UTF-8";
 	var $charcod = "ISO-8859-1"; 
+	
 	var $title = 'Brapci';
 	var $google_id = 'UA-12712904-10';
 	var $login_api = '';

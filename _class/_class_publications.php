@@ -310,16 +310,19 @@ class publications
 		{
 			$sql = "select * from brapci_article_suporte 
 					where bs_article = '$art'
+					order by bs_type
 			";
 			$rlt = db_query($sql);
 			$sx = '<table class="tabela00" width="100%">';
 			$sx .= '<TR><TD width="20"><B>Arquivos</B>';
+			$hv = 0; $hpdf = 0;
 			while ($line = db_read($rlt))
 				{
+					if ($line['bs_type'] == 'PDF') { $hpdf = 1; }
 					$link = '<A HREF="'.trim($line['bs_adress']).'" target="_new">';
 					if ($line['bs_type']!='URL') { $link = ''; }
 					$sx .= '<TR>';
-					$sx .= '<TD class="tabela01">';
+					$sx .= '<TD class="tabela01" height="30" align="center">';
 					$sx .= $line['bs_type'];
 					$sx .= '<TD class="tabela01">';
 					$sx .= $link;
@@ -327,15 +330,38 @@ class publications
 					$sx .= '</A>';
 					if (strlen($link) > 0)
 						{
-							$sx .= '<TD class="tabela01">';
-							$sx .= 'HV';
+							$idx = $line['id_bs'];
+							$sx .= '<TD class="tabela01" width="30" height="30" align="center">';
+							if ($hpdf == 0)
+								{
+								$sx .= '<div id="harvesting">';
+									$sx .= '<img src="'.$http.'/img/icone_push_pdf.png" height="30" >';
+								$sx .= '</div>';
+								}
 							$sx .= '</td>';
+							$hv = 1;
 						} else {
 							$sx .= '<TD class="tabela01">';
 							$sx .= '&nbsp;';
 							$sx .= '</td>';							
 						}
 				}	
+			if ($hv == 1)
+				{
+					$sx .= '
+					<script>
+					$("#harvesting").click(function() {
+						$("#harvesting").html(\'<img src="'.$http.'/img/icone_wait.gif" height="30" >\');
+						$.ajax("article_suport_download_ajax.php?dd0='.round($idx).'&dd89=harvesting")
+						 	.done(function(data) { $("#harvesting").html(data); })
+							.fail(function() {
+								$("#harvesting").html(\'<img src="'.$http.'/img/icone_push_pdf.png" height="30" >\');
+								});
+						
+					}); 
+					</script>
+					';
+				}
 			$sx .= '</table>';
 			return($sx);		
 						

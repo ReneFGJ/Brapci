@@ -13,7 +13,8 @@ require("main_menu.php");
 
 echo '<H1>'.msg('artigos_sem_referencias').'</h1>';
 
-echo $cited->article_without_ref(0,0,2013);
+if (strlen($dd[1])==0) { $dd[1]= (date("Y")-2); }
+echo $cited->article_without_ref(0,0,$dd[1]);
 echo '<HR>';
 
 require("../foot.php");

@@ -64,7 +64,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#"><?=msg('Brapci Manutenção');?></a>
+          <a class="brand" href="#"><?=msg('manutencao_module');?></a>
           <div class="nav-collapse collapse">
           	<div style="float: right; color: #FFFFFF;"><?=$user_name;?></div>
             <ul class="nav_top">
@@ -72,18 +72,21 @@
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Main Menu</a>
                 <ul class="dropdown-menu" role="menu">
                     <li data-submenu-id="submenu-cited">
-                        <a href="cited.php"><?php echo msg('cited');?></a>
+                        <a href="cited.php"><?php echo msg('mm_cited');?></a>
                         <div id="submenu-cited" class="popover">
-                            <h3 class="popover-title"><?php echo msg('cited');?></h3>
+                            <h3 class="popover-title"><?php echo msg('mm_cited');?></h3>
                 			<ul class="dropdown-menu2" role="menu2">
-                				<li><A HREF="cited_artigos_sem_referencias.php" class="submenu">Sem referencias</A></li>
+                				<li><A HREF="cited_artigos_sem_referencias.php?dd1=<?=(date("Y"));?>" class="submenu">Sem referencias <?=(date("Y"));?></A></li>
+                				<li><A HREF="cited_artigos_sem_referencias.php?dd1=<?=(date("Y")-1);?>" class="submenu">Sem referencias <?=(date("Y")-1);?></A></li>
+                				<li><A HREF="cited_artigos_sem_referencias.php?dd1=<?=(date("Y")-2);?>" class="submenu">Sem referencias <?=(date("Y")-2);?></A></li>
+                				<li><A HREF="cited_artigos_sem_referencias.php?dd1=<?=(date("Y")-3);?>" class="submenu">Sem referencias <?=(date("Y")-3);?></A></li>
                 			</ul>            
                         </div>
                     </li>
                     <li data-submenu-id="submenu-menu-01">
                         <a href="#">Journals</a>
                         <div id="submenu-menu-01" class="popover">
-                            <h3 class="popover-title"><?php echo msg('publication');?></h3>
+                            <h3 class="popover-title"><?php echo msg('mm_publication');?></h3>
                 			<ul class="dropdown-menu2" role="menu2">
                 				<li><A HREF="#" class="submenu">Journals</A></li>
                 				<li><A HREF="#" class="submenu">Thesis</A></li>

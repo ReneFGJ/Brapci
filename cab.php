@@ -12,8 +12,13 @@ $path_ini = $include;
 	//require("_class/_class_message.php");
 	//$LANG = $lg->language_read();
 	$LANG = 'pt_BR';
-	$file = $path_ini.'messages/msg_'.$LANG.'.php';
-	if (file_exists($file)) { require($file); } else { echo 'message not found '.$file; }
+	$file = 'messages/msg_'.$LANG.'.php';
+	if (file_exists($file)) { require($file); } 
+		else {
+				 $file = '../messages/msg_'.$LANG.'.php';
+				 if (file_exists($file)) { require($file); }
+				 else { echo 'message not found '.$file; } 
+			  }
 
 /* Carrega Classe */
 	require('_class/_class_face.php');

@@ -18,6 +18,7 @@ class article
 	var $issue;
 	var $tipo;
 	var $pdf;
+	var $pdfc;
 	var $tabela = 'brapci_article';
 	
 	function show_pdf()
@@ -368,9 +369,50 @@ class article
 				}
 		}
 		
+	function coleta_e_salva_pdf($url,$article,$id,$journal)
+		{
+			$dt = date("Ymd");
+			$url = trim($url);
+			$filename='../_repositorio/'.substr($dt,0,4)."/".substr($dt,4,2);
+			
+			$this->checkdir($filename);
+			$filename .= '/pdf_'.checkpost($id).'_'.strzero($id,7).'.pdf';
+			$file_name .= substr($filename,3,strlen($filename));
+			
+			$sx = $this->page_load($url);
+			
+			$tipo = substr($sx,1,3);
+			
+			if ($tipo == 'PDF')
+				{
+					$rlt = fopen($filename,'w');
+					fwrite($rlt,$sx);
+					fclose($rlt);
+					$data = date("Ymd");
+					
+					$sql = "insert into brapci_article_suporte
+							(
+								bs_status, bs_adress, bs_type,
+								bs_article, bs_update, bs_journal_id
+							) values (
+								'A','$file_name','PDF',
+								'$article',$data,'$journal'
+							) 
+							";							
+					$rlt = db_query($sql);
+					return(1);
+				}
+			$this->pdfc = $sx;
+			return(0);
+			
+		}
+		
 	function inport_pdf($id=0)
 		{
-			$sql = "select count(*) as total from brapci_article_suporte where bs_type='PDF' and bs_status = '@'";
+			$sql = "select count(*) as total from brapci_article_suporte 
+						where bs_type='PDF' and bs_status = '@'
+						$wh
+						";
 			$rlt = db_query($sql);
 			while ($line = db_read($rlt))
 				{

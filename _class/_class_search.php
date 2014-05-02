@@ -329,7 +329,7 @@ class search
 				$sx .= '<TD colspan=1>';
 				$sx .= $id.'. ';
 				$sx .= $link;
-				$sx .= utf8_encode(trim(UpperCase($line['Article_Title'])));
+				$sx .= (trim(UpperCase($line['Article_Title'])));
 				$sx .= '</A>';
 				/* Show */
 				
@@ -342,7 +342,7 @@ class search
 					{ $sx .= $email->send_to_email($cod,16); }
 				
 				//$sx .= '<TD colspan=3 class="lt0">';
-				$sx .= utf8_encode(trim($line['Author_Analytic']));
+				$sx .= (trim($line['Author_Analytic']));
 				
 				/* Volume numero */
 				$vol = trim($line['Volume_ID']);
@@ -360,23 +360,23 @@ class search
 				//$sx .= '<BR>'.utf8_encode($ar->mostra_issue($line));
 				
 				$sx .= '<BR>';
-				$sx .= '<B>'.utf8_encode(trim($line['Journal_Title'])).'</B>';
-				$sx .= utf8_encode($v);
+				$sx .= '<B>'.(trim($line['Journal_Title'])).'</B>';
+				$sx .= $v;
 				
 				$tipo = $line['jnl_tipo'];
-				$sx .= utf8_encode(' ('.$this->tipo_publicacao($tipo).')');
+				$sx .= ' ('.$this->tipo_publicacao($tipo).')';
 				
 				/* DIV */
 				$hid = 'display: none;';
 				$sx .= '<div style="text-align: justify; '.$hid.' color: #A0A0A0; line-height:130%; margin: 8px; 8px; 8px; 8px;" id="mt'.$cod.'">';
-				$sx .= utf8_encode(trim($line['ar_resumo_1']));
+				$sx .= trim($line['ar_resumo_1']);
 				$sx .= '<BR>';
 				$keys = trim($line['Idoma']);
 				$key = trim($line['ar_keyword_1']);
 				$key = trim(troca($key,' /',','));
 				if ($keys == 'pt_BR')
-					{ $sx .= '<B>Palavras-chave</B>: '.utf8_encode($key); }
-					else { $sx .= '<BR><B>Keywords</B>: '.utf8_encode($key); }
+					{ $sx .= '<B>Palavras-chave</B>: '.$key; }
+					else { $sx .= '<BR><B>Keywords</B>: '.$key; }
 				$sx .= '</div>';
 			
 			return($sx);
@@ -429,7 +429,7 @@ class search
 				{
 					$sx .= '<TR>';
 					$sx .= '<TD>';
-					$sx .= utf8_encode(trim($line['jnl_nome_abrev']));
+					$sx .= trim($line['jnl_nome_abrev']);
 					$sx .= '<TD align="center">';
 					$sx .= trim($line['total']);
 				}
@@ -456,7 +456,7 @@ class search
 				{
 					$sx .= '<TR>';
 					$sx .= '<TD align="center">';
-					$sx .= utf8_encode(trim($line['ar_ano']));
+					$sx .= trim($line['ar_ano']);
 					$sx .= '<TD align="center">';
 					$sx .= trim($line['total']);
 				}
@@ -490,7 +490,7 @@ class search
 				{
 					$sx .= '<TR>';
 					$sx .= '<TD align="left">';
-					$sx .= utf8_encode(trim($line['autor_nome']));
+					$sx .= trim($line['autor_nome']);
 					$sx .= '<TD align="center">';
 					$sx .= trim($line['total']);
 				}
@@ -524,7 +524,7 @@ class search
 				{
 						$sx .= '<TR>';
 						$sx .= '<TD align="left">';
-						$sx .= utf8_encode(trim($line['kw_word']));
+						$sx .= trim($line['kw_word']);
 						$sx .= '<TD align="center">';
 						$sx .= trim($line['total']);
 				}
@@ -561,7 +561,7 @@ class search
 				{
 					$size = round(log($line['total'])*10);
 					$ntag .= '<div style="float: left">';
-					$ntag .= '&nbsp<font style="font-size: '.$size.'pt;">'.utf8_encode(trim($line['kw_word'])).'</font> ';
+					$ntag .= '&nbsp<font style="font-size: '.$size.'pt;">'.trim($line['kw_word']).'</font> ';
 					$ntag .= '</div>';
 				}
 			$ntag .= '</div>
@@ -619,7 +619,7 @@ class search
 			$sx .= '<input type="submit" name="acao" id="search_bt" value="'.msg("bt_search").'">';
 			$sx .= '</form>';
 				
-			$sx = utf8_encode($sx);
+			//$sx = utf8_encode($sx);
 			
 			if (strlen($dd[2]) > 0)
 			{			
