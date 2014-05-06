@@ -9,6 +9,17 @@ class cited
 
 	var $tabela = "mar_works";
 	
+	function le($id)
+		{
+			$sql = "select * from ".$this->tabela." where id_m = ".round($id);
+			$rlt = db_query($sql);
+			if ($line = db_read($rlt))
+				{
+					$this->line = $line;
+				}
+			return(1);
+		}
+	
 	function journal_insert($nome,$tipo)
 		{
 			$sql = "select * from mar_journal where mj_nome = '".$nome."'";
@@ -415,6 +426,19 @@ function MAR_autor($ss)
 					$refc = $line['id_m'];
 					$mano = trim($line['m_ano']);
 					$mref = $line['m_ref'];
+					$pos = strpos($mref,'  ');
+					$mref = troca($mref,' :',':');
+					$mref = troca($mref,' ,',',');
+					$mref = troca($mref,'&','and');
+					while ($pos > 0)
+						{
+							$mref = troca($mref,'  ',' ');
+							$pos = strpos($mref,'  ');
+						}
+					
+					$sql = "update mar_works set m_ref = '".$mref."' where id_m = ".$line['id_m'];
+					$rlt = db_query($sql);
+					
 					$link = '<A HREF="#" onclick="newxy2(\'article_ref_edit.php?dd0='.$line['id_m'].'\',800,200);">';
 					$link = '['.$link.'editar</A>]';
 					
