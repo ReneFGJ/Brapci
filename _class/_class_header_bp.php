@@ -5,7 +5,7 @@ class header
 	var $charcod = "ISO-8859-1"; 
 	
 	var $title = 'Brapci';
-	var $google_id = 'UA-12712904-10';
+	var $google_id = 'UA-12803182-4';
 	var $login_api = '';
 	
 	function head()
@@ -46,16 +46,16 @@ class header
     	$sx .= '<title>'.$this->title.'</title>'.$cr;
 		$sx .= '</head>';
 		
-		$sx .= "
+		$sx .= "		
 		<script>
   			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-			  ga('create', '".$this->google_id."', 'pucpr.br');
+			  ga('create', '".$this->google_id."', 'brapci.inf.br');
   			ga('send', 'pageview');
-			</script>		
+		</script>		
 			";
 		
 		$LANG='pt_BR';

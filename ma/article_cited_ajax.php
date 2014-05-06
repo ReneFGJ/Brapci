@@ -3,7 +3,7 @@ $include = '../';
 require("../db.php");
 header('Content-type: text/html; charset=ISO-8859-1');
 
-require('../include/sisdoc_debug.php');
+//require('../include/sisdoc_debug.php');
 require('../include/sisdoc_autor.php');
 
 require("../_class/_class_publications.php");

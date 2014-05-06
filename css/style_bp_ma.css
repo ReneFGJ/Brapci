@@ -1,0 +1,19 @@
+.link_google 
+	{
+		font-decoration: underline;
+		color: #3030FF;
+		font-size: 34px;
+	}
+
+a.link_google
+	{
+		font-decoration: underline;
+		color: #3030FF;
+		font-size: 34px;
+	}
+
+a.link_google:hover 
+	{
+		font-decoration: line;
+		color: #000000;
+	}

@@ -22,5 +22,11 @@ echo $res->show_references($art);
 /* Acoes */
 echo $res->acoes();
 
+echo '<BR><BR>';
+echo $res->seek_google();
+
+echo '<BR><BR><BR><BR>';
+echo '-';
+
 require("../foot.php");
 ?>

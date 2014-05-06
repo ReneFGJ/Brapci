@@ -26,13 +26,16 @@ $path_ini = $include;
 
 /* Class de login do google */
 	require("_class/_class_google_api.php");
+	$google = new google_api;
 	$google->google_analytics_id = 'UA-12803182-4';
- 
+	
+
 /* Cabecalho */
 	require("_class/_class_header_bp.php");
 	$hd = new header;
 	
 	echo $hd->cab();
+	$hd->google_id = $google->google_analytics_id;
 	
 	if (!isset($no_cab))
 		{

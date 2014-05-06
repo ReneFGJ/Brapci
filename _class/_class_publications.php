@@ -7,6 +7,14 @@ class publications
 	
 	var $tabela = 'brapci_journal';
 	
+	function seek_google()
+		{
+			$title = $this->line['ar_titulo_1'];
+			$link = "http://scholar.google.com.br/scholar?q=".utf8_encode($title);
+			$sx .= '[ <A HREF="'.$link.'" target="_new'.date("Ymdhis").'" class="link_google">'.msg('seek_google_scholar').'</a> ]';
+			return($sx);
+		}	
+	
 	function resume($jid)
 		{
 			$sql = "SELECT count(*) as total, cache_status 
