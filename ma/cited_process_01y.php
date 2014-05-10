@@ -9,11 +9,14 @@ require("cab.php");
 
 echo '<h1>Selecionar ano de publicação (Fase Iy)</h1>';
 
+require('../include/sisdoc_windows.php');
 require("../_class/_class_cited.php");
 $cited = new cited;
 //$cited->cited_alterar_status('Z','@');
 //$cited->cited_alterar_status('Y','@');
 echo $cited->resumo();
+
+echo $cited->mostra_botao_erro($dd[0]);
 
 $proc = $cited->cited_Iy_recover_year($dd[0]);
 echo '<BR><BR>Processadas '.$proc.' referências';

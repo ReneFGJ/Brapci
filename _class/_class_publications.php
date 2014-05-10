@@ -186,7 +186,7 @@ class publications
 		
 	function show_references($article)
 		{
-			global $editar;
+			global $editar, $http;
 			$sql = "select * from mar_works
 					left join mar_tipo on mt_codigo = m_tipo
 					 where m_work = '$article' 
@@ -204,6 +204,7 @@ class publications
 						
 			$xtipo='x';
 			$tot = 0;
+			$id_prev = 0;
 			while ($line = db_read($rlt))
 				{
 					$tot++;
@@ -220,6 +221,14 @@ class publications
 					$linka = '';
 					if ($editar==1)
 						{
+						if ($id_prev > 0)
+							{
+								$oc = ' onclick="newxy2(\'article_ref_join.php?dd1='.$id_prev.'&dd0='.$line['id_m'].'\',800,200);" ';
+								$link_join = '<img src="'.$http.'img/icone_arrow-join.png" border=0 '.$oc.'>';
+							} else {
+								$link_join = '';
+							}
+							
 						$link = '<A HREF="#" onclick="newxy2(\'article_ref_edit.php?dd0='.$line['id_m'].'\',800,200);">';
 						$linka = '</A>';							
 						switch ($sta)
@@ -234,6 +243,7 @@ class publications
 					$ref = $line['m_ref'];
 					$ref = troca($ref,'<','&lt;');
 					$ref = troca($ref,'>','&gt;');
+					$sx .= $link_join.'&nbsp;';
 					$sx .= $link.$cor.$ref.'</font>'.$linka;
 					$sx .= '('.$sta.')';
 					if (strlen($bdoi) > 0)
@@ -246,7 +256,8 @@ class publications
 						}
 					$sx .= '<BR><BR>';
 					/* Calcula referencias */
-					$tps[$ids] = $tps[$ids] + 1; 					
+					$tps[$ids] = $tps[$ids] + 1; 	
+					$id_prev = $line['id_m'];				
 				}
 			if ($editar==1)
 					{
