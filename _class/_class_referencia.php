@@ -18,8 +18,9 @@ class referencia
 				
 				/* */
 				$link = '<A HREF="article.php?dd0='.$line['id_ar'].'&dd90='.checkpost($line['id_ar']).'" class="lt1">';
-				
+				$pag = '';
 				$sx = $link.$titulo.' '.$pag.trim($year).'</A>';
+				$sx .= '<BR><i>'.$line['Author_Analytic'].'</A>';
 				return($sx);
 				
 			}

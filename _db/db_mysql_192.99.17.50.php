@@ -13,4 +13,6 @@
 		
 		$http = 'http://www.brapci.inf.br/';
 		$ok = db_connect();
+		
+		header ('Content-type: text/html; charset=ISO-8859-1');
 ?>

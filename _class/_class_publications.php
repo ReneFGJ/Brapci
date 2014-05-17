@@ -325,6 +325,14 @@ class publications
 					';	
 			return($sx);	
 		}
+	function upload_files($art)
+		{
+			$link = ' onclick="(\'article_suport_upload.php?dd0='.$art.'\',600,600);" ';
+			$sx = '<input type="button" value=" upload pdf file " '.$link.' >';
+			
+			$sx = '<a href="article_suport_upload.php?dd0='.$art.'" target="file_upload">UPLOAD</A>';
+			return($sx);
+		}
 	function show_files($art)
 		{
 			global $http;
@@ -545,9 +553,7 @@ class publications
 			$sx .= '
 					<script>
 					$("#title_edit").click(function(){
-						$.ajax("article_edit_ajax.php?dd0='.round($this->article_id).'&dd89=title_edit")
-						 	.done(function(data) { $("#titles").html(data); })
-							.fail(function() { alert("error"); });
+						newxy2(\'article_title_ed.php?dd0='.round($this->article_id).'\',800,500);
 					});
 					</script>
 					';			

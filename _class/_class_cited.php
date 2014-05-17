@@ -7,6 +7,105 @@ class cited {
 	var $online = 0;
 
 	var $tabela = "mar_works";
+	
+	function result_search($term)
+		{
+			$term = troca($term,'(',' [ ');
+			$term = troca($term,')',' ] ');
+			$term = troca($term,' ',';').';';
+			
+			$terms = splitx(';',$term);
+			$par = 0;
+			for ($r=0;$r < count($terms);$r++)
+				{
+					$term = $terms[$r];
+					if (strlen($term) > 0)
+						{
+							/* logical */
+							$lg = 0;
+							
+							switch ($term)
+								{
+									case 'AND':
+										//$wh .= ' AND '; 
+										$lg = 1;
+										break;
+									case 'OR':
+										$wh .= ' OR '; 
+										$lg = 1;
+										break;										
+									case '[':
+										$wh .= ' ('; $par++; $lg = 1; 
+										break;
+									case ']':
+										$wh .= ') '; $par--; $lg = 1;
+										break;
+									
+								}
+							//echo '<BR>'.$term.' = '.$lg;
+							if ($lg == 0)
+								{
+								if (strlen($wh) > 0) { $wh .= ' and '; }
+								$wh .= " (m_ref like '%".$term."%') ";
+								}
+						}
+				}
+				
+		/* Finalizar parenteses abertos */
+			while ($par > 0) { $wh .= ')'; $par--; }
+			
+		/* Monta Query de consulta */
+					
+			if (strlen($wh) > 0)
+				{
+					$sql = "select * from ".$this->tabela." where ".$wh;
+					$sql .= " order by m_ano ";
+					echo '<HR>'.$sql.'<HR>';
+				}
+			$rlt = db_query($sql);
+			$sx = '';
+			$sx .= '<table width="100%">';
+			$id = 0;
+			while ($line = db_read($rlt))
+			{
+				$id++;
+				$sx .= '<TR vaign="top">';
+				$sx .= '<TD>'.$id;
+				$sx .= '<TD>'.$line['m_ano'];
+				$sx .= '<TD>';
+				$sx .= $this->show_cited($line);
+				$sx .= '<BR>';
+			}
+			$sx .= '</table>';
+			return($sx);				
+		}
+	function show_cited($line)
+		{
+			$work = $line['m_work'];
+			$link = '<A HREF="article.php?dd0='.$work.'&dd90='.checkpost($work).'" target="_new">';
+			$sx = trim($line['m_ref']);
+			$sx = troca($sx,'>','&gt.');
+			$sx = troca($sx,'<','&lt.');
+			$sx .= ' ('.$link.'V</A>)';
+			return($sx);
+		}
+	
+	function busca_form()
+		{
+			global $dd,$acao;
+			$form = new form;
+			$cp = array();
+			array_push($cp,array('$H8','','',False,True));
+			array_push($cp,array('$T60:4','','',False,True));
+			array_push($cp,array('$B8','','Busca citações',False,True));
+
+			$form->required_message = 0;
+			$form->required_message_post = 0;
+			
+			$tela = $form->editar($cp,'');
+			return($tela);
+			
+		}
 
 	function le($id) {
 		$sql = "select * from " . $this -> tabela . " where id_m = " . round($id);

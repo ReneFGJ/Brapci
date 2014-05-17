@@ -21,6 +21,8 @@ class article
 	var $pdfc;
 	var $tabela = 'brapci_article';
 	
+	var $page_load_type = 'C';
+	
 	function show_pdf()
 		{
 			$art = $this->codigo;
@@ -29,6 +31,7 @@ class article
 					where bs_article = '".$art."'
 					and (bs_type = 'PDF') and (bs_status = 'A')
 					";
+					
 			$rlt = db_query($sql);
 			if ($line = db_read($rlt))
 				{
@@ -37,17 +40,22 @@ class article
 						{
 							$this->pdf = $file;
 						}
+					if (file_exists('../'.$file))
+						{
+							$this->pdf = '../'.$file;
+						}
 				}
 			if (strlen($this->pdf) > 0)
 			{
 				$linka = ' onclick="$(\'#pdf\').toggle();" ';	
+				$linkb = ' onclick="newxy2(\''.$this->pdf.'\',300,300);" style="cursor: pointer;" ';
 				$sx = '<div id="pdf">
 						<div id="pdf_frame">
 							<iframe SRC="'.$this->pdf.'" style="width: 99%; height: 95%;"></iframe>
 						</div>
 					<div style="float: right;">
 						<span id="download" '.$linka.' class="link">fechar</span> | 
-						<span id="download" '.$linkb.' class="link">download</span>&nbsp;</div>
+						<a href="'.$this->pdf.'" id="download" class="link" target="new'.$art.'">download</a>&nbsp;</div>
 					</div>
 				';
 			}
@@ -179,7 +187,6 @@ class article
 				{
 					$this->title = $line['ar_titulo_1'];
 					$this->title_alt = $line['ar_titulo_2'];
-					$this->autores = $line[''];
 					$this->resumo = $line['ar_resumo_1'];
 					$this->resumo_alt = $line['ar_resumo_2'];
 					$this->keyword = $this->recupera_keywords($line['ar_codigo'],$line['ar_idioma_1']);
@@ -215,6 +222,7 @@ class article
 			 $id = 0;
 			 while ($line = db_read($rlt))
 			 	{
+			 		if (strlen($autores) > 0) { $autores .= '; '; }
 			 		$id++;
 					$bio = '';
 					if ($line['ae_aluno']=='1') {$bio .= msg('Student').'. '; }
@@ -227,9 +235,12 @@ class article
 					$bio .= ' '.trim($line['inst_nome']);
 
 					$bio .= trim($line['autor_bio']);
-					$xbio .= '<sup>'.$id.'</sup>'.$bio.'<BR>';
-			 		if (strlen($autores) > 0) { $autores .= ', '; }
-					$link = '<A HREF="#" alt = "'.$bio.'" title="'.$bio.'">';
+					if (strlen($bio) > 5)
+						{
+						$xbio .= '<sup>'.$id.'</sup>'.$bio.'<BR>';
+			 			if (strlen($autores) > 0) { $autores .= ', '; }
+						$link = '<A HREF="#" alt = "'.$bio.'" title="'.$bio.'">';
+						} else { $link = ''; }
 			 		$autores .= trim($line['autor_nome']).'<sup>'.$link.$id.'</A></sup>';
 					
 			 	}
@@ -293,13 +304,15 @@ class article
 		
 	function article_issue($id)
 		{
+			global $db_public, $db_base;
 			$ref = new referencia;
 			$sql = "select * from ".$this->tabela."
 					left join brapci_journal on jnl_codigo = ar_journal_id
 					left join brapci_edition on ed_codigo = ar_edition
 					left join brapci_section on se_codigo = ar_tipo 
-					where ar_edition = '".strzero(round($id),7)."' 
-					order by se_ordem, se_descricao, round(ar_pg_inicial) ";
+					left join ".$db_public."artigos on ".$this->tabela.".ar_codigo = artigos.ar_codigo
+					where ar_edition = '".strzero(round($id),7)."' and ar_pg_inicial <> ''
+					order by se_ordem, ar_pg_inicial ";
 			$rlt = db_query($sql);
 			$sx .= '<table width="99%" class="lt1" cellpadding=0 cellspacing=2 >';
 			$xsection = 'x';
@@ -309,38 +322,65 @@ class article
 					$section = trim($line['se_descricao']);
 					if ($xsection != $section)
 						{
-							$sx .= '<TR><TD class="lt2">'.$section;
+							$sx .= '<TR><TD class="lt1" class="issue_td"><B>'.$section.'</B>';
 							$xsection = $section;
 						}
 					$sx .= '<TR>';
 					$sx .= '<TD>';
 					$sx .= $ref->mostra_artigo_lista($line);
+					$pag = '';
+					$pagi = $line['ar_pg_inicial'];
+					$pagf = $line['ar_pg_final'];
+					if (strlen($pagi) > 0) 
+					{
+						if (strlen($pagf) > 0)
+							{
+								$pag = 'p. '.$pagi.'-'.$pagf;
+							} else {
+								$pag = 'p. '.$pagi;
+							}
+					}
+					$sx .= '<TD><nobr>'.$pag;
 				}
 			$sx .= '</table>';				
 			return($sx);
 		}	
 	function page_load($page)
 		{
-		global $host_install;	
-		$ch = curl_init();
-		curl_setopt ($ch, CURLOPT_URL, $page);
-		curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 5);
-		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
-		$contents = curl_exec($ch);
-		if (curl_errno($ch)) {
-  			echo curl_error($ch);
-  			echo "\n<br />";
-  			$contents = '';
-			$this->ok = 0;
-		} else {
-	  		curl_close($ch);
-			$this->ok = 1;
-		}
-		if (!is_string($contents) || !strlen($contents)) {
-			echo "Failed to get contents.";
-			$contents = '';
-			$this->ok = 0;
-		}
+		global $host_install;
+		if ($this->page_load_type != 'F')
+			{	
+			$ch = curl_init();
+			curl_setopt ($ch, CURLOPT_URL, $page);
+			curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, 5);
+			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
+			$contents = curl_exec($ch);
+			if (curl_errno($ch)) {
+  				echo curl_error($ch);
+  				echo "\n<br />";
+  				$contents = '';
+				$this->ok = 0;
+			} else {
+		  		curl_close($ch);
+				$this->ok = 1;
+				}
+			if (!is_string($contents) || !strlen($contents)) {
+				echo "Failed to get contents.";
+				$contents = '';
+				$this->ok = 0;
+				}
+			} else {
+				$rlt = fopen($page,'r+');
+				$contents = '';
+				while (!(feof($rlt)))
+					{
+						$contents .= fread($rlt,1024);
+					}
+		  		fclose($rlt);
+				$this->ok = 1;
+			}
+			
+			
 
 		return($contents);
 	}

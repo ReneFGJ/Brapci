@@ -67,5 +67,15 @@ class header
 			$sx .= $this->api_google;
 			return($sx);
 		}
+	function cab_popup()
+		{
+			global $user_name;
+			$sx = '
+			<div class="cab"><div class="geral">';
+			if (strlen($user_name) > 0) { echo $user_name.' ('.$user_email.')'; } 
+			$sx .= '<BR><BR></div></div>';
+			return($sx);
+			
+		}
 	}
 ?>
