@@ -113,11 +113,16 @@ class publications
 			array_push($cp,array('$A8','','Dados da publicação',False,True));
 			array_push($cp,array('$S200','jnl_nome','Nome da publicação',True,True));
 			array_push($cp,array('$S40','jnl_nome_abrev','Abreviatura',False,True));
+			
+			$sql = "select * from ajax_cidade order by cidade_nome";
+			array_push($cp,array('$Q cidade_nome:cidade_codigo:'.$sql,'jnl_cidade','Local',True,True));
+			
 			array_push($cp,array('$S14','jnl_issn_impresso','ISSN',False,True));
 			array_push($cp,array('$S14','jnl_issn_eletronico','ISSN eletrônico',False,True));
 			array_push($cp,array('$S20','jnl_patch','Atalho no sistema',False,True));
 			
 			$sql = "select * from brapci_journal_tipo where jtp_ativo = 1 order by jtp_ordem";
+			$sql = "select * from brapci_journal_tipo order by jtp_ordem";
 			array_push($cp,array('$Q jtp_descricao:jtp_codigo:'.$sql,'jnl_tipo','Tipo de publicação',True,True));
 			
 			array_push($cp,array('$A8','','Sobre a publicação',False,True));
