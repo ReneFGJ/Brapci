@@ -5,6 +5,10 @@ $path_ini = $include;
 /* Conecta com os parametros do sistema */
 	require("db.php");
 	
+/* Dados do Usuario */
+	require("_class/_class_user.php");
+	$user = new user;
+	
 /* Habilita modo debug */
 	require($include.'sisdoc_debug.php');
 

@@ -117,12 +117,15 @@ if(isset($google->authUrl)) //user is not logged in, show login button
 		$google_login_link .= '<a class="login" href="'.$google->authUrl.'">
 		<img src="'.$http.'_class/src_google/img/google-login-button.png" height="30" /></a><nobr>';		
 	} else {
-		$user = $google->user;
-		$user_name  = $user['name'];
-		$user_email = $user['email'];
-		$user_image = $user['picture'];
+		$userg = $google->user;
+		$user_name  = $userg['name'];
+		$user_email = $userg['email'];
+		$user_image = $userg['picture'];
+		$user_link = $userg['link'];
 		$link_logout = '<a href="index.php?reset=1"><font color="A0A0A0">Sair</FONT></a>';
-		$email_valid = $user['verified_email'];
-		$user_id = $user['id'];
+		$email_valid = $userg['verified_email'];
+		$user_idioma = $userg['locale'];
+		$user_id = $userg['id'];
+		$user->user($userg,'google');
 	}
 ?>

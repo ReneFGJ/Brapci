@@ -10,7 +10,11 @@ require($include.'cab.php');
 if ((!isset($login)) and (strlen($user_name) == 0))
 	{ redirecina('_login.php'); }
 
-if (!($popup)) { require("cab_menu.php"); }
+if (!($popup)) 
+	{
+		 require("cab_menu.php");
+		 require("cab_menu_left.php"); 
+	}
 ?>
 <div class="container">
 

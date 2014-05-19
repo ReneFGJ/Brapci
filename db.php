@@ -50,7 +50,6 @@
 		$varf=$vars[$varf];
 		$dd[$k] = post_security($varf);
 		}	
-	
 	/* Data base */
 	$filename = "_db/db_mysql_".$ip.".php";
 	for ($r=0; $r < 2;$r++)
@@ -85,4 +84,3 @@ function post_security($s)
 		return($s);		
 	}    
 ?>
-	

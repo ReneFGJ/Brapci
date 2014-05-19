@@ -16,6 +16,8 @@ $res->article_id = $art;
 echo $res->show_article($art);
 
 echo $res->show_files($art);
+echo $res->upload_files($art);
+
 echo $res->show_references($art);
 
 
@@ -26,6 +28,7 @@ echo '<BR><BR>';
 echo $res->seek_google();
 
 echo '<BR><BR><BR><BR>';
+echo '-';
 
 require("../foot.php");
 ?>

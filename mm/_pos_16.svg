@@ -1,0 +1,43 @@
+<?xml version="1.0" standalone="no"?>
+					<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+					<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="1024px" width="768px"> 
+					<text x="10" y="20" fill="black" font-family="Arial, Tahoma, Verdana" font-size="20">Programas de Pós-Graduação em Ciência da Informação</text>
+			<text x="284" y="432" fill="black" font-family="Arial, Tahoma, Verdana" font-size="14">UNIRIO-PPGB</text>
+			<circle cx="640" cy="512" r="2" stroke="black" stroke-width="grey" fill="white" />
+			<text x="626" y="505" fill="grey" font-family="Arial, Tahoma, Verdana" font-size="14">P01</text>
+			<circle cx="591" cy="625" r="2" stroke="black" stroke-width="grey" fill="white" />
+			<text x="577" y="618" fill="grey" font-family="Arial, Tahoma, Verdana" font-size="14">P02</text>
+			<circle cx="463" cy="695" r="2" stroke="black" stroke-width="grey" fill="white" />
+			<text x="449" y="688" fill="grey" font-family="Arial, Tahoma, Verdana" font-size="14">P03</text>
+			<circle cx="305" cy="695" r="2" stroke="black" stroke-width="grey" fill="white" />
+			<text x="291" y="688" fill="grey" font-family="Arial, Tahoma, Verdana" font-size="14">P04</text>
+			<circle cx="177" cy="625" r="2" stroke="black" stroke-width="grey" fill="white" />
+			<text x="163" y="618" fill="grey" font-family="Arial, Tahoma, Verdana" font-size="14">P05</text>
+			<circle cx="128" cy="512" r="2" stroke="black" stroke-width="grey" fill="white" />
+			<text x="114" y="505" fill="grey" font-family="Arial, Tahoma, Verdana" font-size="14">P06</text>
+			<circle cx="177" cy="399" r="2" stroke="black" stroke-width="grey" fill="white" />
+			<text x="163" y="392" fill="grey" font-family="Arial, Tahoma, Verdana" font-size="14">P07</text>
+			<circle cx="305" cy="329" r="2" stroke="black" stroke-width="grey" fill="white" />
+			<text x="291" y="322" fill="grey" font-family="Arial, Tahoma, Verdana" font-size="14">P08</text>
+			<circle cx="463" cy="329" r="2" stroke="black" stroke-width="grey" fill="white" />
+			<text x="449" y="322" fill="grey" font-family="Arial, Tahoma, Verdana" font-size="14">P09</text>
+			<circle cx="591" cy="399" r="2" stroke="black" stroke-width="grey" fill="white" />
+			<text x="577" y="392" fill="grey" font-family="Arial, Tahoma, Verdana" font-size="14">P10</text>
+			<circle cx="384" cy="632" r="2" stroke="black" stroke-width="brown" fill="white" />
+			<text x="376" y="630" fill="brown" font-family="Arial, Tahoma, Verdana" font-size="8">A01</text>
+			<circle cx="384" cy="632" r="2" stroke="black" stroke-width="brown" fill="white" />
+			<text x="376" y="630" fill="brown" font-family="Arial, Tahoma, Verdana" font-size="8">A02</text>
+			<circle cx="384" cy="632" r="2" stroke="black" stroke-width="brown" fill="white" />
+			<text x="376" y="630" fill="brown" font-family="Arial, Tahoma, Verdana" font-size="8">A03</text>
+			<circle cx="421" cy="629" r="2" stroke="black" stroke-width="brown" fill="white" />
+			<text x="413" y="627" fill="brown" font-family="Arial, Tahoma, Verdana" font-size="8">A04</text>
+			<circle cx="456" cy="620" r="2" stroke="black" stroke-width="brown" fill="white" />
+			<text x="448" y="618" fill="brown" font-family="Arial, Tahoma, Verdana" font-size="8">A05</text>
+			<circle cx="488" cy="605" r="2" stroke="black" stroke-width="brown" fill="white" />
+			<text x="480" y="603" fill="brown" font-family="Arial, Tahoma, Verdana" font-size="8">A06</text>
+			<circle cx="514" cy="586" r="2" stroke="black" stroke-width="brown" fill="white" />
+			<text x="506" y="584" fill="brown" font-family="Arial, Tahoma, Verdana" font-size="8">A07</text>
+			<path d="M 463 329 q 0 0 -79 303" stroke="brown" stroke-width="0.5" fill="none" /><path d="M 177 625 q 0 0 207 7" stroke="brown" stroke-width="0.5" fill="none" /><path d="M 305 329 q 0 0 79 303" stroke="brown" stroke-width="1.88629436112" fill="none" /><path d="M 305 329 q 0 0 116 300" stroke="brown" stroke-width="1.88629436112" fill="none" /><path d="M 384 632 q 0 0 37 -3" stroke="brown" stroke-width="1.88629436112" fill="none" /><path d="M 305 329 q 0 0 151 291" stroke="brown" stroke-width="0.5" fill="none" /><path d="M 305 329 q 0 0 183 276" stroke="brown" stroke-width="0.5" fill="none" /><path d="M 305 329 q 0 0 209 257" stroke="brown" stroke-width="0.5" fill="none" /><path d="M 488 605 q 0 0 26 -19" stroke="brown" stroke-width="0.5" fill="none" /><text x="510" y="180" fill="black" font-family="Arial, Tahoma, Verdana" font-size="10">UFPR</text>
+			<text x="510" y="480" fill="black" font-family="Arial, Tahoma, Verdana" font-size="10">UFSCAR</text>
+			
+					</svg>

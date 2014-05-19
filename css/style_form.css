@@ -12,3 +12,11 @@
 		margin: 10px;
 		text-align: center;
 	}
+	
+.radio_form_big
+	{
+		font-family: Roboto, Roboto, Arial, Tahoma, Verdana;
+		font-size: 14px;
+		color: #FFFFFF;
+		padding: 20px 0px 20px 10px;
+	}

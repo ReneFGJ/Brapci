@@ -1,0 +1,25 @@
+<?xml version="1.0" standalone="no"?>
+					<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+					<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="1024px" width="768px"> 
+					<text x="10" y="20" fill="black" font-family="Arial, Tahoma, Verdana" font-size="20">Programas de Pós-Graduação em Ciência da Informação</text>
+			<text x="284" y="432" fill="black" font-family="Arial, Tahoma, Verdana" font-size="14">UNIRIO-PPGARQ</text>
+			<circle cx="640" cy="512" r="2" stroke="black" stroke-width="grey" fill="white" />
+			<text x="626" y="505" fill="grey" font-family="Arial, Tahoma, Verdana" font-size="14">P01</text>
+			<circle cx="565" cy="648" r="2" stroke="black" stroke-width="grey" fill="white" />
+			<text x="551" y="641" fill="grey" font-family="Arial, Tahoma, Verdana" font-size="14">P02</text>
+			<circle cx="384" cy="704" r="2" stroke="black" stroke-width="grey" fill="white" />
+			<text x="370" y="697" fill="grey" font-family="Arial, Tahoma, Verdana" font-size="14">P03</text>
+			<circle cx="203" cy="648" r="2" stroke="black" stroke-width="grey" fill="white" />
+			<text x="189" y="641" fill="grey" font-family="Arial, Tahoma, Verdana" font-size="14">P04</text>
+			<circle cx="128" cy="512" r="2" stroke="black" stroke-width="grey" fill="white" />
+			<text x="114" y="505" fill="grey" font-family="Arial, Tahoma, Verdana" font-size="14">P05</text>
+			<circle cx="203" cy="376" r="2" stroke="black" stroke-width="grey" fill="white" />
+			<text x="189" y="369" fill="grey" font-family="Arial, Tahoma, Verdana" font-size="14">P06</text>
+			<circle cx="384" cy="320" r="2" stroke="black" stroke-width="grey" fill="white" />
+			<text x="370" y="313" fill="grey" font-family="Arial, Tahoma, Verdana" font-size="14">P07</text>
+			<circle cx="565" cy="376" r="2" stroke="black" stroke-width="grey" fill="white" />
+			<text x="551" y="369" fill="grey" font-family="Arial, Tahoma, Verdana" font-size="14">P08</text>
+			<text x="510" y="180" fill="black" font-family="Arial, Tahoma, Verdana" font-size="10">UFPR</text>
+			<text x="510" y="480" fill="black" font-family="Arial, Tahoma, Verdana" font-size="10">UFSCAR</text>
+			
+					</svg>

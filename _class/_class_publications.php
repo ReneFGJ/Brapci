@@ -691,9 +691,9 @@ class publications
 
 			$sx .= '</div>';
 			$sx .= '<TD align="right">';
-			$pagi = round($line['ar_pg_inicial']);
-			$pagf = round($line['ar_pg_final']);
-			if (($pagi > 0) or ($pagf > 0))
+			$pagi = trim($line['ar_pg_inicial']);
+			$pagf = trim($line['ar_pg_final']);
+			if ((strlen($pagi) > 0) or (strlen($pagf) > 0))
 				{
 					$sx .= '<nobr>p. '.trim($line['ar_pg_inicial']);
 					if ($pagf > 0) { $sx .= '-'.$pagf; }		

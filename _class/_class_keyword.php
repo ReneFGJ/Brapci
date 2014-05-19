@@ -3,6 +3,47 @@ class keyword
 	{
 	var $tabela = "brapci_keyword";
 	
+	function save_keyword_article($id,$keys)
+			{
+			$sql = "delete from brapci_article_keyword where kw_article = '$id'";
+			$rlt = db_query($sql);
+				
+			for ($r=0;$r < count($keys);$r++)
+				{
+					$nome_ref = $keys[$r][0];
+					$idioma = $keys[$r][1];
+					$cod = $this->keyword_find($nome_ref,$idioma);
+					$sql = "insert into brapci_article_keyword
+							(
+							kw_article, kw_keyword, kw_ord
+							) value (
+							'$id','$cod',$r)
+							";
+					$rlt = db_query($sql);
+				}
+			return(1);
+			}	
+	
+	function insert_keyword_in_article($article,$key_text,$idioma)
+		{
+			$key_text = troca($key_text,'. ',';');';';
+			$key_text = troca($key_text,', ',';');';';
+			$ky = splitx(';',$key_text);
+			print_r($ky);
+			echo '<BR>'.$idioma.'<HR>';
+			if ($idioma == '') { echo '<font color="red">Sem Idioma</font>'; return(''); }
+			$keys = array();
+			for ($r=0;$r < count($ky);$r++)
+				{
+					array_push($keys,array($ky[$r],$idioma));
+				}
+			
+			if (count($ky) > 0)
+				{
+					$this->save_keyword_article($article,$keys);
+				}
+		}
+	
 	function show_keyword($idioma='pt-BR',$key='A')
 		{
 			$wh = " and kw_word_asc like '$key%' ";

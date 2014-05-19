@@ -18,7 +18,7 @@ class header
 		//$sx .= ''.$cr;
 		$sx .= '<head>'.$cr;
     	$sx .= '<META HTTP-EQUIV=Refresh CONTENT="3600; URL='.$http.'logout.php">'.$cr;
-		$sx .= '<meta http-equiv="Content-Type" content="text/html; charset='.$this->charcod.'" />';
+		$sx .= '<meta http-equiv="Content-Type" content="text/html; charset='.$this->charcod.'" />'.$cr;
 		$sx .= '<meta name="google-site-verification" content="VZpzNVBfl5kOEtr9Upjmed96smfsO9p4N79DZT38toA" />'.$cr;		
         $sx .= '<meta name="description" content="">'.$cr;
         $sx .= '<link rel="shortcut icon" type="image/x-icon" href="'.$http.'favicon.ico" />'.$cr;
@@ -44,7 +44,8 @@ class header
 			
 		$sx .= '<script language="JavaScript" type="text/javascript" src="'.$http.'js/jquery-1.7.1.js"></script>'.$cr;
     	$sx .= '<title>'.$this->title.'</title>'.$cr;
-		$sx .= '</head>';
+		$sx .= '</head>'.$cr;
+		$sx .= '<body>'.$cr;
 		
 		$sx .= "		
 		<script>
@@ -73,7 +74,7 @@ class header
 			$sx = '
 			<div class="cab"><div class="geral">';
 			if (strlen($user_name) > 0) { echo $user_name.' ('.$user_email.')'; } 
-			$sx .= '<BR><BR></div></div>';
+			$sx .= '<BR><BR></div></div>'.chr(13).chr(10);
 			return($sx);
 			
 		}

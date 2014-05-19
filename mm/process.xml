@@ -1,0 +1,52 @@
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2014-04-18T08:34:14Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:ojs.www.sbu.unicamp.br:article/366">http://www.sbu.unicamp.br/seer/ojs/index.php/sbu_rci/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:ojs.www.sbu.unicamp.br:article/366</identifier>
+				<datestamp>2011-05-04T20:23:28Z</datestamp>
+				<setSpec>rbci:EDI</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title>[pt_BR]Editorial</dc:title>
+	<dc:creator>Santos, Gildenir Carolino; UNICAMP - Faculdade de Educação</dc:creator>
+	<dc:creator>Ferreira, Danielle Thiago; Universidade Estadual de Campinas</dc:creator>
+	<dc:creator>Souto, Leonardo Fernandes; Universidade Estadual de Campinas</dc:creator>
+	<dc:subject>[pt_BR]</dc:subject>
+	<dc:subject>[pt_BR]Editorial-Biblioteconomia; Editorial-Ciência da Informação</dc:subject>
+	<dc:subject>[pt_BR]</dc:subject>
+	<dc:description>[pt_BR]</dc:description>
+	<dc:publisher>[pt_BR]Universidade Estadual de Campinas</dc:publisher>
+	<dc:contributor>[pt_BR]</dc:contributor>
+	<dc:date>2006-09-20</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type>[pt_BR]</dc:type>
+	<dc:type>[pt_BR]Editorial</dc:type>
+	<dc:format>text/html</dc:format>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://www.sbu.unicamp.br/seer/ojs/index.php/rbci/article/view/366</dc:identifier>
+	<dc:source>[pt_BR]RDBCI; v. 4 (2006): "O nome da rosa sob diferentes olhares"</dc:source>
+	<dc:source>1678-765X</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.sbu.unicamp.br/seer/ojs/index.php/rbci/article/view/366/244</dc:relation>
+	<dc:relation>http://www.sbu.unicamp.br/seer/ojs/index.php/rbci/article/view/366/245</dc:relation>
+	<dc:coverage>[pt_BR]Biblioteconomia-Brasil; Ciência da Informação-Brasil</dc:coverage>
+	<dc:coverage>[pt_BR]Editorial-2006</dc:coverage>
+	<dc:coverage>[pt_BR]</dc:coverage>
+	<dc:rights>[pt_BR]Direitos Autorais para artigos publicados nesta revista são do autor, com direitos de primeira publicação para a revista. Em virtude da aparecerem nesta revista de acesso público, os artigos são de uso gratuito, com atribuições próprias, em aplicações educacionais e não-comerciais.</dc:rights>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>
