@@ -13,7 +13,6 @@ if ((!isset($login)) and (strlen($user_name) == 0))
 if (!($popup)) 
 	{
 		 require("cab_menu.php");
-		 require("cab_menu_left.php"); 
 	}
 ?>
 <div class="container">

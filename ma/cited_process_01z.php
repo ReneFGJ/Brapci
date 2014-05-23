@@ -5,7 +5,7 @@ array_push($mnpos,array('principal','main.php'));
 array_push($mnpos,array('revistas','brapci_brapci_journal.php'));
 ////////////////////////////
 
-require("cab.php");
+require("db.php");
 
 echo '<h1>Referências com problemas</h1>';
 

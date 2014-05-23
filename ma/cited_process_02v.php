@@ -4,7 +4,7 @@ array_push($mnpos,array('principal','main.php'));
 array_push($mnpos,array('revistas','brapci_brapci_journal.php'));
 ////////////////////////////
 
-require("cab.php");
+require("db.php");
 require('../include/sisdoc_windows.php');
 
 echo '<h1>Identificar tipo de publicação (Fase II)</h1>';
