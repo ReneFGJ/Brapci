@@ -8,6 +8,14 @@ class cited {
 
 	var $tabela = "mar_works";
 	
+	function marcar_como_erro($id)
+		{
+			$sql = "update mar_works set m_status = 'C', ";
+			$sql .= "m_status = 'Z' ";
+			$sql .= " where id_m = " . $id;
+			$rltx = db_query($sql);			
+		}
+	
 	function result_search($term)
 		{
 			$term = troca($term,'(',' [ ');
@@ -64,7 +72,7 @@ class cited {
 				}
 			$rlt = db_query($sql);
 			$sx = '';
-			$sx .= '<table width="100%">';
+			$sx .= '<table width="100%" align="center">';
 			$id = 0;
 			while ($line = db_read($rlt))
 			{
@@ -182,6 +190,20 @@ class cited {
 		return ($sx);
 	}
 
+	function anais_form_insert($journal = '') {
+		$sx = '<form method="post" action="' . page() . '">
+					<input type="text" name="dd14" value=""  size="100">
+					<input type="submit" name="dd15" value="cadastrar anais >>>">
+					</form>
+			';
+
+		if (strlen($journal) > 0) {
+			echo '<BR>-->' . $journal;
+			$this -> journal_insert($journal, 'ANAIS');
+		}
+		return ($sx);
+	}
+
 	function MAR_tipo($ref) {
 
 		/* Padronizacao automatica */
@@ -281,6 +303,7 @@ class cited {
 		$ref = troca($ref, 'WINTER', 'V. ');
 		$ref = troca($ref, 'VOLUME', 'V. ');
 		$ref = troca($ref, 'SEM.', 'V. ');
+		$ref = troca($ref, 'SUPLEMENTO', 'V. ');
 
 		$ref = troca($ref, '(', 'V. ');
 
@@ -522,26 +545,25 @@ class cited {
 			$sql = "update mar_works set m_ref = '" . $mref . "' where id_m = " . $line['id_m'];
 			$rlt = db_query($sql);
 
-			$link = '<A HREF="#" onclick="newxy2(\'article_ref_edit.php?dd0=' . $line['id_m'] . '\',800,200);">';
-			$link = '[' . $link . 'editar</A>]';
-
-			echo '<BR><PRE>' . $mref . $link . '</PRE>';
 
 			$sql = "select * from mar_tipo 
 							order by mt_descricao
 					";
 			$rlt = db_query($sql);
 
-			echo '<BR><BR>';
 			echo '<B>Tipo de publicação</B>:';
-			echo '<UL>';
+			echo '<BR>';
+			
+			echo $this->mostra_botao_editar($refc);
+						
+			echo $this->mostra_botao_erro($refc);
+						
 			while ($line = db_read($rlt)) {
 				$link = '<A HREF="' . page() . '?dd0=' . $refc . '&dd1=' . $line['mt_codigo'] . '" class="link" >';
-				echo '<LI>';
+				echo '<div class="botao_01">';
 				echo $link . $line['mt_descricao'] . '</A>';
-				echo '</LI>';
+				echo '</div>';
 			}
-			echo '</UL>';
 			echo '<BR><BR>';
 			return ($this -> cited_II_recover($refc));
 		}
@@ -594,9 +616,25 @@ class cited {
 		return ($cp);
 	}
 	
+	function mostra_botao_editar($id=0)
+		{
+			$link = '<A HREF="#" class="link" onclick="newxy2(\'article_ref_edit.php?dd0=' . $id . '\',800,200);">';
+			
+				echo '<div class="botao_01" style="background-color: #9090FF;">';
+				echo $link . 'Editar referência' . '</A>';
+				echo '</div>';
+			
+			return($sx);
+		}	
+	
 	function mostra_botao_erro($id=0)
 		{
-			$sx = '<input type="button" value="erro de referencias" onlick="newxy2(\'article_ref_set_erro.php?dd0='.$id.'\',400,400);" class="botao_erro>';
+			$link = '<A HREF="' . page() . '?dd0=' . $id . '&dd1=ERRO" class="link" >';
+			
+				echo '<div class="botao_01" style="background-color: #FF9090;">';
+				echo $link . 'Erro de referências' . '</A>';
+				echo '</div>';
+			
 			return($sx);
 			http://www.brapci.inf.br/ma/cited_process_01y.php?dd0=40830&dd1=ERRO
 		}
@@ -703,6 +741,7 @@ class cited {
 		$rlt = db_query($sql);
 		$proc = 0;
 		while ($line = db_read($rlt)) {
+		
 			$refc = $line['id_m'];
 			$mano = trim($line['m_ano']);
 			$mref = $line['m_ref'];
@@ -729,6 +768,7 @@ class cited {
 				}
 			}
 		}
+		echo $this->mostra_botao_erro($refc);
 		return ($proc);
 	}
 

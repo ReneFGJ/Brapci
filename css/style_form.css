@@ -20,3 +20,27 @@
 		color: #FFFFFF;
 		padding: 20px 0px 20px 10px;
 	}
+.botao_01:hover
+	{
+		background-color: #B0B0B0;
+	}
+.botao_01
+	{
+		float: left;
+		margin: 10px;
+		padding: 5px;
+		padding-top: 10px;
+  		box-sizing: border-box;
+  		-moz-box-sizing: border-box;
+  		background-color: #DDDDDD;
+  		width: 200px;
+  		height: 40px;
+  		opacity: 1;
+  		border: 2px solid #000000;
+  		border-radius: 10px;
+  		-webkit-border-radius: 10px;
+  		-moz-border-radius: 10px;
+  		-ms-border-radius: 10px;
+  		-o-border-radius: 10px;
+  				
+	}
