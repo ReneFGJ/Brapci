@@ -931,7 +931,7 @@
      * Upload/Overwrite data for a custom data source. (uploads.uploadData)
      *
      * @param string $accountId Account Id associated with the upload.
-     * @param string $webPropertyId Web property U A-string associated with the upload.
+     * @param string $webPropertyId Web property UA-string associated with the upload.
      * @param string $customDataSourceId Custom data source Id to which the data being uploaded belongs.
      * @param array $optParams Optional parameters.
      * @return Google_Upload

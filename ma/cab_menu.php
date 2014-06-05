@@ -73,14 +73,13 @@
                 <ul class="dropdown-menu" role="menu">
                     <li data-submenu-id="submenu-cited">
                         <a href="cited.php"><?php echo msg('mm_cited');?></a>
-                        <div id="submenu-cited" class="popoverx">
+                        <div id="submenu-cited" class="popover">
                             <h3 class="popover-title"><?php echo msg('mm_cited');?></h3>
-                			<ul class="dropdown-menu" role="menu">
+                			<ul class="dropdown-menu2" role="menu2">
                 				<li><A HREF="cited_artigos_sem_referencias.php?dd1=<?=(date("Y"));?>" class="submenu">Sem referencias <?=(date("Y"));?></A></li>
                 				<li><A HREF="cited_artigos_sem_referencias.php?dd1=<?=(date("Y")-1);?>" class="submenu">Sem referencias <?=(date("Y")-1);?></A></li>
                 				<li><A HREF="cited_artigos_sem_referencias.php?dd1=<?=(date("Y")-2);?>" class="submenu">Sem referencias <?=(date("Y")-2);?></A></li>
                 				<li><A HREF="cited_artigos_sem_referencias.php?dd1=<?=(date("Y")-3);?>" class="submenu">Sem referencias <?=(date("Y")-3);?></A></li>
-                				<li><A HREF="cited_process.php" class="submenu">Processar citações</A></li>
                 			</ul>            
                         </div>
                     </li>
@@ -96,9 +95,12 @@
                         </div>
                     </li>
                     <li data-submenu-id="submenu-menu-02">
-                        <a href="#">Journals</a>
+                        <a href="#">Tools</a>
                         <div id="submenu-menu-02" class="popover">
-                            <h3 class="popover-title">Journals</h3>
+                            <h3 class="popover-title">Tools</h3>
+                			<ul class="dropdown-menu2" role="menu2">
+                				<li><A HREF="export_public.php" class="submenu">Export to public module</A></li>
+                			</ul>                              
                         </div>
                     </li>
                     <li data-submenu-id="submenu-menu-03">
@@ -184,4 +186,6 @@
 
     </script>
 
+  </body>
+</html>
 

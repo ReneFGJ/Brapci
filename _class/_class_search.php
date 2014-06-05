@@ -3,7 +3,16 @@ class search
 	{
 	var $query;
 	
+	var	$offset = 00;
+	var	$page = 0;
+	var $limit = 300;	
+	
 	var $sessao = '001122';
+	
+	function export_selecao_para_excel()
+		{
+			
+		}
 		
 	function mark_resume()
 		{
@@ -77,7 +86,10 @@ class search
 		}
 	function where($term='',$field='')
 		{
+			$term = UpperCaseSql($term);
+			
 			$term = $this->trata_termo_composto($term);
+			
 			$term = troca($term,'"','');
 			$term = troca($term,'\"','');
 			$term = troca($term,' ',';');
@@ -85,9 +97,14 @@ class search
 			$wh = '';
 			for ($r=0;$r < count($terms);$r++)
 				{
-					if (strlen($wh) > 0) { $wh .= ' and '; }
-					$wh .= "(".$field." like '%".$terms[$r]."%') ";
+					$wd = $terms[$r];
+					if (strlen($wd) > 2)
+						{
+						if (strlen($wh) > 0) { $wh .= ' and '; }
+						$wh .= "(".$field." like '%".$terms[$r]."%') ";
+						}
 				}
+				echo $wh;
 			return($wh);
 		}
 		
@@ -95,11 +112,11 @@ class search
 	function result_total_articles($term='',$datai='',$dataf='')
 		{
 			global $db_public;
-			$term = utf8_decode($term);
 			
 			$sessao = $this->sessao;
 			
 			$wh = $this->where(UpperCaseSql($term),'ar_asc');
+			
 			if (strlen($datai) > 0) { $wh .= ' and ar_ano >= '.$datai; }
 			if (strlen($dataf) > 0) { $wh .= ' and ar_ano <= '.$dataf; }
 			$sql = "select count(*) as total from ".$db_public."artigos 
@@ -109,6 +126,7 @@ class search
 			$rlt = db_query($sql);
 			$line = db_read($rlt);
 			$total = $line['total'];
+			$this->wh = $wh;
 			return($total);
 		}	
 	function result_article($term='',$datai='',$dataf='')
@@ -117,11 +135,11 @@ class search
 			
 			$total = $this->result_total_articles($term,$datai,$dataf);
 			
-			$term = utf8_decode($term);
+			//$term = utf8_decode($term);
 			
 			$sessao = $this->sessao;
 			
-			$wh = $this->where(UpperCaseSql($term),'ar_asc');
+			$wh = $this->wh;
 			if (strlen($datai) > 0) { $wh .= ' and ar_ano >= '.$datai; }
 			if (strlen($dataf) > 0) { $wh .= ' and ar_ano <= '.$dataf; }
 			$sql = "select * from ".$db_public."artigos 
@@ -250,10 +268,10 @@ class search
 			
 			$sql = "select * from ".$db_public."usuario_selecao 
 					inner join ".$db_public."artigos on ar_codigo = sel_work
-					where sel_sessao = '$session'
+					where sel_sessao = '$session' and sel_ativo = '1'
 					";
 			$sql .= " order by ar_ano desc ";
-			$sql .= " limit 100 offset 0 ";
+			$sql .= " ";
 			
 			$rlt = db_query($sql);
 			
@@ -267,10 +285,14 @@ class search
 			$wh = '';
 			while ($line = db_read($rlt))
 				{
-					$sx .= $this->show_article_mini($line);
+					if (($id >= $this->offset) and ($id < ($this->limit + $this->offset)))
+						{ $sx .= $this->show_article_mini($line); }
+						
 					if (strlen($wh) > 0) { $wh .= ' or '; }
 					$wh .= " ar_codigo = '".trim($line['ar_codigo'])."' ";
+					$id++;
 				}
+			$sx .= '<TR><TD colspan=2><B>Total de '.$id.' registros';
 			$sx .= '</table>';
 			$sx .= chr(13).chr(10);
 			$sx .= $this->js;
@@ -479,20 +501,27 @@ class search
 				inner join ".$db_base."brapci_autor on ae_author = autor_codigo
 				group by autor_nome, autor_codigo
 				order by total desc, autor_nome
-				limit 20
+				limit 80
 			";
 					//echo $sql;
 			$rlt = db_query($sql);
 			$sx .= '<table class="lt0" width="160">';
 			$sx .= '<TR><Th>'.msg("author").'<Th>'.msg('quant.');
-			
+			$min = 1;
+			$xtot = 1;
 			while ($line = db_read($rlt))
 				{
-					$sx .= '<TR>';
-					$sx .= '<TD align="left">';
-					$sx .= trim($line['autor_nome']);
-					$sx .= '<TD align="center">';
-					$sx .= trim($line['total']);
+					$tot = $line['total'];
+					if ($tot > $xtot) { $xtot = $tot; $min = (round(sqrt($tot))-1); }
+					
+					if ($tot >= $min)
+						{
+						$sx .= '<TR>';
+						$sx .= '<TD align="left">';
+						$sx .= trim($line['autor_nome']);
+						$sx .= '<TD align="center">';
+						$sx .= trim($line['total']);
+						}
 				}
 			$sx .= '</table>';
 			return($sx);
@@ -576,44 +605,31 @@ class search
 			$chk1='checked';
 			$sx = '';
 			$sx .= '<form method="get" action="'.page().'">';
-			$sx .= '<table width="98%" class="lt1" cellpadding=0 cellspacing=0 >';
-			$sx .= '<TR><TD>';
+			$sx .= '<table width="98%" class="lt1 tabela00" cellpadding=0 cellspacing=0 >';
+			$sx .= '<TR valign="top"><TD>';
 			$sx .= msg('search_caption');
 			$sx .= '<BR>';
 			$sx .= '<textarea cols=80 rows=5 id="search" name="dd2" />';
 			$sx .= $dd[2];
 			
 			$sx .= '</textarea>';
-			$sx .= '<BR>';
+			$sx .= '<BR><BR>';
 			$sx .= '<input type="radio" name="dd3" id="typeid1" class="tp1" value="1" '.$chk1.'>'.msg('search_all').'&nbsp;&nbsp;&nbsp;';
 			$sx .= '<input type="radio" name="dd3" id="typeid2" class="tp1" value="2" '.$chk2.'>'.msg('search_author').'&nbsp;&nbsp;&nbsp;';
 			$sx .= '<input type="radio" name="dd3" id="typeid3" class="tp1" value="3" '.$chk3.'>'.msg('search_title').'&nbsp;&nbsp;&nbsp;';
 			$sx .= '<input type="radio" name="dd3" id="typeid4" class="tp1" value="4" '.$chk3.'>'.msg('search_abstract').'&nbsp;&nbsp;&nbsp;';
 			$sx .= '<input type="radio" name="dd3" id="typeid5" class="tp1" value="5" '.$chk3.'>'.msg('search_keywords').'&nbsp;&nbsp;&nbsp;';
 			
-			/* Delimitacao por data */
-			$dtf = ''; for ($r=1900;$r <= date("Y");$r++)
-				{
-					$chk = '';
-					if ($dd[10]==$r) { $chk = 'selected'; }
-					$dtf .= '<option value="'.$r.'" '.$chk.'>'.$r.'</option>'; 
-				}
-			$dti = '<select name="dd10" id="typeid10">'.$dtf.'</select>';
+			$sx .= '<TD width="180">';
+			$sx .= '<div id="delimit_year">';
+			$sx .= $this->delimitacao_por_data();
+			$sx .= '</div>';
 
-			$dtf = ''; for ($r=date("Y");$r>=1972;$r--)
-				{
-					$chk = '';
-					if ($dd[11]==$r) { $chk = 'selected'; }					
-					$dtf .= '<option value="'.$r.'" '.$chk.'>'.$r.'</option>'; 
-				}
-
-			$dtf = '<select name="dd11" id="typeid11">'.$dtf.'</select>'; 
+			$sx .= '<div id="delimit_year">';
+			$sx .= $this->delimitacao_por_journals();
+			$sx .= '</div>';
 			
-			$sx .= '<div id="delimit_year">
-					'.msg('publicacao_de').' '.$dti.' '.msg('ate').' '.$dtf.'
-					</div>
-			';
-
+			$sx .= '<TR><TD>';
 			$sx .= '<BR>';
 			$sx .= '<BR>';			
 			$sx .= '<input type="submit" name="acao" id="search_bt" value="'.msg("bt_search").'">';
@@ -628,6 +644,64 @@ class search
 			}		
 			return($sx);
 		}
+
+		function delimitacao_por_journals()
+			{
+				$sql = "select * from brapci_journal_tipo where jtp_ativo = 1
+							order by jtp_ordem ";
+				$rlt = db_query($sql);
+				while ($line = db_read($rlt))
+					{
+					$da = $_SESSION['TYPE_'.$line['jtp_codigo']];
+					$checked = '';
+					if ($da=='T') { $checked = 'checked'; }
+					$jscmd = 'onchange="mark_tipo(\''.$line['jtp_codigo'].'\',this);" ';						
+					$sx .= '<input type="checkbox" name="ddj'.$line['jtp_codigo'].'" value="'.$line['jpt_codigo'].'" '.$jscmd.' '.$checked.'>
+							&nbsp;'.$line['jtp_descricao'].'<BR>';
+					}
+					
+				$sx .= '<script>
+					function mark_tipo(ms,ta)
+					{
+						var ok = ta.checked;
+						$.ajax({
+  							type: "POST",
+  							url: "article_tipo.php",
+  							data: { dd1: ms, dd2: ok }
+						}).done(function( data ) {
+							$("#basket").html(data);
+						});						
+					}
+					</script>
+					';					
+					
+				return($sx);
+				
+			}
+		function delimitacao_por_data()
+			{
+				global $dd, $acao;
+				/* Delimitacao por data */
+				$dtf = ''; 
+				for ($r=1900;$r <= date("Y");$r++)
+					{
+					$chk = '';
+					if ($dd[10]==$r) { $chk = 'selected'; }
+					$dtf .= '<option value="'.$r.'" '.$chk.'>'.$r.'</option>'; 
+					}
+			$dti = '<select name="dd10" id="typeid10">'.$dtf.'</select>';
+
+			$dtf = ''; for ($r=date("Y");$r>=1972;$r--)
+					{
+					$chk = '';
+					if ($dd[11]==$r) { $chk = 'selected'; }					
+					$dtf .= '<option value="'.$r.'" '.$chk.'>'.$r.'</option>'; 
+					}
+
+					$dtf = '<select name="dd11" id="typeid11">'.$dtf.'</select>'; 
+					$sx .= msg('publicacao_de').' '.$dti.' '.msg('ate').' '.$dtf;	
+			return($sx);			
+			}
 
 		function realce($txt,$term)
 			{

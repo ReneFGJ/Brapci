@@ -38,7 +38,13 @@ $path_ini = $include;
 	require("_class/_class_header_bp.php");
 	$hd = new header;
 	
-	echo $hd->cab();
+	if ($meta==1)
+		{
+			$cab = $hd->cab();
+		} else {
+			echo $hd->cab();		
+		}
+	
 	$hd->google_id = $google->google_analytics_id;
 	
 	if (!isset($no_cab))

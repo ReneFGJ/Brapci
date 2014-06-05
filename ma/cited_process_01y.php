@@ -1,25 +1,33 @@
 <?
-////////////// Menu Position
 $mnpos = array(); 
 array_push($mnpos,array('principal','main.php'));
 array_push($mnpos,array('revistas','brapci_brapci_journal.php'));
 ////////////////////////////
 
-require("db.php");
+require("cab_process.php");
+require('../include/sisdoc_windows.php');
 
 echo '<h1>Selecionar ano de publicação (Fase Iy)</h1>';
 
-require('../include/sisdoc_windows.php');
 require("../_class/_class_cited.php");
 $cited = new cited;
+
+if ($dd[1]=='ERRO')
+	{
+		$cited->marcar_como_erro($dd[0]);
+		redirecina(page());
+		exit;
+	}
 //$cited->cited_alterar_status('Z','@');
 //$cited->cited_alterar_status('Y','@');
 echo $cited->resumo();
 
-echo $cited->mostra_botao_erro($dd[0]);
+
 
 $proc = $cited->cited_Iy_recover_year($dd[0]);
 echo '<BR><BR>Processadas '.$proc.' referências';
+
+
 if ($proc > 0)
 	{
 			echo '<meta http-equiv="refresh" content="2;'.page().'" />';

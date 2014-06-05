@@ -5,7 +5,7 @@ array_push($mnpos,array('principal','main.php'));
 array_push($mnpos,array('revistas','brapci_brapci_journal.php'));
 ////////////////////////////
 
-require("cab.php");
+require("cab_process.php");
 
 echo '<h1>Identificar ano de publicação (Fase I)</h1>';
 

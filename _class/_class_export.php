@@ -238,14 +238,21 @@ class export
 						$sqlq .= "'".$line['ar_doi']."',";
 						$sqlq .= "'".$line['ar_titulo_1']."',";
 						$sqlq .= "'".$line['ar_titulo_2']."',";
-	
-						$sqlq .= "'".$line['ar_resumo_1']."',";
-						$sqlq .= "'".$line['ar_resumo_2']."',";
+					
+						$res = trim($line['ar_resumo_1']);
+						if (strlen($res) < 10)
+							{
+								$sqlq .= "'".$line['ar_resumo_2']."',";
+								$sqlq .= "'".$line['ar_resumo_1']."',";
+							} else {
+								$sqlq .= "'".$line['ar_resumo_1']."',";
+								$sqlq .= "'".$line['ar_resumo_2']."',";	
+							}
 						$sqlq .= "'".$line['se_cod']."',";
 		
 						$sqlq .= "'".$line['ar_journal_id']."',";
 						$sqlq .= "'".$key1."',";
-						$sqlq .= "'".$line['ar_keyword_2']."',";
+						$sqlq .= "'".$line['ar_keyword_1']."',";
 	
 						$sqlq .= "'".$line['ed_ano']."',";
 						$sqlq .= "'".$line['ed_vol']."',";

@@ -262,6 +262,8 @@ function msg($s) {
 	global $gerar, $edit_mode;
 	$s = substr($s,0,40);
 	$gerar = 0;
+	echo '<BR>->'.$LANG.'-'.$s = $messa[$LANG][$s];
+	exit;
 	if (isset($messa[$LANG][$s])) 
 		{
 			

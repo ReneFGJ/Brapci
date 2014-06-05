@@ -1,8 +1,8 @@
 <?php
 
-function ajax_email($link='',$id)
+function nwin($link='',$w=200,$h=50,$resize=1,$scroll=0)
 	{
-		$sx = ' onclick="enviar_email(\''.$link.'\',\'.$id.'\');" ';
+		$sx = ' onclick="NewWindow=window.open(\'.$link.\',\'newwin\',\'scrollbars=no,resizable=no,width='+$w+',height='+$h+',top=10,left=10\'); NewWindow.focus(); void(0); alert(\'1\');" ';
 		//$sx = ' onclick="alert(\'ola\');" ';
 		return($sx);
 	}
