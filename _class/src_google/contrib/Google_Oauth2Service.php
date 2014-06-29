@@ -157,9 +157,12 @@ class Google_Tokeninfo extends Google_Model {
   public function getIssued_to() {
     return $this->issued_to;
   }
+  
+  
   public function setScope( $scope) {
     $this->scope = $scope;
   }
+  
   public function getScope() {
     return $this->scope;
   }

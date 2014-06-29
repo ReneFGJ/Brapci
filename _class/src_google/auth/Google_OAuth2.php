@@ -159,6 +159,7 @@ class Google_OAuth2 extends Google_Auth {
   public function setAccessToken($token) {
     $token = json_decode($token, true);
     if ($token == null) {
+    	return('');
       throw new Google_AuthException('Could not json decode the token');
     }
     if (! isset($token['access_token'])) {

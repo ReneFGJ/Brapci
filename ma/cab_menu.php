@@ -100,6 +100,7 @@
                             <h3 class="popover-title">Tools</h3>
                 			<ul class="dropdown-menu2" role="menu2">
                 				<li><A HREF="export_public.php" class="submenu">Export to public module</A></li>
+                				<li><A HREF="article_double.php" class="submenu">Article Double</A></li>
                 			</ul>                              
                         </div>
                     </li>

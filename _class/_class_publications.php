@@ -66,7 +66,6 @@ class publications
 	function acoes()
 		{
 			global $dd;
-			
 			$this->acao_executa($dd[10],$dd[11]);
 			
 			$status = $this->line['ar_status'];
@@ -98,7 +97,7 @@ class publications
 			for ($r=0;$r < count($acao);$r++)
 				{
 					$sx .= '<input type="button" value="'.$acao[$r][1].'"
-								onlick="window.location=\''.$acao[$r][0].'&dd11=ALTERA_STATUS&DD90='.checkpost($line['ar_codigo']).'\';"
+								onclick="window.location=\''.page().'?dd0='.$dd[0].'&dd10='.$acao[$r][0].'&dd11=ALTERA_STATUS&DD90='.checkpost($line['ar_codigo']).'\';"
 								>&nbsp;';
 				}
 			return($sx);
@@ -777,7 +776,7 @@ class publications
 		{
 			$sql = "select * from brapci_journal 
 					where jnl_tipo = '$tp' 
-					and jnl_status = 'A'
+					and jnl_status <> 'X'
 					order by jnl_nome
 					";
 			$rlt = db_query($sql);

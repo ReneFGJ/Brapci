@@ -4,7 +4,7 @@ require($include.'sisdoc_debug.php');
 
 require("../_class/_class_export.php");
 $exp = new export;
-$max = 100;
+$max = 340;
 
 echo '<div id="main">';
 echo '<h1>Exportação para base pública</h1>';

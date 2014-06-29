@@ -7,113 +7,154 @@ class cited {
 	var $online = 0;
 
 	var $tabela = "mar_works";
+	var $tabela_journal = "mar_journal";
 	
-	function marcar_como_erro($id)
+	function processa_remissivas()
 		{
-			$sql = "update mar_works set m_status = 'C', ";
-			$sql .= "m_status = 'Z' ";
-			$sql .= " where id_m = " . $id;
-			$rltx = db_query($sql);			
-		}
-	
-	function result_search($term)
-		{
-			$term = troca($term,'(',' [ ');
-			$term = troca($term,')',' ] ');
-			$term = troca($term,' ',';').';';
+			$sql = "update mar_works set m_status = 'X' 
+						where m_ref like '%xxx%' ";
+			$rlt = db_query($sql);
 			
-			$terms = splitx(';',$term);
-			$par = 0;
-			for ($r=0;$r < count($terms);$r++)
+			$sql = "SELECT * FROM mar_works
+						INNER JOIN mar_journal on mj_codigo = m_journal
+						where mj_codigo <> mj_use
+						order by mj_codigo
+						limit 20
+			";
+			$rlt = db_query($sql);
+			$xlst = '';
+			while ($line = db_read($rlt))
 				{
-					$term = $terms[$r];
-					if (strlen($term) > 0)
+					$lst = $line['mj_codigo'];
+					if ($xlst != $lst)
 						{
-							/* logical */
-							$lg = 0;
-							
-							switch ($term)
-								{
-									case 'AND':
-										//$wh .= ' AND '; 
-										$lg = 1;
-										break;
-									case 'OR':
-										$wh .= ' OR '; 
-										$lg = 1;
-										break;										
-									case '[':
-										$wh .= ' ('; $par++; $lg = 1; 
-										break;
-									case ']':
-										$wh .= ') '; $par--; $lg = 1;
-										break;
-									
-								}
-							//echo '<BR>'.$term.' = '.$lg;
-							if ($lg == 0)
-								{
-								if (strlen($wh) > 0) { $wh .= ' and '; }
-								$wh .= " (m_ref like '%".$term."%') ";
-								}
+						$sqk = "update mar_works set 
+								m_journal = '".$line['mj_use']."',
+								m_tipo = '".$line['mj_tipo']."'								 
+								where m_journal = '".$line['mj_codigo']."'";
+						$xrlt = db_query($sqk);
+						echo '<BR>'.$sqk;
 						}
 				}
-				
-		/* Finalizar parenteses abertos */
-			while ($par > 0) { $wh .= ')'; $par--; }
-			
-		/* Monta Query de consulta */
-					
-			if (strlen($wh) > 0)
-				{
-					$sql = "select * from ".$this->tabela." where ".$wh;
-					$sql .= " order by m_ano ";
-					echo '<HR>'.$sql.'<HR>';
-				}
-			$rlt = db_query($sql);
-			$sx = '';
-			$sx .= '<table width="100%" align="center">';
-			$id = 0;
-			while ($line = db_read($rlt))
-			{
-				$id++;
-				$sx .= '<TR vaign="top">';
-				$sx .= '<TD>'.$id;
-				$sx .= '<TD>'.$line['m_ano'];
-				$sx .= '<TD>';
-				$sx .= $this->show_cited($line);
-				$sx .= '<BR>';
-			}
-			$sx .= '</table>';
-			return($sx);				
-		}
-	function show_cited($line)
-		{
-			$work = $line['m_work'];
-			$link = '<A HREF="article.php?dd0='.$work.'&dd90='.checkpost($work).'" target="_new">';
-			$sx = trim($line['m_ref']);
-			$sx = troca($sx,'>','&gt.');
-			$sx = troca($sx,'<','&lt.');
-			$sx .= ' ('.$link.'V</A>)';
-			return($sx);
 		}
 	
-	function busca_form()
+	function cp_mar_journal()
 		{
-			global $dd,$acao;
-			$form = new form;
 			$cp = array();
-			array_push($cp,array('$H8','','',False,True));
-			array_push($cp,array('$T60:4','','',False,True));
-			array_push($cp,array('$B8','','Busca citações',False,True));
-
-			$form->required_message = 0;
-			$form->required_message_post = 0;
-			
-			$tela = $form->editar($cp,'');
-			return($tela);
-			
+			array_push($cp,array('$H8','id_mj','',False,True));
+			array_push($cp,array('$S80','mj_nome','Nome da publicação/local',False,True));
+			array_push($cp,array('$S80','mj_abrev','Nome padronizado',False,True));
+			array_push($cp,array('$S5','mj_tipo','Tipo',False,True));
+			array_push($cp,array('$S7','mj_codigo','CODIGO:',False,False));
+			array_push($cp,array('$S7','mj_use','USE:',False,True));
+			array_push($cp,array('$O 1:SIM&0:NÃO','mj_ativo','Ativo',True,True));
+			array_push($cp,array('$O N:NÃO&S:SIM','m_processar','Processar BDOI',False,True));
+			return($cp);
 		}
+
+	function marcar_como_erro($id) {
+		$sql = "update mar_works set m_status = 'C', ";
+		$sql .= "m_status = 'Z' ";
+		$sql .= " where id_m = " . $id;
+		$rltx = db_query($sql);
+	}
+
+	function result_search($term) {
+		$term = troca($term, '(', ' [ ');
+		$term = troca($term, ')', ' ] ');
+		$term = troca($term, ' ', ';') . ';';
+
+		$terms = splitx(';', $term);
+		$par = 0;
+		for ($r = 0; $r < count($terms); $r++) {
+			$term = $terms[$r];
+			if (strlen($term) > 0) {
+				/* logical */
+				$lg = 0;
+
+				switch ($term) {
+					case 'AND' :
+						//$wh .= ' AND ';
+						$lg = 1;
+						break;
+					case 'OR' :
+						$wh .= ' OR ';
+						$lg = 1;
+						break;
+					case '[' :
+						$wh .= ' (';
+						$par++;
+						$lg = 1;
+						break;
+					case ']' :
+						$wh .= ') ';
+						$par--;
+						$lg = 1;
+						break;
+				}
+				//echo '<BR>'.$term.' = '.$lg;
+				if ($lg == 0) {
+					if (strlen($wh) > 0) { $wh .= ' and ';
+					}
+					$wh .= " (m_ref like '%" . $term . "%') ";
+				}
+			}
+		}
+
+		/* Finalizar parenteses abertos */
+		while ($par > 0) { $wh .= ')';
+			$par--;
+		}
+
+		/* Monta Query de consulta */
+
+		if (strlen($wh) > 0) {
+			$sql = "select * from " . $this -> tabela . " where " . $wh;
+			$sql .= " order by m_ano ";
+			echo '<HR>' . $sql . '<HR>';
+		}
+		$rlt = db_query($sql);
+		$sx = '';
+		$sx .= '<table width="100%" align="center">';
+		$id = 0;
+		while ($line = db_read($rlt)) {
+			$id++;
+			$sx .= '<TR vaign="top">';
+			$sx .= '<TD>' . $id;
+			$sx .= '<TD>' . $line['m_ano'];
+			$sx .= '<TD>';
+			$sx .= $this -> show_cited($line);
+			$sx .= '<BR>';
+		}
+		$sx .= '</table>';
+		return ($sx);
+	}
+
+	function show_cited($line) {
+		$work = $line['m_work'];
+		$link = '<A HREF="article.php?dd0=' . $work . '&dd90=' . checkpost($work) . '" target="_new">';
+		$sx = trim($line['m_ref']);
+		$sx = troca($sx, '>', '&gt.');
+		$sx = troca($sx, '<', '&lt.');
+		$sx .= ' (' . $link . 'V</A>)';
+		return ($sx);
+	}
+
+	function busca_form() {
+		global $dd, $acao;
+		$form = new form;
+		$cp = array();
+		array_push($cp, array('$H8', '', '', False, True));
+		array_push($cp, array('$T60:4', '', '', False, True));
+		array_push($cp, array('$B8', '', 'Busca citações', False, True));
+
+		$form -> required_message = 0;
+		$form -> required_message_post = 0;
+
+		$tela = $form -> editar($cp, '');
+		return ($tela);
+
+	}
 
 	function le($id) {
 		$sql = "select * from " . $this -> tabela . " where id_m = " . round($id);
@@ -545,7 +586,6 @@ class cited {
 			$sql = "update mar_works set m_ref = '" . $mref . "' where id_m = " . $line['id_m'];
 			$rlt = db_query($sql);
 
-
 			$sql = "select * from mar_tipo 
 							order by mt_descricao
 					";
@@ -553,11 +593,11 @@ class cited {
 
 			echo '<B>Tipo de publicação</B>:';
 			echo '<BR>';
-			
-			echo $this->mostra_botao_editar($refc);
-						
-			echo $this->mostra_botao_erro($refc);
-						
+
+			echo $this -> mostra_botao_editar($refc);
+
+			echo $this -> mostra_botao_erro($refc);
+
 			while ($line = db_read($rlt)) {
 				$link = '<A HREF="' . page() . '?dd0=' . $refc . '&dd1=' . $line['mt_codigo'] . '" class="link" >';
 				echo '<div class="botao_01">';
@@ -606,6 +646,175 @@ class cited {
 
 	}
 
+	function cited_III_recover($id = 0) {
+		$wh = " m_status = 'C' ";
+		if ($id > 0) { $wh = ' id_m = ' . $id;
+		}
+		$sql = "select * from mar_works 
+				inner join mar_journal on m_journal = mj_codigo
+						where $wh and m_processar = 'S'
+						order by m_ref limit 50 offset 150 ";
+		$rlt = db_query($sql);
+		$proc = 0;
+		$idx = 0;
+		while ($line = db_read($rlt)) {
+			$idx++;
+			$id = $line['id_m'];
+			$tt = trim($line['m_ref']);
+			echo 'REF-> '.$tt.'';
+			$tt = $this -> trata_busca($tt);
+			$ano = $line['m_ano'];
+			$art = $this -> busca_limitador($tt, $ano);
+			if (count($art) == 1)
+				{
+					echo ' <font color="blue">LOCALIZADO '.$art[0].'</font>';
+					$this->identificar_referencia($art[0],$id);
+				} else {
+					echo $this->mostra_botao_editar($id);
+					echo '<font color="red">Localizados '.count($this -> busca_limitador($tt, $ano)).'</font>';
+				}
+			echo '<BR><BR>';
+		}
+		echo '<BR><BR><BR>====>'.$ar;
+		echo '<h2>Total '.$idx.'</h2>';
+		exit ;
+		return ($proc);
+	}
+	
+	function identificar_referencia($bdoi,$id)
+		{
+			if (strlen($bdoi) > 5)
+				{
+				$sql = "update mar_works set 
+						m_bdoi = '".$bdoi."',
+						m_status = 'F'
+						where id_m = ".$id; 
+				$rlt = db_query($sql);
+				} else {
+					$this->gerar_bdoi();
+					echo 'BDOI Não informado';
+					exit;
+				}
+		}
+
+	function trata_busca($t) {
+		$t = troca($t, '.', ' ');
+		return ($t);
+	}
+
+	function busca_limitador($t, $ano = '') {
+		$t = UpperCaseSql($t);
+		$t = troca($t, ' ', ';');
+		$t = troca($t, ',', ';');
+		$ta = splitx(';', $t);
+		$keys = array();
+		for ($r = 0; $r < count($ta); $r++) {
+			if (strlen(trim($ta[$r])) > 3) { array_push($keys, $ta[$r]);
+			}
+		}
+		$tipo = 0;
+		for ($y=0;$y <= 12;$y++)
+			{
+			$tt = $this -> busca_trabalho_base($keys, $ano, $y);
+			if (count($tt)==1) { $y=100; }
+			}
+		return($tt);
+	}
+
+	function busca_trabalho_base($termos, $ano, $tipo) {
+		global $db_public;
+		
+		switch ($tipo)
+			{
+			case 0:
+				$ini = 0; $inc = 1; $ter = 6; break;
+			case 1:
+				$ini = 0; $inc = 1; $ter = 5; break;
+			case 2:
+				$ini = 0; $inc = 1; $ter = 4; break;
+			case 2:
+				$ini = 0; $inc = 1; $ter = 3; break;
+			case 3:
+				$ini = 1; $inc = 1; $ter = 6; break;
+			case 4:
+				$ini = 1; $inc = 1; $ter = 5; break;
+			case 5:
+				$ini = 1; $inc = 1; $ter = 4; break;
+			case 6:
+				$ini = 1; $inc = 1; $ter = 3; break;
+			case 7:
+				$ini = 0; $inc = 3; $ter = 5; break;
+			case 8:
+				$ini = 0; $inc = 2; $ter = 3; break;
+			case 9:
+				$ini = 0; $inc = 2; $ter = 3; break;
+			case 10:
+				$ini = 1; $inc = 3; $ter = 3; break;
+			case 11:
+				$ini = 0; $inc = 1; $ter = 3; break;
+			case 12:
+				$ini = 0; $inc = 1; $ter = 2; break;
+			default:
+				$ini = 1; $inc = 3; $ter = 3; break;
+			}
+		$wh = '';
+		$tm = 0;
+		for ($r = $ini; $r < count($termos); $r = $r + $inc) {
+			if ($tm <= $ter) {
+				$tm++;
+				if (strlen($wh) > 0) { $wh .= ' and ';
+				}
+				$wh .= " (ar_asc_mini like '%" . $termos[$r] . "%') ";
+			}
+		}
+		$wh = "(" . $wh . ") and (ar_ano = '" . trim($ano) . "')";
+
+		$sql = "select * from " . $db_public . "artigos where " . $wh;
+		//echo '<HR>'.$sql;
+		$rlt = db_query($sql);
+		//echo '<BR>'.$sql;
+		$ars = array();
+		while ($line = db_read($rlt)) {
+			array_push($ars,$line['ar_doi']);
+		}
+		return($ars);
+	}
+
+	function gerar_bdoi()
+		{
+			/* 1985-0000082-00011 */
+			$sql = "select * from brapci_article 
+			inner join brapci_edition on ar_edition = ed_codigo
+				where ar_bdoi = '' 
+				and ar_status <> 'X'
+				limit 1000";
+			$rlt = db_query($sql);
+			while ($line = db_read($rlt))
+				{
+					$id = $line['id_ar'];
+					$jid = $line['ar_journal_id'];
+					$ed_ano = trim($line['ed_ano']);
+					$hsql = "select count(*) as total from brapci_article where ar_bdoi like '".$ed_ano."-%' ";
+					$drlt = db_query($hsql);
+					$dline = db_read($drlt);
+					$art_id = $dline['total']+1;
+	
+					$qsql = "update brapci_article set ";
+					$qsql .= " ar_bdoi = '".$ed_ano.'-'.strzero($art_id,7).'-'.strzero($jid,5)."' ";
+					$qsql .= " where ar_journal_id = '".strzero($jid,7)."' and id_ar= '".$id."' ";
+					$hrlt = db_query($qsql);
+					$bdoi = $ed_ano.'-'.strzero($art_id,7).'-'.strzero($jid,5);					
+					echo '.';
+				}
+			$sql = "select count(*) as total from brapci_article 
+					where ar_bdoi = '' 
+						and ar_status <> 'X'
+			";
+			$rlt = db_query($sql);
+			$line = db_read($rlt);
+			print_r($line);
+		}
+
 	function cp() {
 		$cp = array();
 		array_push($cp, array('$H8', 'id_m', '', False, True));
@@ -615,48 +824,46 @@ class cited {
 		array_push($cp, array('$S4', 'm_ano', '', True, True));
 		return ($cp);
 	}
-	
-	function mostra_botao_editar($id=0)
-		{
-			$link = '<A HREF="#" class="link" onclick="newxy2(\'article_ref_edit.php?dd0=' . $id . '\',800,200);">';
-			
-				echo '<div class="botao_01" style="background-color: #9090FF;">';
-				echo $link . 'Editar referência' . '</A>';
-				echo '</div>';
-			
-			return($sx);
-		}	
-	
-	function mostra_botao_erro($id=0)
-		{
-			$link = '<A HREF="' . page() . '?dd0=' . $id . '&dd1=ERRO" class="link" >';
-			
-				echo '<div class="botao_01" style="background-color: #FF9090;">';
-				echo $link . 'Erro de referências' . '</A>';
-				echo '</div>';
-			
-			return($sx);
-			http://www.brapci.inf.br/ma/cited_process_01y.php?dd0=40830&dd1=ERRO
-		}
-	
-	function join_cited($a1=0,$a2=0)
-		{
-			$sql = "select * from ".$this->tabela." where id_m = ".round($a1);
-			$rlt = db_query($sql);
-			$line = db_read($rlt);		
-			$ref1 = trim($line['m_ref']);
-			
-			$sql = "select * from ".$this->tabela." where id_m = ".round($a2);
-			$rlt = db_query($sql);
-			$line = db_read($rlt);
-			$ref2 = trim($line['m_ref']);
-			
-			$ref =  $ref2.' '.$ref1;
-			$sql = "update ".$this->tabela." set m_ref='".$ref."', m_status = '@' where id_m = ".round($a2).'; '.chr(13).chr(10);
-			$rlt = db_query($sql);
-			$sql = "update ".$this->tabela." set m_ref='".$ref."', m_status = 'X' where id_m = ".round($a1).'; '.chr(13).chr(10);
-			$rlt = db_query($sql);
-		}
+
+	function mostra_botao_editar($id = 0) {
+		$link = '<A HREF="#" class="link" onclick="newxy2(\'article_ref_edit.php?dd0=' . $id . '\',800,200);">';
+
+		echo '<div class="botao_01" style="background-color: #9090FF;">';
+		echo $link . 'Editar referência' . '</A>';
+		echo '</div>';
+
+		return ($sx);
+	}
+
+	function mostra_botao_erro($id = 0) {
+		$link = '<A HREF="' . page() . '?dd0=' . $id . '&dd1=ERRO" class="link" >';
+
+		echo '<div class="botao_01" style="background-color: #FF9090;">';
+		echo $link . 'Erro de referências' . '</A>';
+		echo '</div>';
+
+		return ($sx);
+		http:
+		//www.brapci.inf.br/ma/cited_process_01y.php?dd0=40830&dd1=ERRO
+	}
+
+	function join_cited($a1 = 0, $a2 = 0) {
+		$sql = "select * from " . $this -> tabela . " where id_m = " . round($a1);
+		$rlt = db_query($sql);
+		$line = db_read($rlt);
+		$ref1 = trim($line['m_ref']);
+
+		$sql = "select * from " . $this -> tabela . " where id_m = " . round($a2);
+		$rlt = db_query($sql);
+		$line = db_read($rlt);
+		$ref2 = trim($line['m_ref']);
+
+		$ref = $ref2 . ' ' . $ref1;
+		$sql = "update " . $this -> tabela . " set m_ref='" . $ref . "', m_status = '@' where id_m = " . round($a2) . '; ' . chr(13) . chr(10);
+		$rlt = db_query($sql);
+		$sql = "update " . $this -> tabela . " set m_ref='" . $ref . "', m_status = 'X' where id_m = " . round($a1) . '; ' . chr(13) . chr(10);
+		$rlt = db_query($sql);
+	}
 
 	function resumo() {
 		$sql = "select count(*) as total, m_status from 
@@ -666,7 +873,7 @@ class cited {
 		$rlt = db_query($sql);
 
 		$st = array('@' => 'Nova', 'A' => 'Ano Identificado', 'Z' => 'Problema', 'X' => 'Cancelado', 'Y' => 'Mais de um ano', 'V' => 'Não identificado tipo', 'C' => 'Identificado tipo de publicação');
-		$sl = array('@' => 'cited_process_01.php', 'Z' => 'cited_process_01z.php', 'Y' => 'cited_process_01y.php', 'V' => 'cited_process_02v.php');
+		$sl = array('@' => 'cited_process_01.php', 'Z' => 'cited_process_01z.php', 'Y' => 'cited_process_01y.php', 'V' => 'cited_process_02v.php', 'C' => 'cited_process_03.php');
 
 		$sx = '<table width="99%" align="center" 
 					class="tabela00" style="border: 1px solid #505050;">';
@@ -741,7 +948,7 @@ class cited {
 		$rlt = db_query($sql);
 		$proc = 0;
 		while ($line = db_read($rlt)) {
-		
+
 			$refc = $line['id_m'];
 			$mano = trim($line['m_ano']);
 			$mref = $line['m_ref'];
@@ -768,7 +975,7 @@ class cited {
 				}
 			}
 		}
-		echo $this->mostra_botao_erro($refc);
+		echo $this -> mostra_botao_erro($refc);
 		return ($proc);
 	}
 

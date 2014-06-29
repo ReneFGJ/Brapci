@@ -1,0 +1,52 @@
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2014-06-05T21:05:10Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:ojs.web2.eci.ufmg.br:article/721">http://portaldeperiodicos.eci.ufmg.br/index.php/pci/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:ojs.web2.eci.ufmg.br:article/721</identifier>
+				<datestamp>2009-05-28T19:49:46Z</datestamp>
+				<setSpec>pci:art</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title>[pt_BR]Fatores que influenciam o compartilhamento da informaÃ§Ã£o e do conhecimento</dc:title>
+	<dc:title>[en]FACTORS THAT INFLUENCE SHARING OF INFORMATION AND KNOWLEDGE</dc:title>
+	<dc:creator>AlcarÃ¡, Adriana Rosecler</dc:creator>
+	<dc:creator>Di Chiara, Ivone Guerreiro</dc:creator>
+	<dc:creator>Rodrigues, Jorge Luis</dc:creator>
+	<dc:creator>TomaÃ©l, Maria InÃªs</dc:creator>
+	<dc:creator>Piedade, ValÃ©ria Cristina Heckler</dc:creator>
+	<dc:subject>[pt_BR]Compartilhamento da informaÃ§Ã£o e do conhecimento; MotivaÃ§Ã£o para compartilhar; Barreiras no compartilhamento</dc:subject>
+	<dc:description>[pt_BR]O compartilhamento da informaÃ§Ã£o e do conhecimento Ã© essencial para a construÃ§Ã£o de novos conhecimentos, porÃ©m esse processo pode ser influenciado por diferentes fatores. Este artigo apresenta os resultados de uma pesquisa sobre o compartilhamento da informaÃ§Ã£o, do conhecimento e da experiÃªncia no ambiente de pesquisa e desenvolvimento (P&amp;D). Os dados coletados, por meio de entrevistas, foram analisados a partir da tÃ©cnica anÃ¡lise de conteÃºdo. Entre os resultados estÃ£o os principais fatores que podem interferir no processo de compartilhamento da informaÃ§Ã£o, entre os quais a motivaÃ§Ã£o, as barreiras e a obrigatoriedade; bem como as formas e os meios mais utilizados para compartilhar informaÃ§Ã£o e conhecimento.</dc:description>
+	<dc:description>[en]The process of knowledge and information sharing is essential for the construction of new knowledge even though it may be affected by several factors. This article presents the results from a research on the sharing of knowledge and information as well as of experience in the context of research &amp; development (R&amp;D). The data were collected through interviews and analyzed by means of the context analysis approach. Among the results obtained are the main factors which may interfere in the process of sharing information such as motivation, barriers and obligations as well as the most common ways and means to share information and knowledge.</dc:description>
+	<dc:publisher>[pt_BR]Escola de CiÃªncia da InformaÃ§Ã£o da UFMG</dc:publisher>
+	<dc:contributor>[pt_BR]CNPq</dc:contributor>
+	<dc:date>2009-03-17</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type>[pt_BR]</dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://portaldeperiodicos.eci.ufmg.br/index.php/pci/article/view/721</dc:identifier>
+	<dc:source>[pt_BR]Perspectivas em CiÃªncia da InformaÃ§Ã£o; v. 14, n. 1 (2009); 170-191</dc:source>
+	<dc:source>19815344</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://portaldeperiodicos.eci.ufmg.br/index.php/pci/article/view/721/545</dc:relation>
+	<dc:rights>[pt_BR]
+
+Texto sobre Copyright  do conteÃºdo da Revista.
+
+</dc:rights>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

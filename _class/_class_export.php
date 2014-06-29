@@ -27,6 +27,9 @@ class export
 		function export_public($ini,$max)
 			{
 				global $dd,$db_public,$db_apoio;
+				$sql = "update brapci_article set ar_status = '@' where ar_status is null ";
+				$rlt = db_query($sql);
+				
 				$sql = "alter table ".$db_public."artigos add ar_tipo char(1) ";
 				//$rlt = db_query($sql);
 				
@@ -113,8 +116,7 @@ class export
 				$sql .= " inner join brapci_edition on ed_codigo = ar_edition ";
 				$sql .= " left join brapci_section on ar_section = se_codigo ";
 				//$sql .= " where ar_status <> 'X' and (se_tipo <> '-' and se_tipo <> 'Z' and se_tipo <> 'E' and se_tipo <> 'H')";
-				$sql .= " where ar_status <> 'X' 							
-							";
+				$sql .= " where ar_status <> 'X' 							";
 				$sql .= " order by ar_codigo ";
 				$sql .= " limit ".($ini+1).", ".$max." ";
 				$rlt = db_query($sql);				
@@ -238,21 +240,14 @@ class export
 						$sqlq .= "'".$line['ar_doi']."',";
 						$sqlq .= "'".$line['ar_titulo_1']."',";
 						$sqlq .= "'".$line['ar_titulo_2']."',";
-					
-						$res = trim($line['ar_resumo_1']);
-						if (strlen($res) < 10)
-							{
-								$sqlq .= "'".$line['ar_resumo_2']."',";
-								$sqlq .= "'".$line['ar_resumo_1']."',";
-							} else {
-								$sqlq .= "'".$line['ar_resumo_1']."',";
-								$sqlq .= "'".$line['ar_resumo_2']."',";	
-							}
+	
+						$sqlq .= "'".$line['ar_resumo_1']."',";
+						$sqlq .= "'".$line['ar_resumo_2']."',";
 						$sqlq .= "'".$line['se_cod']."',";
 		
 						$sqlq .= "'".$line['ar_journal_id']."',";
 						$sqlq .= "'".$key1."',";
-						$sqlq .= "'".$line['ar_keyword_1']."',";
+						$sqlq .= "'".$line['ar_keyword_2']."',";
 	
 						$sqlq .= "'".$line['ed_ano']."',";
 						$sqlq .= "'".$line['ed_vol']."',";

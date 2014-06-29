@@ -5,7 +5,6 @@ class article
 	var $title;
 	var $title_alt;
 	var $autores;
-	var $autores_row;
 	var $resumo;
 	var $resumo_alt;
 	var $keyword;
@@ -21,21 +20,8 @@ class article
 	var $pdf;
 	var $pdfc;
 	var $tabela = 'brapci_article';
-	var $tabela_edition = 'brapci_edition';
-	var $tabela_journal = 'brapci_journal';
-	
-	var $keyword_array=array();
 	
 	var $page_load_type = 'C';
-	
-	function report_a_bug($art)
-		{
-			global $http;
-			$link = ' onclick="newxy2(\''.$http.'problem_report.php?dd0='.$art.'&dd90='.checkpost($art).'\',800,600);" ';
-			$sx = '<div '.$link.' style="cursor: pointer;"><img src="'.$http.'/img/icone_bug.png" height="16" title="comunique um erro!" >';
-			$sx .= 'Comunique um erro!</div>';
-			return($sx);
-		}
 	
 	function show_pdf()
 		{
@@ -45,7 +31,6 @@ class article
 					where bs_article = '".$art."'
 					and (bs_type = 'PDF') and (bs_status = 'A')
 					";
-					
 			$rlt = db_query($sql);
 			if ($line = db_read($rlt))
 				{
@@ -54,22 +39,17 @@ class article
 						{
 							$this->pdf = $file;
 						}
-					if (file_exists('../'.$file))
-						{
-							$this->pdf = '../'.$file;
-						}
 				}
 			if (strlen($this->pdf) > 0)
 			{
 				$linka = ' onclick="$(\'#pdf\').toggle();" ';	
-				$linkb = ' onclick="newxy2(\''.$this->pdf.'\',300,300);" style="cursor: pointer;" ';
 				$sx = '<div id="pdf">
 						<div id="pdf_frame">
 							<iframe SRC="'.$this->pdf.'" style="width: 99%; height: 95%;"></iframe>
 						</div>
 					<div style="float: right;">
 						<span id="download" '.$linka.' class="link">fechar</span> | 
-						<a href="'.$this->pdf.'" id="download" class="link" target="new'.$art.'">download</a>&nbsp;</div>
+						<span id="download" '.$linkb.' class="link">download</span>&nbsp;</div>
 					</div>
 				';
 			}
@@ -185,24 +165,17 @@ class article
 
 			array_push($cp,array('$T80:6','ar_titulo_1',msg('work_title'),True,True));
 			array_push($cp,array('$O pt_BR:Português&us:Inglês&es:Espanhol','ar_idioma_1',msg('idioma'),True,True));
-			array_push($cp,array('$T80:6','ar_titulo_2',msg('work_title'),True,True));
 			array_push($cp,array('$O us:Inglês&pt_BR:Português&es:Espanhol','ar_idioma_2',msg('idioma').' '.msg('alternative'),True,True));
 			array_push($cp,array('$HV','ar_codigo','',False,True));
 			array_push($cp,array('$HV','ar_status','@',True,True));
 			array_push($cp,array('$Q se_descricao:se_codigo:select * from brapci_section order by se_descricao','ar_tipo',msg("session"),True,True));
-			array_push($cp,array('$S5','ar_pg_inicial','Pag. Inicial',True,True));
-			array_push($cp,array('$S5','ar_pg_final','Pag. Final',False,True));
 			return($cp);
 			
 		}
 	
 	function le($id)
 		{
-			global $http;
-			$sql = "select * from ".$this->tabela." 
-						inner join ".$this->tabela_edition." on ar_edition = ed_codigo
-						inner join ".$this->tabela_journal." on ar_journal_id = jnl_codigo
-						where id_ar = ".round($id);
+			$sql = "select * from ".$this->tabela." where id_ar = ".round($id);
 			$rlt = db_query($sql);
 			if ($line = db_read($rlt))
 				{
@@ -223,7 +196,6 @@ class article
 					$this->journal_id = $line['ar_journal_id'];
 					$this->autores = $this->autores($line['ar_codigo']);
 					$this->line = $line;
-					$this->link = $http.'article.php?dd0='.trim($line['ar_codigo']).'&dd90='.checkpost($line['ar_codigo']);
 					}
 			return(1);
 		}
@@ -242,7 +214,6 @@ class article
 			 $bio = '';
 			 $xbio = '';
 			 $id = 0;
-			 $autor = array();
 			 while ($line = db_read($rlt))
 			 	{
 			 		if (strlen($autores) > 0) { $autores .= '; '; }
@@ -265,16 +236,13 @@ class article
 						$link = '<A HREF="#" alt = "'.$bio.'" title="'.$bio.'">';
 						} else { $link = ''; }
 			 		$autores .= trim($line['autor_nome']).'<sup>'.$link.$id.'</A></sup>';
-					array_push($autor,trim($line['autor_nome']));			
+					
 			 	}
 			if (strlen($autores) > 0) { $autores .= '.'; }
-			$this->autores_row = $autor;
 			return($autores.'<BR>'.$xbio);
 		}
 	function recupera_keywords($article,$idioma='')
 		{
-					
-					$ar = $this->keyword_array;
 					$sql = "select * from brapci_article_keyword
 							inner join brapci_keyword on kw_keyword = kw_codigo
 							where kw_article = '".$article."'
@@ -286,9 +254,7 @@ class article
 						{
 							if (strlen($keys) > 0) { $keys .= '. '; }
 							$keys .= trim($line['kw_word']);
-							array_push($ar,UpperCaseSql(trim($line['kw_word'])));
 						}			
-					$this->keyword_array = $ar;
 					return($keys);
 		}
 		
@@ -359,26 +325,20 @@ class article
 					$pag = '';
 					$pagi = $line['ar_pg_inicial'];
 					$pagf = $line['ar_pg_final'];
-					$pag = $this->show_page($pagi,$pagf);
-
+					if (strlen($pagi) > 0) 
+					{
+						if (strlen($pagf) > 0)
+							{
+								$pag = 'p. '.$pagi.'-'.$pagf;
+							} else {
+								$pag = 'p. '.$pagi;
+							}
+					}
 					$sx .= '<TD><nobr>'.$pag;
 				}
 			$sx .= '</table>';				
 			return($sx);
 		}	
-	function show_page($pagi,$pagf)
-		{
-			if (strlen($pagi) > 0) 
-			{
-				if (strlen($pagf) > 0)
-					{
-						$pag = 'p. '.$pagi.'-'.$pagf;
-					} else {
-						$pag = 'p. '.$pagi;
-					}
-			}	
-			return($pag);
-		}
 	function page_load($page)
 		{
 		global $host_install;

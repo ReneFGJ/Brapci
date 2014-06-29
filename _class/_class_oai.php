@@ -234,7 +234,47 @@ class oai
 						</script>
 						';
 						exit;
-					} else {
+						}
+
+				
+				/* Volume e numero */
+				$pos = strpos($ses,'v. ');
+				if ($pos > 0) 
+						{
+						   $vol = trim(substr($ses,$pos + 2,10));
+						   $vol = sonumero(substr($vol,0,strpos($vol,','))); 
+						}
+				$pos = strpos($ses,'n. ');
+				if ($pos > 0) 
+										{
+						   $num = trim(substr($ses,$pos + 2,12));
+						   $ano = sonumero(substr($num,strpos($num,'('),10));
+						   $year = substr($ano,0,4);
+						   $num = sonumero(substr($num,0,strpos($num,'('))); 
+						}
+				
+				echo '<HR>'.$ses.'<BR>'.$vol.'-'.$num.'-'.$year.'<HR>';
+				/* Buscape por volume, numero e ano */
+				if ((strlen($vol) > 0) and (strlen($num) > 0) and (strlen($year) > 0))
+					{
+						$sql = "select * from brapci_edition 
+								where ed_vol = '".$vol."'
+								and ed_nr = '".$num."' 
+								and ed_ano = '".$year."' 
+								and ed_journal_id = '$journal'
+								";
+						$rlt = db_query($sql);
+						if ($line = db_read($rlt))
+							{
+								echo '
+								<script>
+									window.location.href = "'.page().'?dd12='.trim($line['ed_codigo']).'&dd20=issue&dd13='.$this->id.'";
+								</script>
+								';
+								exit;
+								}
+					}
+				
 						$ops = '<select id="dd12">';
 						$sql = "select * from brapci_edition where ed_journal_id='$journal' order by ed_ano desc, ed_vol desc, ed_nr desc";
 						$rlt = db_query($sql);
@@ -271,7 +311,6 @@ class oai
 							</script>
 						';
 												
-					}
 				$tabela = "oai_listsets";
 				return($sx);				
 			}
