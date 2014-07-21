@@ -1,0 +1,22 @@
+#basket
+	{
+		border: 0px solid #E0E0E0;
+		width: 100%;
+	}
+#basket_itens
+	{
+		border: 1px solid #E0E0E0;
+		padding: 5px;
+		width: 160px;
+		float: right;
+		margin: 10px;
+		text-align: center;
+	}
+	
+.radio_form_big
+	{
+		font-family: RobotoThin, Roboto, Arial, Tahoma, Verdana;
+		font-size: 14px;
+		color: #FFFFFF;
+		padding: 0px 20px 0px 20px;
+	}

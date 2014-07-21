@@ -110,10 +110,7 @@ class author
 		
 	function author_new($author)
 		{
-				if (utf8_detect($author))
-					{ $author1 = utf8_decode($author); }
-				else
-					{ $author1 = trim($author); }
+				$author1 = trim($author);
 				
 				$author1a = nbr_autor(($author1),1);
 				$author1b = uppercasesql($author1a);
@@ -181,10 +178,7 @@ class author
 		
 	function author_find($author)
 		{
-			if (utf8_detect($author))
-				{ $author1 = trim(utf8_decode($author)); }
-			else
-				{ $author1 = $author; }
+			$author1 = $author;
 							
 			$author1a = nbr_autor(UpperCaseSql($author1),1);
 			$sql = "select * from brapci_autor where

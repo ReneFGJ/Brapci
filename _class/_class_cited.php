@@ -9,6 +9,46 @@ class cited {
 	var $tabela = "mar_works";
 	var $tabela_journal = "mar_journal";
 	
+	function ajuste_automatico()
+		{
+			$sql = "update ".$this->tabela." set m_tipo = 'ARTIC' where m_tipo = 'PERIO' ";
+			$rlt = db_query($sql);
+
+			$sql = "update ".$this->tabela_journal." set mj_tipo = 'ARTIC' where mj_tipo = 'PERIO' ";
+			$rlt = db_query($sql);
+
+			return(1);
+		}
+	
+	function lista_completa_remissivas()
+		{
+			$this->ajuste_automatico();
+			
+			$sql = "select t1.mj_codigo as cod, t1.mj_nome as titulo
+						from ".$this->tabela_journal." as t1
+						where t1.mj_codigo = t1.mj_use
+						and t1.mj_tipo = 'ARTIC'
+						order by t1.mj_nome
+			";
+			$rlt = db_query($sql);
+			$sx .= '<table class="tabela00">';
+			$id = 0;
+			while ($line = db_read($rlt))
+				{
+					$id++;
+					$nome = $line['titulo'];
+					$nome = troca($nome,'.','');
+					$nome = troca($nome,',','');
+					$nome = troca($nome,'  ',' ');
+					$nome = UpperCase(trim($nome));
+					$sx .= '<TR>';
+					$sx .= '<TD>'.$nome;
+				}
+			$sx .= '<TR><TD>Total '.$id;
+			$sx .= '</table>';
+			return($sx);
+		}
+	
 	function processa_remissivas()
 		{
 			$sql = "update mar_works set m_status = 'X' 
@@ -19,7 +59,7 @@ class cited {
 						INNER JOIN mar_journal on mj_codigo = m_journal
 						where mj_codigo <> mj_use
 						order by mj_codigo
-						limit 20
+						limit 200
 			";
 			$rlt = db_query($sql);
 			$xlst = '';
@@ -274,16 +314,21 @@ class cited {
 		</table>';
 
 		$ok = '';
-		if (strpos($ref, 'TESE (DOUTORADO') > 0) { $ok = 'TESE 0000000';
-		}
-		if (strpos($ref, 'TESE DE DOUTORADO') > 0) { $ok = 'TESE 0000000';
-		}
-		if (strpos($ref, 'TESE(') > 0) { $ok = 'TESE 0000000';
-		}
-		if (strpos($ref, 'TESE (') > 0) { $ok = 'TESE 0000000';
-		}
-		if (strpos($ref, 'TESIS (') > 0) { $ok = 'TESE 0000000';
-		}
+		
+		$ts = array();
+			array_push($ts,'(TESIS DOCTORAL)');
+			array_push($ts,'TESE (DOUTORADO');
+			array_push($ts,'TESE DE DOUTORADO');
+			array_push($ts,'TESE(');
+			array_push($ts,'TESE (');
+			array_push($ts,'TESIS (');
+			array_push($ts,'THESE DE DOCTORAT (');
+			array_push($ts,'PHD DISSERTATION');
+		for ($x=0;$x < count($ts);$x++)
+			{
+				if (strpos($ref, $ts[$x]) > 0) { $ok = 'TESE 0000000'; }		
+			}
+
 
 		//// Dissertação
 		if (strpos($ref, '(DISSERTACAO DE MESTRADO)') > 0) { $ok = 'DISSE0000000';
@@ -291,6 +336,8 @@ class cited {
 		if (strpos($ref, 'DISSERTACAO (MESTRADO') > 0) { $ok = 'DISSE0000000';
 		}
 		if (strpos($ref, 'DISSERTACAO (') > 0) { $ok = 'DISSE0000000';
+		}		
+		if (strpos($ref, 'DISSERTACAO. (') > 0) { $ok = 'DISSE0000000';
 		}
 		if (strpos($ref, 'DISSERTATION (') > 0) { $ok = 'DISSE0000000';
 		}
@@ -298,14 +345,17 @@ class cited {
 		}
 		if (strpos($ref, '. MESTRADO (') > 0) { $ok = 'DISSE0000000';
 		}
-		if (strpos($ref, '. DISSERTATION ') > 0) { $ok = 'DISSE0000000';
-		}
+		if (strpos($ref, '. DISSERTATION ') > 0) { $ok = 'DISSE0000000';  }
+		if (strpos($ref, 'DISSERTACAO MESTRADO EM') > 0) { $ok = 'DISSE0000000';  }
+		
 
 		if (strpos($ref, '#') > 0) { $ok = 'NC0000000';
 		}
 
 		if (strpos($ref, 'TRABALHO DE CONCLUSÃO DE CURSO') > 0) { $ok = 'TCC  0000000';
 		}
+		if (strpos($ref, 'TRABALHO DE CONCLUSAO DE CURSO') > 0) { $ok = 'TCC  0000000';
+		}		
 		if (strpos($ref, '(MONOGRAFIA)') > 0) { $ok = 'TCC  0000000';
 		}
 		if (strpos($ref, 'MONOGRAFIA (') > 0) { $ok = 'TCC  0000000';

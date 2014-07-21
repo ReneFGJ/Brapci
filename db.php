@@ -16,10 +16,9 @@
 	session_start();
 
 	/* Noshow Errors */
-	$debug = 0; 	
-	if (file_exists('DEBUG')) { $debug1 = 0; $debug2 = 0; }
-	ini_set('display_errors', $debug1);
-	ini_set('error_reporting', $debug2);
+	$debug = 0; 
+
+	require($include.'_class_debug.php');
 	
 	/* Path Directory */
 	$path_info = trim($_SERVER['PATH_INFO']);
@@ -36,7 +35,7 @@
 	header('Content-Type: text/html; charset='.$charset);
 	
 	/* Include */
-	require($include.'_class_msg.php');
+	//require($include.'_class_msg.php');
 	require($include.'_class_char.php');		
 	require($include.'sisdoc_sql.php');	
 	

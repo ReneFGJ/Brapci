@@ -5,6 +5,11 @@ $pb = new publications;
 
 $jnl = trim($dd[0]);
 
+require('../_class/_class_journals.php');
+$jl = new journals;
+$jl->le($dd[0]);
+echo $jl->journals_mostra();
+
 echo '<div class="nav">';
 echo '<h1>'.$pb->journal_name($jnl).'</h1>';
 echo '

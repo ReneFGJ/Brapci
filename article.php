@@ -98,8 +98,9 @@ $sx .= '
 $sx .= '<meta>';									
 echo $sx;			
 
+echo '<table width="100%"><TR><TD>';
 echo ($edi->issue_legend($issue));
-echo '<BR>';
+echo '<BR>'.$issue;
 echo ($art->mostra());
 
 echo ($ref->exportar_ref($art->line));
@@ -113,7 +114,7 @@ echo ($art->article_referencias());
 //$sx = $journals->journals_mostra();
 
 
-$sa = ($autor->publicoes_dos_autores($dd[0]));
+//$sa = ($autor->publicoes_dos_autores($dd[0]));
 if (strlen($sa) > 0)
 	{
 		echo '<BR><h3>'.msg('otherts_bibliographics').'</h3><BR>';
@@ -123,6 +124,6 @@ if (strlen($sa) > 0)
 	}
 
 echo $art->seek_google();
-
+echo '</table>';
 require("foot.php");
 ?>

@@ -6,14 +6,18 @@ $path_ini = $include;
 	require("db.php");
 	
 /* Dados do Usuario */
-	require("_class/_class_user.php");
-	$user = new user;
+//	require("_class/_class_user.php");
+//	$user = new user;
+	
+	require('_class/_class_oauth_v1.php');
+	$user = new oauth;
+	$user->token();	
 	
 /* Habilita modo debug */
 	require($include.'sisdoc_debug.php');
 
 /* Ativa mensagens nos varios idiomas */
-	//require("_class/_class_message.php");
+	require("_class/_class_message.php");
 	//$LANG = $lg->language_read();
 	$LANG = 'pt_BR';
 	$file = 'messages/msg_'.$LANG.'.php';
@@ -29,22 +33,16 @@ $path_ini = $include;
 	$face = new face;
 
 /* Class de login do google */
-	require("_class/_class_google_api.php");
-	$google = new google_api;
-	$google->google_analytics_id = 'UA-12803182-4';
-	
+//	require("_class/_class_google_api.php");
+//	$google = new google_api;
+//	$google->google_analytics_id = 'UA-12803182-4';
+//	
 
 /* Cabecalho */
 	require("_class/_class_header_bp.php");
 	$hd = new header;
 	
-	if ($meta==1)
-		{
-			$cab = $hd->cab();
-		} else {
-			echo $hd->cab();		
-		}
-	
+	echo $hd->cab();
 	$hd->google_id = $google->google_analytics_id;
 	
 	if (!isset($no_cab))
@@ -73,18 +71,22 @@ $path_ini = $include;
 				</div>
 				<div class="geral">
 					<div id="div1">&nbsp;&nbsp;<a href="index.php?idioma=pt_BR"><img src="img/ididoma_br.png" border=0 title="Portugues" alt="Português"></A>
-					| '.$face->userID();
-
-					if (strlen($user_name) > 0)
+					| ';
+					if ($user->autenticado ==1)
 						{
-							echo $user_name.' ('.$user_email.')';
-							echo '<BR><I>'.$link_logout.'</I>';
+							echo $user->name.' ('.$user->email.')';
+							echo '<BR><I><A href="logout.php">sair</A></I>';
 						} else {
-							echo $google_login_link;
+							echo '<a href="_login_s.php">login</A>';
 						} 
 		echo '<BR><BR></div>											   
 		
-					<div class="topo"></div>
+					<div class="topo">
+						<a href="https://twitter.com/BrapciCI">
+						<img src="img/icone_twitter.png" width="32" border=0 target="twitter"></A>
+						<a href="https://www.facebook.com/brapci.ci" target="facebook">
+						<img src="img/icone_face.png" width="32" border=0 ></A>
+					</div>
     			</div>
     		</div>';
 		echo '<center>';
@@ -96,7 +98,6 @@ $path_ini = $include;
 
 		require("cab_menu.php");
 		echo '<DIV ID="content_TOP">';
-
 		echo '</div><BR>
 			<DIV id="conteudo">';
 	}

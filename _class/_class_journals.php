@@ -17,6 +17,64 @@ class journals
 		var $periodicidade;
 		var $periodicidade_nome;
 		
+		function periodicidade_publicaoes()
+			{
+				$sql = "select count(*) as total, peri_nome, peri_ordem from ".$this->tabela." 
+						left join brapci_periodicidade on peri_codigo = jnl_periodicidade
+						where jnl_tipo = 'J' 
+						and jnl_vinc_vigente = '1'
+						group by peri_nome, peri_ordem
+						order by peri_ordem, total desc
+						";
+				$rlt = db_query($sql);
+				
+				$sx = '<table width="300" class="tabela00">';
+				$to = 0;
+				while ($line = db_read($rlt))
+					{
+						$to = $to + $line['total'];
+						$sx .= '<tr><TD class="tabela01">'.$line['peri_nome'];
+						$sx .= '<TD align="center" class="tabela01">'.$line['total'];
+					}
+				$sx .= '<tr><TD><I>Total '.$to;
+				$sx .= '</table>';
+				return($sx);
+			}
+			
+		function periodicidade_publicaoes_lista($status='')
+			{
+				if (strlen($status) > 0) { $wh = "and jnl_vinc_vigente = '$status' ";}
+				$sql = "select * from ".$this->tabela." 
+						left join brapci_periodicidade on peri_codigo = jnl_periodicidade
+						where jnl_tipo = 'J' 
+						$wh
+						order by peri_ordem, jnl_nome
+						";
+						
+				$rlt = db_query($sql);
+				
+				$sx = '<table width="600" class="tabela00">';
+				$to = 0;
+				$xperi = 'x';
+				while ($line = db_read($rlt))
+					{
+						$to++;
+						$peri = trim($line['peri_nome']);
+						if ($xperi != $peri)
+							{
+								$sx .= '<tr><TD class="tabela00 lt2" colspan=3><B>'.$line['peri_nome'].'</B></TD></TR>';
+								$xperi = $peri;
+							}
+						$sx .= '<TR>';
+						$sx .= '<TD width="40">';
+						$sx .= '<TD align="left" class="tabela01">'.$line['jnl_nome'];
+						$sx .= '<TD>'.ShowLink($line['jnl_url'],'1','NewSite',trim($line['jnl_nome']));
+					}
+				$sx .= '<tr><TD><I>Total '.$to;
+				$sx .= '</table>';
+				return($sx);
+			}			
+		
 		function row()
 			{
 				global $cdf, $cdm, $masc;
@@ -73,7 +131,7 @@ class journals
 		function  le($id)
 			{
 				$sql = "select * from ".$this->tabela." 
-						inner join brapci_periodicidade on jnl_periodicidade = peri_codigo
+						left join brapci_periodicidade on jnl_periodicidade = peri_codigo
 						where id_jnl = ".round($id);
 				$rlt = db_query($sql);
 				if ($line = db_read($rlt))
@@ -108,7 +166,7 @@ class journals
 			}
 		function journals_mostra()
 			{
-				$sx .= '<fieldset><legend>'.msg("journal").'</legend>';
+				$sx .= '<fieldset><legend style="margin-left: 10px; padding-left:10px; padding-right:10px;">'.msg("journal").'</legend>';
 					$sx .= '<table width="99%" class="lt0" cellpadding=0 cellspacing=2 >';
 					/* nome */
 					$sx .= '<TR><TD class="lt0" colspan=4 >'.msg('journal_name');
@@ -132,7 +190,7 @@ class journals
 					$sx .= '						 	<TD><B>'.$this->status_nome;
 					
 					$sx .= '</table>';
-				$sx .= '</fiedlset>';
+				$sx .= '</fieldset>';
 				return($sx);
 			}
 		function list_journals($sta)

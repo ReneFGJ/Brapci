@@ -11,7 +11,10 @@ if (strlen($dd[90]) > 0)
 	{
 		redirecina("journal_view.php?dd0=".$dd[90]);
 	}
-	
+$dd[2] = troca($dd[2],'&quote;','"');
+$dd[2] = troca($dd[2],'"','´');	
+$dd[2] = troca($dd[2],'\\','');
+
 /* Search */
 $sr = new search;
 $sr->sessao = $sr->session();

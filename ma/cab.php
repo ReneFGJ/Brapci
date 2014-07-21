@@ -2,18 +2,27 @@
 $include = '../';
 $no_cab = 1; /* não mostrar cabecalho */
 /* Estitlos adicionais */ 
-$style_add = array('style_bp_ma.css','style_bp.css');
+$style_add = array('style_bris.css');
 
 require($include.'cab.php');
-
-/* Redireciona para o login */
-if ((!isset($login)) and (strlen($user_name) == 0))
-	{ redirecina('_login.php'); }
-
-if (!($popup)) 
-	{
-		 require("cab_menu.php");
-	}
 ?>
-<div class="container">
+<style>
+	body { background-color: #FFFFFF; }
+</style>
+<div style="background-color: #FFFFFF;">
+	<img src="../img/logo_brapci.png" height="90">
+</div>
+<div id="menu_bris">
+	<UL>
+	<LI><A HREF="index.php">HOME</A></LI>
+	<LI><A HREF="publications.php">Journals</A></LI>
+	<LI><A HREF="autores.php">Authors</A></LI>
+	<LI><A HREF="cited.php">Cited</A></LI>
+	<LI><A HREF="oai.php">Harvesting</A></LI>
+	<LI><A HREF="public.php">Public</A></LI>	
+	</UL>
+</div>
+<center>
+<div id="context">
+	
 

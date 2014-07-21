@@ -1,4 +1,7 @@
 <?
+
+echo 'Session:'. $_SESSION['ssid'];
+
 if (!isset($no_cab)) 
 	{
 	echo '

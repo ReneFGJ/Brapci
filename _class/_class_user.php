@@ -8,6 +8,41 @@ class user
 	
 	var $tabela = 'users';
 	
+	function mostra_colaborador_linha($line)
+		{
+			$sx = '<div class="colaborador">';
+			$img = trim($line['us_image']);
+			$sx .= '<img src="'.$img.'" class="colaborador_imagem" height="32" align="left">';
+			$sx .= '<B>'.$line['us_nome'].'</B>';
+			$sx .= '<BR><font class="lt0">'.$this->mostra_genero($line['us_genero']).'</font>';
+			$sx .= ' - <font class="lt0"><I>'.$line['nv_descricao'].'</i></font>';
+			$sx .= '</div>';
+			return($sx);
+		}
+	function mostra_genero($genero)
+		{
+			switch ($genero)
+				{
+				case 'M': $sx = 'Masculino'; break;
+				case 'F': $sx = 'Feminino'; break;
+				default: $sx = 'Não informado'; break;
+				}
+			return($sx);
+		}
+	function listar_colaboradores($ano='')
+		{
+			$sql = "select * from users 
+						left join user_nivel on us_nivel = nv_codigo
+					order by us_cadastro ";
+			$rlt = db_query($sql);
+			$sx .= '<h1>Comunidade Brapci</h1>';
+			while ($line = db_read($rlt))
+				{
+					$sx .= $this->mostra_colaborador_linha($line);
+				}
+			return($sx);
+		}
+	
 	function user($us,$tp)
 		{
 			if ($tp == 'google')

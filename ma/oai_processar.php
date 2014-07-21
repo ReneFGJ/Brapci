@@ -24,7 +24,10 @@ echo '<BR>Loolking record...';
 $line = $oai->proximo_processamento($jid);
 if (strlen(trim($line['cache_journal'])) > 0)
 	{
-		echo '<A HREF="'.page().'?dd0='.$line['id_cache'].'&dd10=RELOAD">RECOLETAR</A><BR>';
+		echo '<A HREF="'.page().'?dd0='.$line['id_cache'].'&dd10=RELOAD">RECOLETAR</A>';
+		echo ' | ';
+		echo '<A HREF="oai_ver_xml.php?dd0='.$line['id_cache'].'">VER XML</A><BR>';
+		echo '<BR>';
 		if ($dd[10]=='RELOAD')
 			{
 					$sql = "update oai_cache set cache_status = '@' where id_cache = ".round($dd[0]);
@@ -38,7 +41,7 @@ if (strlen(trim($line['cache_journal'])) > 0)
 		echo $oai->form_cancel();
 		
 		$jid = $line['cache_journal'];
-				$file = '../man/oai/'.strzero($line['id_cache'],7).'.xml';
+				$file = 'oai/'.strzero($line['id_cache'],7).'.xml';
 				echo '<BR>'.$file;
 				$s = $oai->read_link_fopen($file);
 				if ($oai->utf8_detect($s)==1)
@@ -77,7 +80,7 @@ if (strlen(trim($line['cache_journal'])) > 0)
 		$s = troca($s,'</span','[/span');
 		$s = troca($s,'<p dir="ltr">','');
 		
-		$s = utf8_encode($s);
+		//$s = utf8_encode($s);
 		fwrite($flt,$s);
 		fclose($flt);
 	} else {
@@ -112,6 +115,24 @@ foreach( $dados as $fields )
   $sessao = values($setSpec);
   $issues = values($source);
   }
+
+echo '<HR>';
+	$k = array();
+	for ($r=0; $r < count($keys); $r++)
+		{
+			$kt = $keys[$r];
+			$term = $kt[0];
+			$term = troca($term,'.',';');
+			$term = troca($term,',',';');
+			//$term = utf8_decode($term);
+			$idio = $kt[1];
+			$kts = splitx(';',$term);
+			for ($q=0;$q < count($kts);$q++)
+				{
+					array_push($k,array($kts[$q],$idio));
+				}
+		}
+$keys = $k;
 
 /* Dados */
 $oai->id = $id;
@@ -191,24 +212,9 @@ $keywords = array();
 for ($r=0;$r < count($keys);$r++)
 {
 	$idioma = $keys[$r][1];
-	$keys[$r][0] = utf8_decode($keys[$r][0]);
+//	$keys[$r][0] = utf8_decode($keys[$r][0]);
 	$words = $keys[$r][0];
-	echo '<BR>--->'.$words;
-	$words = troca($words,',',';');
-	$words = troca($words,'.',';');
-	
-	if (strpos($words,';') > 0)
-		{
-			$wd = splitx(';',$words);
-
-			for ($y=0;$y < count($wd);$y++)
-				{
-					$word = trim(troca($word,'.',' '));
-					array_push($keywords,array($word,$idioma));
-				}
-		} else {
-			array_push($keywords,array($words,$idioma));
-		}
+	array_push($keywords,array($words,$idioma));
 }
 
 for ($r=0;$r < count($keywords);$r++)
@@ -281,7 +287,7 @@ if ((strlen($oai->session) < 7) and (strlen($oai->session) >= 2) and (strlen($oa
 	//$this->oai_save_03($art,$keys);
 	echo '<BR>ID OAI:'.$oai->id;
 	$oai->oai_save_99($oai->id);
-	echo '<meta HTTP-EQUIV = "Refresh" CONTENT = "2; URL = '.page().'?dd1='.$dd[1].'"> ';
+	echo '<meta HTTP-EQUIV = "Refresh" CONTENT = "50; URL = '.page().'?dd1='.$dd[1].'"> ';
 } else {
 	echo '<HR><h1>'.$titles[0][0].'</h1><HR>';
 	echo '<BR><font color="red">';
@@ -302,10 +308,7 @@ function values($vlr)
 			$idioma = 'pt_BR';
   			$name = trim($vlr->item($r)->nodeValue);
   			if (strlen($name) > 0)
-				{
-					if (utf8_detect($name))
-						{ $name = utf8_decode($name); }
-						
+				{						
 					if (substr($name,0,1)=='[')
 						{
 							$xpos = strpos($name,']');
@@ -319,45 +322,16 @@ function values($vlr)
 		return($nm);
 	}
 
-function utf8_detect($utt)
-	{
-	$utt = ' '.$utt;
-	$xok = 0;
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('Ã')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('É')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('Í')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('Ó')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('Ú')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('á')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('é')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('í')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('ó')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('ú')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('ñ')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('Ñ')); }
-	
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('ã')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('õ')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('Â')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('Ê')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('Î')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('Ô')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('Û')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('â')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('ê')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('î')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('ô')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('û')); }
-		
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('ç')); }
-		if ($xok==0) { $xok = strpos($utt,UTF8_encode('Ç')); }
-
-		if ($xok > 0)
-			{
-				return 1;
-			} else {
-				return 0;
-			}
-	}
-
+function acento_para_html($umarray){
+	$comacento = array('Á','á','Â','â','À','à','Ã','ã','É','é','Ê','ê','È','è','Ó','ó','Ô','ô','Ò','ò','Õ','õ','Í','í','Î','î','Ì','ì','Ú','ú','Û','û','Ù','ù','Ç','ç',);
+	$acentohtml   = array('&Aacute;','&aacute;','&Acirc;','&acirc;','&Agrave;','&agrave;','&Atilde;','&atilde;','&Eacute;','&eacute;','&Ecirc;','&ecirc;','&Egrave;','&egrave;','&Oacute;','&oacute;','&Ocirc;','&ocirc;','&Ograve;','&ograve;','&Otilde;','&otilde;','&Iacute;','&iacute;','&Icirc;','&icirc;','&Igrave;','&igrave;','&Uacute;','&uacute;','&Ucirc;','&ucirc;','&Ugrave;','&ugrave;','&Ccedil;','&ccedil;');
+	$umarray  = str_replace($comacento, $acentohtml, $umarray);
+	return $umarray;
+}
+function html_para_acentos($umarray){
+	$comacento = array('Á','á','Â','â','À','à','Ã','ã','É','é','Ê','ê','È','è','Ó','ó','Ô','ô','Ò','ò','Õ','õ','Í','í','Î','î','Ì','ì','Ú','ú','Û','û','Ù','ù','Ç','ç',);
+	$acentohtml   = array('&Aacute;','&aacute;','&Acirc;','&acirc;','&Agrave;','&agrave;','&Atilde;','&atilde;','&Eacute;','&eacute;','&Ecirc;','&ecirc;','&Egrave;','&egrave;','&Oacute;','&oacute;','&Ocirc;','&ocirc;','&Ograve;','&ograve;','&Otilde;','&otilde;','&Iacute;','&iacute;','&Icirc;','&icirc;','&Igrave;','&igrave;','&Uacute;','&uacute;','&Ucirc;','&ucirc;','&Ugrave;','&ugrave;','&Ccedil;','&ccedil;');
+	$umarray  = str_replace($acentohtml, $comacento, $umarray);
+	return $umarray;
+}
 ?>

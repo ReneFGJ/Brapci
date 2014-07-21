@@ -17,7 +17,7 @@ class header
 		header ('Content-type: text/html; charset='.$this->charcod);
 		//$sx .= ''.$cr;
 		$sx .= '<head>'.$cr;
-    	$sx .= '<META HTTP-EQUIV=Refresh CONTENT="3600; URL='.$http.'logout.php">'.$cr;
+    	//$sx .= '<META HTTP-EQUIV=Refresh CONTENT="3600; URL='.$http.'logout.php">'.$cr;
 		$sx .= '<meta http-equiv="Content-Type" content="text/html; charset='.$this->charcod.'" />'.$cr;
 		$sx .= '<meta name="google-site-verification" content="VZpzNVBfl5kOEtr9Upjmed96smfsO9p4N79DZT38toA" />'.$cr;		
         $sx .= '<meta name="description" content="">'.$cr;
@@ -25,7 +25,7 @@ class header
 		$sx .= '<link rel="stylesheet" href="'.$http.'css/style_cabecalho.css">'.$cr;
 
 		/* Style */
-		$style = array('style.css','style_form.css','style_menu.css');
+		$style = array('style.css','style_form.css','style_menu.css','style_roboto.css');
 		for ($r=0;$r < count($style);$r++)
 				{ $sx .= '<link rel="STYLESHEET" type="text/css" href="'.$http.'css/'.$style[$r].'">'.$cr; }
 		/* Style Adicional */

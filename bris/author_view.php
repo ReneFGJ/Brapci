@@ -1,6 +1,6 @@
 <?php
 require("cab.php");
-require("_class/_class_bris.php");
+require("../_class/_class_bris.php");
 $br = new bris;
 
 require("_class/_class_autor.php");
@@ -26,8 +26,10 @@ echo '<table>';
 	echo $au->grafico();
 	echo '<TD align="right">';
 	echo $au->grafico_minhas_citacoes();	
-echo '<TR><TD>';
+echo '<TR valign="top"><TD>';
 	echo $au->autor_revistas_publicacoes($au->codigo);
+echo '<TD>';
+	echo $br->indicador_autor($au->codigo);
 echo '</table>';
 echo '<BR><BR>';
 echo '<h3>Publicações do autor</h3>';

@@ -189,10 +189,10 @@ class face
 					  js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1&appId='.$this->appID.'";
 					  fjs.parentNode.insertBefore(js, fjs);
 					}(document, \'script\', \'facebook-jssdk\'));</script>';
+				/* NOVO */
 				
-				$sx .= '
-				<div class="fb-like" data-href="'.$this->site.'" data-layout="box_count" data-action="like" data-show-faces="true" data-share="true"></div>
-				';
+				$sx .= '<div class="fb-like-box" data-href="https://www.facebook.com/brapci.ci" data-width="100%" data-height="240" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>';
+				//$sx .= '<div class="fb-like" data-href="https://www.facebook.com/brapci.ci" data-layout="box_count" data-action="like" data-show-faces="true" data-share="true"></div>';
 				return($sx);
 			}
 			
@@ -209,7 +209,6 @@ class face
 					}(document, \'script\', \'facebook-jssdk\'));</script>';
 					
 				$sx .= '<div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-width="300" data-type="button_count"></div>';
-				
 				return($sx);
 			}				
 	}

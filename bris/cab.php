@@ -17,7 +17,8 @@ require($include.'cab.php');
 	<LI><A HREF="index.php">HOME</A></LI>
 	<LI><A HREF="bris_journal.php">JOURNAL RANKING</A></LI>
 	<LI><A HREF="index_cited_journal.php">CITED RANKING</A></LI>
-	<LI><A HREF="index_author.php">AUTHOR RANKING</A></LI>	
+	<LI><A HREF="index_author.php">AUTHOR RANKING</A></LI>
+	<LI><A HREF="index_indicadores.php">INDICATORS</A></LI>	
 	</UL>
 </div>
 <center>

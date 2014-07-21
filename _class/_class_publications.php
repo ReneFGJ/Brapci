@@ -7,6 +7,9 @@ class publications
 	
 	var $tabela = 'brapci_journal';
 	
+	
+	/************************************ ACOES */
+	
 	function seek_google()
 		{
 			$title = $this->line['ar_titulo_1'];
@@ -74,6 +77,15 @@ class publications
 			$acao = array();
 			switch ($status)
 				{
+				case '':
+						array_push($acao,array('B','Enviar para revisão'));
+						array_push($acao,array('X','Cancelar trabalho'));
+						break;
+				case '@':
+						array_push($acao,array('B','Enviar para revisão'));
+						array_push($acao,array('X','Cancelar trabalho'));
+						break;
+						
 				case 'A':
 						array_push($acao,array('B','Enviar para revisão'));
 						array_push($acao,array('X','Cancelar trabalho'));
@@ -113,6 +125,7 @@ class publications
 			array_push($cp,array('$S200','jnl_nome','Nome da publicação',True,True));
 			array_push($cp,array('$S40','jnl_nome_abrev','Abreviatura',False,True));
 			
+			
 			$sql = "select * from ajax_cidade order by cidade_nome";
 			array_push($cp,array('$Q cidade_nome:cidade_codigo:'.$sql,'jnl_cidade','Local',True,True));
 			
@@ -123,21 +136,44 @@ class publications
 			$sql = "select * from brapci_journal_tipo where jtp_ativo = 1 order by jtp_ordem";
 			$sql = "select * from brapci_journal_tipo order by jtp_ordem";
 			array_push($cp,array('$Q jtp_descricao:jtp_codigo:'.$sql,'jnl_tipo','Tipo de publicação',True,True));
+			return($cp);
+		}	
 			
+	function cp_02()
+		{
+			$cp = array();
+			array_push($cp,array('$H8','id_jnl','',False,True));
 			array_push($cp,array('$A8','','Sobre a publicação',False,True));
-			array_push($cp,array('$[1950-'.date("Y").']','jnl_ano_inicio','Ano inicial',False,True));
+						
+			array_push($cp,array('$[1950-'.date("Y").']','jnl_ano_inicio','Ano inicial',False,True));			
 			array_push($cp,array('$[1950-'.date("Y").']','jnl_ano_final','Ano final',False,True));
+			
+			$sql = "select * from brapci_periodicidade where peri_ativo = 1";
+			array_push($cp,array('$Q peri_nome:peri_codigo:'.$sql,'jnl_periodicidade','Periodicidade',True,True));
+						
 			array_push($cp,array('$O 1:SIM&0:Descontinuada','jnl_vinc_vigente','Vigente',True,True));
 			array_push($cp,array('$O A:Ativa&B:Descontinuada&X:Cancelada','jnl_status','Status',True,True));
-			array_push($cp,array('$T60:7','jnl_obs','Observação',False,True));
+			array_push($cp,array('$T60:7','jnl_obs','Observação',False,True));	
+			return($cp);
+		}	
 			
+	function cp_03()
+		{
+			$cp = array();
+			array_push($cp,array('$H8','id_jnl','',False,True));
 			array_push($cp,array('$A8','','LINKS',False,True));
-			array_push($cp,array('$S120','jnl_url','Link',False,True));
-			
-			
+			array_push($cp,array('$S80','jnl_url','Nome do Link',False,True));
+			return($cp);
+		}	
+						
+	function cp_04()
+		{
+			$cp = array();
+			array_push($cp,array('$H8','id_jnl','',False,True));
 			array_push($cp,array('$A8','','OAI',False,True));
-			array_push($cp,array('$S200','jnl_url_oai','OAI Link',False,True));
-			array_push($cp,array('$S30','jnl_token','Codigo',False,True));
+			array_push($cp,array('$S100','jnl_url_oai','OAI Link',False,True));
+						
+			array_push($cp,array('$S30','jnl_token','Token',False,True));
 			array_push($cp,array('$O 1:SIM&0:NÃO','jnl_oai_from','Harvesting seletivo',True,True));
 			return($cp);
 		}
@@ -316,7 +352,8 @@ class publications
 			$sx .= $sa;		
 			if ($editar==1)
 				{
-				$sx .= '<BR><font class="link"><a href="#" class="link" id="author">editar autor</A></font>';
+				$oc = ' onclick="newxy2(\'article_autor_ed.php?dd1='.$article.'\',800,600);" ';
+				$sx .= '<BR><font class="link"><a href="#" class="link" '.$oc.'>editar autor</A></font>';
 				}
 			$sx .= '
 					<script>
@@ -402,6 +439,7 @@ class publications
 		}
 	function show_keywords_words($art,$idio)
 		{
+			global $editar;
 			$sql = "select * from brapci_article_keyword
 					inner join brapci_keyword on kw_keyword = kw_codigo
 					where kw_article = '$art' and kw_idioma = '$idio'
@@ -415,6 +453,12 @@ class publications
 					$sx .= trim($line['kw_word']);
 					$tot++;
 				}
+			if ($editar==1)
+				{
+				$oc = ' onclick="newxy2(\'article_keyword_ed.php?dd1='.$art.'&dd2='.$idio.'\',800,600);" ';
+				$sx .= '<BR><font class="link"><a href="#" class="link" '.$oc.'>editar palavras-chave</A></font>';
+				}
+			
 			return($sx);
 		}
 	function updatex_keys()
@@ -538,7 +582,7 @@ class publications
 			$sx .= '<font class="article_title">';
 			$sx .= trim($line['ar_titulo_1']);
 			$sx .= '</font>';
-				
+			//$sx .= '<BR>==>'.$line['ar_titulo_1_asc'];
 			/* Título alternativo */
 			$tit_alt = trim($line['ar_titulo_2']);
 			if (strlen($tit_alt) > 0)
@@ -588,7 +632,8 @@ class publications
 					}
 					if ($editar==1)
 						{
-						$sx .= '<BR><font class="link"><a href="#" class="link" id="abstract_edit">editar abstract</A></font>';
+						$oc = ' onclick="newxy2(\'article_abstract_ed.php?dd0='.$id.'\',800,800);" ';
+						$sx .= '<BR><font class="link"><a href="#" class="link" id="abstract_edit_ok" '.$oc.'>editar abstract</A></font>';
 						}
 					
 			return($sx);								
@@ -780,7 +825,7 @@ class publications
 					order by jnl_nome
 					";
 			$rlt = db_query($sql);
-			$sx = '<table class="tabela00 lt1" style="width: auto;">';
+			$sx = '<table class="tabela00 lt1" style="width: 100%;">';
 			while ($line = db_read($rlt))
 				{
 					$sx .= $this->mostra_row($line);

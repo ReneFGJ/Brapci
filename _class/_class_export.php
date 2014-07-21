@@ -80,7 +80,7 @@ class export
 
 				$sql .= "'' as Notes,";
 				$sql .= "ar_resumo_1 as Abstract,";
-				$sql .= "'' as Call_Number,";
+				$sql .= "jnl_tipo as Call_Number,";
 
 				$sql .= "'' as Keywords,";
 				$sql .= "ar_codigo as ar_codigo,";
@@ -231,7 +231,22 @@ class export
 	
 						$sqlq .= "'".$line['Notes']."',";
 						$sqlq .= "'".$line['Abstract']."',";
-						$sqlq .= "'".$line['Call_Number']."',";
+						/* Tipo */
+						$tipo = trim($line['Call_Number']);
+					
+						switch ($tipo)
+							{
+								case 'J': $tipo = '1'; break;
+								case 'E': $tipo = '2'; break;
+								case 'L': $tipo = '3'; break;
+								case 'C': $tipo = '4'; break;
+								case 'D': $tipo = '5'; break;
+								case 'B': $tipo = '6'; break;
+								case 'T': $tipo = '7'; break;
+								case 'A'; $tipo = '8'; break;
+								default: $tipo = '99'; break;
+							}							
+						$sqlq .= "'".$tipo."',";
 	
 						$sqlq .= "'".$key1."',";
 						$sqlq .= "'".$line['ar_codigo']."',";
