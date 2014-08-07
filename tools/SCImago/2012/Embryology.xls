@@ -1,0 +1,44 @@
+	<html>
+	<head>
+	<title>SJR : Scientific Journal Rankings</title>
+	<style>
+	<!--table
+	{mso-displayed-decimal-separator:"\,";
+	mso-displayed-thousand-separator:"\.";}
+	-->
+	</style>
+	</head>
+	<body>
+	
+		<table class="tabla_datos">
+		<thead>
+			  <tr>
+				<th></th>
+				<th class="mitooltip" onmouseover="Tip('Journal title',OFFSETY,20)">Title</th>
+				<th>ISSN</th>
+				<th class="mitooltip"  colspan="2"  onmouseover="Tip('SCImago Journal Rank indicator. It is a measure of journal\'s impact,<br /> influence or prestige. It expresses the average number of<br /> weighted citations received in the selected year by the documents<br /> published in the journal in the three previous years',OFFSETY,20)">SJR</th> 
+				<th class="mitooltip" onmouseover="Tip('Journal\'s number of articles (h) that have<br /> received at least h citations over the whole period',OFFSETY,20)">H index</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s published articles in 2012.<br /> All type of documents are considered',OFFSETY,20)">Total Docs. (2012)</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s published articles in 2011, 2010 and 2009.<br /> All type of documents are considered',OFFSETY,20)">Total Docs. (3years)</th>
+				<th class="mitooltip" onmouseover="Tip('Number of references included in the<br /> journal\'s published articles in 2012',OFFSETY,20)">Total Refs.</th>
+				<th class="mitooltip" onmouseover="Tip('Citations in 2012 received by journal\'s documents<br /> published in 2011, 2010 and 2009',OFFSETY,20)">Total Cites (3years)</th> 
+				<th class="mitooltip" onmouseover="Tip('Journal\'s citable documents in 2011, 2010 and 2009.<br /> Citable documents include: articles, reviews<br /> and conference papers',OFFSETY,20)">Citable Docs. (3years)</th>
+				<th class="mitooltip" onmouseover="Tip('Average citation per document in a 2 year period.<br /> This metric is widely used as impact index',OFFSETY,20)">Cites / Doc. (2years)</th> 
+				<th class="mitooltip" onmouseover="Tip('Average amount of references per document in 2012',OFFSETY,20)">Ref. / Doc.</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s Publication Country',OFFSETY,20)">Country</th>
+			  </tr>
+		</thead>
+		<tbody>
+<tr><td>1</td><td>Molecular Human Reproduction</td><td>="14602407"</td><td >Q1</td><td>1,701</td><td>84</td><td>68</td><td>279</td><td>3.032</td><td>1.224</td><td>267</td><td>4,40</td><td>44,59</td><td>United Kingdom</td><tr><td>2</td><td>Birth Defects Research Part C - Embryo Today: Reviews</td><td>="15429768"</td><td >Q1</td><td>1,665</td><td>41</td><td>27</td><td>82</td><td>3.439</td><td>390</td><td>79</td><td>4,56</td><td>127,37</td><td>United States</td><tr><td>3</td><td>Biology of Reproduction</td><td>="15297268"</td><td >Q1</td><td>1,536</td><td>124</td><td>345</td><td>850</td><td>15.332</td><td>3.413</td><td>801</td><td>3,97</td><td>44,44</td><td>United States</td><tr><td>4</td><td>Evolution and Development</td><td>="1525142X"</td><td >Q2</td><td>1,336</td><td>47</td><td>47</td><td>190</td><td>2.930</td><td>484</td><td>179</td><td>2,94</td><td>62,34</td><td>United Kingdom</td><tr><td>5</td><td>Reproduction</td><td>="17417899"</td><td >Q2</td><td>1,185</td><td>77</td><td>141</td><td>536</td><td>8.230</td><td>1.892</td><td>526</td><td>3,61</td><td>58,37</td><td>United Kingdom</td><tr><td>6</td><td>Developmental Psychobiology</td><td>="10982302"</td><td >Q2</td><td>0,970</td><td>54</td><td>110</td><td>218</td><td>6.476</td><td>522</td><td>215</td><td>2,61</td><td>58,87</td><td>United States</td><tr><td>7</td><td>Sexual Development</td><td>="16615433"</td><td >Q3</td><td>0,771</td><td>18</td><td>59</td><td>116</td><td>3.446</td><td>307</td><td>111</td><td>2,58</td><td>58,41</td><td>Switzerland</td><tr><td>8</td><td>Organogenesis</td><td>="15558592"</td><td >Q3</td><td>0,769</td><td>14</td><td>18</td><td>103</td><td>968</td><td>231</td><td>98</td><td>2,46</td><td>53,78</td><td>United States</td><tr><td>9</td><td>Anatomical Sciences Education</td><td>="19359780"</td><td >Q3</td><td>0,519</td><td>16</td><td>65</td><td>178</td><td>2.367</td><td>396</td><td>148</td><td>2,44</td><td>36,42</td><td>United States</td><tr><td>10</td><td>Folia Morphologica</td><td>="00155659"</td><td >Q4</td><td>0,207</td><td>14</td><td>39</td><td>152</td><td>861</td><td>82</td><td>151</td><td>0,50</td><td>22,08</td><td>Poland</td><tr><td>11</td><td>Acta Anatomica Sinica</td><td>="05291356"</td><td >Q4</td><td>0,126</td><td>4</td><td>104</td><td>524</td><td>1.751</td><td>38</td><td>524</td><td>0,08</td><td>16,84</td><td>China</td></tr>
+</tbody>
+</table>
+
+</div>
+</div>
+Retrieved from: http://www.scimagojr.com. 
+
+
+</div>
+</div>
+</body>
+</html>

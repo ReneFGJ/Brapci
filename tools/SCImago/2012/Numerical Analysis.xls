@@ -1,0 +1,44 @@
+	<html>
+	<head>
+	<title>SJR : Scientific Journal Rankings</title>
+	<style>
+	<!--table
+	{mso-displayed-decimal-separator:"\,";
+	mso-displayed-thousand-separator:"\.";}
+	-->
+	</style>
+	</head>
+	<body>
+	
+		<table class="tabla_datos">
+		<thead>
+			  <tr>
+				<th></th>
+				<th class="mitooltip" onmouseover="Tip('Journal title',OFFSETY,20)">Title</th>
+				<th>ISSN</th>
+				<th class="mitooltip"  colspan="2"  onmouseover="Tip('SCImago Journal Rank indicator. It is a measure of journal\'s impact,<br /> influence or prestige. It expresses the average number of<br /> weighted citations received in the selected year by the documents<br /> published in the journal in the three previous years',OFFSETY,20)">SJR</th> 
+				<th class="mitooltip" onmouseover="Tip('Journal\'s number of articles (h) that have<br /> received at least h citations over the whole period',OFFSETY,20)">H index</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s published articles in 2012.<br /> All type of documents are considered',OFFSETY,20)">Total Docs. (2012)</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s published articles in 2011, 2010 and 2009.<br /> All type of documents are considered',OFFSETY,20)">Total Docs. (3years)</th>
+				<th class="mitooltip" onmouseover="Tip('Number of references included in the<br /> journal\'s published articles in 2012',OFFSETY,20)">Total Refs.</th>
+				<th class="mitooltip" onmouseover="Tip('Citations in 2012 received by journal\'s documents<br /> published in 2011, 2010 and 2009',OFFSETY,20)">Total Cites (3years)</th> 
+				<th class="mitooltip" onmouseover="Tip('Journal\'s citable documents in 2011, 2010 and 2009.<br /> Citable documents include: articles, reviews<br /> and conference papers',OFFSETY,20)">Citable Docs. (3years)</th>
+				<th class="mitooltip" onmouseover="Tip('Average citation per document in a 2 year period.<br /> This metric is widely used as impact index',OFFSETY,20)">Cites / Doc. (2years)</th> 
+				<th class="mitooltip" onmouseover="Tip('Average amount of references per document in 2012',OFFSETY,20)">Ref. / Doc.</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s Publication Country',OFFSETY,20)">Country</th>
+			  </tr>
+		</thead>
+		<tbody>
+<tr><td>1</td><td>SIAM Journal on Mathematical Analysis</td><td>="10957154"</td><td >Q1</td><td>1,767</td><td>47</td><td>142</td><td>342</td><td>4.059</td><td>516</td><td>341</td><td>1,53</td><td>28,58</td><td>United States</td><tr><td>2</td><td>Journal of Multivariate Analysis</td><td>="10957243"</td><td >Q1</td><td>1,712</td><td>39</td><td>177</td><td>479</td><td>4.815</td><td>636</td><td>474</td><td>1,25</td><td>27,20</td><td>United States</td><tr><td>3</td><td>Applied Mathematics Letters</td><td>="08939659"</td><td >Q1</td><td>1,187</td><td>47</td><td>485</td><td>1.087</td><td>5.872</td><td>1.950</td><td>1.080</td><td>1,75</td><td>12,11</td><td>United Kingdom</td><tr><td>4</td><td>Set-Valued and Variational Analysis</td><td>="18770541"</td><td >Q1</td><td>1,102</td><td>22</td><td>32</td><td>74</td><td>944</td><td>67</td><td>65</td><td>0,96</td><td>29,50</td><td>Germany</td><tr><td>5</td><td>Applied Mathematics and Computation</td><td>="18735649"</td><td >Q1</td><td>0,988</td><td>74</td><td>1.077</td><td>2.963</td><td>26.932</td><td>5.209</td><td>2.935</td><td>1,60</td><td>25,01</td><td>United States</td><tr><td>6</td><td>Journal of Approximation Theory</td><td>="00219045"</td><td >Q1</td><td>0,973</td><td>31</td><td>88</td><td>344</td><td>1.810</td><td>275</td><td>334</td><td>0,83</td><td>20,57</td><td>United States</td><tr><td>7</td><td>Journal of Computational and Applied Mathematics</td><td>="03770427"</td><td >Q2</td><td>0,941</td><td>60</td><td>324</td><td>1.852</td><td>6.461</td><td>2.536</td><td>1.812</td><td>1,22</td><td>19,94</td><td>Netherlands</td><tr><td>8</td><td>SIAM Journal on Financial Mathematics</td><td>="1945497X"</td><td >Q2</td><td>0,872</td><td>6</td><td>26</td><td>74</td><td>736</td><td>78</td><td>73</td><td>1,07</td><td>28,31</td><td>United States</td><tr><td>9</td><td>Linear Algebra and Its Applications</td><td>="00243795"</td><td >Q2</td><td>0,868</td><td>49</td><td>636</td><td>1.364</td><td>9.694</td><td>1.416</td><td>1.325</td><td>0,97</td><td>15,24</td><td>United States</td><tr><td>10</td><td>International Journal of Numerical Analysis and Modeling</td><td>="17055105"</td><td >Q2</td><td>0,832</td><td>11</td><td>64</td><td>123</td><td>1.638</td><td>120</td><td>122</td><td>0,83</td><td>25,59</td><td>Canada</td><tr><td>11</td><td>Computational Science and Discovery</td><td>="17494680"</td><td >Q2</td><td>0,829</td><td>7</td><td>26</td><td>14</td><td>1.440</td><td>55</td><td>14</td><td>1,75</td><td>55,38</td><td>United Kingdom</td><tr><td>12</td><td>Kinetic and Related Models</td><td>="19375093"</td><td >Q2</td><td>0,704</td><td>4</td><td>39</td><td>88</td><td>993</td><td>74</td><td>85</td><td>0,87</td><td>25,46</td><td>United States</td><tr><td>13</td><td>Complex Variables and Elliptic Equations</td><td>="17476941"</td><td >Q3</td><td>0,529</td><td>6</td><td>99</td><td>238</td><td>1.873</td><td>118</td><td>234</td><td>0,46</td><td>18,92</td><td>United Kingdom</td><tr><td>14</td><td>Journal of Numerical Analysis, Industrial and Applied Mathematics</td><td>="17908159"</td><td >Q3</td><td>0,426</td><td>6</td><td>8</td><td>35</td><td>202</td><td>48</td><td>33</td><td>1,56</td><td>25,25</td><td>Greece</td><tr><td>15</td><td>Communications in Applied Analysis</td><td>="10832564"</td><td >Q3</td><td>0,395</td><td>8</td><td>0</td><td>136</td><td>0</td><td>50</td><td>132</td><td>0,36</td><td>0,00</td><td>United States</td><tr><td>16</td><td>Jaen Journal on Approximation</td><td>="19897251"</td><td >Q3</td><td>0,364</td><td>3</td><td>10</td><td>37</td><td>108</td><td>16</td><td>37</td><td>0,35</td><td>10,80</td><td>Spain</td><tr><td>17</td><td>International Journal of Mathematical Modelling and Numerical Optimisation</td><td>="20403615"</td><td >Q3</td><td>0,362</td><td>4</td><td>12</td><td>47</td><td>321</td><td>71</td><td>47</td><td>1,71</td><td>26,75</td><td>Switzerland</td><tr><td>18</td><td>Handbook of Numerical Analysis</td><td>="15708659"</td><td >Q3</td><td>0,356</td><td>19</td><td>0</td><td>38</td><td>0</td><td>19</td><td>36</td><td>1,00</td><td>0,00</td><td>Netherlands</td><tr><td>19</td><td>Algorithms</td><td>="19994893"</td><td >Q4</td><td>0,341</td><td>9</td><td>36</td><td>109</td><td>936</td><td>131</td><td>109</td><td>0,84</td><td>26,00</td><td>Switzerland</td><tr><td>20</td><td>Miskolc Mathematical Notes</td><td>="17872413"</td><td >Q4</td><td>0,206</td><td>4</td><td>45</td><td>46</td><td>741</td><td>31</td><td>46</td><td>0,67</td><td>16,47</td><td>Hungary</td><tr><td>21</td><td>Applied Mathematics and Information Sciences</td><td>="19350090"</td><td >Q4</td><td>0,185</td><td>5</td><td>105</td><td>71</td><td>1.942</td><td>42</td><td>71</td><td>0,59</td><td>18,50</td><td>United States</td><tr><td>22</td><td>Communications in Mathematical Analysis</td><td>="19389787"</td><td >Q4</td><td>0,168</td><td>2</td><td>33</td><td>16</td><td>647</td><td>6</td><td>16</td><td>0,38</td><td>19,61</td><td>United States</td><tr><td>23</td><td>Numerical Analysis and Applications</td><td>="19954247"</td><td >Q4</td><td>0,152</td><td>3</td><td>38</td><td>101</td><td>543</td><td>22</td><td>100</td><td>0,17</td><td>14,29</td><td>Russian Federation</td><tr><td>24</td><td>Investigacion Operacional</td><td>="02574306"</td><td >Q4</td><td>0,000</td><td>1</td><td>24</td><td>0</td><td>487</td><td>0</td><td>0</td><td>0,00</td><td>20,29</td><td>Cuba</td></tr>
+</tbody>
+</table>
+
+</div>
+</div>
+Retrieved from: http://www.scimagojr.com. 
+
+
+</div>
+</div>
+</body>
+</html>

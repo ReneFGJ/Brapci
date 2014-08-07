@@ -1,0 +1,44 @@
+	<html>
+	<head>
+	<title>SJR : Scientific Journal Rankings</title>
+	<style>
+	<!--table
+	{mso-displayed-decimal-separator:"\,";
+	mso-displayed-thousand-separator:"\.";}
+	-->
+	</style>
+	</head>
+	<body>
+	
+		<table class="tabla_datos">
+		<thead>
+			  <tr>
+				<th></th>
+				<th class="mitooltip" onmouseover="Tip('Journal title',OFFSETY,20)">Title</th>
+				<th>ISSN</th>
+				<th class="mitooltip"  colspan="2"  onmouseover="Tip('SCImago Journal Rank indicator. It is a measure of journal\'s impact,<br /> influence or prestige. It expresses the average number of<br /> weighted citations received in the selected year by the documents<br /> published in the journal in the three previous years',OFFSETY,20)">SJR</th> 
+				<th class="mitooltip" onmouseover="Tip('Journal\'s number of articles (h) that have<br /> received at least h citations over the whole period',OFFSETY,20)">H index</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s published articles in 2012.<br /> All type of documents are considered',OFFSETY,20)">Total Docs. (2012)</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s published articles in 2011, 2010 and 2009.<br /> All type of documents are considered',OFFSETY,20)">Total Docs. (3years)</th>
+				<th class="mitooltip" onmouseover="Tip('Number of references included in the<br /> journal\'s published articles in 2012',OFFSETY,20)">Total Refs.</th>
+				<th class="mitooltip" onmouseover="Tip('Citations in 2012 received by journal\'s documents<br /> published in 2011, 2010 and 2009',OFFSETY,20)">Total Cites (3years)</th> 
+				<th class="mitooltip" onmouseover="Tip('Journal\'s citable documents in 2011, 2010 and 2009.<br /> Citable documents include: articles, reviews<br /> and conference papers',OFFSETY,20)">Citable Docs. (3years)</th>
+				<th class="mitooltip" onmouseover="Tip('Average citation per document in a 2 year period.<br /> This metric is widely used as impact index',OFFSETY,20)">Cites / Doc. (2years)</th> 
+				<th class="mitooltip" onmouseover="Tip('Average amount of references per document in 2012',OFFSETY,20)">Ref. / Doc.</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s Publication Country',OFFSETY,20)">Country</th>
+			  </tr>
+		</thead>
+		<tbody>
+<tr><td>1</td><td>SIAM Journal on Control and Optimization</td><td>="10957138"</td><td >Q1</td><td>2,661</td><td>65</td><td>139</td><td>291</td><td>3.998</td><td>693</td><td>289</td><td>1,79</td><td>28,76</td><td>United States</td><tr><td>2</td><td>IET Control Theory and Applications</td><td>="17518652"</td><td >Q1</td><td>1,587</td><td>59</td><td>194</td><td>590</td><td>5.205</td><td>1.607</td><td>588</td><td>2,47</td><td>26,83</td><td>United Kingdom</td><tr><td>3</td><td>Memetic Computing</td><td>="18659292"</td><td >Q1</td><td>1,557</td><td>10</td><td>32</td><td>70</td><td>1.104</td><td>157</td><td>60</td><td>1,88</td><td>34,50</td><td>Germany</td><tr><td>4</td><td>Journal of Optimization Theory and Applications</td><td>="15732878"</td><td >Q1</td><td>1,244</td><td>50</td><td>273</td><td>445</td><td>6.837</td><td>715</td><td>433</td><td>1,55</td><td>25,04</td><td>United States</td><tr><td>5</td><td>Optimization Letters</td><td>="18624480"</td><td >Q1</td><td>1,201</td><td>13</td><td>278</td><td>194</td><td>5.838</td><td>243</td><td>160</td><td>1,46</td><td>21,00</td><td>Germany</td><tr><td>6</td><td>Journal of Global Optimization</td><td>="15732916"</td><td >Q1</td><td>1,149</td><td>46</td><td>290</td><td>427</td><td>8.803</td><td>600</td><td>361</td><td>1,40</td><td>30,36</td><td>Netherlands</td><tr><td>7</td><td>Optimization Methods and Software</td><td>="10556788"</td><td >Q1</td><td>1,004</td><td>32</td><td>62</td><td>165</td><td>1.774</td><td>189</td><td>158</td><td>0,77</td><td>28,61</td><td>United Kingdom</td><tr><td>8</td><td>Applied Mathematical Modelling</td><td>="0307904X"</td><td >Q2</td><td>0,936</td><td>37</td><td>506</td><td>1.195</td><td>14.590</td><td>2.640</td><td>1.182</td><td>2,17</td><td>28,83</td><td>United States</td><tr><td>9</td><td>Optimal Control Applications and Methods</td><td>="10991514"</td><td >Q2</td><td>0,870</td><td>22</td><td>75</td><td>119</td><td>2.016</td><td>178</td><td>115</td><td>1,53</td><td>26,88</td><td>United Kingdom</td><tr><td>10</td><td>Inverse Problems and Imaging</td><td>="19308345"</td><td >Q2</td><td>0,747</td><td>8</td><td>36</td><td>98</td><td>1.164</td><td>128</td><td>96</td><td>1,18</td><td>32,33</td><td>United States</td><tr><td>11</td><td>Journal of Combinatorial Optimization</td><td>="15732886"</td><td >Q2</td><td>0,736</td><td>27</td><td>190</td><td>226</td><td>3.368</td><td>136</td><td>184</td><td>0,55</td><td>17,73</td><td>Netherlands</td><tr><td>12</td><td>Numerical Functional Analysis and Optimization</td><td>="15322467"</td><td >Q2</td><td>0,716</td><td>26</td><td>69</td><td>226</td><td>1.390</td><td>147</td><td>224</td><td>0,54</td><td>20,14</td><td>United Kingdom</td><tr><td>13</td><td>Optimization</td><td>="10294945"</td><td >Q2</td><td>0,664</td><td>22</td><td>102</td><td>244</td><td>2.377</td><td>157</td><td>236</td><td>0,62</td><td>23,30</td><td>United Kingdom</td><tr><td>14</td><td>Numerical Mathematics</td><td>="10048979"</td><td >Q3</td><td>0,621</td><td>4</td><td>30</td><td>58</td><td>870</td><td>45</td><td>57</td><td>0,79</td><td>29,00</td><td>China</td><tr><td>15</td><td>International Journal of Dynamical Systems and Differential Equations</td><td>="17523591"</td><td >Q3</td><td>0,593</td><td>6</td><td>20</td><td>43</td><td>469</td><td>31</td><td>43</td><td>0,88</td><td>23,45</td><td>United Kingdom</td><tr><td>16</td><td>Journal of Geometric Mechanics</td><td>="19414889"</td><td >Q3</td><td>0,582</td><td>3</td><td>23</td><td>18</td><td>571</td><td>20</td><td>18</td><td>1,11</td><td>24,83</td><td>United States</td><tr><td>17</td><td>Journal of Industrial and Management Optimization</td><td>="1553166X"</td><td >Q3</td><td>0,580</td><td>12</td><td>64</td><td>182</td><td>1.523</td><td>138</td><td>177</td><td>0,71</td><td>23,80</td><td>United States</td><tr><td>18</td><td>Pacific Journal of Optimization</td><td>="13498169"</td><td >Q3</td><td>0,578</td><td>7</td><td>47</td><td>109</td><td>1.226</td><td>84</td><td>109</td><td>0,92</td><td>26,09</td><td>Japan</td><tr><td>19</td><td>Nonlinear Biomedical Physics</td><td>="17534631"</td><td >Q3</td><td>0,399</td><td>7</td><td>2</td><td>39</td><td>57</td><td>57</td><td>33</td><td>1,50</td><td>28,50</td><td>United Kingdom</td><tr><td>20</td><td>Journal of Uncertain Systems</td><td>="17528917"</td><td >Q3</td><td>0,354</td><td>4</td><td>39</td><td>28</td><td>610</td><td>19</td><td>28</td><td>0,68</td><td>15,64</td><td>United Kingdom</td><tr><td>21</td><td>Journal of Grey System</td><td>="09573720"</td><td >Q4</td><td>0,349</td><td>7</td><td>45</td><td>122</td><td>588</td><td>53</td><td>122</td><td>0,36</td><td>13,07</td><td>United Kingdom</td><tr><td>22</td><td>Archives of Control Sciences</td><td>="12302384"</td><td >Q4</td><td>0,266</td><td>3</td><td>31</td><td>79</td><td>567</td><td>28</td><td>79</td><td>0,43</td><td>18,29</td><td>Poland</td><tr><td>23</td><td>Studies in Informatics and Control</td><td>="1841429X"</td><td >Q4</td><td>0,224</td><td>5</td><td>36</td><td>83</td><td>766</td><td>62</td><td>83</td><td>0,75</td><td>21,28</td><td>Romania</td><tr><td>24</td><td>Lecture Notes in Computational Science and Engineering</td><td>="14397358"</td><td >Q4</td><td>0,213</td><td>5</td><td>41</td><td>410</td><td>1.547</td><td>67</td><td>384</td><td>0,20</td><td>37,73</td><td>Germany</td><tr><td>25</td><td>Miskolc Mathematical Notes</td><td>="17872413"</td><td >Q4</td><td>0,206</td><td>4</td><td>45</td><td>46</td><td>741</td><td>31</td><td>46</td><td>0,67</td><td>16,47</td><td>Hungary</td><tr><td>26</td><td>Moscow University Computational Mathematics and Cybernetics</td><td>="02786419"</td><td >Q4</td><td>0,107</td><td>2</td><td>18</td><td>87</td><td>176</td><td>5</td><td>87</td><td>0,09</td><td>9,78</td><td>United States</td></tr>
+</tbody>
+</table>
+
+</div>
+</div>
+Retrieved from: http://www.scimagojr.com. 
+
+
+</div>
+</div>
+</body>
+</html>

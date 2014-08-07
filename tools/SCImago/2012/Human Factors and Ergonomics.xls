@@ -1,0 +1,44 @@
+	<html>
+	<head>
+	<title>SJR : Scientific Journal Rankings</title>
+	<style>
+	<!--table
+	{mso-displayed-decimal-separator:"\,";
+	mso-displayed-thousand-separator:"\.";}
+	-->
+	</style>
+	</head>
+	<body>
+	
+		<table class="tabla_datos">
+		<thead>
+			  <tr>
+				<th></th>
+				<th class="mitooltip" onmouseover="Tip('Journal title',OFFSETY,20)">Title</th>
+				<th>ISSN</th>
+				<th class="mitooltip"  colspan="2"  onmouseover="Tip('SCImago Journal Rank indicator. It is a measure of journal\'s impact,<br /> influence or prestige. It expresses the average number of<br /> weighted citations received in the selected year by the documents<br /> published in the journal in the three previous years',OFFSETY,20)">SJR</th> 
+				<th class="mitooltip" onmouseover="Tip('Journal\'s number of articles (h) that have<br /> received at least h citations over the whole period',OFFSETY,20)">H index</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s published articles in 2012.<br /> All type of documents are considered',OFFSETY,20)">Total Docs. (2012)</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s published articles in 2011, 2010 and 2009.<br /> All type of documents are considered',OFFSETY,20)">Total Docs. (3years)</th>
+				<th class="mitooltip" onmouseover="Tip('Number of references included in the<br /> journal\'s published articles in 2012',OFFSETY,20)">Total Refs.</th>
+				<th class="mitooltip" onmouseover="Tip('Citations in 2012 received by journal\'s documents<br /> published in 2011, 2010 and 2009',OFFSETY,20)">Total Cites (3years)</th> 
+				<th class="mitooltip" onmouseover="Tip('Journal\'s citable documents in 2011, 2010 and 2009.<br /> Citable documents include: articles, reviews<br /> and conference papers',OFFSETY,20)">Citable Docs. (3years)</th>
+				<th class="mitooltip" onmouseover="Tip('Average citation per document in a 2 year period.<br /> This metric is widely used as impact index',OFFSETY,20)">Cites / Doc. (2years)</th> 
+				<th class="mitooltip" onmouseover="Tip('Average amount of references per document in 2012',OFFSETY,20)">Ref. / Doc.</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s Publication Country',OFFSETY,20)">Country</th>
+			  </tr>
+		</thead>
+		<tbody>
+<tr><td>1</td><td>Accident Analysis and Prevention</td><td>="18792057"</td><td >Q1</td><td>1,228</td><td>69</td><td>324</td><td>698</td><td>11.106</td><td>1.781</td><td>695</td><td>2,32</td><td>34,28</td><td>United Kingdom</td><tr><td>2</td><td>Journal of Safety Research</td><td>="00224375"</td><td >Q1</td><td>1,010</td><td>40</td><td>69</td><td>208</td><td>2.024</td><td>350</td><td>196</td><td>1,53</td><td>29,33</td><td>United Kingdom</td><tr><td>3</td><td>Journal of Anthropological Archaeology</td><td>="10902686"</td><td >Q1</td><td>0,956</td><td>31</td><td>42</td><td>95</td><td>4.189</td><td>212</td><td>95</td><td>2,12</td><td>99,74</td><td>United States</td><tr><td>4</td><td>Safety Science</td><td>="09257535"</td><td >Q1</td><td>0,814</td><td>45</td><td>261</td><td>516</td><td>8.403</td><td>1.055</td><td>500</td><td>1,86</td><td>32,20</td><td>Netherlands</td><tr><td>5</td><td>Career Development International</td><td>="13620436"</td><td >Q1</td><td>0,750</td><td>19</td><td>35</td><td>106</td><td>2.250</td><td>188</td><td>105</td><td>1,30</td><td>64,29</td><td>United Kingdom</td><tr><td>6</td><td>Journal of Ambient Intelligence and Humanized Computing</td><td>="18685137"</td><td >Q1</td><td>0,623</td><td>7</td><td>28</td><td>52</td><td>746</td><td>83</td><td>47</td><td>1,77</td><td>26,64</td><td>Germany</td><tr><td>7</td><td>Behaviour and Information Technology</td><td>="13623001"</td><td >Q2</td><td>0,614</td><td>40</td><td>85</td><td>167</td><td>4.037</td><td>226</td><td>150</td><td>1,30</td><td>47,49</td><td>United Kingdom</td><tr><td>8</td><td>Adoption Quarterly</td><td>="10926755"</td><td >Q2</td><td>0,601</td><td>7</td><td>15</td><td>47</td><td>648</td><td>49</td><td>44</td><td>1,07</td><td>43,20</td><td>United States</td><tr><td>9</td><td>Theoretical Issues in Ergonomics Science</td><td>="1464536X"</td><td >Q2</td><td>0,587</td><td>5</td><td>39</td><td>70</td><td>1.763</td><td>76</td><td>65</td><td>1,17</td><td>45,21</td><td>United Kingdom</td><tr><td>10</td><td>Journal of Personal Selling and Sales Management</td><td>="08853134"</td><td >Q2</td><td>0,538</td><td>20</td><td>32</td><td>72</td><td>1.811</td><td>96</td><td>62</td><td>0,95</td><td>56,59</td><td>United States</td><tr><td>11</td><td>Identity</td><td>="1532706X"</td><td >Q2</td><td>0,421</td><td>14</td><td>17</td><td>57</td><td>804</td><td>47</td><td>55</td><td>0,50</td><td>47,29</td><td>United Kingdom</td><tr><td>12</td><td>Journal of Divorce and Remarriage</td><td>="15404811"</td><td >Q3</td><td>0,368</td><td>9</td><td>34</td><td>116</td><td>1.155</td><td>82</td><td>115</td><td>0,70</td><td>33,97</td><td>United Kingdom</td><tr><td>13</td><td>Australian and New Zealand Journal of Family Therapy</td><td>="0814723X"</td><td >Q3</td><td>0,365</td><td>6</td><td>30</td><td>101</td><td>755</td><td>40</td><td>83</td><td>0,56</td><td>25,17</td><td>Australia</td><tr><td>14</td><td>Technology in Society</td><td>="0160791X"</td><td >Q3</td><td>0,348</td><td>24</td><td>32</td><td>120</td><td>1.519</td><td>126</td><td>113</td><td>0,78</td><td>47,47</td><td>United Kingdom</td><tr><td>15</td><td>Journal of Religion and Spirituality in Social Work</td><td>="15426440"</td><td >Q3</td><td>0,285</td><td>7</td><td>21</td><td>72</td><td>1.147</td><td>41</td><td>65</td><td>0,16</td><td>54,62</td><td>United Kingdom</td><tr><td>16</td><td>Family Journal</td><td>="10664807"</td><td >Q3</td><td>0,242</td><td>12</td><td>57</td><td>173</td><td>1.950</td><td>77</td><td>152</td><td>0,52</td><td>34,21</td><td>United States</td><tr><td>17</td><td>Journal of Social Work in Disability and Rehabilitation</td><td>="15367118"</td><td >Q3</td><td>0,211</td><td>5</td><td>16</td><td>49</td><td>608</td><td>24</td><td>47</td><td>0,48</td><td>38,00</td><td>United Kingdom</td><tr><td>18</td><td>Employee Responsibilities and Rights Journal</td><td>="08927545"</td><td >Q4</td><td>0,210</td><td>13</td><td>25</td><td>90</td><td>1.030</td><td>30</td><td>60</td><td>0,29</td><td>41,20</td><td>United States</td><tr><td>19</td><td>Historical Records of Australian Science</td><td>="07273061"</td><td >Q4</td><td>0,140</td><td>6</td><td>6</td><td>7</td><td>393</td><td>1</td><td>6</td><td>0,00</td><td>65,50</td><td>Australia</td><tr><td>20</td><td>Reviews of Human Factors and Ergonomics</td><td>="1557234X"</td><td >Q4</td><td>0,121</td><td>2</td><td>0</td><td>9</td><td>0</td><td>8</td><td>8</td><td>1,00</td><td>0,00</td><td>United States</td><tr><td>21</td><td>Groupwork</td><td>="0951824X"</td><td >Q4</td><td>0,110</td><td>3</td><td>6</td><td>56</td><td>162</td><td>12</td><td>47</td><td>0,26</td><td>27,00</td><td>United Kingdom</td></tr>
+</tbody>
+</table>
+
+</div>
+</div>
+Retrieved from: http://www.scimagojr.com. 
+
+
+</div>
+</div>
+</body>
+</html>

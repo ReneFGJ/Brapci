@@ -10,9 +10,7 @@ echo '<UL>';
 echo '<LI><a href="indicador_tipologia.php?dd0='.$ano.'">Tipologia das fontes</A></LI>';
 echo '<LI><a href="indicador_icpa.php?dd0='.$ano.'">Indice de Concentração de Produção por Autor (iCPA)</A></LI>';
 echo '<LI><a href="indicador_periodicidade.php">Periodicidade das publicações</A></LI>';
+echo '<LI><a href="indicador_imv.php">Meia vida</A></LI>';
 echo '</UL>';
-
-
-
 
 ?>

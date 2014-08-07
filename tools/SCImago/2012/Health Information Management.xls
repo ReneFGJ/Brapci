@@ -1,0 +1,44 @@
+	<html>
+	<head>
+	<title>SJR : Scientific Journal Rankings</title>
+	<style>
+	<!--table
+	{mso-displayed-decimal-separator:"\,";
+	mso-displayed-thousand-separator:"\.";}
+	-->
+	</style>
+	</head>
+	<body>
+	
+		<table class="tabla_datos">
+		<thead>
+			  <tr>
+				<th></th>
+				<th class="mitooltip" onmouseover="Tip('Journal title',OFFSETY,20)">Title</th>
+				<th>ISSN</th>
+				<th class="mitooltip"  colspan="2"  onmouseover="Tip('SCImago Journal Rank indicator. It is a measure of journal\'s impact,<br /> influence or prestige. It expresses the average number of<br /> weighted citations received in the selected year by the documents<br /> published in the journal in the three previous years',OFFSETY,20)">SJR</th> 
+				<th class="mitooltip" onmouseover="Tip('Journal\'s number of articles (h) that have<br /> received at least h citations over the whole period',OFFSETY,20)">H index</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s published articles in 2012.<br /> All type of documents are considered',OFFSETY,20)">Total Docs. (2012)</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s published articles in 2011, 2010 and 2009.<br /> All type of documents are considered',OFFSETY,20)">Total Docs. (3years)</th>
+				<th class="mitooltip" onmouseover="Tip('Number of references included in the<br /> journal\'s published articles in 2012',OFFSETY,20)">Total Refs.</th>
+				<th class="mitooltip" onmouseover="Tip('Citations in 2012 received by journal\'s documents<br /> published in 2011, 2010 and 2009',OFFSETY,20)">Total Cites (3years)</th> 
+				<th class="mitooltip" onmouseover="Tip('Journal\'s citable documents in 2011, 2010 and 2009.<br /> Citable documents include: articles, reviews<br /> and conference papers',OFFSETY,20)">Citable Docs. (3years)</th>
+				<th class="mitooltip" onmouseover="Tip('Average citation per document in a 2 year period.<br /> This metric is widely used as impact index',OFFSETY,20)">Cites / Doc. (2years)</th> 
+				<th class="mitooltip" onmouseover="Tip('Average amount of references per document in 2012',OFFSETY,20)">Ref. / Doc.</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s Publication Country',OFFSETY,20)">Country</th>
+			  </tr>
+		</thead>
+		<tbody>
+<tr><td>1</td><td>IEEE Transactions on Information Technology in Biomedicine</td><td>="10897771"</td><td >Q1</td><td>0,877</td><td>55</td><td>150</td><td>406</td><td>5.209</td><td>1.462</td><td>396</td><td>3,40</td><td>34,73</td><td>United States</td><tr><td>2</td><td>International Journal of Technology Assessment in Health Care</td><td>="14716348"</td><td >Q1</td><td>0,800</td><td>43</td><td>69</td><td>278</td><td>1.516</td><td>425</td><td>241</td><td>1,68</td><td>21,97</td><td>United Kingdom</td><tr><td>3</td><td>Medical and Biological Engineering and Computing</td><td>="01400118"</td><td >Q1</td><td>0,664</td><td>56</td><td>160</td><td>457</td><td>5.319</td><td>922</td><td>410</td><td>2,01</td><td>33,24</td><td>Germany</td><tr><td>4</td><td>Health Information and Libraries Journal</td><td>="14711842"</td><td >Q2</td><td>0,486</td><td>24</td><td>41</td><td>143</td><td>1.085</td><td>138</td><td>126</td><td>0,94</td><td>26,46</td><td>United Kingdom</td><tr><td>5</td><td>Informatics for Health and Social Care</td><td>="17538157"</td><td >Q2</td><td>0,430</td><td>22</td><td>21</td><td>56</td><td>701</td><td>100</td><td>56</td><td>1,45</td><td>33,38</td><td>United Kingdom</td><tr><td>6</td><td>Telemedicine Journal and e-Health</td><td>="15563669"</td><td >Q2</td><td>0,373</td><td>33</td><td>259</td><td>701</td><td>3.171</td><td>631</td><td>629</td><td>0,82</td><td>12,24</td><td>United States</td><tr><td>7</td><td>Journal of Clinical Monitoring and Computing</td><td>="15732614"</td><td >Q2</td><td>0,372</td><td>30</td><td>101</td><td>166</td><td>2.416</td><td>123</td><td>153</td><td>0,77</td><td>23,92</td><td>Netherlands</td><tr><td>8</td><td>CIN - Computers Informatics Nursing</td><td>="15389774"</td><td >Q3</td><td>0,329</td><td>29</td><td>93</td><td>236</td><td>1.998</td><td>179</td><td>222</td><td>0,84</td><td>21,48</td><td>United States</td><tr><td>9</td><td>Journal of Medical Engineering and Technology</td><td>="03091902"</td><td >Q3</td><td>0,267</td><td>24</td><td>52</td><td>194</td><td>1.239</td><td>183</td><td>191</td><td>0,82</td><td>23,83</td><td>United Kingdom</td><tr><td>10</td><td>International Journal of Bioinformatics Research and Applications</td><td>="17445493"</td><td >Q3</td><td>0,189</td><td>10</td><td>29</td><td>119</td><td>755</td><td>51</td><td>119</td><td>0,47</td><td>26,03</td><td>United Kingdom</td><tr><td>11</td><td>International Journal of Telemedicine and Applications</td><td>="16876423"</td><td >Q4</td><td>0,153</td><td>5</td><td>26</td><td>46</td><td>869</td><td>32</td><td>44</td><td>0,61</td><td>33,42</td><td>Egypt</td><tr><td>12</td><td>ACIMED</td><td>="15612880"</td><td >Q4</td><td>0,140</td><td>4</td><td>39</td><td>139</td><td>662</td><td>4</td><td>110</td><td>0,04</td><td>16,97</td><td>Cuba</td></tr>
+</tbody>
+</table>
+
+</div>
+</div>
+Retrieved from: http://www.scimagojr.com. 
+
+
+</div>
+</div>
+</body>
+</html>

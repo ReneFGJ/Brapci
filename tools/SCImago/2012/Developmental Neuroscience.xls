@@ -1,0 +1,44 @@
+	<html>
+	<head>
+	<title>SJR : Scientific Journal Rankings</title>
+	<style>
+	<!--table
+	{mso-displayed-decimal-separator:"\,";
+	mso-displayed-thousand-separator:"\.";}
+	-->
+	</style>
+	</head>
+	<body>
+	
+		<table class="tabla_datos">
+		<thead>
+			  <tr>
+				<th></th>
+				<th class="mitooltip" onmouseover="Tip('Journal title',OFFSETY,20)">Title</th>
+				<th>ISSN</th>
+				<th class="mitooltip"  colspan="2"  onmouseover="Tip('SCImago Journal Rank indicator. It is a measure of journal\'s impact,<br /> influence or prestige. It expresses the average number of<br /> weighted citations received in the selected year by the documents<br /> published in the journal in the three previous years',OFFSETY,20)">SJR</th> 
+				<th class="mitooltip" onmouseover="Tip('Journal\'s number of articles (h) that have<br /> received at least h citations over the whole period',OFFSETY,20)">H index</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s published articles in 2012.<br /> All type of documents are considered',OFFSETY,20)">Total Docs. (2012)</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s published articles in 2011, 2010 and 2009.<br /> All type of documents are considered',OFFSETY,20)">Total Docs. (3years)</th>
+				<th class="mitooltip" onmouseover="Tip('Number of references included in the<br /> journal\'s published articles in 2012',OFFSETY,20)">Total Refs.</th>
+				<th class="mitooltip" onmouseover="Tip('Citations in 2012 received by journal\'s documents<br /> published in 2011, 2010 and 2009',OFFSETY,20)">Total Cites (3years)</th> 
+				<th class="mitooltip" onmouseover="Tip('Journal\'s citable documents in 2011, 2010 and 2009.<br /> Citable documents include: articles, reviews<br /> and conference papers',OFFSETY,20)">Citable Docs. (3years)</th>
+				<th class="mitooltip" onmouseover="Tip('Average citation per document in a 2 year period.<br /> This metric is widely used as impact index',OFFSETY,20)">Cites / Doc. (2years)</th> 
+				<th class="mitooltip" onmouseover="Tip('Average amount of references per document in 2012',OFFSETY,20)">Ref. / Doc.</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s Publication Country',OFFSETY,20)">Country</th>
+			  </tr>
+		</thead>
+		<tbody>
+<tr><td>1</td><td>Alzheimer's and Dementia</td><td>="15525279"</td><td >Q1</td><td>3,246</td><td>37</td><td>111</td><td>224</td><td>3.409</td><td>2.041</td><td>181</td><td>14,02</td><td>30,71</td><td>United States</td><tr><td>2</td><td>Frontiers in Systems Neuroscience</td><td>="16625137"</td><td >Q1</td><td>2,838</td><td>18</td><td>99</td><td>149</td><td>6.485</td><td>849</td><td>144</td><td>5,90</td><td>65,51</td><td>Switzerland</td><tr><td>3</td><td>Neural Development</td><td>="17498104"</td><td >Q1</td><td>2,540</td><td>24</td><td>41</td><td>116</td><td>2.232</td><td>480</td><td>113</td><td>3,79</td><td>54,44</td><td>United Kingdom</td><tr><td>4</td><td>Developmental Neurobiology</td><td>="1932846X"</td><td >Q1</td><td>1,850</td><td>94</td><td>122</td><td>239</td><td>9.591</td><td>855</td><td>228</td><td>4,21</td><td>78,61</td><td>United States</td><tr><td>5</td><td>Mechanisms of Development</td><td>="09254773"</td><td >Q2</td><td>1,603</td><td>108</td><td>47</td><td>163</td><td>2.157</td><td>477</td><td>162</td><td>2,49</td><td>45,89</td><td>Ireland</td><tr><td>6</td><td>Mechanisms of Ageing and Development</td><td>="00476374"</td><td >Q2</td><td>1,310</td><td>74</td><td>81</td><td>264</td><td>4.606</td><td>950</td><td>256</td><td>3,51</td><td>56,86</td><td>Ireland</td><tr><td>7</td><td>Developmental Neuropsychology</td><td>="87565641"</td><td >Q2</td><td>1,272</td><td>58</td><td>43</td><td>160</td><td>2.464</td><td>481</td><td>151</td><td>3,10</td><td>57,30</td><td>United Kingdom</td><tr><td>8</td><td>International Journal of Developmental Neuroscience</td><td>="07365748"</td><td >Q2</td><td>0,974</td><td>60</td><td>83</td><td>298</td><td>4.040</td><td>810</td><td>292</td><td>2,84</td><td>48,67</td><td>United Kingdom</td><tr><td>9</td><td>Vascular Cell</td><td>="2045824X"</td><td >Q3</td><td>0,972</td><td>9</td><td>21</td><td>54</td><td>946</td><td>164</td><td>52</td><td>3,15</td><td>45,05</td><td>United Kingdom</td><tr><td>10</td><td>Journal of the Neurological Sciences</td><td>="0022510X"</td><td >Q3</td><td>0,911</td><td>87</td><td>467</td><td>1.298</td><td>14.621</td><td>3.340</td><td>1.218</td><td>2,58</td><td>31,31</td><td>Netherlands</td><tr><td>11</td><td>Fluids and Barriers of the CNS</td><td>="20458118"</td><td >Q3</td><td>0,910</td><td>17</td><td>22</td><td>57</td><td>1.230</td><td>183</td><td>50</td><td>4,00</td><td>55,91</td><td>United Kingdom</td><tr><td>12</td><td>Developmental Neurorehabilitation</td><td>="17518423"</td><td >Q3</td><td>0,552</td><td>28</td><td>51</td><td>158</td><td>1.945</td><td>327</td><td>148</td><td>2,05</td><td>38,14</td><td>United Kingdom</td><tr><td>13</td><td>ADHD Attention Deficit and Hyperactivity Disorders</td><td>="18666647"</td><td >Q4</td><td>0,457</td><td>6</td><td>21</td><td>64</td><td>1.147</td><td>118</td><td>61</td><td>2,27</td><td>54,62</td><td>Austria</td><tr><td>14</td><td>NeuroQuantology</td><td>="13035150"</td><td >Q4</td><td>0,221</td><td>9</td><td>77</td><td>205</td><td>2.531</td><td>87</td><td>187</td><td>0,42</td><td>32,87</td><td>Turkey</td><tr><td>15</td><td>Open Tissue Engineering and Regenerative Medicine Journal</td><td>="18750435"</td><td >Q4</td><td>0,180</td><td>3</td><td>7</td><td>15</td><td>302</td><td>13</td><td>13</td><td>1,00</td><td>43,14</td><td>Netherlands</td><tr><td>16</td><td>Neural Regeneration Research</td><td>="16735374"</td><td >Q4</td><td>0,137</td><td>6</td><td>246</td><td>844</td><td>7.981</td><td>149</td><td>841</td><td>0,20</td><td>32,44</td><td>China</td></tr>
+</tbody>
+</table>
+
+</div>
+</div>
+Retrieved from: http://www.scimagojr.com. 
+
+
+</div>
+</div>
+</body>
+</html>

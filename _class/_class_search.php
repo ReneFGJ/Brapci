@@ -14,8 +14,10 @@ class search {
 
 		$xano = '0';
 		$id = 0;
+		$to = 0;
 		while ($line = db_read($rlt)) {
 			$id++;
+			$to++;
 			$ano = $line['m_ano'];
 			if ($xano != $ano) {
 				$id = 1;
@@ -28,6 +30,7 @@ class search {
 			}
 			$sx .= '<BR>';
 		}
+		$sx .= 'Total de '.$to.' referências';
 		return ($sx);
 
 	}

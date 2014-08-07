@@ -734,6 +734,50 @@ class bris
 			return($sx);
 		}	
 	
+	function indicador_imv($ano='')
+		{
+			$sql = "SELECT count(*) as total, m_ano, m_tipo FROM mar_works 
+					inner join brapci_article on m_work = ar_codigo
+					WHERE ar_ano = $ano and ar_tipo = 'ARTIG' and ar_status <> 'X'
+					and (m_tipo = 'ARTIC' or m_tipo = 'LIVRO')
+					group by m_ano, m_tipo
+					order by m_ano desc, m_tipo";
+			$rlt = db_query($sql);
+			$arti = array();
+			$livr = array();
+			$anos  = array();
+			$xano = '';
+			while ($line = db_read($rlt))
+				{
+					$ano = trim($line['m_ano']);
+					$tipo = $line['m_tipo'];
+					$total = $line['total'];
+					if (strlen($ano) == 4)
+						{
+							if ($ano != $xano)
+								{
+									array_push($anos,$ano);
+									array_push($livr,0);
+									array_push($arti,0);
+									$id = (count($anos)-1);
+									$xano = $ano;
+								}
+							if ($tipo == 'ARTIC') { $arti[$id] = $arti[$id] + $total; }
+							if ($tipo == 'LIVRO') { $livr[$id] = $livr[$id] + $total; }						
+						}
+				}
+			$sx = '<table class="tabela00" width="400">';
+			for ($r=0;$r < count($anos);$r++)
+				{
+					$sx .= '<TR>';
+					$sx .= '<TD>'.$anos[$r];
+					$sx .= '<TD>'.$arti[$r];
+					$sx .= '<TD>'.$livr[$r];
+				}
+			$sx .= '</table>';
+			return($sx);
+		}
+	
 	function grupos_icpa($ano='')
 		{
 			if (strlen($ano) == 0)

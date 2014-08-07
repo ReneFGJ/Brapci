@@ -1,0 +1,44 @@
+	<html>
+	<head>
+	<title>SJR : Scientific Journal Rankings</title>
+	<style>
+	<!--table
+	{mso-displayed-decimal-separator:"\,";
+	mso-displayed-thousand-separator:"\.";}
+	-->
+	</style>
+	</head>
+	<body>
+	
+		<table class="tabla_datos">
+		<thead>
+			  <tr>
+				<th></th>
+				<th class="mitooltip" onmouseover="Tip('Journal title',OFFSETY,20)">Title</th>
+				<th>ISSN</th>
+				<th class="mitooltip"  colspan="2"  onmouseover="Tip('SCImago Journal Rank indicator. It is a measure of journal\'s impact,<br /> influence or prestige. It expresses the average number of<br /> weighted citations received in the selected year by the documents<br /> published in the journal in the three previous years',OFFSETY,20)">SJR</th> 
+				<th class="mitooltip" onmouseover="Tip('Journal\'s number of articles (h) that have<br /> received at least h citations over the whole period',OFFSETY,20)">H index</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s published articles in 2012.<br /> All type of documents are considered',OFFSETY,20)">Total Docs. (2012)</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s published articles in 2011, 2010 and 2009.<br /> All type of documents are considered',OFFSETY,20)">Total Docs. (3years)</th>
+				<th class="mitooltip" onmouseover="Tip('Number of references included in the<br /> journal\'s published articles in 2012',OFFSETY,20)">Total Refs.</th>
+				<th class="mitooltip" onmouseover="Tip('Citations in 2012 received by journal\'s documents<br /> published in 2011, 2010 and 2009',OFFSETY,20)">Total Cites (3years)</th> 
+				<th class="mitooltip" onmouseover="Tip('Journal\'s citable documents in 2011, 2010 and 2009.<br /> Citable documents include: articles, reviews<br /> and conference papers',OFFSETY,20)">Citable Docs. (3years)</th>
+				<th class="mitooltip" onmouseover="Tip('Average citation per document in a 2 year period.<br /> This metric is widely used as impact index',OFFSETY,20)">Cites / Doc. (2years)</th> 
+				<th class="mitooltip" onmouseover="Tip('Average amount of references per document in 2012',OFFSETY,20)">Ref. / Doc.</th>
+				<th class="mitooltip" onmouseover="Tip('Journal\'s Publication Country',OFFSETY,20)">Country</th>
+			  </tr>
+		</thead>
+		<tbody>
+<tr><td>1</td><td>Advances in Colloid and Interface Science</td><td>="00018686"</td><td >Q1</td><td>2,396</td><td>98</td><td>57</td><td>228</td><td>5.847</td><td>1.779</td><td>216</td><td>6,26</td><td>102,58</td><td>Netherlands</td><tr><td>2</td><td>Langmuir</td><td>="15205827"</td><td >Q1</td><td>1,872</td><td>205</td><td>2.150</td><td>6.654</td><td>97.635</td><td>29.234</td><td>6.592</td><td>4,31</td><td>45,41</td><td>United States</td><tr><td>3</td><td>Tribology International</td><td>="0301679X"</td><td >Q1</td><td>1,250</td><td>56</td><td>272</td><td>751</td><td>6.105</td><td>1.466</td><td>733</td><td>1,85</td><td>22,44</td><td>United States</td><tr><td>4</td><td>Journal of Colloid and Interface Science</td><td>="10957103"</td><td >Q1</td><td>1,154</td><td>123</td><td>934</td><td>2.864</td><td>39.574</td><td>9.772</td><td>2.845</td><td>3,27</td><td>42,37</td><td>United States</td><tr><td>5</td><td>Colloids and Surfaces B: Biointerfaces</td><td>="09277765"</td><td >Q2</td><td>1,068</td><td>65</td><td>428</td><td>1.349</td><td>16.595</td><td>5.044</td><td>1.336</td><td>3,76</td><td>38,77</td><td>Netherlands</td><tr><td>6</td><td>Colloid and Polymer Science</td><td>="14351536"</td><td >Q2</td><td>0,778</td><td>56</td><td>280</td><td>582</td><td>10.649</td><td>1.278</td><td>545</td><td>2,19</td><td>38,03</td><td>Germany</td><tr><td>7</td><td>Colloids and Surfaces A: Physicochemical and Engineering Aspects</td><td>="09277757"</td><td >Q2</td><td>0,752</td><td>89</td><td>640</td><td>1.817</td><td>21.365</td><td>4.261</td><td>1.790</td><td>2,19</td><td>33,38</td><td>Netherlands</td><tr><td>8</td><td>Journal of Surfactants and Detergents</td><td>="10973958"</td><td >Q3</td><td>0,549</td><td>23</td><td>133</td><td>184</td><td>4.067</td><td>288</td><td>169</td><td>1,64</td><td>30,58</td><td>Germany</td><tr><td>9</td><td>Surface and Interface Analysis</td><td>="10969918"</td><td >Q3</td><td>0,515</td><td>53</td><td>308</td><td>792</td><td>6.886</td><td>1.035</td><td>774</td><td>1,21</td><td>22,36</td><td>United Kingdom</td><tr><td>10</td><td>Progress in Colloid and Polymer Science</td><td>="0340255X"</td><td >Q3</td><td>0,277</td><td>26</td><td>0</td><td>95</td><td>0</td><td>54</td><td>94</td><td>0,36</td><td>0,00</td><td>Germany</td><tr><td>11</td><td>Tenside, Surfactants, Detergents</td><td>="09323414"</td><td >Q3</td><td>0,248</td><td>16</td><td>63</td><td>156</td><td>1.914</td><td>121</td><td>155</td><td>0,78</td><td>30,38</td><td>Germany</td><tr><td>12</td><td>Colloid Journal of the Russian Academy of Sciences: Kolloidnyi Zhurnal</td><td>="16083067"</td><td >Q4</td><td>0,207</td><td>18</td><td>96</td><td>343</td><td>2.878</td><td>141</td><td>343</td><td>0,37</td><td>29,98</td><td>Russian Federation</td><tr><td>13</td><td>Studies in Interface Science</td><td>="13837303"</td><td >Q4</td><td>0,106</td><td>9</td><td>0</td><td>43</td><td>0</td><td>1</td><td>40</td><td>0,03</td><td>0,00</td><td>Netherlands</td></tr>
+</tbody>
+</table>
+
+</div>
+</div>
+Retrieved from: http://www.scimagojr.com. 
+
+
+</div>
+</div>
+</body>
+</html>
