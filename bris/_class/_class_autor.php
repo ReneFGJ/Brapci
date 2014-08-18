@@ -6,12 +6,65 @@ class autor
 	
 	var $anos = 15;
 	
+	function resumo_producao()
+		{
+			$sx .= '<table width="100%">';
+			$sx .= '<TR><TH>Trabalhos produzidos<TH>Citações recebidas';
+			$sx .= '<TR align="center"><TD>'.$this->total_producao;
+			$sx .= '<TD>'.$this->total_citacoes;
+			$sx .= '</table>';
+			return($sx);
+		}
+
+	function autor_revistas_publicacoes_cinco_ano($autor)
+		{
+			$ano1 = date("Y");
+			$ano2 = $ano1 - 9;
+			$sql = "select count(*) as total, ae_journal_id, jnl_nome, jnl_tipo from brapci_article_author
+					inner join brapci_journal on ae_journal_id = jnl_codigo 
+					inner join brapci_article on ae_article = ar_codigo
+					inner join brapci_section on ar_section = se_codigo and se_tipo = 'B'
+					where ae_author = '$autor' and (ar_section <> 'EDITO' and ar_section <> 'RESEN')
+					and jnl_tipo = 'J' and ar_status <> 'X'
+					and (ar_ano >= $ano2 and ar_ano <= $ano1)
+					group by ae_journal_id, jnl_nome, jnl_tipo
+			";
+			$rlt = db_query($sql);
+			$id = 0;
+			while ($line = db_read($rlt))
+				{
+					if ($id > 0) { $sd .= ', '.chr(13).chr(10); }
+					$id++;
+					$sd .= "['".trim($line['jnl_nome'])."', " .
+							$line['total']."] ";
+				}
+			$sx = '
+    			<script type="text/javascript">
+      			function drawVisualization2() {
+        			// Create and populate the data table.
+        			var data = google.visualization.arrayToDataTable([
+          			[\'Revista\', \'Publicações\'],
+					'.$sd.'
+        			]);
+      
+        			// Create and draw the visualization.
+        			new google.visualization.PieChart(document.getElementById(\'visualization2\')).
+            			draw(data, {title:"Concetração da produção de '.$ano2.'-'.$ano1.'"});
+			      }
+      				google.setOnLoadCallback(drawVisualization2);
+    			</script>
+			    <div id="visualization2" style="width: 600px; height: 400px;"></div>
+			';
+			return($sx);
+		}
+	
 	function autor_revistas_publicacoes($autor)
 		{
 			$sql = "select count(*) as total, ae_journal_id, jnl_nome, jnl_tipo from brapci_article_author
 					inner join brapci_journal on ae_journal_id = jnl_codigo 
-					where ae_author = '$autor'
-					and jnl_tipo = 'J'
+					inner join brapci_article on ae_article = ar_codigo
+					where ae_author = '$autor' and (ar_section <> 'EDITO' and ar_section <> 'RESEN')
+					and jnl_tipo = 'J' and ar_status <> 'X'
 					group by ae_journal_id, jnl_nome, jnl_tipo
 			";
 			$rlt = db_query($sql);
@@ -42,7 +95,7 @@ class autor
 			      }
       				google.setOnLoadCallback(drawVisualization);
     			</script>
-			    <div id="visualization" style="width: 600px; height: 400px;"></div>
+			    <div id="visualization" style="width: 600px; height: 200px;"></div>
 			';
 			return($sx);
 		}
@@ -79,11 +132,12 @@ class autor
 	
 	function citacoes_meus_artigos($autor)
 		{
-			$sql = "select 1 as cited, cit_ano_pub from brapci_article_author
+			$sql = "select count(*) as cited, cit_ano_pub from brapci_article_author
 						inner join bris_cited on cit_citado = ae_article
 						where ae_author = '$autor'
 						group by cit_ano_pub
 			";
+			
 			$rlt = db_query($sql);
 			$pub = array(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 
@@ -91,8 +145,9 @@ class autor
 			$anoi = date("Y");
 			while ($line = db_read($rlt))
 			{
+				$cit = $line['cited'];
 				$anoz = $anos - ($anoi - $line['cit_ano_pub']) + $ano;
-				$pub[$anoz] = $pub[$anoz] + 1;
+				$pub[$anoz] = $pub[$anoz] + $cit;
 			}
 			$this->dados_cited = $pub;
 		}
@@ -166,6 +221,7 @@ class autor
 			$this->anos = $anos;
 			$anoi = date("Y");
 			$total = 0;
+			$tcit = 0;
 			while ($line = db_read($rlt))
 				{
 					$tp = $line['jnl_tipo'];
@@ -193,11 +249,14 @@ class autor
 						{
 							$sx .= ' (<font color="blue">'.$cit.' citações</font>)';
 						}
+					$tcit = $tcit + $cit;
 					$sx .= '&nbsp&nbsp[ '.$link.' ]';
 					$sx .= '<BR><BR>';
 				}
 			$this->dados = $pub;
 			$this->dados_evento = $eve;
+			$this->total_producao = $total;
+			$this->total_citacoes = $tcit;
 
 			$br = new bris;
 			$ano = '0000';

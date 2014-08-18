@@ -753,12 +753,29 @@ class publications
 			$sx .= '<BR><BR>';
 			return($sx);
 		}
+	function update_title_asc($id) {
+		$sql = "select * from brapci_article where id_ar = " . round($id);
+		$rlt = db_query($sql);
+		$line = db_read($rlt);
+		$tit = UpperCaseSql($line['ar_titulo_1']);
+		if (strlen($tit) == 0) {
+			$semtitulo = ", at_titulo_1 = '**Sem titulo**' , at_status = '@' ";
+			$tit = '**SEM TITULO**';
+		}
+
+		$sql = "update brapci_article set 
+					ar_titulo_1_asc = '" . $tit . "'
+					" . $sem_titulo . "
+					where id_ar = " . round($id);
+		$rlt = db_query($sql);
+		return (1);
+	}
 	function list_issue_articles($issue)
 		{
 			$sql = "select *,
 					CONVERT(ar_pg_inicial, SIGNED INTEGER) as pagi from brapci_article
 					left join brapci_section on ar_tipo = se_codigo 
-					where ar_edition = '$issue'
+					where ar_edition = '$issue' and ar_status <> 'X'
 					order by se_ordem, ar_section, pagi
 			";
 

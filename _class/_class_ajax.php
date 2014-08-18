@@ -7,13 +7,13 @@
 	top: 50%;
 	left: 50%;
 	width: 300px;
-	height: 60px;
+	height: 80px;
 	background: white;
 	margin-left: -150px;
 	margin-top: -30px;
 }
 </style>
-<div id="loading" ><center>Pocessando busca...<BR><BR><img src="img/icone_ajax_waiting.gif"></center></div>
+<div id="loading" ><center>wait...<BR><BR><img src="img/icone_ajax_waiting.gif"></center></div>
 	
 <script>
    $("body").ajaxSend(function()

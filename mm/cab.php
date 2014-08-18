@@ -1,73 +1,49 @@
 <?php
-header('Content-type: text/html; charset=ISO-8859-1');
-$include = '../';
-require("../db.php");
-require($include.'sisdoc_debug.php');
-//require("../_class/_class_message.php");
-//$LANG = $lg->language_read();
-$LANG = 'pt_BR';
+require("db.php");
+require($include."sisdoc_data.php");
+require($include."sisdoc_cookie.php");
+require($include."sisdoc_security.php");
 
-$file = '../messages/msg_'.$LANG.'.php';
-if (file_exists($file)) { require($file); } else { echo 'message not found '.$file; }
-/*
- * 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
- * <meta charset="utf-8" />
- */
+$idioma = 'pt_BR';
+$ed_editar = 1;
+security();
+///////////////// Contator de visitas
+$jid=1;
+$jidsel = read_cookie("journal_sel");
+$jedsel = read_cookie("journal_ed");
+$user_perfil = $user_nivel;
+if ($user_nivel == 1) { $user_perfil = "Coordenador"; }
+if ($user_nivel == 2) { $user_perfil = "Indexador"; }
+
+//// recupera periódico ativo
+$jid = read_cookie("jid");
+$jid_nome = read_cookie("jid_name");
+/////////////////////////////////////
+require("cab_php.php");
 ?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
 <head>
-	<title>::Brapci - Base Referencial de Periodicos em Ciência da Informacao::</title>
+	<title><?=$site_title;?></title>
+	<link rel="STYLESHEET" type="text/css" href="css/letras.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<link rel="STYLESHEET" type="text/css" href="../css/style.css">
-	<link rel="STYLESHEET" type="text/css" href="../css/style_menu.css">
-	<link rel="STYLESHEET" type="text/css" href="../css/style_roboto.css">
-	<link rel="shortcut icon" href="http://www.brapci.inf.br/favicon.png" />
-	
-	<script type="text/javascript" src="../js/jquery.js"></script>
-	<script type="text/javascript" src="../js/jquery.corner.js"></script>
-	<script type="text/javascript" src="../js/jquery.example.js"></script>
-	<script type="text/javascript" src="../js/jquery.autocomplete.js"></script>
 </head>
-<BODY>
-<?
-if ($xcab != 1)
-	{
-	$sx = '<script type="text/javascript">
-	';
-	$sx .= "
-  		var _gaq = _gaq || [];
-  		_gaq.push(['_setAccount', 'UA-12803182-4']);
-  		_gaq.push(['_trackPageview']);
+<body>
+<CENTER>
+<div id="toppagina"><table width="100%" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+<TR><TD width="280"><img src="<?=$logo_img;?>" alt="60" >
+<TD><?=$empresa_01;?><BR><font class="lt1">Módulo Manutenção <?=$versao;?><BR>
+<I><?=$user_nome;?></I> (<?=$user_perfil;?>)</font></TD></TR></table></div>
 
-		  (function() {
-    		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  		})();
-	</script>
-	";
-	
-	$sx .= '
-		<div class="cab">
-				<div class="geral">
-					<div id="div1">&nbsp;&nbsp;<a href="index.php?idioma=pt_BR"><img src="../img/ididoma_br.png" border=0 title="Português" alt="Português"></A>
-					| <B>ISSN xxxx-xxxx</B>
-					</div>											   
-		
-					<div class="topo">	
-        				<a href="http://www.facebook.com/brapci" target="_blank"><div class="bt_face_puc">face</div></a>
-    				</div>
-    			</div>
-    		</div>
-	';
+<div id="nada"><img src="img/nada.gif" border=0></div>
 
-
-	$sx .= '<center>';
-	$sx .= '<DIV ID="content_TOP">';
-	$sx .=	'</div><BR>
-		<DIV id="conteudo">
-			<table width="100%"><TR align="left"><TD><A HREF="main.php">HOME</A></TD><TD> 
-		</TD></TR></table>
-	';
-	}
-echo $sx;
-?>
+<? require("cab_position.php"); ?>
+<div id="nada"><img src="img/nada.gif" border=0></div>
+<div id="conteudo">
+<CENTER><TABLE align="center" width="100%" border=0>
+<TR valign="top">
+<TD width="150">
+<? require("menu_left.php"); ?>
+</TD>
+<TD width="20">&nbsp;&nbsp;</TD>
+<TD width="90%">

@@ -9,30 +9,14 @@
   * @subpackage mensagens
  */
 
-$ido = array('pt_BR','en_US','es','fr');
-$idio = trim($_SERVER['PATH_INFO']);
-$idio_valid = '';
-if (strlen($idio) > 0)
-	{
-		$idio = troca($idio,'/','');
-		for ($r=0;$r < count($ido);$r++)
-			{
-				//echo '<BR>'.$ido[$r].'-'.$idio;
-				if ($idio == $ido[$r]) { $idio_valid = $ido[$r]; }
-			}
-		if (strlen($idio_valid) == 0)
-			{ require("_noaccess.php"); exit; }
-	}
-
 $lg = new message;
-$lg -> language_set($idio_valid);
-$LANG = $lg -> language_read();
+$lg->language_set($_GET['idioma']);
+$LANG = $lg->language_read();
 
 if (strlen($LANG) == 0) {
 	$idiona = $lg -> language_detect();
 	$lg -> language_set($idioma);
 }
-
 //$LANG = 'en_US';
 class message 
 	{
@@ -41,19 +25,6 @@ class message
 	 */
 	var $LANG = 'en';
 	var $tabela = '_messages';
-	
-	public function __construct()
-		{
-			$ipserver = trim($_SERVER['SERVER_ADDR']);
-			if ($ipserver == '50.22.37.205')
-			{
-				$this->tabela = 'sisdocco_cip._messages';
-			} else {
-				$this->tabela = '_messages';
-			}
-		}
-			
-	
 	
 	/**
 	 * Identifica��o de idioma
@@ -115,7 +86,7 @@ class message
 		$sql = "select * from " . $this->tabela;
 		$sql .= " where (msg_field = '" . $ref . "') ";
 		$sql .= " and (msg_ativo = 1) ";
-		$sql .= " order by id_msg ";
+		$sql .= " order by id_msg ";		
 		$rlt = db_query($sql);
 		while ($line = db_read($rlt)) {
 			array_push($msg, array($line['id_msg'], $line['msg_language'], $line['msg_content']));
@@ -162,12 +133,10 @@ class message
 	/* Seleciona a Linguagem */
 	function language_set($lg) {
 		global $LANG;
-		$lg = troca($lg,'/','');
 		if (strlen($lg) > 0) 
 		{
 			$_SESSION['language'] = $lg;
-			redirecina(page_link());	
-			exit;	
+			//redirecina(page());		
 		}
 		return (1);
 	}
@@ -178,13 +147,13 @@ class message
 	function language_page_create() {
 		$cr = chr(13).chr(10);
 		$pags = array();
-		$sql = "select msg_language from ".$this->tabela." group by msg_language";
+		$sql = "select msg_language from _messages group by msg_language";
 		$rlt = db_query($sql);
 		while ($line = db_read($rlt)) { array_push($pags, $line['msg_language']); }
 
 		/* Constroi as paginas */
 		for ($ro = 0; $ro < count($pags); $ro++) {
-			$sql = "select * from ".$this->tabela." where (msg_ativo = 1) ";
+			$sql = "select * from _messages where (msg_ativo = 1) ";
 			$sql .= " and (msg_language = '" . $pags[$ro] . "') ";
 			$sql .= " order by msg_language, msg_field ";
 			$rlt = db_query($sql);
@@ -206,13 +175,13 @@ class message
 					$sx .= $cr;
 					$sx .= '/* New Language ' . $xline['msg_language'] . ' */';
 					$sx .= $cr;
-					$sx .= "'" . $xline['msg_language'] . "'=>";
+					$sx .= "'" . trim($xline['msg_language']) . "'=>";
 					$sx .= " array(" . $cr;
 					$it = 0;
 					$idio = $xlan;
 				}
 
-				if ($it > 0) { $sx .= ',' . $cr;
+				if ($it > 0) { $sx .= ',' . chr(13);
 				}
 				$sx .= "             '" . trim($xline['msg_field']) . "'=>'" . trim($xline['msg_content']) . "' ";
 				$it++;
@@ -229,7 +198,7 @@ class message
 			fclose($fld);
 		}
 		$arq = page();
-
+		
 	}
 
 	/** Gerar c�digo das mensagens */
@@ -239,7 +208,7 @@ class message
 	
 	/* Modelagem da strutura da tabela */
 	function structure() {
-		$sql = "CREATE TABLE ".$this->tabela." (
+		$sql = "CREATE TABLE _messages (
 			id_msg serial NOT NULL,
 			msg_pag CHAR(50),
 			msg_language CHAR(5),
@@ -257,7 +226,7 @@ class message
  * Caso n�o exista a mensagem, envia para fun��o de cadastrar nova
  */
 function msg($s) {
-	global $LANG;
+	global $LANG,$http;
 	global $messa;
 	global $gerar, $edit_mode;
 	$s = substr($s,0,40);
@@ -267,10 +236,11 @@ function msg($s) {
 			
 			/* Campos para editar mensagens */
 			$img = '<A href="javascript:newxy2(';
-			$img .= "'message_ed_pop.php?dd2=" . page() . "&dd1=" . $s;
+			$img .= "'http://www2.pucpr.br/reol/message_ed_pop.php?dd2=" . page() . "&dd1=" . $s;
 			$img .= "',600,300);";
 			$img .= '">';
-			$img .= '<img src=img/icone_alert.png width=10 border=0>';
+			//$img .= '<img src=img/icone_alert.png width=10 border=0>';
+			$img .= '<font color="orange">(e)</font>';
 			$img .= '</A>';
 			if ($edit_mode!=1) { $img = ''; }
 			$link = $img;
@@ -288,11 +258,9 @@ function msg($s) {
 }
 function msg_insert($s,$idioma)
 		{
-			global $edit_mode,$ln;
-			$tabela = $ln->tabela;
-			if (strlen($tabela) == 0) { $tabela = "_messages"; }
+			global $edit_mode;
 			$s = substr($s,0,40);
-			$sql = "select * from ".$tabela." 
+			$sql = "select * from _messages 
 				where msg_language='$idioma' and msg_field ='$s' ";
 			
 			$txt = $s;
@@ -301,7 +269,7 @@ function msg_insert($s,$idioma)
 				{
 					if (!($edit_mode == 1))
 						{	
-						$sqlx = "insert into ".$tabela." ";
+						$sqlx = "insert into _messages ";
 						$sqlx .= "(msg_pag,msg_field,msg_language,msg_content,msg_ativo)";
 						$sqlx .= "values ";
 						/* pt_BR */

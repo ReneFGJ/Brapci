@@ -43,6 +43,12 @@ if (strlen(trim($line['cache_journal'])) > 0)
 		$jid = $line['cache_journal'];
 				$file = 'oai/'.strzero($line['id_cache'],7).'.xml';
 				echo '<BR>'.$file;
+				if (!file_exists($file))
+					{
+						redirecina('oai_processar.php?dd0='.$line['id_cache'].'&dd10=RELOAD');
+						exit;
+					}
+				
 				$s = $oai->read_link_fopen($file);
 				if ($oai->utf8_detect($s)==1)
 					{
@@ -287,7 +293,7 @@ if ((strlen($oai->session) < 7) and (strlen($oai->session) >= 2) and (strlen($oa
 	//$this->oai_save_03($art,$keys);
 	echo '<BR>ID OAI:'.$oai->id;
 	$oai->oai_save_99($oai->id);
-	echo '<meta HTTP-EQUIV = "Refresh" CONTENT = "50; URL = '.page().'?dd1='.$dd[1].'"> ';
+	echo '<meta HTTP-EQUIV = "Refresh" CONTENT = "5; URL = '.page().'?dd1='.$dd[1].'"> ';
 } else {
 	echo '<HR><h1>'.$titles[0][0].'</h1><HR>';
 	echo '<BR><font color="red">';

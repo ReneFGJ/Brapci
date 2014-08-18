@@ -8,6 +8,8 @@ $ano = $dd[0];
 echo '<H1>Indice de Concentração de Produção por Autor (iCPA)</h1>';
 echo '<h3>Ano Base: '.$ano.'</h3>';
 
-echo $bris->grupos_icpa($ano);
+echo $bris->grupos_icpa_mostra($ano,3);
+echo $bris->grupos_icpa_mostra($ano,2);
+echo $bris->grupos_icpa_mostra($ano,1);
 
 ?>

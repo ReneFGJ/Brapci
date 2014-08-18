@@ -3,6 +3,45 @@ class pos_linha
 	{
 		var $tabela = 'programa_pos_linhas';
 		
+		function mostra_resumo_pos($pos)
+			{
+				$sqlq = "
+						select sum(docentes) as docentes, sum(visitante) as visitante, pdce_programa_linha 
+						from (
+							select count(*) as docentes , 0 as visitante, pdce_programa_linha
+							from programa_pos_docentes 
+							where pdce_programa = '$pos' and pdce_tipo = 'P' 
+							group by pdce_programa_linha
+						union
+							select 0 as docentes, count(*) as visitante, pdce_programa_linha
+							from programa_pos_docentes 
+							where pdce_programa = '$pos' and pdce_tipo = 'V'
+							group by pdce_programa_linha 
+						) as tabela group by pdce_programa_linha
+						";				
+				
+				$sql = "select * from programa_pos_linhas
+						left join (".$sqlq.") as tabela001 on pdce_programa_linha = posln_codigo 
+						where posln_programa = '$pos'
+				";
+				$rlt = db_query($sql);
+				$sx .= '<table class="tabela00" width="100%">';
+				$sx .= '<TR><TH>Linha de pesquisa<TH>Docentes<TH>Visitantes';
+				while ($line = db_read($rlt))
+					{
+						$sx .= '<TR>';
+						$sx .= '<td class="tabela01">';
+						$sx .= $line['posln_descricao'];
+						$sx .= '<td class="tabela01" align="center" clsas="lt4">';
+						$sx .= $line['docentes'];						
+						$sx .= '<td class="tabela01" align="center" clsas="lt4">';
+						$sx .= $line['visitante'];
+					}
+				$sx .= '</table>';
+
+				return($sx);
+			}
+		
 		function cp()
 			{
 				$cp = array();

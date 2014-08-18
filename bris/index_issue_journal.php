@@ -1,6 +1,6 @@
 <?php
 require("cab.php");
-require("_class/_class_bris.php");
+require("../_class/_class_bris.php");
 $br = new bris;
 
 $jid = round($dd[1]);

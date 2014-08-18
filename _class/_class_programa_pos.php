@@ -20,9 +20,494 @@ class programa_pos
 		var $areas;
 			
 		var $tabela = 'programa_pos';
+		var $tabela_nota = "programa_pos_capes";
 		
+		
+		function programas_pos_notas_cronologico()
+			{
+				$sql = "select qa_descricao, count(*) as total from ".$this->tabela." 
+							inner join qualis_area on qa_codigo = pos_avaliacao_1
+							where (pos_mestado > 1950 or pos_mestrado_prof > 1950)
+							and pos_ativo = 1
+						group by qa_descricao
+						order by total, qa_descricao
+				";
+				$rlt = db_query($sql);
+				while ($line = db_read($rlt))
+				{
+					echo '<HR>';
+					print_r($line);
+					$dados .= ', '.chr(13).chr(10).'[\''.$line['qa_descricao'].'\','.$line['total'].']';
+				}
+				
+$sa = '
+<script type="text/javascript" src="//www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load(\'visualization\', \'1\', {packages: [\'corechart\']});
+    </script>
+    <script type="text/javascript">
+      function drawVisualization() {
+        // Create and populate the data table.
+        var data = google.visualization.arrayToDataTable([
+          [\'Área avaliação\', \'Incidênia\']
+          '.$dados.'
+        ]);
+      
+        // Create and draw the visualization.
+        new google.visualization.PieChart(document.getElementById(\'visualization\')).
+            draw(data, {title:"Áreas de Avaliação"});
+      }
+      
 
+      google.setOnLoadCallback(drawVisualization);
+    </script>
+    <div id="visualization" style="width: 900px; height: 500px;"></div>
+';				
+				return($sa.$sx);
+			}
+		function programas_pos_entrada_discente()
+			{
+				$sql = "select count(*) as total, sum(orientacoes) as orientacoes, od_ano_ingresso
+						, od_modalidade from (
+						select count(*) as orientacoes, od_ano_ingresso, od_modalidade
+							from docente_orientacao e
+							where od_status <> 'X' 
+							group by od_ano_ingresso, od_modalidade
+							) as tabela
+							group by od_ano_ingresso, od_modalidade
+							order by od_ano_ingresso, od_modalidade
+							";
+				$rlt = db_query($sql);
+				$id = 0;
+				$ide = 0;
+				
+				$ano_start = 1900;
+				$ori_ms = array();
+				$ori_do = array();
+				$ori_pr = array();
+				$ori_po = array();
+				
+				for ($r=$ano_start;$r <= date("Y");$r++)
+					{
+						array_push($ori_ms,0);
+						array_push($ori_do,0);
+						array_push($ori_pr,0);
+						array_push($ori_po,0);
+					}
+				$max  = 600;
+				while ($line = db_read($rlt))
+					{
+						if ($line['orientacoes'] > $max) { $max = $line['orientacoes']; }
+						$ano = round($line['od_ano_ingresso']);
+						$modalidade = trim($line['od_modalidade']);
+						if ($ano < 1990 or $ano > date("Y"))
+							{
+								
+							} else {
+							$id = $id + $line['total'];
+							$ide = $ide + $line['orientacoes'];		
+											
+							$pos = $line['od_ano_ingresso'] - $ano_start;
+							switch ($modalidade)
+								{
+									case 'M':
+										$ori_ms[$pos] = $ori_ms[$pos] + $line['orientacoes']; 
+										break;
+									case 'D':
+										$ori_do[$pos] = $ori_do[$pos] + $line['orientacoes'];
+										break;
+									case 'P':
+										$ori_pr[$pos] = $ori_pr[$pos] + $line['orientacoes'];
+										break;
+									case 'O':
+										$ori_po[$pos] = $ori_po[$pos] + $line['orientacoes'];
+										break;
+																		}
+							}
+					}
+				$sx .= '<h2>Alunos de Pós-Graduação por Entrada nos Programas</h2>';
+				$sx .= '<P>O registro é retirado das informações repassado pela secretaria dos programas</P>';
+				$sx .= '<table width="100%">';
+				for ($r = 0;$r < count($ori_ms);$r++)
+					{
+						$tot = $ori_ms[$r] + $ori_do[$r] + $ori_pr[$r] + $ori_po[$r];
+						if ($tot > 0)
+							{
+								$cor1 = $this->cor($ori_ms[$r],$max);
+								$cor2 = $this->cor($ori_do[$r],$max);
+								$cor3 = $this->cor($ori_pr[$r],$max);
+								$cor4 = $this->cor($ori_po[$r],$max);
+								$sx1 .= '<TH align="center">'.($ano_start+$r);
+								$sx2 .= '<Td align="center" '.$cor1.'><font color="black">'.$ori_ms[$r];
+								$sx3 .= '<Td align="center" '.$cor2.'><font color="black">'.$ori_do[$r];
+								$sx4 .= '<Td align="center" '.$cor3.'><font color="black">'.$ori_pr[$r];
+								$sx5 .= '<Td align="center" '.$cor4.'><font color="black">'.$ori_po[$r];
+								$sx6 .= '<Td align="center" ><font color="black"><B>'.$tot.'</B>';
+								
+							}
+					}
+				$sx .= '<TR><TH>Ano'.$sx1;
+				$sx .= '<TR><TH align="left">Mestrado Acadêmico'.$sx2;
+				$sx .= '<TR><TH align="left">Doutorado'.$sx3;
+				$sx .= '<TR><TH align="left">Pós-Doutorado'.$sx4;
+				$sx .= '<TR><TH align="left">Mestrado Profissional'.$sx5;
+				$sx .= '<TR><TH align="left">Total geral'.$sx6;
+				
+				$sx .= '</table>';
+				return($sx);
+			}
+		function cor($vlr2,$max)
+			{
+				$cor = ' bgcolor="#FFFFFF" ';
+				if ($vlr2 > 0)
+					{
+						$vlr = (255-round(($vlr2 / $max) * 255));
+						$vlr3 = dechex($vlr);
+						$cor = ' bgcolor="#00'.$vlr3.'FF" ';
+					}
+				return($cor);
+			}
+		function programas_pos_fluxo_discente($anoi=0,$anof=0)
+			{
+				$sql = "select * from docente_orientacao ";
+				$rlt = db_query($sql);
+				while ($line = db_read($rlt))
+					{
+						$ano = $line['od_ano_ingresso'];
+						if ($ano > 10000)
+							{
+							$sql = "update docente_orientacao set od_ano_ingresso = '".substr($line['od_ano_ingresso'],0,4)."' where id_od = ".$line['id_od'];
+							$rrr = db_query($sql);							
+							}
+					}
+				$anoi = 2013;
+				$anof = $anoi;
+				
+				/* Quadro geral */
+				$sql = "select count(*) as total, sum(orientacoes) as orientacoes from (
+						select count(*) as orientacoes, od_professor
+							from docente_orientacao 
+							where od_status <> 'X' 
+							and 
+								(
+								(od_ano_ingresso >= ".($anoi-2)." and od_ano_ingresso <= $anof and od_modalidade = 'M')
+								or
+								(od_ano_ingresso >= ".($anoi-4)." and od_ano_ingresso <= $anof and od_modalidade = 'D')
+								) and od_modalidade = 'D'
+							group by od_professor
+							) as tabela
+							";
+				$rlt = db_query($sql);	
+				$sx .= '<table width="100%">';
+				$sx .= '<TR><TH>Programa ('.$anoi.'-'.$anof.')<TH>Docentes<TH>Orientações';
+								
+				if ($line = db_read($rlt))
+				{
+						$sx .= '<TR bgcolor="#C0C0C0">';
+						$sx .= '<TD class="tabela01"><B>Todos os programas';
+						$sx .= '<TD align="center" class="tabela01"><B>'.$line['total'].'</B>';
+						$sx .= '<TD align="center" class="tabela01"><B>'.$line['orientacoes'].'</B>';
+				}				
+				
+				$sql = "select count(*) as total, sum(orientacoes) as orientacoes, od_programa, pos_nome from (
+						select count(*) as orientacoes, od_professor, od_programa
+							from docente_orientacao 
+							where od_status <> 'X' 
+							and 
+								(
+								(od_ano_ingresso >= ".($anoi-2)." and od_ano_ingresso <= $anof and od_modalidade = 'M')
+								or
+								(od_ano_ingresso >= ".($anoi-4)." and od_ano_ingresso <= $anof and od_modalidade = 'D')
+								) 
+							group by od_professor, od_programa
+							) as tabela
+							inner join programa_pos on od_programa = pos_codigo
+							group by od_programa, pos_nome
+							";
+				$rlt = db_query($sql);
+
+				$id = 0;
+				$ide = 0;
+				while ($line = db_read($rlt))
+					{
+						$id = $id + $line['total'];
+						$ide = $ide + $line['orientacoes'];		
+										
+						$professor = $line['od_professor'];
+						$programa = $line['pos_nome'];
+						$sta = $line['od_status'];
+						$ano_a1 = substr($line['od_ano_ingresso'],0,4);
+						$ano_a2 = substr($line['od_ano_diplomaca'],0,4);
+						
+						$sx .= '<TR>';
+						$sx .= '<TD class="tabela01">'.$line['pos_nome'];
+						$sx .= '<TD align="center" class="tabela01">'.$line['total'];
+						$sx .= '<TD align="center" class="tabela01">'.$line['orientacoes'];
+					}
+				$sx .= '<TR bgcolor="#C0C0C0"><TD>Total geral<TD align="center">'.$id.'<TD align="center">'.$ide;
+				$sx .= '<TR><TD colspan=10 class="lt0">A divergência nos valores de todos os programas e a somatórias dos programas, é derivada de alguns orientadores estarem vinculados a mais de um programa, registrando multiplas vezes o orientador.';
+				$sx .= '</table>';
+				return($sx);
+			}
 		
+		function programas_pos_cronologico()
+			{
+				$sql = "select * from ".$this->tabela." 
+							left join qualis_area on qa_codigo = pos_avaliacao_1
+							where (pos_mestado > 1950 or pos_mestrado_prof > 1950)
+							and pos_ativo = 1
+						order by pos_nome
+				";
+				$rlt = db_query($sql);
+				$msc = array();
+				$dor = array();
+				$pro = array();
+				$ano = array();
+				$ano_ini = 1990;
+				for ($r=$ano_ini;$r <= date("Y");$r++)
+					{
+						array_push($msc,0);
+						array_push($dor,0);
+						array_push($pro,0);
+						array_push($ano,$r);
+					}
+				$sx .= '<table width="100%">';
+				$sx .= '<TR><TH>Programa<TH>Área de avaliação<TH>Mestrado Acadêmico<TH>Doutorado Acadêmico<TH>Mestrado Profissionalizante';
+				$id = 0;
+				$ide = 0;
+				while ($line = db_read($rlt))
+					{
+						$id++;
+						$anoi = $line['pos_abertura'];
+						$anof = $line['pos_encerramento'];
+						if ($anof < 1900) { $anof = date("Y"); }
+						$ano_mes = $line['pos_mestado'];
+						$ano_dou = $line['pos_doutorado'];
+						$ano_mesp = $line['pos_mestrado_prof'];
+						
+						$idm = $ano_mes - $ano_ini;
+						$idd = $ano_dou - $ano_ini;
+						$idp = $ano_mesp - $ano_ini;
+						
+						$idf = $anof - $ano_ini;
+						
+						$sx .= '<TR><TD align="left" class="tabela01">'
+								.$line['pos_nome'];
+						if ($anof <> date("Y")) { $sx .= '<font color="red">(Encerrado)</font>'; $ide++; }
+						$sx .= '<TD align="left" class="tabela01">'.$line['qa_descricao'];
+						if ($ano_mes == 0) { $dsp = '-'; } else { $dsp = $ano_mes; }
+						$sx .= '<TD align="center" class="tabela01">'.$dsp;
+						if ($ano_dou == 0) { $dsp = '-'; } else { $dsp = $ano_dou; }
+						$sx .= '<TD align="center" class="tabela01">'.$dsp;
+						if ($ano_mesp == 0) { $dsp = '-'; } else { $dsp = $ano_mesp; }
+						$sx .= '<TD align="center" class="tabela01">'.$dsp;
+						$sx .= '</TR>';
+						
+						if ($idm > 0)
+							{ for ($r=$idm; $r <= $idf;$r++) { $msc[$r] = $msc[$r] + 1; } }
+						if ($idd > 0)
+							{ for ($r=$idd; $r <= $idf;$r++) { $dor[$r] = $dor[$r] + 1; } }
+						if ($idp > 0)
+							{ for ($r=$idp; $r <= $idf;$r++) { $pro[$r] = $pro[$r] + 1; } }
+					}
+				$sx .= '<TR><TD colspan=10><B><I>Total de '.($id-$ide).' programas, '.$ide.' descontinuado.';
+				$sx .= '</table>';
+				$sx .= '<h2>Programa por ano</h2>';
+				$sx .= '<table>';
+				$sx .= $sa;
+				$sx .= '</table>';					
+				$sx .= '<table width="100%">';
+				$sx .= '<TR><TH>Ano<TH>Mestrado Acadêmico<TH>Doutorado Acadêmico<TH>Mestrado Profissionalizante';
+				$dados = '';
+				for ($r=0;$r < count($msc);$r++)
+					{
+						$sx .= '<tr>';
+						$sx .= '<TD align="center" class="tabela01">'.$ano[$r];
+						$dsp = $msc[$r]; if ($dsp == 0) { $dsp = '-'; }
+						$sx .= '<TD align="center" class="tabela01">'.$dsp;
+						$dsp = $dor[$r]; if ($dsp == 0) { $dsp = '-'; }
+						$sx .= '<TD align="center" class="tabela01">'.$dsp;
+						$dsp = $pro[$r]; if ($dsp == 0) { $dsp = '-'; }
+						$sx .= '<TD align="center" class="tabela01">'.$dsp;
+						
+						$dados .= ', '.chr(13).chr(10)."['".$ano[$r]."', ".$pro[$r].", ".$msc[$r].",".$dor[$r]."] ";
+					}
+				$sx .= '</table>';
+				
+$sg = '
+ <script type="text/javascript" src="//www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load(\'visualization\', \'1\', {packages: [\'corechart\']});
+    </script>
+    <script type="text/javascript">
+      function drawVisualization() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+          [\'Ano\',  \'Mestrado Profissionalizante\', \'Mestrado\', \'Doutorado\']
+          '.$dados.'
+        ]);
+      
+        // Create and draw the visualization.
+        var ac = new google.visualization.AreaChart(document.getElementById(\'visualization\'));
+        ac.draw(data, {
+          title : \'Programas de Mestrado e Doutorado (Stricto sensu)\',
+          width: 900,
+          height: 400,
+          vAxis: {title: "Programas"},
+          hAxis: {title: "Ano"}
+        });
+      }
+      
+
+      google.setOnLoadCallback(drawVisualization);
+    </script>
+  </head>
+  <body style="font-family: Arial;border: 0 none;">
+    <div id="visualization" style="width: 900px; height: 400px;"></div>
+  </body>
+';
+				
+				
+				
+				return($sg.$sx);
+			}
+		
+		function cp_avaliacao()
+			{
+				$opd = '0:Não aplicado&1:Nota 1&2:Nota 2&3:Nota 3&4:Nota 4&5:Nota 5&6:Nota 6&7:Nota 7';
+				$cp = array();
+				array_push($cp,array('$H8','id_posc','',False,True));
+				array_push($cp,array('$HV','',$this->tabela_nota,False,True));
+				array_push($cp,array('$HV','','',False,True));
+				array_push($cp,array('$Q pos_nome:pos_codigo:select * from '.$this->tabela.' where pos_corrente=\'1\' order by pos_nome','posc_programa','',False,True));
+				array_push($cp,array('$[1970-'.date("Y").']','posc_ano','',False,True));
+				array_push($cp,array('$HV','posc_doutorado','0',False,True));
+				array_push($cp,array('$O '.$opd,'posc_mestrado','Nota do programa',False,True));
+				array_push($cp,array('$H8','posc_area_avaliacao','Área de avaliação',False,True));
+				array_push($cp,array('$O 1:Ativo&0:Excluído','posc_ativo','Ativo',False,True));
+				
+				return($cp);
+			}		
+		
+		function situacao($tp)
+			{
+				$tp = trim($tp);
+				switch ($tp)
+					{
+					case '1': $sx = 'Ativo'; break;
+					case '0': $sx = 'Excluido'; break;
+					case '2': $sx = 'Encerrado'; break;
+					default: $sx = '??';
+					}
+				return($sx);
+			}
+		
+		function rel_programas_pos_historico_notas($programa='')
+			{
+				global $http;
+				$sql = "select * from ".$this->tabela." 
+				left join qualis_area on pos_avaliacao_1 = qa_codigo
+				left join ".$this->tabela_nota." on pos_codigo = posc_programa
+						where pos_ativo <> 0 and pos_corrente = '1'
+						order by pos_nome, posc_ano ";
+				$rlt = db_query($sql);
+				$sx .= '<table width="98%" class="tabela01">';
+				$id = 0;
+				$xpos = '';
+				while ($line = db_read($rlt))
+					{
+						$pos = $line['pos_codigo'];
+						if ($pos != $xpos)
+						{
+						$id++;
+						$sx .= '<TR>
+									<TD colspan=5>
+									<h3>'.$line['pos_sigla'].' - '.trim($line['pos_nome']).'</h3>
+								<TR>
+									<TD>ABERTURA: '.$line['pos_abertura'].'
+									<TD>SITUAÇÂO: '.$this->situacao($line['pos_corrente']).'
+									<TD colspan=3>ÁREA DE AVALIAÇÃO: '.$line['qa_descricao'];
+						$xpos = $pos;
+						}
+						
+						$link = '<A HREF="programa_pos_capes_notas.php?dd0='.$line['id_posc'].'">x<img src="'.$http.'img/icone_editar.png" border=0></A>';
+						$sx .= '<TR>';
+						$sx .= '<TD>';
+						$sx .= '<TD>';
+						$sx .= '<TD class="tabela01" align="center">'.$line['posc_ano'];
+						$sx .= '<TD class="tabela01" align="center">'.$line['posc_mestrado'];
+						$sx .= '<TD class="tabela01" align="center">'.$link;
+					}
+				$sx .= '<TR><TD colspan=10><I>Total '.$id.' programas</i>';
+				$sx .= '</table>';
+				return($sx);
+					
+			}
+		/*
+		 * Lista os programas em uma lista e link com uma página se enviada na variável $link
+		 */
+		function lista_pos_programas($xlink='')
+			{
+				$sql = "select * from ".$this->tabela." 
+					left join centro on pos_centro = centro_codigo
+					left join qualis_area on pos_avaliacao_1 = qa_codigo
+					left join pibic_professor on pp_cracha = pos_coordenador
+					where pos_ativo = 1 and pos_corrente = '1'
+					order by pos_nome
+				";
+				$rlt = db_query($sql);
+				
+				$sx .= '<table width="100%" class="tabela00">';
+				$sx .= '<TR><TH>Programa<TH>Mestrado<TH>Nota';
+				$sx .= '<TH>Doutorado<TH>Nota';
+				$sx .= '<TH>Área de avaliação';
+				$sx .= '<TH>Coordenador';
+				
+				while ($line = db_read($rlt))
+					{
+						$link = '<A href="'.$xlink.'?dd1='.$line['pos_codigo'].'&dd90='.checkpost($line['id_pos']).'" class="link">';
+						$linkp = '<A href="docente.php?dd0='.$line['id_pp'].'&dd90='.checkpost($line['id_pp']).'" class="link">';
+						
+						$sx .= '<TR '.coluna().'>';
+						$sx .= '<TD class="tabela01">'.$link.$line['pos_nome'].'</A>';
+						$sx .= '<TD class="tabela01" align="center">'.$line['pos_mestado'];
+						$sx .= '<TD class="tabela01" align="center"> '.$line['pos_conceito'];
+						if ($line['pos_doutorado'] != 0)
+							{
+							$sx .= '<TD class="tabela01" align="center">'.$line['pos_doutorado'];
+							$sx .= '<TD class="tabela01" align="center"> '.$line['pos_conceito'];
+							} else {
+								$sx .= '<TD class="tabela01"><center>- -';
+								$sx .= '<TD class="tabela01"><center>- -';
+							}
+						$sx .= '<TD class="tabela01">'.$line['qa_descricao'];
+						$sx .= '<TD class="tabela01">'.$linkp.$line['pp_nome'].'</A>';
+						$ln = $line;
+					}
+				$sx .= '</table>';
+				return($sx);				
+			}
+
+		function coordenador_do_professor($professor)
+			{
+			$sql = "
+					select * from programa_pos_docentes
+						inner join programa_pos on pdce_programa = pos_codigo
+						inner join pibic_professor on pp_cracha = pos_coordenador
+					where pp_cracha = '$professor'						
+			 ";
+			 $rlt = db_query($sql);
+			 $email = array();
+			 while ($line = db_read($rlt))
+			 	{
+			 		$email1 = trim($line['pp_email']);
+					if (strlen($email1) > 0) { array_push($email,trim($email1)); }
+					$email1 = trim($line['pp_email_1']);
+					if (strlen($email1) > 0) { array_push($email,trim($email1)); }			 		
+			 	}
+			return($email);
+			}
+			
 	function perfis_progamas()
 		{
 			global $perfil;
@@ -63,16 +548,12 @@ class programa_pos
 			while ($line = db_read($rlt))
 				{
 				$ID++;
-				$link = '<A HREF="programa_pos_detalhes.php?dd0='.$line['id_pos'].'" class="link">';
-				
 				$ano_mestrado = $line['pos_mestado'];
 				$ano_mestrado_prof = $line['pos_mestrado_prof'];
 				$ano_doutorado = $line['pos_doutorado'];
 				$sx .= '<TR>';
 				$sx .= '<TD class="tabela01">';
-				$sx .= $link;
-				$sx .= trim($line['pos_nome']);
-				$sx .= '</A>';	
+				$sx .= trim($line['pos_nome']);	
 
 				$sx .= '<TD class="tabela01" align="center">';
 				$sx .= trim($line['pos_instituicao']);
@@ -157,18 +638,18 @@ class programa_pos
 				}
 					/* legenda */
 					$hg = 12;
-					$legend  = '<img src="'.http.'img/img_icone_boneco_01.png" height="'.$hg.'" title="Mestrado">'.chr(13);
+					$legend  = '<img src="'.http.'img/img_icone_boneco_01a.png" height="'.$hg.'" title="Mestrado">'.chr(13);
 					$legend .= 'Mestrado, ';
-					$legend .= '<img src="'.http.'img/img_icone_boneco_02.png" height="'.$hg.'" title="Doutorado">'.chr(13);
+					$legend .= '<img src="'.http.'img/img_icone_boneco_02a.png" height="'.$hg.'" title="Doutorado">'.chr(13);
 					$legend .= 'Doutorado, ';
-					$legend .= '<img src="'.http.'img/img_icone_boneco_03.png" height="'.$hg.'" title="Pós-Doutorado">'.chr(13);
+					$legend .= '<img src="'.http.'img/img_icone_boneco_03a.png" height="'.$hg.'" title="Pós-Doutorado">'.chr(13);
 					$legend .= 'Pós-Doutorado';					
 					
-					$sx1 = '<h5>Orientações concluídas</B></h5>'.$gr->grafico_bonecos($ai,'',$legend);
+					$sx1 = '<h5>Orientações concluídas</B></h5>'.$gr->grafico_bonecos($ai,'',$legend,'a');
 					
 					$ai = array('Em orientação',$ms,$dr,$po,0,0,0,0);
 					array_push($ai,array('<h5>Em orientação</h5><TR>',$ms,$dr,$po,0,0,0,0));
-					$sx2 = $gr->grafico_bonecos($ai,'orientacoes_pos','');
+					$sx2 = $gr->grafico_bonecos($ai,'orientacoes_pos','','a');
 						
 					return($sx2.'<HR>'.$sx1);
 				}		
@@ -606,31 +1087,35 @@ class programa_pos
 						$linkp = '<A href="docente.php?dd0='.$line['id_pp'].'&dd90='.checkpost($line['id_pp']).'" class="link">';
 						
 						$sx .= '<TR '.coluna().'>';
-						$sx .= '<TD>'.$link.$line['pos_nome'].'</A>';
-						$sx .= '<TD align="center">'.$line['pos_mestado'];
-						$sx .= '<TD align="center"> '.$line['pos_conceito'];
+						$sx .= '<TD class="tabela01">'.$link.$line['pos_nome'].'</A>';
+						$sx .= '<TD class="tabela01" align="center">'.$line['pos_mestado'];
+						$sx .= '<TD class="tabela01" align="center"> '.$line['pos_conceito'];
 						if ($line['pos_doutorado'] != 0)
 							{
-							$sx .= '<TD align="center">'.$line['pos_doutorado'];
-							$sx .= '<TD align="center"> '.$line['pos_conceito'];
+							$sx .= '<TD class="tabela01" align="center">'.$line['pos_doutorado'];
+							$sx .= '<TD class="tabela01" align="center"> '.$line['pos_conceito'];
 							} else {
-								$sx .= '<TD><center>- -';
-								$sx .= '<TD><center>- -';
+								$sx .= '<TD class="tabela01"><center>- -';
+								$sx .= '<TD class="tabela01"><center>- -';
 							}
-						$sx .= '<TD>'.$line['qa_descricao'];
-						$sx .= '<TD>'.$linkp.$line['pp_nome'].'</A>';
+						$sx .= '<TD class="tabela01">'.$line['qa_descricao'];
+						$sx .= '<TD class="tabela01">'.$line['pos_capes_cod'];
+						$sx .= '<TD class="tabela01">'.$line['centro_nome'];
+						$sx .= '<TD class="tabela01">'.$linkp.$line['pp_nome'].'</A>';
 						$ln = $line;
 					}
 				
 				if (strlen($sx) > 0)
 					{
-						$sa = '<table width="98%" class="lt1">';
+						$sa = '<table width="100%" class="lt1">';
 						$sa .= '<TR><TH>Programa';
 						$sa .= '<TH>Mestrado';
 						$sa .= '<TH>Nota';
 						$sa .= '<TH>Doutorado';
 						$sa .= '<TH>Nota';
 						$sa .= '<TH>Área de avaliação CAPES';
+						$sa .= '<TH>Cód. CAPES';
+						$sa .= '<TH>Escola';
 						$sa .= '<TH>Coordenador';
 						$sa .= $sx;
 						$sa .= '</table>';
@@ -657,7 +1142,7 @@ class programa_pos
 //				array_push($cp,array('$QA pp_nome:pp_cracha:select * from docentes where pp_ss = \'S\' and pp_ativo = 1 order by pp_nome','pdce_docente',msg('docente'),True,true));
 				array_push($cp,array('$QA pp_nome:pp_cracha:select * from docentes where pp_ativo = 1 order by pp_nome','pdce_docente',msg('docente'),True,true));
 				array_push($cp,array('$H8','pdce_programa','',true,true));
-				array_push($cp,array('$O P:Permanente&V:Visitante','pdce_tipo',msg('pos_participacao'),true,true));
+				array_push($cp,array('$O P:Permanente&V:Visitante&C:Colaborador','pdce_tipo',msg('pos_participacao'),true,true));
 				array_push($cp,array('$O : '.$opl,'pdce_programa_linha',msg('programa_linha'),true,true));
 				array_push($cp,array('$I8','pdce_ano_entrada',msg('ano_entrada'),true,true));
 				array_push($cp,array('$I8','pdce_ano_saida',msg('ano_saida'),true,true));
@@ -668,14 +1153,27 @@ class programa_pos
 		
 		function cp()
 			{
+				//$sql = "ALTER TABLE ".$this->tabela." add column pos_email_1 char(80)";
+				//$rlt = db_query($sql);
+				//$sql = "ALTER TABLE ".$this->tabela." add column pos_email_2 char(80)";
+				//$rlt = db_query($sql);
+				
 				$cp = array();
+				
 				$opa = '&1:ano indefinido';
 				for ($r=1950;$r<=date("Y");$r++)
 					{$opa .= '&'.$r.':'.$r; }
 				array_push($cp,array('$H8','id_pos','id',False,true));
 				array_push($cp,array('$H5','pos_codigo',msg('codigo'),False,true));
 				array_push($cp,array('$S100','pos_nome',msg('nome'),true,true));
+				array_push($cp,array('$S10','pos_sigla',msg('sigla'),true,true));
 				array_push($cp,array('$S10','pos_instituicao',msg('instituicao'),true,true));
+				
+				array_push($cp,array('$S30','pos_capes_cod','Código do programa na CAPES',true,true));
+				array_push($cp,array('$Q centro_nome:centro_codigo:select * from centro order by centro_nome','pos_escola','Escola/Centro',true,true));
+				
+				array_push($cp,array('$S100','pos_email_1','e-mail da secretaria (1)',False,True));
+				array_push($cp,array('$S100','pos_email_2','e-mail da secretaria (2)',False,True));				
 
 				array_push($cp,array('$T80:6','pos_descricao',msg('descricao'),False,true));
 
@@ -716,7 +1214,7 @@ class programa_pos
 				global $cdf,$cdm,$masc;
 				$cdf = array('id_pos','pos_nome','pos_instituicao','pos_corrente','pos_codigo','pos_mestado','pos_doutorado','pos_campus','pos_ativo');
 				$cdm = array('cod',msg('nome'),msg('instituicao'),msg('corrente'),msg('codigo'),msg('mestrado'),msg('doutorado'),msg('campus'),msg('ativo'));
-				$masc = array('','','','SN','','','SN','');
+				$masc = array('','','','SN','','','','','','');
 				return(1);				
 			}	
 
@@ -825,6 +1323,7 @@ class programa_pos
 			{
 				if ($tp=='P') { return('Permanente'); }
 				if ($tp=='V') { return('Visitante'); }
+				if ($tp=='C') { return('Colaborador'); }
 				return('??'.$tp);
 			}
 			
@@ -944,6 +1443,7 @@ class programa_pos
 			$xprof = 'x';
 			$totc = 0;
 			$totp = 0;
+			$totv = 0;
 			while ($line = db_read($rlt))
 				{
 					$link = '<A HREF="'.http.'cip/docente.php?dd0='.$line['id_pp'].'&dd90='.checkpost($line['id_pp']).'" target="new'.checkpost($line['id_pp']).'">';
@@ -966,16 +1466,17 @@ class programa_pos
 						$sx .= '<TD align="center">'.round($line['pdce_c_hora']).'h';
 						//$sx .= '<TD align="center">'.$line['pdce_ano_entrada'];
 						//$sx .= '<TD align="center">'.$line['pdce_ano_saida'];
-						if ($line['pdce_tipo'] == 'P')
+						switch (trim($line['pdce_tipo']))
 							{
-								$totp++;
-							} else {
-								$totc++;
+								case 'P': $totp++; break;
+								case 'C': $totc++; break;
+								case 'V': $totv++; break;
+
 							}
 					}
 					$xprof = $prof;
 				}
-				$sx .= '<TR><TD colspan=6 class="lt0">Total de '.$totp.' professor(es) permanente(s) e '.$totc.' convidado(s).';
+				$sx .= '<TR><TD colspan=6 class="lt0">Total de '.$totp.' professor(es) permanente(s) e '.$totc.' colaborador(s) e '.$totv.' visitante(s)';
 				$sx .= '</table>';
 			return($sx);
 			}
@@ -1048,6 +1549,17 @@ class programa_pos
 			
 		function structure()
 			{
+				$sql = "CREATE TABLE programa_pos_capes (
+					id_posc SERIAL NOT NULL ,
+					posc_programa CHAR( 5 ),
+					posc_ano CHAR( 4 ),
+					posc_mestrado CHAR( 1 ),
+					posc_doutorado CHAR( 1 ),
+					posc_area_avaliacao CHAR( 7 ),
+					posc_ativo int default 1					
+					)";
+			$rlt = db_query($sql);
+			exit;				
 				$sql = "CREATE TABLE programa_pos (
 					id_pos SERIAL NOT NULL ,
 					pos_codigo CHAR( 5 ) NOT NULL ,

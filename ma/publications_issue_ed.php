@@ -1,9 +1,10 @@
 <?
 require("cab.php");
+require("../include/sisdoc_debug.php");
+
 require('../_class/_class_publications.php');
-require($include.'sisdoc_form2.php');
-require($include.'cp2_gravar.php');
-require($include.'sisdoc_colunas.php');
+require($include.'_class_form.php');
+$form = new form;
 $pb = new publications;
 
 $jnl = trim($dd[2]);
@@ -13,14 +14,14 @@ $clx = new issue;
 $tabela = $clx->tabela;
 $cp = $clx->cp();
 
-echo '<table>';
-editar();
-echo '</table>';
+$tela = $form->editar($cp,$tabela);
 
-if ($saved > 0)
+if ($form->saved > 0)
 	{
 		$clx->updatex();
 		redirecina('publications_details.php?dd0='.$dd[2]);
+	} else {
+		echo $tela;
 	}
 require("../foot.php");
 ?>

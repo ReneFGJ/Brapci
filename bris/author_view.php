@@ -23,10 +23,13 @@ $au->citacoes_meus_artigos($au->codigo);
 
 echo '<table>';
 	echo '<TR><TD>';
+	echo $au->resumo_producao($au->codigo);
+	
 	echo $au->grafico();
 	echo '<TD align="right">';
 	echo $au->grafico_minhas_citacoes();	
 echo '<TR valign="top"><TD>';
+	echo $au->autor_revistas_publicacoes_cinco_ano($au->codigo);
 	echo $au->autor_revistas_publicacoes($au->codigo);
 echo '<TD>';
 	echo $br->indicador_autor($au->codigo);

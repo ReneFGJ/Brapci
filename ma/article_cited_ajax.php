@@ -5,7 +5,7 @@ header('Content-type: text/html; charset=ISO-8859-1');
 
 //require('../include/sisdoc_debug.php');
 require('../include/sisdoc_autor.php');
-
+function msg($x) { return($x); }
 require("../_class/_class_publications.php");
 $pb = new publications;
 $pb->article_id = $dd[0];

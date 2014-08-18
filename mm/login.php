@@ -1,6 +1,6 @@
 <?
-require("cab.php");
-echo '	<link rel="STYLESHEET" type="text/css" href="../css/letras_login.css">';
+require("login_cab.php");
+
 $erro[0] = '&nbsp;';
 $erro[1] = '&nbsp;';
 $erro[2] = '&nbsp;';
@@ -56,10 +56,22 @@ $msg[3] = 'Módulo Manutenção';
 </div>
 	<!--- patrocinadores --->
 	<BR>
+	<table align="center" width="500" border="0" background="center">
+	<TR><TD>
+	<div id="barra_logos">
+	<dl>
+			<dd id="ufpr"><a href="http://www.ufpr.br/" target="_blank">UFPR</a></dd>
+	   		<dd id="decigi"><a href="http://www.decigi.ufpr.br/" target="_blank">UFPR</a></dd>
+			<dd id="cnpq"><a href="http://www.cnpq.br/" target="_blank">UFPR</a></dd>
+	</dl>
+	</div>
+	</TD></TR>
+	</table>
+	<font class="lt0">copyright &copy 2009-<?=date("Y");?></font>
+	
 </center>
 
 <?
-require("../foot.php");
 ////////////////////////////////////////////////// login
 function login_brapci()
  { 

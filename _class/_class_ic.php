@@ -133,14 +133,18 @@ class ic
 
 		function ic($cod='',$jid='')
 			{
+				if (strlen($cod) > 0)
+				{
 				$sql = "select * from ic_noticia 
 					where nw_ref = '".$cod."' ";
 				
 				if (strlen($jid) > 0) { $sql .= " and (journal_id = $jid)"; }
-				
 				$sql .= " limit 1";
 				$rlt = db_query($sql);
 				$line = db_read($rlt);
+				} else {
+					$line=array();
+				}
 				return($line);
 			}
 		

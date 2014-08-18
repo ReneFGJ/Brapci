@@ -3,6 +3,29 @@ class keyword
 	{
 	var $tabela = "brapci_keyword";
 	
+	function cp()
+		{
+			$cp = array();
+			array_push($cp,array('$H8','id_kw','',False,True));
+			array_push($cp,array('$S80','kw_word','Termo',True,True));
+			array_push($cp,array('$S5','kw_idioma','Idioma',True,True));
+			array_push($cp,array('$S10','kw_codigo','Codigo',False,True));
+			array_push($cp,array('$S10','kw_use','Alias',False,True));
+			array_push($cp,array('$O 0:Não&1:SIM','kw_hidden','Oculto',False,True));
+			array_push($cp,array('$S1','kw_tipo','Tipo',False,True));
+			
+			return($cp);
+		}
+	
+	function row()
+		{
+			global $cdf, $cdm,$masc;
+			$idcp = 'kw';
+			$cdf = array('id_'.$idcp,$idcp.'_word',$idcp.'_codigo',$idcp.'_use',$idcp.'_idioma');
+			$cdm = array('Código','Nome','Citação','Codigo','Alias');
+			$masc = array('','','','','','','','','','','');			
+		}	
+	
 	function save_keyword_article($id,$keys)
 			{
 			$sql = "delete from brapci_article_keyword where kw_article = '$id'";

@@ -1,259 +1,272 @@
 <?php
+/**
+ * Class Autor
+ * @category SistemaApoio
+ * @author Rene Faustino Gabriel Junior <monitoramento@sisdoc.com.br>
+ * @copyright Copyright (c) 2011 - sisDOC.com.br
+ * @license http://www.opensource.org/licenses/lgpl-license.php LGPL
+ * @package Classe
+ * @version 0.12.04
+ */
 class author
 	{
-	var $codigo;
-	var $nome;
-	
-	var $tabela = "brapci_autor";
-	
-	function cp()
-		{
-			$cp = array();
-			array_push($cp,array('$H8','id_autor','',False,True));
-			array_push($cp,array('$S100','autor_nome','Nome do autor',False,True));
-			array_push($cp,array('$S10','autor_codigo','Codigo',False,True));
-			array_push($cp,array('$S100','autor_nome_abrev','Nome abreviado',False,True));
-			array_push($cp,array('$S100','autor_alias','Alias',False,True));
-			return($cp);
-		}
-	
-	function seek_google()
-		{
-			$link = "http://scholar.google.com.br/scholar?q=";
-			$sx .= '<A HREF="'.$link.'" target="_new">'.msg('seek_google_scholar').'</a>';
-			return($sx);
-		}
+		var $id_sa;
+		var $sa_codigo;
+		var $sa_nome;
+		var $sa_nome_asc;
+		var $sa_nome_autoridade;
+		var $sa_instituicao;
+		var $sa_nasc;
+		var $sa_fale;
+		var $sa_email;
+		var $sa_email_alt;
+		var $sa_titulo;
+		var $sa_dt_cadastro;
+		var $sa_lattes;
+		var $sa_content;
+		var $sa_ativo;
+		var $sa_senha;
+		var $sa_endereco;
+		var $sa_bairro;
+		var $sa_cidade;
+		var $sa_estado;
+		var $sa_cep;
+		var $sa_cx_postal;
+		var $sa_fone_1;
+		var $sa_fone_2;
+		var $sa_fone_3;
+		var $sa_email_confirmado;
+		var $sa_cpf;
+		var $sa_status;
+		var $sa_language;
 		
-	
-	function row()
-		{
-			global $cdf, $cdm,$masc;
-			$idcp = 'autor';
-			$cdf = array('id_'.$idcp,$idcp.'_nome',$idcp.'_nome_abrev',$idcp.'_codigo',$idcp.'_alias');
-			$cdm = array('Código','Nome','Citação','Codigo','Alias');
-			$masc = array('','','','','','','','','','','');			
-		}
-	
+		var $tabela = 'submit_autor';
+		
+		function cp()
+			{
+				global $dd;
+				$cp = array();
+				array_push($cp,array('$H8','id_sa','key',False,True));
+				array_push($cp,array('$H8','sa_codigo','',False,True));
+				array_push($cp,array('$S100','sa_nome',msg('full_name'),True,True));
+				array_push($cp,array('$HV','sa_nome_asc',UpperCaseSql($dd[2]),True,True));
+				array_push($cp,array('$HV','sa_nome_autoridade',UpperCaseSql($dd[2]),False,True));
+				array_push($cp,array('$HV','sa_status','A',False,True));
 
-	function publicoes_dos_autores($artigo)
-		{
-			global $db_public;
-			$art = new article;
-			$sql = "select * from (
-					SELECT ae_author FROM `brapci_article_author` 
-					where ae_article = '$artigo'
-					) as tabela";
-					
-			$sql = "select * from (
-						select ae_article from (
-						SELECT ae_author as author FROM brapci_article_author
-						where ae_article = '$artigo'
-						) as tabela01
-					inner join brapci_article_author on ae_author = author 
-					group by ae_article
-					) as tabela02
-					inner join ".$db_public."artigos on ar_codigo = ae_article
-				order by ar_ano desc, ar_vol desc, ar_nr desc	
-				";
-							
-			$rlt = db_query($sql);
-			$wh = '';
-			while ($line = db_read($rlt))
-				{
-					$link = '<A HREF="article.php?dd0='.$line['ar_codigo'].'" >VIEW</A>';
-					$sx .= $art->referencia_abnt($line);
-					$sx .= '&nbsp&nbsp[ '.$link.' ]';
-					$sx .= '<BR><BR>';
-				}
-			return($sx);			
-		}
-	function troca_remissivas()
-		{
-			echo '<HR>1<HR>';
-			$sql = "select * from brapci_article_author 
-					inner join brapci_autor on autor_codigo = ae_author
-					where autor_codigo <> autor_alias
-			";
-			$rlt = db_query($sql);
-			$id=0;
-			while ($line = db_read($rlt))
-				{
-					$id++;
-					$sql = "update brapci_article_author 
-							set ae_author = '".$line['autor_alias']."'
-							where id_ae = ".$line['id_ae'];
-					echo '<BR>'.$line['autor_nome'].' '.$line['autor_alias'];
-					$rrr = db_query($sql);
-				}
-			echo '<BR>Total de '.$id.' trocas';
-		}
-	
-	function mostra_producao()
-		{
-			
-		}
+				array_push($cp,array('$QA it_nome:it_codigo:select * from institutions where it_ativo=1 order by it_nome','',msg('institution'),False,True));
+				array_push($cp,array('$A8','',msg('persnal_info'),False,False));
+				array_push($cp,array('$[1900-'.(date('Y')-16).']','sa_nasc',msg('ano_nasc'),True,True));
+				array_push($cp,array('$S22','sa_cpf',msg('document'),False,True));
+				array_push($cp,array('$T60:5','sa_content',msg('bioghafic'),False,True));
+
+				array_push($cp,array('$H8','sa_fale','',False,True));
+				array_push($cp,array('$A8','',msg('persnal_eletronic'),False,False));
+				array_push($cp,array('$EMAIL','sa_email',msg('email'),True,True));
+				if (strlen($dd[13])> 0)
+					{
+					if (($this->email_exists($dd[13])) and (strlen($dd[0]) == 0))
+						{
+						array_push($cp,array('$M8','','<font color=red>'.msg('email_exist'),False,True));
+						} else {
+						array_push($cp,array('$H8','','',False,True));
+						$dd[16] = '1';
+						}
+					} else {
+						array_push($cp,array('$H8','','',False,True));					
+					}
+				array_push($cp,array('$EMAIL','sa_email_alt',msg('email_alt'),False,True));
+				array_push($cp,array('$HV','','',True,True));
+				array_push($cp,array('$S100','sa_lattes',msg('url'),False,True));
+				array_push($cp,array('$P20','sa_senha',msg('password'),True,True));
 				
-	function updatex_author()
-		{
-				$c = 'autor';
-				$c1 = 'id_'.$c;
-				$c2 = $c.'_codigo';
-				$c5 = $c.'_alias';
-				$c3 = 7;
-				$sql = "update  brapci_autor set 
-						$c2 = lpad($c1,$c3,0) , 
-						$c5 = lpad($c1,$c3,0)
-						where $c2='' ";
-				$rlt = db_query($sql);
-				return(1);
-		}
-		
-	function author_new($author)
-		{
-				$author1 = trim($author);
-				
-				$author1a = nbr_autor(($author1),1);
-				$author1b = uppercasesql($author1a);
-				$author1e = nbr_autor(($author1),5);
-				$sql = "insert into brapci_autor
-						(autor_nome, autor_nome_asc, autor_nome_abrev ,
-						autor_nome_citacao, autor_tipo, autor_codigo) 
-						values
-						('$author1a','$author1b','$author1e',
-						'$author1a','A','')";
-				$rlt = db_query($sql);
-				$this->updatex_author();
-				$sql = "select * from brapci_autor where
-						autor_nome_asc = '$author1a' 
-						";
-				$rrr = db_query($sql);
-				$line = db_read($rrr);
-				$codigo = $line['autor_codigo'];
-				return($codigo);
-		}
-		
-	function author_article_save($art,$author,$pos,$jid)
-		{
-			if ((strlen($art) > 0) and (strlen($author) > 0))
+				array_push($cp,array('$A8','',msg('persnal_address'),False,False));
+				array_push($cp,array('$U8','sa_dt_cadastro','',False,True));
+				array_push($cp,array('$HV','sa_ativo',1,False,True));
+				array_push($cp,array('$S100','sa_endereco',msg('address'),False,True));
+				array_push($cp,array('$S30','sa_bairro',msg('block'),False,True));
+				array_push($cp,array('$S8','sa_pais',msg('country'),False,True));
+				array_push($cp,array('$S8','sa_cidade',msg('city'),False,True));
+				array_push($cp,array('$UF','sa_estado',msg('state'),False,True));
+				array_push($cp,array('$S10','sa_cep',msg('cep'),False,True));
+				array_push($cp,array('$S10','sa_cx_postal',msg('cxpost'),False,True));
+				array_push($cp,array('$S20','sa_fone_1',msg('fone1'),False,True));
+				array_push($cp,array('$S20','sa_fone_2',msg('fone2'),False,True));
+				array_push($cp,array('$S20','sa_fone_3',msg('fone3'),False,True));
+				array_push($cp,array('$H8','sa_email_confirmado','',False,True));
+				return($cp);
+			}
+
+		function logout()
+			{
+						$_SESSION['id'] = '';
+						$_SESSION['name'] = '';
+						$_SESSION['cod'] = '';
+			}
+
+		function autenticar($id,$pw)
+			{
+				if ((strlen($id) > 0) and (strlen($pw) > 0))
 				{
-				$inst = $this->autor_instituition;
-				$bio = $this->bio;
-				$sql = "select * from brapci_article_author
-						where ae_article = '$art' and ae_author = '$author'	";
+				$auto = $this->valida_user($id,$pw);
+		
+				if ($auto == (-1)) { $msg = msg('email_incorrect'); }
+				if ($auto == (-2)) { $msg = msg('password_incorrect'); }
+				echo $msg;
+		
+				if ($auto == 0)
+					{
+						$ok = $this->email_exists($id);
+						$this->id_sa = $ok;
+						$this->le($this->id_sa);
+						$_SESSION['id'] = $this->sa_codigo;
+						$_SESSION['name'] = $this->sa_nome;
+						$_SESSION['cod'] = substr(md5($this->sa_nome.$this->sa_codigo),5,10);
+						redirecina('main.php'); 
+						echo 'ops '.$this->sa_status;
+						exit;	
+					}
+				}
+			}
+		function le($id='')
+			{
+				if (strlen($id) > 0) { $this->id_sa = $id; }
+				$rsp = 0;
+				$sql = "select * from ".$this->tabela." where id_sa = ".$this->id_sa;
 				$rlt = db_query($sql);
 				if ($line = db_read($rlt))
 					{
-						//echo '<BR>'.$author;
-						//print_r($line);
-					} else {
-						$sql = "insert into  brapci_article_author 
-						(ae_journal_id, ae_article, ae_position,
-						ae_author,ae_instituicao, ae_aluno,
-						ae_professor, ae_ss, ae_pos,
-						ae_contact, ae_mestrado, ae_doutorado,
-						ae_profissional, ae_bio, ae_telefone,
-						ae_endereco
-						) values (
-						'$jid','$art',$pos,
-						'$author','$inst',0,
-						0,0,0,
-						'',0,0,
-						'0','$bio','',
-						''
-						)";
-						$rrr = db_query($sql);
+						$rsp = 1;
+						$this->id_sa = $line['id_sa'];
+						$this->sa_codigo = $line['sa_codigo'];
+						$this->sa_nome = $line['sa_nome'];
+						$this->sa_nome_asc = $line['sa_nome_asc'];
+						$this->sa_nome_autoridade = $line['sa_nome_autoridade'];
+						$this->sa_instituicao = $line['sa_instituicao'];
+						$this->sa_nasc = $line['sa_nasc'];
+						$this->sa_fale = $line['sa_fale'];
+						$this->sa_email = $line['sa_email'];
+						$this->sa_email_alt = $line['sa_email_alt'];
+						$this->sa_titulo = $line['sa_titulo'];
+						$this->sa_dt_cadastro = $line['sa_dt_cadastro'];
+						$this->sa_lattes = $line['sa_lattes'];
+						$this->sa_content = $line['sa_content'];
+						$this->sa_ativo = $line['sa_ativo'];
+						$this->sa_senha = $line['sa_senha'];
+						$this->sa_endereco = $line['sa_endereco'];
+						$this->sa_bairro = $line['sa_bairro'];
+						$this->sa_cidade = $line['sa_cidade'];
+						$this->sa_estado = $line['sa_estado'];
+						$this->sa_cep = $line['sa_cep'];
+						$this->sa_cx_postal = $line['sa_cx_postal'];
+						$this->sa_fone_1 = $line['sa_fone_1'];
+						$this->sa_fone_2 = $line['sa_fone_2'];
+						$this->sa_fone_3 = $line['sa_fone_3'];
+						$this->sa_email_confirmado = $line['sa_email_confirmado'];
+						$this->sa_cpf = $line['sa_cpf'];
+						$this->sa_status = $line['sa_status'];
+						$this->sa_language = $line['sa_language'];
 					}
-				}
-		}
-		
-	function author_next_pos($art)
-		{
-			$sql = "select count(*) as total from brapci_article_author
-					where ae_article = '$art' ";
-			$rrr = db_query($sql);
-			$line = db_read($rrr);
-			$total = round($line['total']);
-			return($total);
-		}
-		
-	function author_find($author)
-		{
-			$author1 = $author;
-							
-			$author1a = nbr_autor(UpperCaseSql($author1),1);
-			$sql = "select * from brapci_autor where
-					autor_nome_asc = '$author1a' 
-					";
-			$rrr = db_query($sql);
-			if ($line = db_read($rrr))
-				{
-					$codigo = $line['autor_codigo'];
-				} else {
-					$codigo = $this->author_new($author);
-				}
+				return($rsp);
+			}
+		function cp_sp()
+			{
+				$cp = $this->cp();
+				$dd[5] = '@';
+				return($cp);
+			}				
+		function autor_autenticado()
+			{
+				$id=$_SESSION['id'];
+				$name = $_SESSION['name'];
+				if (strlen($id) > 0)
+					{
+						$this->le($id);
+						return(1);
+					} else {
+						redirecina('login.php');
+						return(0);
+					}
+				return(0);
+			}
+		function email_exists($email)
+			{
+				$email = lowercase($email);
+				$sql = "select id_sa from submit_autor where sa_email = '".lowercase($email)."' ";
+				$sql .= " or sa_email_alt = '".lowercase($email)."' ";
+				$rlt = db_query($sql);
+				if ($line = db_read($rlt))
+					{ $ok = $line['id_sa']; } else { $ok = 0; }
+				return($ok);				
+			}
+		function valida_user($em,$pass)
+			{
+				$ok = $this->email_exists($em);
+				if ($ok > 0)
+					{
+						$this->id_sa = $ok;
+						$this->le();
+						if (($this->sa_senha == $pass) and ($pass == $this->sa_senha))
+							{ $err = 0; } else { $err = -2; }
+					} else {
+						$err = -1;
+					}
+				return($err);
+			}
+		function password_send($em)
+			{
+				$id = $this->email_exists($em);
+				$this->id_sa = $id;
+				$this->le();
 				
-			$sql = "select * from  brapci_article_author
-					inner join brapci_article on ae_article = ar_codigo
-					inner join brapci_edition on ar_edition = ed_ano   
-					where ae_author = '$codigo'
-					order by ed_ano desc limit 1
-			";
-			$rlt = db_query($sql);
-			if ($line = db_read($rlt))
-				{
-					$this->autor_instituition = $line['ae_instituicao'];
-					if (($line['ae_doutorado']) == 1) { $dr = 1; }
-					if (($line['ae_mestrado']) == 1) { $dr = 1; }
-					if (($line['ae_profissional']) == 1) { $dr = 1; }
-					if (($line['ae_professor']) == 1) { $dr = 1; }
-					if (($line['ae_ss']) == 1) { $dr = 1; }
-					if (($line['ae_professor']) == 1) { $dr = 1; }
-				} else {
-					$this->autor_institution = '';
-				}
-			return($codigo);		
-		}
-	function show_author_row($key)
-		{
-			$sql = "select * from brapci_autor  
-					where autor_nome like '".$key."%' 
-					order by autor_nome_asc
-					";
+				$status = trim($this->sa_status);
+				
+				if ((strlen($status)==0) or ($status=='@'))
+					{
+						$senha = trim($this->sa_senha);
+						if (strlen($senha)==0)
+							{ $senha = $this->create_new_password(); }
+					}
+				$msg = msg('text_send_password');
+				$msg = troca($msg,'$password',$senha);
+				$msg = troca($msg,'$email',$em);
+				
+				$ema = new email;
+				$ema->to = $em;
+				$ema->subject = msg('text_send_subject');
+				$ema->body = $msg;
+				
+				/* Recupera dados */
+				global $email,$email_from,$email_nome,$email_pass,$smtp,$metodo;
+				
+				$ema->metodo = $metodo;
+				$ema->from  = $email_from;
+				$ema->from_name = $email_nome;
+				$ema->from_password = $email_pass;
+				$ema->smtp_server = $smtp;
+				$ema->enviar();
+				echo 'Enviado';
+				return(1);
+			}
+		function create_new_password()
+			{
+				$pass = date("isn");
+				$sql = "update ".$this->tabela." set sa_senha = '".$pass."' where id_sa = ".$this->id_sa;
+				$rlt = db_query($sql);	
+				return($pass);
+			}
+		function updatex()
+			{
+			global $base;
+			$dx1 = 'sa_codigo';
+			$dx2 = 'sa';
+			$dx3 = 7;
+			$sql = "update ".$this->tabela." set ".$dx1." = lpad(id_".$dx2.",".$dx3.",0) where ".$dx1." = '' ";
+			if ($base="pgsql")
+				{ $sql = "update ".$this->tabela." set ".$dx1."=trim(to_char(id_".$dx2.",'".strzero(0,$dx3)."')) where (length(trim(".$dx1.")) < ".$dx3.") or (".$dx1." isnull);";}
+			
 			$rlt = db_query($sql);	
-			while ($line = db_read($rlt))
-				{
-					$link = '<A HREF="busca_autor.php?dd1='.$line['autor_codigo'].'" class="link lt1">';
-					$sx .= '<BR>';
-					$sx .= $link;
-					$sx .= utf8_encode($line['autor_nome']);
-					$sx .= '</A>';
-				}
-			return($sx);
-		}
-	function show_author($article,$tp=1)
-		{
-			global $editar;
-			$sx = '';
-			/* Show Author */
-			$sql = "select * from  brapci_article_author
-					inner join brapci_autor on autor_codigo = ae_author 
-					where ae_article = '".$article."' 
-					order by ae_position
-					";
-			$rrr = db_query($sql);
-			$sa = '';
-			while ($rline = db_read($rrr))
-				{
-					if (strlen($sa) > 0) { $sa .= '; '; }
-					$sa .= '<I>'.trim($rline['autor_nome']).'</I>';
-				}
-			$sx .= $sa;		
-			if ($editar==1)
-				{
-				$sx .= '<BR><font class="link"><a href="#" class="link" id="autor">editar autor</A></font>';
-				}
-			return($sx);	
-		}
-	
+			return(1); 
+			}
+				
 	}
 ?>

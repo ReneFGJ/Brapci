@@ -1,9 +1,13 @@
-</div><BR>
-<div id="content_BOTTON"></div>
-<center>
-	&copy COPYRIGHT 1996-<?php echo date("Y"); ?>
-</center>
-<script>
-	$("#conteudo").corner();
-</script>	
-<?php require("../foot_menu.php");?>
+<?
+/**
+* Rodapé do módulo de manutenção
+* @author Rene F. Gabriel Junior <rene@sisdoc.com.br>
+* @version 0.0a
+* @copyright Copyright © 2011, Rene F. Gabriel Junior.
+* @access public
+* @package MM
+* @subpackage Layout
+*/
+?>
+</DIV>
+&copy 2009 - <?=date("Y");?> - UFPR 
