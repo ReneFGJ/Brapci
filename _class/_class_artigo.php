@@ -1166,9 +1166,11 @@ class artigo
 							';
 				$sx .= 'Qualis: <B>'.$line['ar_a'].'</B>';
 				$sx .= '<BR>Scopus Q: <B>'.$line['ar_q'].'</B>';
-				$sx .= '<BR>Excelence Rate: <B>'.$line['ar_er'].'</B>';				
-				
+				$sx .= '<BR>Excelence Rate: <B>'.$line['ar_er'].'</B>';
+				$sx .= '<BR>Colaboração Internacional: <B>'.$line['ar_ic'].'</B>';				
+				print_r($line);
 				$sx .= '<TR><TD align="center" class="tabela00 lt4" colspan=2>';
+				
 				
 				/* Arquivos */
 				//require_once("_ged_artigo_ged_documento.php");				
