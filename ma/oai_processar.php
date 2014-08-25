@@ -45,6 +45,8 @@ if (strlen(trim($line['cache_journal'])) > 0)
 				echo '<BR>'.$file;
 				if (!file_exists($file))
 					{
+						echo '<meta HTTP-EQUIV = "Refresh" CONTENT = "0; URL = '.page().'?dd0='.$line['id_cache'].'&dd1='.$dd[1].'&dd10=RELOAD"> ';
+						exit;
 						redirecina('oai_processar.php?dd0='.$line['id_cache'].'&dd10=RELOAD');
 						exit;
 					}
