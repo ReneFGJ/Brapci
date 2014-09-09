@@ -2,47 +2,15 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
 		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
-	<responseDate>2014-07-09T10:06:49Z</responseDate>
-	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:agora.periodicos.emnuvens.com.br:article/228">http://agora.emnuvens.com.br/ra/oai</request>
+	<responseDate>2014-09-09T16:35:32Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/73810">http://www.revistas.usp.br/incid/oai</request>
 	<GetRecord>
 		<record>
-			<header>
-				<identifier>oai:agora.periodicos.emnuvens.com.br:article/228</identifier>
-				<datestamp>2011-09-23T21:05:36Z</datestamp>
-				<setSpec>ra:APRES</setSpec>
+			<header status="deleted">
+				<identifier>oai:www.revistas.usp.br:article/73810</identifier>
+				<datestamp>2014-07-01T19:30:36Z</datestamp>
+				<setSpec>letrasclassicas:EDI</setSpec>
 			</header>
-			<metadata>
-<oai_dc:dc
-	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
-	xmlns:dc="http://purl.org/dc/elements/1.1/"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
-	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
-	<dc:title>[pt_BR]Apresentação</dc:title>
-	<dc:creator>Salles, Geraldo Gama</dc:creator>
-	<dc:subject>[pt_BR]Arquivologia; Biblioteconomia; História; Educação; Sociologia; Psicologia; Direito; Ciência da Informação</dc:subject>
-	<dc:subject>[pt_BR]Apresentação; Ágora; Arquivo público</dc:subject>
-	<dc:description>[pt_BR]Uma revista, pelo seu conte&amp;uacute;do, muitas vezes pode dispensar de apresenta&amp;ccedil;&amp;atilde;o que poderia se resumir em algumas palavras de incentivo a sua leitura, e para observarem bem o conte&amp;uacute;do de suas mat&amp;eacute;rias.</dc:description>
-	<dc:publisher>[pt_BR]ÁGORA ISSN 0103-3557</dc:publisher>
-	<dc:contributor>[pt_BR]</dc:contributor>
-	<dc:date>2011-07-04</dc:date>
-	<dc:type>info:eu-repo/semantics/article</dc:type>
-	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
-	<dc:type>[pt_BR]</dc:type>
-	<dc:type>[pt_BR]</dc:type>
-	<dc:format>application/pdf</dc:format>
-	<dc:identifier>http://agora.emnuvens.com.br/ra/article/view/228</dc:identifier>
-	<dc:source>[pt_BR]ÁGORA ISSN 0103-3557; v. 18, n. 37 (2003); 1-6</dc:source>
-	<dc:source>0103-3557</dc:source>
-	<dc:language>por</dc:language>
-	<dc:relation>http://agora.emnuvens.com.br/ra/article/view/228/pdf</dc:relation>
-	<dc:coverage>[pt_BR]Brasil</dc:coverage>
-	<dc:coverage>[pt_BR]</dc:coverage>
-	<dc:coverage>[pt_BR]</dc:coverage>
-	<dc:rights xml:lang="0">Direitos autorais 2014 ÁGORA ISSN 0103-3557</dc:rights>
-	<dc:rights xml:lang="0"></dc:rights>
-</oai_dc:dc>
-			</metadata>
 		</record>
 	</GetRecord>
 </OAI-PMH>

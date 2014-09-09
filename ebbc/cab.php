@@ -2,6 +2,7 @@
 $include = '../';
 require("../db.php");
 header ('Content-type: text/html; charset=ISO-8859-1');
+function msg($x) { return($x); }
 ?>
 <head>
 	<META HTTP-EQUIV=Refresh CONTENT="3600; URL=http://www.brapci.inf.br/logout.php">

@@ -25,7 +25,7 @@ $edi = new issue;
 /* Le dados do artigo */
 $art->le($dd[0]);
 $journals->le($art->journal_id);
-$issue = $art->issue;
+$issue = $art->line['ar_edition'];
 
 //print_r($art);
 $cr = chr(13).chr(10);
@@ -36,7 +36,8 @@ $edicao_data = substr(edicao_data,0,4).'-'.substr(edicao_data,4,2).'-'.substr(ed
 $titulo 	= $art->line['ar_titulo_1'];
 $titulo_alt = $art->line['ar_titulo_2'];
 $journal_title = $art->line['jnl_nome'];
-$issue = $art->line['ed_nr'];
+//$issue = $art->line['ed_nr'];
+$issue_name = $edi->issue_legend($issue);
 $vol = $art->line['ed_vol'];
 $page = trim($art->pagf);
 if (strlen($page) > 0) { $page = '-'.$page;}
@@ -76,7 +77,7 @@ $sx .= '
 	<meta name="DC.Rights" content="Direitos Reservados ao autor"/>
 	<meta name="DC.Source" content="'.$journal_title.'"/>
 	<meta name="DC.Source.ISSN" content="'.$issn.'"/>
-	<meta name="DC.Source.Issue" content="'.$issue.'"/>	
+	<meta name="DC.Source.Issue" content="'.$issue_name.'"/>	
 	<meta name="DC.Source.URI" content="http://www.brapci.inf.br/article.php?dd0='.$dd[0].'"/>
 	<meta name="DC.Source.Volume" content="'.$vol.'"/>						
 	<meta name="DC.Type" content="Text.Serial.Journal"/>
@@ -89,7 +90,7 @@ $sx .= '
 	<meta name="citation_date" content="2014/03/31"/>
 
 	<meta name="citation_volume" content="'.$vol.'"/>
-	<meta name="citation_issue" content="'.$issue.'"/>
+	<meta name="citation_issue" content="'.$issue_name.'"/>
 
 	<meta name="citation_firstpage" content="'.$page.'"/>
 	<meta name="citation_abstract_html_url" content="http://www.brapci.inf.br/article.php?dd0='.$dd[0].'"/>
@@ -99,8 +100,7 @@ $sx .= '<meta>';
 echo $sx;			
 
 echo '<table width="100%"><TR><TD>';
-echo ($edi->issue_legend($issue));
-echo '<BR>'.$issue;
+echo ($issue_name);
 echo ($art->mostra());
 
 echo ($ref->exportar_ref($art->line));

@@ -51,12 +51,12 @@ if ($line = db_read($rlt))
 	print_r($line);
 	}
 
-$sql = "select count(*) as total, autores from ( 
-              SELECT count(*) as autores, ae_article FROM brapci_article  
-              inner join brapci_article_author on ar_codigo = ae_article 
-              inner join brapci_edition on ar_edition = ed_codigo 
-               inner join brapci_section on ar_section = se_codigo 
-               where (se_tipo = 'B' and ar_status <> 'X' )";
+$sql = "select count(*) as total, autores from ( ";
+$sql .= "SELECT count(*) as autores, ae_article FROM brapci_article  ";
+$sql .= "inner join brapci_article_author on ar_codigo = ae_article ";
+$sql .= "inner join brapci_edition on ar_edition = ed_codigo ";
+$sql .= " inner join brapci_section on ar_section = se_codigo ";
+$sql .= " where (se_tipo = 'B' and ar_status <> 'X' )";
 if (strlen($dd[1]) > 0) { $sql .= " and ( ed_ano >= '".$dd[1]."') "; }
 if (strlen($dd[2]) > 0) { $sql .= " and ( ed_ano <= '".$dd[2]."') "; }
 $sql .= "group by ae_article ) as tabelas group by autores ";

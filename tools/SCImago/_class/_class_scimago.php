@@ -1,18 +1,96 @@
 <?php
 class scimago {
+	function structure() {
+		$sql = "alter table ajax_cidade add column cidade_nome_asc char(40)";
+		$rlt = db_query($sql);
+		
+		$sql = "alter table ajax_pais add column pais_nome_asc char(30)";
+		$rlt = db_query($sql);
+		
+		$sql .= "
+					CREATE TABLE ajax_pais
+					( 
+					id_pais serial NOT NULL, 
+					pais_nome char(30), 
+					pais_nome_asc char(30),
+					pais_codigo char(7), 
+					pais_ativo int4 DEFAULT 1, 
+					pais_use char(7), 
+					pais_idioma char(5),, 
+					pais_prefe int8 DEFAULT 0
+					);
+				ALTER TABLE ajax_cidade ADD CONSTRAINT id_cidade PRIMARY KEY(id_cidade);
+				";	
+		
+		$sql = "CREATE TABLE ajax_cidade
+				( 
+					id_cidade serial NOT NULL, 
+					cidade_nome char(40),
+					cidade_nome_asc char(40), 
+					cidade_codigo char(7), 
+					cidade_ativo int4 DEFAULT 1, 
+					cidade_use char(7), 
+					cidade_pais char(7), 
+					cidade_estado char(7), 
+					cidade_idioma char(5) DEFAULT 'pt_BR'::bpchar, 
+					cidade_sigla char(3) 
+					); 
+					
+				ALTER TABLE ajax_cidade ADD CONSTRAINT id_cidade PRIMARY KEY(id_cidade);
+				";
+	}
 
-	var $journal;
-	var $journal_codigo;
+	function updatex()
+		{
+			$sql = "select * from ajax_pais where pais_nome_asc = '' ";
+			while ($line = db_read($rlt))
+				{
+					$sql = "update ajax_pais set pais_nome_asc = '".uppercasesql($line['pais_nome'])."' where id_pais = ".$line['id_pais'];
+					echo $sql.'<HR>';
+				}
+		}
+	function search_country($country) {
+		$country_asc = UpperCaseSql($country);
+		$sql = "select * from ajax_pais where pais_nome_asc = '" . $country_asc . "' ";
+		$rlt = db_query($sql);
+		if ($line = db_read($rlt)) {
+			return ($line['cnt_codigo']);
+		} else {
+			$sql = "select pais_codigo from ajax_pais order by pais_codigo desc ";
+			$rlt = db_query($sql);
+			$line = db_read($rlt);
+			$cod = strzero(round($line['pais_codigo']) + 1, 5);
+
+			$sql = "insert into apoio_pais
+								( 
+								pais_nome, pais_name_asc, pais_codigo, 
+								pais_use, pais_ativo,  )
+								values 
+								( '$country','$country_asc','$cod','$cod') 
+							";
+			$rlt = db_query($sql);
+			return ($cod);
+		}
+	}
 
 	function search_journal($issn, $name = '', $country = '') {
 		if (substr($issn, 4, 1) == '-') {
-			$sql = "select * from cited_journals where cj_issn = '" . $issn . "' ";
+			$sql = "select * from sci_journal where sci_issn = '" . $issn . "' ";
 			$rlt = db_query($sql);
 			if ($line = db_read($rlt)) {
-				$this -> journal_codigo = $line['cj_codigo'];
 				return (1);
 			} else {
-				return (-1);
+				$ctr = $this -> search_country($country);
+				$sql = "insert into sci_journal 
+									(
+										sci_issn, sci_journal, sci_ativo,
+										sci_country
+									) values (
+										'$issn','$name',1,
+										'$ctr'
+									)							
+							";
+				$rlt = db_query($sql);
 			}
 		}
 	}
@@ -25,7 +103,6 @@ class scimago {
 			$s = $this -> process_ii($s);
 			$sa = $this -> process_iii($s);
 			$this -> process_iv($sa);
-			$this -> process_v($sa);
 		} else {
 			Echo 'Erro na abertura de arquivo';
 			exit ;
@@ -34,29 +111,7 @@ class scimago {
 
 	/* Identificacao */
 	function process_iv($sa) {
-		for ($r = 0; $r < count($sa); $r++) {
-			$sx = $sa[$r] . ';';
-			$ss = splitx(';', $sx);
-			$issn = substr($ss[2], 0, 4) . '-' . substr($ss[2], 4, 4);
-			$journal = $ss[1];
-
-			$country = $ss[13];
-			echo '<BR>' . $issn . '-' . $journal . ' ';
-			if ($this -> search_journal($issn) > 0) {
-
-			} else {
-				echo '<BR><font color="red">Publicação não localizada ' . $issn . ' - ' . $this -> journal . '</font>';
-				$qualis = new qualis;
-				$qualis -> cited_journal_insert($issn, $journal);
-			}
-
-		}
-	}
-
-	/* Process Grava Dados */
-	function process_v($sa) {
-		/* Identificacao */
-
+		print_r($sa[0]);
 		for ($r = 0; $r < count($sa); $r++) {
 			$sx = $sa[$r] . ';';
 			$ss = splitx(';', $sx);
@@ -73,13 +128,10 @@ class scimago {
 			$f8 = $ss[11];
 			$f9 = $ss[12];
 			$country = $ss[13];
-			echo '<BR>' . $issn . '-' . $journal . ' ';
-			if ($this -> search_journal($issn) > 0) {
 
-			} else {
-				echo '<BR><font color="red">Publicação não localizada ' . $issn . ' - ' . $this -> journal . '</font>';
-			}
-
+			echo '<BR>' . $issn . '-' . $journal.'-'.$q.'-';
+			echo '=' . $f1 . '=' . $f2 . '=' . $f3 . '=' . $f4 . '=' . $f5 . '=' . $f6 . '=' . $f7 . '=' . $f8 . '=' . $f9;
+			echo '====' . $country;
 		}
 	}
 

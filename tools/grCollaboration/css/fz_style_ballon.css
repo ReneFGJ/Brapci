@@ -1,0 +1,29 @@
+/* menu lateral */
+#onkey {  
+  	background:#F8F8F8;
+    border-radius: 4px;  
+    -moz-border-radius: 4px;  
+    -webkit-border-radius: 4px;  
+  
+    padding: 20px; 
+    left: -900px; 
+    top: 90px;
+    position: absolute;  
+    font-size: 12px;  
+ 
+    text-align: justify;  
+    color: #3a3a3a; 
+    border:2px solid #62C2D0;
+}  
+  
+#onkey .arrow {  
+    border-color: transparent #111111 transparent transparent;  
+    border-style: solid;  
+    border-width: 10px;  
+    display: block;  
+    height: 0;  
+    left: -18px;  
+    position: absolute;  
+    top: 20px;  
+    width: 0;  
+}  

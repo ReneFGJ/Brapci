@@ -16,7 +16,8 @@
 	session_start();
 
 	/* Noshow Errors */
-	$debug = 0; 
+	$debug = 0; 	
+	if (file_exists('DEBUG')) { $debug1 = 0; $debug2 = 0; }
 
 	require($include.'_class_debug.php');
 	

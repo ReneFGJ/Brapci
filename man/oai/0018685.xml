@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2014-08-30T10:10:32Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/75401">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header status="deleted">
+				<identifier>oai:www.revistas.usp.br:article/75401</identifier>
+				<datestamp>2014-07-21T12:24:13Z</datestamp>
+				<setSpec>ceru:CERU030</setSpec>
+			</header>
+		</record>
+	</GetRecord>
+</OAI-PMH>

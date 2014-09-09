@@ -1,0 +1,52 @@
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2014-07-07T02:24:58Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:ojs.web2.eci.ufmg.br:article/2189">http://portaldeperiodicos.eci.ufmg.br/index.php/pci/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:ojs.web2.eci.ufmg.br:article/2189</identifier>
+				<datestamp>2014-07-02T12:16:22Z</datestamp>
+				<setSpec>pci:ted</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title>[pt_BR]Tomada de decisão organizacional e subjetividade: análise das dimensões simbólico-afetivas no uso da informação em processos decisórios</dc:title>
+	<dc:creator>Araújo, Eliane Pawlowski de Oliveira</dc:creator>
+	<dc:subject>[pt_BR]</dc:subject>
+	<dc:subject>[pt_BR]</dc:subject>
+	<dc:description>[pt_BR]O aumento da complexidade nos ambientes de negócios tem transformado a informação e a capacidade de lidar com ela em questão estratégica para ...</dc:description>
+	<dc:publisher>[pt_BR]Escola de Ciência da Informação da UFMG</dc:publisher>
+	<dc:contributor>[pt_BR]</dc:contributor>
+	<dc:date>2014-06-30</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type>[pt_BR]</dc:type>
+	<dc:type>[pt_BR]</dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://portaldeperiodicos.eci.ufmg.br/index.php/pci/article/view/2189</dc:identifier>
+	<dc:source>[pt_BR]Perspectivas em Ciência da Informação; v. 19, n. 2 (2014); 199</dc:source>
+	<dc:source>19815344</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://portaldeperiodicos.eci.ufmg.br/index.php/pci/article/view/2189/1382</dc:relation>
+	<dc:relation>http://portaldeperiodicos.eci.ufmg.br/index.php/pci/article/downloadSuppFile/2189/747</dc:relation>
+	<dc:coverage>[pt_BR]</dc:coverage>
+	<dc:coverage>[pt_BR]</dc:coverage>
+	<dc:coverage>[pt_BR]</dc:coverage>
+	<dc:rights>[pt_BR]
+
+Texto sobre Copyright  do conteúdo da Revista.
+
+</dc:rights>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

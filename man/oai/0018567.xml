@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.ufpb.br/evento/lti/ocs/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2014-08-16T09:35:53Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:ocs.www.ufpb.br:paper/1525">http://www.ufpb.br/evento/lti/ocs/index.php/enancib/enancib2014/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:ocs.www.ufpb.br:paper/1525</identifier>
+				<datestamp>2014-08-15T20:30:26Z</datestamp>
+				<setSpec>enancib:enancib2014:GT11</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="0">METRIAS CONTAM A HISTÓRIA E A TRAJETÓRIA DA REVISTA ELETRÔNICA DE COMUNICAÇÃO, INFORMAÇÃO E INOVAÇÃO EM SAÚDE - RECIIS</dc:title>
+	<dc:creator>Rosany Bochner; Fiocruz/ICICT/PPGICS</dc:creator>
+	<dc:creator>Rodrigo Murtinho; Fiocruz/ICICT</dc:creator>
+	<dc:creator>Christovam Barcellos; Fiocruz/ICICT</dc:creator>
+	<dc:creator>Juliana Gonçalves Reis; Fiocruz/ICICT</dc:creator>
+	<dc:creator>Ticiana Santa Rita; Fiocruz/ICICT</dc:creator>
+	<dc:description xml:lang="pt-BR">O artigo apresenta os resultados de um estudo bibliométrico sobre sete anos da Revista Eletrônica de Comunicação, Informação e Inovação em Saúde - RECIIS. Foram considerados todos os números publicados desde seu lançamento, junho de 2007, até o volume 7, número 4 temático de 2013. Fizeram parte do estudo 30 exemplares, sendo 17 correntes, 11 temáticos e 2 suplementos. Foram analisados todos os artigos, exceto os editoriais, os autores (frequência, padrões de coautoria, vinculação institucional e nacionalidade) e as palavras-chave. Entre os principais resultados encontrados destacam-se que foram identificados 776 autores que produziram 397 artigos. Destes autores, 87% publicaram um único artigo. A média de autores por artigo no período foi de 2,32, com tendência crescente, corroborando com a tese de que no âmbito da ciência, a imagem do pesquisador isolado faz parte do passado. A vinculação dos autores mostrou-se bastante abrangente, tanto na participação de estrangeiros, quanto na de outras regiões brasileiras diferentes de onde está alocada a revista. A análise das palavras-chave mostra o alinhamento da revista com sua meta no sentido de divulgar um novo campo de pesquisa interdisciplinar, comunicação e informação científica e tecnológica em saúde, área esta que é o foco da Unidade da Fiocruz que abriga a revista.</dc:description>
+	<dc:publisher xml:lang="pt-BR">XV Encontro Nacional de Pesquisa em Pós-Graduação em Ciência da Informação</dc:publisher>
+	<dc:contributor xml:lang="pt-BR">Faperj</dc:contributor>
+	<dc:date>2014-08-15 17:30:26</dc:date>
+	<dc:type xml:lang="pt-BR">Documento avaliado pelos pares</dc:type>
+	<dc:identifier>http://www.ufpb.br/evento/lti/ocs/index.php/enancib/enancib2014/paper/view/1525</dc:identifier>
+	<dc:source xml:lang="0">XV Encontro Nacional de Pesquisa em Pós-Graduação em Ciência da Informação; XV Encontro Nacional de Pesquisa em Pós-Graduação em Ciência da Informação</dc:source>
+	<dc:language>pt</dc:language>
+	<dc:relation>http://www.ufpb.br/evento/lti/ocs/index.php/enancib/enancib2014/paper/download/1525/2604</dc:relation>
+	<dc:relation>http://www.ufpb.br/evento/lti/ocs/index.php/enancib/enancib2014/paper/download/1525/2605</dc:relation>
+	<dc:relation>http://www.ufpb.br/evento/lti/ocs/index.php/enancib/enancib2014/paper/download/1525/2608</dc:relation>
+	<dc:rights>Autores que submetem a esta conferência concordam com os seguintes termos:[br /] [strong]a)[/strong] Autores mantém os direitos autorais sobre o trabalho, permitindo à conferência colocá-lo sob uma licença [a href=&quot;http://creativecommons.org/licenses/by/3.0/&quot;]Licença Creative Commons Attribution[/a], que permite livremente a outros acessar, usar e compartilhar o trabalho com o crédito de autoria e apresentação inicial nesta conferência.[br /] [strong]b)[/strong] Autores podem abrir mão dos termos da licença CC e definir contratos adicionais para a distribuição não-exclusiva e subseqüente publicação deste trabalho (ex.: publicar uma versão atualizada em um periódico, disponibilizar em repositório institucional, ou publicá-lo em livro), com o crédito de autoria e apresentação inicial nesta conferência.[br /] [strong]c)[/strong] Além disso, autores são incentivados a publicar e compartilhar seus trabalhos online (ex.:  em repositório institucional ou em sua página pessoal) a qualquer momento antes e depois da conferência.</dc:rights>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

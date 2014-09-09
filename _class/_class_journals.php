@@ -1,163 +1,254 @@
-<?
+<?php
 class journals
 	{
-		var $journal_id;
-		var $title;
-		var $path;
-		var $tabela = 'journals';
+		var $tabela = 'brapci_journal';
+		var $line;
+		var $codigo;
+		var $abrev;
+		var $journal_name;
+		var $issn;
+		var $issn_e;
+		var $ano_inicial;
+		var $ano_final;
+		var $artigos;
+		var $tipo;
+		var $status;
+		var $status_nome;
+		var $periodicidade;
+		var $periodicidade_nome;
 		
-		function cp()
+		function periodicidade_publicaoes()
 			{
-				$nc = $nucleo.":".$nucleo;
-				$opt = ' : ';
-				$opt .= '&J:Revista Cientifica';
-				$opt .= '&A:Anais de eventos';
-				
-				array_push($cp,array('$H4','journal_id','journal_id',False,False,''));
-				array_push($cp,array('$A4','','Dados pessoais',False,True,''));
-				array_push($cp,array('$S200','jn_title','Título da publicação',True,True,''));
-				array_push($cp,array('$S80','title','Título abreviado (para citação)',True,True,''));
-				array_push($cp,array('$S150','editor','Nome do editor chefe',True,True,''));
-				array_push($cp,array('$T50:5','description','Descrição da publicação',False,True,''));
-				array_push($cp,array('$S30','path','Path',True,True,''));
-		
-				array_push($cp,array('$T60:8','jnl_html_cab','cabecalho',False,True,''));
-				array_push($cp,array('$T60:5','assinatura','Assinatura',True,True,''));
-		
-				array_push($cp,array('$[1-40]','seq','Seq',True,True,''));
-				array_push($cp,array('$O 1:Sim&0:Não','enabled','Habilitado',True,True,''));
-				array_push($cp,array('$Q layout_descricao:layout_cod:select * from layout where layout_ativo = '.chr(39).'S'.chr(39).' order by layout_descricao ','layout','Layout',True,True,''));
-				array_push($cp,array('$S30','journal_issn','ISSN (rev. impressa)',False,True,''));
-				array_push($cp,array('$S8','jn_bgcor','Cor',True,True,''));
-				array_push($cp,array('$S60','jn_id','ID',True,True,''));
-				array_push($cp,array('$S100','jn_http','OAI-http',True,True,''));
-				array_push($cp,array('$S100','jn_email','e-mail administrador',True,True,''));
-			
-				array_push($cp,array('$O S:Sim&N:Não','jn_send','Submissão on-line',True,True,''));
-				array_push($cp,array('$O 0:Não&1:Sim','jn_send_suspense','Submissão on-line suspensa',False,True,''));
-		
-				array_push($cp,array('$O S:Sim&N:Não','jn_noticia','Notícias',False,True,''));
-				array_push($cp,array('$O S:Sim&N:Não','jn_suplemento','Suplemento',False,True,''));
-		////	//////////////////// Novos campos
-				array_push($cp,array('$S15','jn_eissn','e-ISSN (rev. eletronico)',False,True,''));
-				array_push($cp,array('$S20','jn_isbn','ISBN (livro)',False,True,''));
-				array_push($cp,array('$S20','jnl_google','ID do Google Analytics',False,True,''));
-				
-				array_push($cp,array('$O '.$opt,'jnl_journals_tipo','Tipo',False,True,''));
-				
-				return($cp);	
-		}
-			
-		function le($id)
-			{
-				if (strlen($id) > 0)
-					{ $this->$journal_id = $id; }
-				$sql = "select * from ".$this->tabela." where journal_id = ".$this->$journal_id;
+				$sql = "select count(*) as total, peri_nome, peri_ordem from ".$this->tabela." 
+						left join brapci_periodicidade on peri_codigo = jnl_periodicidade
+						where jnl_tipo = 'J' 
+						and jnl_vinc_vigente = '1'
+						group by peri_nome, peri_ordem
+						order by peri_ordem, total desc
+						";
 				$rlt = db_query($sql);
+				
+				$sx = '<table width="300" class="tabela00">';
+				$to = 0;
+				while ($line = db_read($rlt))
+					{
+						$to = $to + $line['total'];
+						$sx .= '<tr><TD class="tabela01">'.$line['peri_nome'];
+						$sx .= '<TD align="center" class="tabela01">'.$line['total'];
+					}
+				$sx .= '<tr><TD><I>Total '.$to;
+				$sx .= '</table>';
+				return($sx);
+			}
+			
+		function periodicidade_publicaoes_lista($status='')
+			{
+				if (strlen($status) > 0) { $wh = "and jnl_vinc_vigente = '$status' ";}
+				$sql = "select * from ".$this->tabela." 
+						left join brapci_periodicidade on peri_codigo = jnl_periodicidade
+						where jnl_tipo = 'J' 
+						$wh
+						order by peri_ordem, jnl_nome
+						";
+						
+				$rlt = db_query($sql);
+				
+				$sx = '<table width="600" class="tabela00">';
+				$to = 0;
+				$xperi = 'x';
+				while ($line = db_read($rlt))
+					{
+						$to++;
+						$peri = trim($line['peri_nome']);
+						if ($xperi != $peri)
+							{
+								$sx .= '<tr><TD class="tabela00 lt2" colspan=3><B>'.$line['peri_nome'].'</B></TD></TR>';
+								$xperi = $peri;
+							}
+						$sx .= '<TR>';
+						$sx .= '<TD width="40">';
+						$sx .= '<TD align="left" class="tabela01">'.$line['jnl_nome'];
+						$sx .= '<TD>'.ShowLink($line['jnl_url'],'1','NewSite',trim($line['jnl_nome']));
+					}
+				$sx .= '<tr><TD><I>Total '.$to;
+				$sx .= '</table>';
+				return($sx);
+			}			
+		
+		function row()
+			{
+				global $cdf, $cdm, $masc;
+				$cdf = array('id_jnl','jnl_nome','jnl_issn_impresso');
+				$cdm = array('Código','Nome','ISSN');
+				$masc = array('','','');
+				return(1);				
+			}		
+		
+		function recupera_journal_pelo_path($path)
+			{
+				$sql = "select * from brapci_journal where jnl_patch = '".$path."' ";
+				$rlt = db_query($sql);
+				
 				if ($line = db_read($rlt))
 					{
-						$this->journal_id = $line['journal_id'];
-						$this->path = $line['path'];
-						$this->title = $line['title'];
+						return(array($line['id_jnl'],'J'));	
 					}
-				return(1);
-			}
-			
-		/** Mostra journals disponíveis */
-		function mostra_journals_row()
-			{
-					$sql = "select * from journals 
-							inner join journals_tipo on jnl_journals_tipo = jt_codigo
-							where jt_evento = 0 and jt_anais = 0
-							order by title ";
-					$sql = "select * from journals 
-							left join journals_tipo on jnl_journals_tipo = jt_codigo
-							where jnl_journals_tipo = 'J'
-							order by title
-							";
-    				$rst = db_query($sql);
-					
-	
-   					/* Printing results in HTML */
-  					$row=0;
-					$col=0;
-					$xid = 0;
- 					$sx = '<table class=lt0 width=100%" border=0>';	
-	
-    				while ($line = db_read($rst)) 
-					{
-						$xid = $line['journal_id'];
-						$sx .= '<TR valign="top">';
-						$sx .= '<TD align="left" width="25%">';
-						$sx .= '<A HREF="index.php/'.$line["path"].'">';
-						$sx .= $line["title"];
-						$sx .= '</A>';
-	        			$sx .= "</TD>";
-	        		}
-					$sx .= '</table>';
-					$col = $col + 1;
-					return($sx);			
-			}
-		
-		
-		function mostra_journals()
-			{
-					$sql = "select * from journals 
-							inner join journals_tipo on jnl_journals_tipo = jt_codigo
-							where jt_evento = 0 and jt_anais = 0
-							order by title ";
-					$sql = "select * from journals 
-							left join journals_tipo on jnl_journals_tipo = jt_codigo
-							order by title
-							";
-    				$rst = db_query($sql);
-					
-	
-   					/* Printing results in HTML */
-  					$row=0;
-					$col=0;
-					$xid = 0;
- 					$sx = '<table class=lt2 width=100%" border=0>';	
-	
-    				while ($line = db_read($rst)) 
-					{
-						$xid = $line['journal_id'];
-						if (($col==0) or ($col >= 3))
-						{
-							$sx .= '<TR valign="top">';
-							$col = 0;
-						}
-						$col++;
-						$capa = '../editora/img_edicao/capa_'.$line['path'].'.png';
-						$sx .= '<TD align="center" width="25%">';
-						$sx .= '<A HREF="index.php/'.$line["path"].'">';
-						$sx .= '<img src="'.$capa.'" height="135"  border="0">';
-						$sx .= '<font class="lt1"><BR>';
-						$sx .= '<B>'.$line["title"].'</B>';
-						$sx .= '</A><BR><font class="lt0">';
-						$sx .= $line['description'];
-	        			$sx .= "</TD>";
-	        		}
-					$sx .= '</table>';
-					$col = $col + 1;
-					return($sx);			
-			}
 
-		function mostra_completo_tipo_01()
-			{
+				$sql = "select * from brapci_edition where ed_patch = '".$path."' ";
+				$rlt = db_query($sql);
 				
-				$sx .= '<table width="100%" cellpadding=0 cellspacing=0 >
-						<TR class="tdcol">
-						
-						</table>
-						';
+				if ($line = db_read($rlt))
+					{
+						return(array($line['id_jnl'],'I'));	
+					}
+				return(array(0,''));
+
+			}
+		
+		
+		function structure()
+			{
+				$sql = "ALTER TABLE brapci_journal ADD jnl_patch CHAR(20) NOT NULL ; ";
+				$rlt = db_query($sql);
+				
+				$sql = "ALTER TABLE brapci_edition ADD ed_path CHAR(20) NOT NULL ;";
+				$rlt = db_query($sql);
+				return(0);				
+			}			
+			
+			
+		
+		function mostra()
+			{
+				$sx .= '<h1>'.$this->journal_name.'</h1>';
 				return($sx);
 			}
 		
-		function updatex()
+		function mostra_issue_menu()
 			{
-			$sql = "update ".$this->tabela." set jnl_codigo = trim(to_char(journal_id,'0000000'))";
-			$rlt = db_query($sql);
+				
+			}
+		function  le($id)
+			{
+				$sql = "select * from ".$this->tabela." 
+						left join brapci_periodicidade on jnl_periodicidade = peri_codigo
+						where id_jnl = ".round($id);
+				$rlt = db_query($sql);
+				if ($line = db_read($rlt))
+					{
+						$this->codigo = trim($line['jnl_codigo']);
+						$this->journal_name = trim($line['jnl_nome']);
+						$this->abrev = trim($line['jnl_nome_abrev']);
+						$this->issn = trim($line['jnl_issn_impresso']);
+						$this->issn_e = trim($line['jnl_issn_eletronico']);
+						$this->ano_inicial = trim($line['jnl_ano_inicio']);
+						$this->ano_final = trim($line['jnl_ano_final']);
+						if ($this->ano_final==0) { $this->ano_final = ''; }
+						$this->url = trim($line['jnl_url']);
+						$this->artigos = trim($line['jnl_artigos_indexados']);
+						$this->tipo = trim($line['jnl_tipo']);
+						$this->status = trim($line['jnl_status']);
+						$this->periodicidade = trim($line['jnl_periodicidade']);
+						$this->periodicidade_nome = trim($line['peri_nome']);
+						$sta = trim($line['jnl_status']);
+						
+						if ($sta=='A') { $sta = msg('current'); }
+						if ($sta=='B') { $sta = msg('closed'); }
+						if ($sta=='X') { $sta = msg('cancel'); }
+						$this->status_nome = $sta;
+						$this->line = $line;	
+					}
+			}
+		function jourmal_legenda()
+			{
+				$sx .= $this->journal_name;
+				return($sx);
+			}
+		function journals_mostra()
+			{
+				$sx .= '<fieldset><legend style="margin-left: 10px; padding-left:10px; padding-right:10px;">'.msg("journal").'</legend>';
+					$sx .= '<table width="99%" class="lt0" cellpadding=0 cellspacing=2 >';
+					/* nome */
+					$sx .= '<TR><TD class="lt0" colspan=4 >'.msg('journal_name');
+					$sx .= '<TR class="lt1"><TD colspan=4><B>'.$this->journal_name;
+					/* issn */
+					$sx .= '<TR><TD class="lt0" colspan=1 >'.msg('journal_issn');
+					$sx .= '    <TD class="lt0" colspan=1 >'.msg('journal_issne');
+					$sx .= '    <TD class="lt0" colspan=2 >'.msg('journal_abrev');
+					$sx .= '<TR class="lt1" colspan=1 >	<TD><B>'.$this->issn;
+					$sx .= '						 	<TD><B>'.$this->issn_e;
+					$sx .= '						 	<TD colspan=2><B>'.$this->abrev;						
+					
+					$sx .= '<TR><TD class="lt0" colspan=1 >'.msg('journal_start');
+					$sx .= '    <TD class="lt0" colspan=1 >'.msg('journal_closed');
+					$sx .= '    <TD class="lt0" colspan=1 >'.msg('periodicity');
+					$sx .= '    <TD class="lt0" colspan=1 >'.msg('status');
+
+					$sx .= '<TR class="lt1" colspan=1 >	<TD><B>'.$this->ano_inicial;
+					$sx .= '						 	<TD><B>'.$this->ano_final;
+					$sx .= '						 	<TD><B>'.$this->periodicidade_nome;
+					$sx .= '						 	<TD><B>'.$this->status_nome;
+					
+					$sx .= '</table>';
+				$sx .= '</fieldset>';
+				return($sx);
+			}
+		function list_journals($sta)
+			{
+				$sql = "select * from ".$this->tabela." where jnl_tipo = 'J' and jnl_status = '$sta'
+						order by jnl_nome
+				";
+				$rlt = db_query($sql);
+				
+				/* gera resultados */
+				$sx .= '<table class="lt1" width="100%">';
+				$sx .= '<TR><TH>'.msg('journal_name');
+				$sx .= '    <TH>'.msg('journal_issn');
+				$sx .= '    <TH>'.msg('journal_status');
+				$tot = 0;
+				while ($line = db_read($rlt))
+					{
+						$tot++;
+						$sx .= $this->mostra_journal_linha($line,'journal_mostra.php');
+					}
+				$sx .= '<TR><TD colspan=5><B>'.msg('found').' '.$tot.' '.msg('register');
+				$sx .= '</table>';
+				
+				return($sx);
+			}
+		function mostra_journal_linha($line,$link='')
+			{
+				if (strlen($link) > 0)
+					{
+						$linkf = "</A>";
+						$link .= '?dd0='.$line['id_jnl'].'&dd90='.checkpost($line['id_jnl']);
+						$link = '<A HREF="'.$link.'">';
+					} else {
+						$linkf='';
+					}
+				$sx .= '<TR '.coluna().'>';
+				$sx .= '<TD>';
+				$sx .= $link;
+				$sx .= trim($line['jnl_nome']);
+				$sx .= $linkf;
+
+				$sx .= '<TD align="center">';
+				$sx .= $link;
+				$sx .= trim($line['jnl_issn_impresso']);
+				$sx .= $linkf;
+
+				$sta = trim($line['jnl_status']);
+				if ($sta=='A') { $sta = msg('current'); }
+				if ($sta=='B') { $sta = msg('closed'); }
+
+				$sx .= '<TD align="center">';
+				$sx .= $link;
+				$sx .= $sta;
+				$sx .= $linkf;
+
+				return($sx);
 			}
 	}
-?>
+
+	
+	

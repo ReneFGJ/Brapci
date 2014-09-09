@@ -1,229 +1,165 @@
 <?php
 class issue
 	{
-	var $tabela = 'issue';
-	var $capa;
-	var $legenda;
-	var $sumary_tipe = 1;
+	var $id;
+	var $codigo;
+	var $journal;
 	
-	function publication_list($jid=0)
-		{
-			$ed = array();
-			$sql = "select * from issue 
-						where journal_id = ".round($jid)."
-						and issue_published = 1 and issue_status = 'S'
-						order by 	issue_year desc,
-						 			issue_volume desc, 
-						 			issue_number desc
-						
-			";	
-			$rlt = db_query($sql);
-			while ($line = db_read($rlt))
-				{ array_push($ed,$line); }
-			return($ed);
-		}
+	var $tabela = 'brapci_edition';
 	
-	function issue_mostra($id)
-		{
-			global $art,$jid;
-			$sql = "select * from issue 
-						left join journals on journals.journal_id = issue.journal_id
-						where id_issue = ".round($id)."
-			";
-			$rlt = db_query($sql);
-			if ($line = db_read($rlt))
-				{
-					$title = trim($line['jn_title']);
-					$vol = trim($line['issue_volume']);
-					$num = trim($line['issue_number']);
-					$ano = trim($line['issue_year']);
-					$this->capa = http.'public/'.$jid.'/capas/'.trim($line['issue_capa']);
-					
-					$sx .= $title;
-					if (strlen($vol) > 0)
-						{ $sx .= ', v.'.$vol; }
-					if (strlen($num) > 0)
-						{ $sx .= ', n.'.$num; }
-					if (strlen($ano) > 0)
-						{ $sx .= ', '.$ano.'.'; }
-				}
-			return('<h3>'.$sx.'</h3>');
-		}
-	
-	function sumary($issue=0)
-		{
-			$issue = round($issue);
-			
-			$sql = "select * from issue
-					inner join articles on article_issue = id_issue
-					inner join sections on article_section = section_id
-					where id_issue = $issue 
-					order by seq, seq_area, article_seq
-			";
-			
-			$rlt = db_query($sql);
-			$secx = 'secao';
-			$sx = '<table width="650" border=0 >';
-			while ($line = db_read($rlt))
-				{
-					$ab = round($line['abstracts_disabled']);
-					$sec = trim($line['title']);
-					if ($secx != $sec)
-						{
-							$sx .= '<TR><TD>'.$this->session_show_name($sec);
-							$secx = $sec; 
-						}
-					$sx .= '<TR><TD>';
-					$sx .= $this->article_sumary_show($line,$ab);
-				}
-			$sx .= '</table>';
-			$sx .= '
-				<script>
-				function abstractshow(id)
-					{
-						var pm = $("#it"+id);
-						pm.toggleClass(\'td_minus\');
-						if(pm.hasClass(\'td_minus\')){
-							$("#it"+id).slideDown("slow");
-						}else{
-							$("#it"+id).slideUp("slow");
-						}
-					}
-				</script>
-			';
-			return($sx);
-		}
-		
-	function read_more($ln)
-		{
-			global $path;
-			$sx = '<div class="pdf" style="width: 100px;">';
-			$sx .= '<A HREF="'.http.'pb/index.php/'.$path.'?dd1='.$ln['id_article'].'&dd99=view&dd98=pb">';
-			$sx .= '<nobr>'.msg("read_more");
-			$sx .= '</A></div>';
-			return($sx); 
-		}
-	function editar($ln)
-	{
-		global $edit_mode;
-		if ($edit_mode==1)
+	function updatex()
 			{
-				$sx .= '&nbsp;<A HREF="#" onclick="newxy2(\''.http.'editora/article_ed.php?dd0='.$ln['id_article'].'\',800,600);" class="editmode">';
-				$sx .= msg('editar');
-				$sx .= '</A>';
-			}	
-		return($sx);	
-	}
-
-	function pdf_link($ln=0,$art_pdf='')
-		{
-			global $path;
-			$sx = '<a target="_BLANK" ';
-			$sx .= 'onclick="javascript:newxy(\'';
-			$sx .= http.'index.php/'.$path;
-			$sx .= '?dd1='.$ln['id_article'].'&dd99=pdf\',180,20);';
-			$sx .= '" >'.$art_pdf.'</A>';
-			
-			$sx = '';
-			$sql = "select * from articles_files where article_id = ".round($ln['id_article']);
-			
-			$rrr = db_query($sql);
-			while ($line = db_read($rrr))
-				{
-					$tp = trim($line['fl_type']);
-					$idio = trim($line['fl_idioma']);
-					switch ($idio)
-						{
-						case 'pt_BT': $art_pdf = 'PDF (Português)'; break;
-						case 'en_US': $art_pdf = 'PDF (English)'; break;
-						default:
-							$art_pdf = 'PDF (Português)'; break;
-						}	
-					if (strlen($sx) > 0) { $sx .= '<BR>'; }
-					
-					$sx .= '<a target="_BLANK" ';
-					$sx .= 'onclick="javascript:newxy(\'';
-					$sx .= http.'index.php/'.$path;
-					$sx .= '?dd1='.trim($ln['id_article']).'&dd2='.trim($line['id_fl']).'&dd3='.trim($line['fl_idioma']).'&dd99=pdf\',180,20);';
-					$sx .= '" ><nobr>'.$art_pdf.'</nobr></A>';					
-				}			
-			return($sx);
-		}
+				$c = 'ed';
+				$c1 = 'id_'.$c;
+				$c2 = $c.'_codigo';
+				$c3 = 7;
+				$sql = "update ".$this->tabela." set $c2 = lpad($c1,$c3,0) where $c2='' ";
+				$rlt = db_query($sql);
+			}
 	
-	function article_sumary_show($ln,$ab)
-		{
-			global $edit_mode;	
-			$sx = '';
-			$id = trim($ln['id_article']);
-			$art_title = trim(UpperCase($ln['article_title']));
-			
-			$art_abstract = $ln['article_abstract'];
-			$art_keys = trim($ln['article_keywords']);
-			$art_pages = trim($ln['article_pages']);
-			$art_autor = mst_autor(trim($ln['article_author']),1);
-			if ($edit_mode==1) { $art_autor .= '<BR>'.$this->editar($ln); }
-			
-			if (strlen($art_pages) > 0)
-				{ $art_pages = '<td class="pags"><small>Págs&nbsp;'.$art_pages.'&nbsp;</small>'; }
-			$art_pdf = 'PDF';
-			
-			if (strlen($art_keys) > 0)
+	function articles_for_editions()
+		{ 
+			$sql = "SELECT count(*) as total, ar_journal_id FROM `brapci_article` ";
+			$sql .= " where ar_status <> 'X' ";
+			$sql .= "group by ar_journal_id";
+			$rlt = db_query($sql);
+			$sqlu = "";
+			while ($line = db_read($rlt))
 				{
-					$art_keys = '<div class="palavras" ><B>'.msg('keywords').'</B>: '.$art_keys.'</div>';
-				} else {
-					$art_keys = '';
+				$sqlu = "update brapci_journal set jnl_artigos=".$line['total']." where jnl_codigo='".$line['ar_journal_id']."';".chr(13).chr(10);
+				$xrlt = db_query($sqlu);
 				}
-			
-			$sx .= '
-				<div class="artigo">
-                    <div class="div_titulo">
-                        <table width="100%" class="titulo_pdf" border=0 cellpadding=0 cellspacing=0>
-                        	<tr>
-                            <td class="td_titulo" onclick="abstractshow(\''.$id.'\');" >'.$art_title.'</td>
-                            '.$art_pages.'
-                            <td class="pdf" align="left">'.$this->pdf_link($ln,$art_pdf).'</td>
-						</tr></table>
-                    </div>
-                    <div class="artigo_autor">'.$art_autor.'</div>
-                                        
-                    <div style="display: none;" class="resumo_palavra" id="it'.$id.'">';
-			if ($ab==1) { $sx .= '<b>RESUMO</b><br>'; }
-			$sx .= '
-                        <table width="600">
-                        	<TR><TD><div class="resumoz">
-                        	'.$art_abstract.'
-                        	</div>
-                        </table>
-                        
-                        '.$art_keys.'
-                        <BR>'.$this->read_more($ln).'
-                    </div>
-                </div>
-			';
-			return($sx);
-		}
 
-	function session_show_name($sec)
-		{
-			$sx .= '<h1>'.UpperCase($sec).'</h1>';
-			return($sx);
+			$sql = "SELECT count(*) as total, ar_journal_id FROM `brapci_article` WHERE ar_status = 'A' ";
+			$sql .= "group by ar_journal_id";
+			$rlt = db_query($sql);
+			while ($line = db_read($rlt))
+				{
+				$sqlu = "update brapci_journal set jnl_artigos_indexados=".$line['total']." ";
+				$sqlu .= "where jnl_codigo='".$line['ar_journal_id']."';".chr(13).chr(10);
+				$xrlt = db_query($sqlu);
+				}
+			return(1);
 		}
 	
-	function ultima_edicao_publicada($journal)
+	function cp()
 		{
-			$sql = "select * from ".$this->tabela;
-			$sql .= " where 
-						and issue_published = 1 and issue_status = 'S'
-						and journal_id = $journal
-						order by issue_year desc, issue_volume desc, issue_number desc
+			global $jid;
+			$cp = array();
+			if (strlen($jid) > 0)
+				{
+				$wh = 'jnl_codigo = '.chr(39).strzero($jid,7).chr(39);
+				}
+			array_push($cp,array('$H8','id_ed','id_ed',False,True,''));
+			array_push($cp,array('$H8','ed_codigo','',False,True,''));
+			array_push($cp,array('$Q jnl_nome:jnl_codigo:SELECT * FROM brapci_journal where jnl_status <> \'X\''.$wh,'ed_journal_id',msg('publication'),True,True,''));
+			array_push($cp,array('$S10','ed_ano',msg('year'),False,True,''));
+			array_push($cp,array('$S10','ed_vol',msg('volume'),False,True,''));
+			array_push($cp,array('$S10','ed_nr',msg('numero'),False,True,''));
+			array_push($cp,array('$S20','ed_periodo','Edição (jan./abr. 2009)',False,True,''));
+			array_push($cp,array('$[0-12]','ed_mes_inicial','Mês incial',False,True,''));
+			array_push($cp,array('$[0-12]','ed_mes_final','Mês final',False,True,''));
+			array_push($cp,array('$S100','ed_tematica_titulo','Título temático',False,True,''));
+			array_push($cp,array('$O 9:Não definido &1:SIM&0:NÃO','ed_biblioteca','Acervo da biblioteca',False,True,''));
+			array_push($cp,array('$H8','ed_obs','',False,True,''));
+			array_push($cp,array('$O -1:Em preparo&1:Disponível&0:Inativo&','ed_ativo','<I>Status</I> atual',True,True,''));
+			array_push($cp,array('$H8','ed_editor','',False,True,''));
+			array_push($cp,array('$H8','ed_coeditor','',False,True,''));
+			array_push($cp,array('$H8','ed_qualis','',False,True,''));
+			array_push($cp,array('$T60:6','ed_notas','Notas sobre edição',False,True,''));
+			array_push($cp,array('$H8','ed_data_publicacao','',False,True,''));
+			array_push($cp,array('$U8','ed_data_cadastro','',False,True,''));
+			array_push($cp,array('$T60:3','ed_oai_issue','OAI Source',False,True,''));
+			array_push($cp,array('$O A:Preparo&B:Revisão&D:Ready of print&E:Disponível','ed_status','OAI Source',False,True,''));
+			array_push($cp,array('$H8','ed_path','Atalho de acesso',False,True,''));
+			return($cp);
+		}
+	function journal_go($jid)
+		{
+			$sx .= '<A HREF="publications_details.php?dd0='.$jid.'" class="link">';
+			$sx .= msg('return_to_journal');
+			$sx .= '</A>';
+			return($sx);			
+		}
+	function issue_go($issue)
+		{
+			$sx .= '<A HREF="publication_issue.php?dd0='.$issue.'" class="link">';
+			$sx .= msg('return_to_issue');
+			$sx .= '</A>';
+			return($sx);
+		}
+	function issue_legend($issue)
+		{
+			global $db_apoio,$db_base;
+			$this->id = $issue;
+			$sql = "select * from brapci_edition
+					inner join brapci_journal on jnl_codigo = ed_journal_id 
+					left join ".$db_base."ajax_cidade on jnl_cidade = cidade_codigo
+					where ed_codigo = '$issue'
 			";
 			$rlt = db_query($sql);
 			if ($line = db_read($rlt))
 				{
-					return($line['id_issue']);
+					$this->journal = $line['ed_journal_id'];
+					$sx .= '<h2>';
+					$sx .= trim($line['jnl_nome']);
+					$cid = trim($line['cidade_nome']);
+					if (strlen($cid) > 0) { $sx .= ', '.$cid; }
+					$vol = $line['ed_vol'];
+					$ano = $line['ed_ano'];
+					$nr = $line['ed_nr'];
+					if (strlen($vol) > 0) { $sx .= ', v. '.$vol; }
+					if (strlen($nr) > 0) { $sx .= ', n. '.$nr; }
+					if (strlen($ano) > 0) { $sx .= ', '.$ano; }
+					$sx .= '</h2>';
 				}
-			return(-1);
+			return($sx);
 		}
 	
+	function issue_list()
+		{
+			$sql = "select * from ".$this->tabela." where ed_journal_id = '".$this->journal."' 
+				order by ed_ano desc, ed_vol desc, ed_nr desc
+			";
+			$rlt = db_query($sql);
+			
+			$sx .= '<table width="99%" class="lt1" cellpadding=0 cellspacing=2 >';
+			$sx .= '<TR><TH>'.msg('year');
+			$sx .= '<Th width="12%">'.msg("issue");
+			$sx .= '<Th width="12%">'.msg("issue");
+			$sx .= '<Th width="12%">'.msg("issue");
+			$sx .= '<Th width="12%">'.msg("issue");
+			$sx .= '<Th width="12%">'.msg("issue");
+			$sx .= '<Th width="12%">'.msg("issue");
+			$sx .= '<Th width="12%">'.msg("issue");
+			$sx .= '<Th width="12%">'.msg("issue");
+			
+			$xano = 9999;
+			while ($line = db_read($rlt))
+				{
+					$ano = $line['ed_ano'];
+					$link = '<A HREF="journal_issue.php?dd0='.$line['id_ed'].'"><font class="lt0">';
+					if ($ano != $xano)
+						{
+							$sx .= '<TR class="lt1">';
+							$sx .= '<TD>'.$line['ed_ano'];
+							$xano = $ano;
+						}
+					
+					$vol = $line['ed_vol'];
+					if (strlen($vol) > 0) { $vol = 'v. '.$vol; }
+					
+					$nr = trim($line['ed_nr']);
+					if (strlen($nr) > 0) { $nr = ', n. '.$nr; }
+					
+					$sx .= '<TD class="lt1" align="center">';
+					$sx .= $link;
+					$sx .= $vol.' '.$nr;
+					$sx .= '</A>';
+				}
+			$sx .= '</table>';				
+			return($sx);
+			
+		}
 	}
 ?>

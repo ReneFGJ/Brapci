@@ -23,6 +23,7 @@
 ///////////////////////////////////////////
 if ($mostar_versao == True) { array_push($sis_versao,array("sisDOC (Char)","0.0a",20080520)); }
 
+function msg($x) { return($x); }
 if (strlen($include) == 0) { exit; }
 /** Define o time zone, opcional para alguns servidores; */
 //date_default_timezone_set('UTC'); 
