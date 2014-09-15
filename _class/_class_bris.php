@@ -7,6 +7,11 @@ class bris {
 
 	var $keys;
 	
+	function classificacao_autor($autor)
+		{
+			
+		}
+	
 	function fluxo_citacao($ano1='',$ano2='')
 		{
 			$ano1 = '2012';

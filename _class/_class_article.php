@@ -450,13 +450,17 @@ class article {
 					left join brapci_edition on ed_codigo = ar_edition
 					left join brapci_section on se_codigo = ar_tipo 
 					left join " . $db_public . "artigos on " . $this -> tabela . ".ar_codigo = artigos.ar_codigo
-					where ar_edition = '" . strzero(round($id), 7) . "' and ar_pg_inicial <> ''
+					where ar_edition = '" . strzero(round($id), 7) . "' 
 					order by se_ordem, ar_pg_inicial ";
+					
 		$rlt = db_query($sql);
 		$sx .= '<table width="99%" class="lt1" cellpadding=0 cellspacing=2 >';
+		$sx .= '<TR class="lt1">';
+		$sx .= '<Th>título<Th>pag.<Th>cited';
 		$xsection = 'x';
 		while ($line = db_read($rlt)) {
 			$this -> journal_id = $line['ar_journal_id'];
+			$cited = $line['at_citacoes'];
 			$section = trim($line['se_descricao']);
 			if ($xsection != $section) {
 				$sx .= '<TR><TD class="lt1" class="issue_td"><B>' . $section . '</B>';
@@ -471,6 +475,7 @@ class article {
 			$pag = $this -> show_page($pagi, $pagf);
 
 			$sx .= '<TD><nobr>' . $pag;
+			$sx .= '<TD align="center">' . $cited;
 		}
 		$sx .= '</table>';
 		return ($sx);
