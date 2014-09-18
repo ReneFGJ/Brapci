@@ -7,6 +7,83 @@ class bris {
 
 	var $keys;
 	
+	function journal_fi_issn($jnl)
+		{
+			$sql = "select * from bris_rank 
+						where rk_journal = '".$jnl."' 
+					order by rk_ano desc	
+					";
+			$rlt = db_query($sql);
+			$sx = '<table class="tabela00 lt1">';
+			$sx .= '<TR class="lt0"><TH>Ano</TH>
+						<TH>FI2</TH>
+						<TH>FI3</TH>
+						<TH>FI5</TH>
+						<TH>II</TH>
+						<TH>Índice h</TH>';
+			while ($line = db_read($rlt))
+				{
+					$sx .= '<tr align="center">';
+					$sx .= '<TD width="40" align="center">'.$line['rk_ano'];
+					$sx .= '<TD width="60">'.number_format($line['rk_fi2'],4,',','.').'</td>';
+					$sx .= '<TD width="60">'.number_format($line['rk_fi3'],4,',','.').'</td>';
+					$sx .= '<TD width="60">'.number_format($line['rk_fi5'],4,',','.').'</td>';
+					$sx .= '<TD width="60">'.number_format($line['rk_ii'],4,',','.').'</td>';
+					$sx .= '<TD width="60">'.number_format($line['rk_h'],0,',','.').'</td>';
+					$sx .= '</tr>';
+				}
+			$sx .= '</table>';
+			return($sx);
+		}
+	
+	function journal_fi($ano='',$tipo='J')
+		{
+			$cr = chr(13).chr(10);
+			$sql = "select * from bris_rank
+						inner join brapci_journal on rk_journal = jnl_codigo 
+						where rk_ano = '$ano' and jnl_tipo = '$tipo'
+						order by rk_fi2 desc
+					";
+			$rlt = db_query($sql);
+			$sx .= '<table width="98%" class="tabela00 lt1">';
+			$sx .= '<thead>';
+			$sx .= '<TR align="center"><TH align="center">Pos</TH>
+						<TH align="center">Título<TH>ISSN</TH>
+						<TH width="8%" align="center">FI (2anos)</TH>
+						<TH width="8%" align="center">FI (3anos)</TH>
+						<TH width="8%" align="center">FI (5anos)</TH>
+						<TH width="8%" align="center">Impacto Imediato</TH>
+					</tr>'.$cr;
+			$sx .= '</thead>'.$cr;
+			$sx .= '<tbody>'.$cr;
+			$id = 0;
+			while ($line = db_read($rlt))
+				{
+					$link = '<A HREF="bris_journal_view.php?dd0='.$line['id_jnl'].'">';
+					$id++;
+					$sx .= '<TR>'.$cr;
+					$sx .= '<TD align="center">'.$id.'.'.'</td>'.$cr;
+					$sx .= '<TD>';
+					$sx .= $link;
+					$sx .= $line['jnl_nome'];
+					$sx .= '</A>'.'</td>'.$cr;
+					$sx .= '<TD align="center">';
+					$sx .= $line['jnl_issn_impresso'].'</td>'.$cr;
+					$sx .= '<TD align="center">';
+					$sx .= number_format($line['rk_fi2'],4,',','.').'</td>'.$cr;
+					$sx .= '<TD align="center">';
+					$sx .= number_format($line['rk_fi3'],4,',','.').'</td>'.$cr;
+					$sx .= '<TD align="center">';
+					$sx .= number_format($line['rk_fi5'],4,',','.').'</td>'.$cr;
+					$sx .= '<TD align="center">';
+					$sx .= number_format($line['rk_ii'],4,',','.').'</td>'.$cr;
+					$sx .= '</tr>'.$cr;
+				}
+			$sx .= '</tbody>'.$cr;
+			$sx .= '</table>'.$cr;
+			return($sx);
+		}
+	
 	function fluxo_citacao($ano1='',$ano2='')
 		{
 			$ano1 = '2012';

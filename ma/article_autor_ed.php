@@ -1,6 +1,8 @@
 <? 
 require("db.php"); 
-require($include."sisdoc_debug.php");
+
+ini_set('display_errors', 255);
+ini_set('error_reporting', 255);
 require($include."sisdoc_autor.php");
 require($include."sisdoc_cookie.php");
 $jidsel = strzero(read_cookie("journal_sel"),7);
@@ -26,13 +28,15 @@ if ((strlen($dd[0]) == 0) and (strlen($dd[5]) > 0))
 			$xsql .= "'".UpperCaseSql($dd5)."','".$dd5a."','',";
 			$xsql .= "'',''";
 			$xsql .= ")";
-			$xrlt = db_query($xsql);	
+			$prlt = db_query($xsql);
 			
-			$xsql = "update brapci_autor set autor_codigo=lpad(id_autor,7,'0') where autor_codigo=''";			
+			$xsql = "update brapci_autor set autor_codigo=lpad(id_autor,7,'0') where autor_codigo='' ";			
 			$xrlt = db_query($xsql);
-
+			
 			$xrlt = db_query($qsql);
 			$xline = db_read($xrlt);
+			} else {
+				echo 'update';
 			}
 		$xcod = $xline['autor_codigo'];
 		$dd[6] = $xcod;
@@ -76,19 +80,15 @@ array_push($cp,array('$A','','Dados complementares',False,True,''));
 array_push($cp,array('$S20','ae_telefone','Telefone',False,True,''));
 array_push($cp,array('$T60:4','ae_endereco','Endereço',False,True,''));
 
-require($include.'sisdoc_colunas.php');
-require($include.'sisdoc_form2.php');
-require($include.'cp2_gravar.php');
+require($include.'_class_form.php');
+$form = new form;
 
-$http_edit = page();
-$http_redirect = '../close.php';
-?><TABLE width="<?=$tab_max?>" align="center"><TR><TD><?
-editar();
-?></TD></TR></TABLE>
+$tela = $form->editar($cp,$tabela);
 
-<?
-if ($saved > 0)
-	{	
-	echo $sql;
-
+if ($form->saved > 0)
+	{
+		require('../close.php');
+	} else {
+		echo $tela;
 	}
+function msg($x) { return($x); }

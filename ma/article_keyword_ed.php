@@ -62,19 +62,17 @@ array_push($cp,array('$H8','','',False,True,''));
 array_push($cp,array('$T50:6','','separe por ";" ou ",","."',False,True,''));
 
 
-require($include.'sisdoc_colunas.php');
-require($include.'sisdoc_form2.php');
-require($include.'cp2_gravar.php');
+require($include.'_class_form.php');
+$form = new form;
 
-$http_edit = page();
-$http_redirect = '../close.php';
-?><TABLE width="<?=$tab_max?>" align="center"><TR><TD><?
-editar();
-?></TD></TR></TABLE>
+$tela = $form->editar($cp,$tabela);
 
-<?
-if ($saved > 0)
-	{	
-	echo $sql;
-
+if ($form->saved > 0)
+	{
+		require('../close.php');
+	} else {
+		echo $tela;
 	}
+function msg($x) { return($x); }
+
+?>

@@ -17,6 +17,34 @@ class journals
 		var $periodicidade;
 		var $periodicidade_nome;
 		
+		function mostra_detalhe()
+			{
+				//print_r($this);
+				$link = '<A HREF="'.$this->line['jnl_url'].'" target="_new"><img src="../img/icone_link.png" height="15" border=0 ></A>';
+				
+				$sx .= '<table width="100%" class="tabela00">';
+				$sx .= '<TR class="lt0">
+							<TD width="7%">ISSN</TD>
+							<TD width="7%">e-ISSN</TD>
+							<TD width="5%">Ano inicial</TD>
+							<TD>Periodicidade</TD>
+							<TD width="5%">Fascículos</TD>
+							<TD width="5%">Artigos</TD>
+							<TD width="4%">Link</TD>
+							</TR>';
+				$sx .= '<TR class="lt1">
+							<TD>'.$this->issn.'</TD>
+							<TD>'.$this->issn_e.'</TD>
+							<TD>'.$this->line['jnl_ano_inicio'].'</td>
+							<TD>'.$this->line['peri_nome'].'</td>
+							<TD>-</TD>
+							<TD>-</TD>
+							<TD>'.$link.'</td>
+							</TR>';
+				$sx .= '</table>';
+				return($sx);
+			}
+		
 		function periodicidade_publicaoes()
 			{
 				$sql = "select count(*) as total, peri_nome, peri_ordem from ".$this->tabela." 

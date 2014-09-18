@@ -14,7 +14,7 @@ class author
 			array_push($cp,array('$S10','autor_codigo','Codigo',False,True));
 			array_push($cp,array('$S100','autor_nome_abrev','Nome abreviado',False,True));
 			array_push($cp,array('$S100','autor_alias','Alias',False,True));
-			array_push($cp,array('$O A:Pessoa&I:Instituição&X:Cancelado','autor_tipo','Tipo',False,True));
+			array_push($cp,array('$O A:Pessoa&I:Instituição&G:Grupo&X:Cancelado','autor_tipo','Tipo',False,True));
 			return($cp);
 		}
 	

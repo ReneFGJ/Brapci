@@ -42,7 +42,6 @@ class header
 		/* Icone */
 		$sx .= '<link rel="shortcut icon" href="http://www.brapci.inf.br/favicon.png" />'.$cr;
 			
-		$sx .= '<script language="JavaScript" type="text/javascript" src="'.$http.'js/jquery-1.7.1.js"></script>'.$cr;
     	$sx .= '<title>'.$this->title.'</title>'.$cr;
 		$sx .= '</head>'.$cr;
 		$sx .= '<body>'.$cr;
