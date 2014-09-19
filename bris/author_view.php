@@ -3,7 +3,7 @@ require("cab.php");
 require("../_class/_class_bris.php");
 $br = new bris;
 
-require("_class/_class_autor.php");
+require("../_class/_class_autor.php");
 $au = new autor;
 
 require("../_class/_class_article.php");
@@ -12,6 +12,7 @@ $sh = new article;
 
 $au->le($dd[0]);
 
+echo $au->mostra_foto();
 echo $au->mostra();
 
 
@@ -35,7 +36,7 @@ echo '<TD>';
 	echo $br->indicador_autor($au->codigo);
 echo '</table>';
 echo '<BR><BR>';
-echo '<h3>Publicações do autor</h3>';
+echo '<h3>Publicaï¿½ï¿½es do autor</h3>';
 echo '<BR>';
 
 echo '<font class="lt0">';
