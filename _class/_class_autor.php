@@ -198,17 +198,22 @@ class autor {
 		$ano = $this -> anos;
 		$vlr = $this -> dados;
 		$vlr2 = $this -> dados_evento;
+		$vlr3 = $this -> dados_livro;
+		
 		$sx = '<Table width="500" class="lt0">';
-		$sx .= '<TR><TD colspan=15 >publicações por ano ';
+		$sx .= '<TR><TD colspan=15 ><h2>Publicações por ano</h2>';
 		for ($r = 0; $r <= $ano; $r++) {
 			$size = $vlr[$r] * 5;
 			$size2 = $vlr2[$r] * 5;
+			$size3 = $vlr3[$r] * 5;
 			$s1 .= '<td align="center" style="border-top: 1px solid #404040;">' . (date("Y") + $r - $ano);
 			$s2 .= '<td align="center" style="border-top: 1px solid #404040;">' . ($vlr[$r] + $vlr2[$r]);
 			$s3 .= '<td align="center">';
-			if ($size > 0) { $s3 .= '<img src="img/nada_verde.png" width="20" height="' . $size . '"><BR>';
+			if ($size > 0) { $s3 .= '<img src="img/nada_verde.png" width="20" title="Artigos - '.$vlr1[$r].'" height="' . $size . '"><BR>';
 			}
-			if ($size2 > 0) { $s3 .= '<img src="img/nada_azul.png" width="20" height="' . $size2 . '">';
+			if ($size2 > 0) { $s3 .= '<img src="img/nada_azul.png" width="20" title="Eventos - '.$vlr2[$r].'" height="' . $size2 . '">';
+			}
+			if ($size3 > 0) { $s3 .= '<img src="img/nada_laranja.png" title="Livros - '.$vlr3[$r].'" width="20" height="' . $size3 . '">';
 			}
 		}
 		$sx .= '<TR valign="bottom">' . $s3 . '<TD height="100">';
@@ -217,6 +222,7 @@ class autor {
 		$sx .= '<TR><TD colspan=40 class="lt0">';
 		$sx .= '<img src="img/nada_verde.png" width="10"> Artigo<BR>';
 		$sx .= '<img src="img/nada_azul.png" width="10"> Evento<BR>';
+		$sx .= '<img src="img/nada_laranja.png" width="10"> Livros<BR>';
 		$sx .= '</table>';
 		return ($sx);
 	}
@@ -237,12 +243,15 @@ class autor {
 		$wh = '';
 		$pub = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		$eve = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		$liv = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		$anos = 15;
 		$this -> anos = $anos;
 		$anoi = date("Y");
 		$total = 0;
 		$tcit = 0;
+		$pos = 0;
 		while ($line = db_read($rlt)) {
+			$pos++;
 			$tp = $line['jnl_tipo'];
 			$total = $total + 1;
 			$ano = $anos - ($anoi - $line['ar_ano']);
@@ -253,6 +262,9 @@ class autor {
 				case 'E' :
 					$eve[$ano] = $eve[$ano] + 1;
 					break;
+				case 'L' :
+					$liv[$ano] = $liv[$ano] + 1;
+					break;					
 				default :
 					echo '[' . $tp . ']';
 					exit ;
@@ -261,6 +273,7 @@ class autor {
 
 			$cit = round($line['ca_citacoes']);
 			$link = '<A HREF="/article.php?dd0=' . $line['ar_codigo'] . '" >VIEW</A>';
+			$sx .= $pos.'. ';
 			$sx .= $art -> referencia_abnt($line);
 			$sx .= '';
 			if ($cit > 0) {
@@ -272,6 +285,7 @@ class autor {
 		}
 		$this -> dados = $pub;
 		$this -> dados_evento = $eve;
+		$this -> dados_livro = $liv;
 		$this -> total_producao = $total;
 		$this -> total_citacoes = $tcit;
 

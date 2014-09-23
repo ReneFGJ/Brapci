@@ -6,160 +6,197 @@ class bris {
 	var $idh = 0;
 
 	var $keys;
-	
-	function processa_citacoes_do_autor()
-		{
-			$sql = "select * from bris_autor where au_processado = 0 limit 1";
-			$rlt = db_query($sql);
-			while ($line = db_read($rlt))
-				{
-					$autor = $line['au_codigo'];
-					$ano = $line['au_ano'];
-					$cited = $this->citacoes_do_autor($autor,$ano);
-					$cited_without = $this->citacoes_do_autor_sem_autocitacao($autor,$ano);
-					echo '-->'.$cited;
-					echo '-->'.$cited_without;
-					//exit;
-				}
-		}
-	function citacoes_do_autor($autor,$ano)
-		{
-		$sql = "
-		SELECT sum(total) as citacoes, count(*) as artigos FROM brapci_article
-			inner join brapci_article_author on ae_article = ar_codigo
-			left join (select m_bdoi, count(*) as total from mar_works where m_bdoi <> '' and m_status <> 'X'
-	           	group by m_bdoi)
-			as tebela on ar_bdoi = m_bdoi
-			WHERE ae_author = '$autor' and ar_status <> 'X'
-			and ar_ano <= '$ano'
-		";
+
+	function citacoes_do_autor_grafico($autor) {
+		$ano = $this -> anos;
+		$sql = "select * from bris_autor 
+					where au_codigo = '$autor' 
+					and au_ano >= (" . (date("Y") - $ano) . ")
+					order by au_ano
+					";
 		$rlt = db_query($sql);
-		if ($line = db_read($rlt))
-			{
-				$cited = $line['citacoes'];
+		/* Cria grafico */
+		$multi= 5;
+		$sx = '<Table width="500" class="lt0">';
+		$sx .= '<TR><TD colspan=15 ><h2>Citações recebidas por ano</h2>';
+		while ($line = db_read($rlt)) {
+			$vlr2 = $line['au_autocitacao'];
+			$vlr = $line['au_citacoes'] - $vlr2;
+			
+			$size = $vlr * $multi;
+			$size2 = $vlr2 * $multi;
+			$s1 .= '<td align="center" style="border-top: 1px solid #404040;">' . $line['au_ano'];
+			$s2 .= '<td align="center" style="border-top: 1px solid #404040;">' . ($vlr + $vlr2);
+			$s3 .= '<td align="center">';
+			if ($size > 0) { $s3 .= '<img src="img/nada_azul.png" width="20" height="' . $size . '" title="Citacoes - '.$vlr.'"><BR>';
 			}
-		return($cited);
+			if ($size2 > 0) { $s3 .= '<img src="img/nada_vermelho.png" width="20" height="' . $size2 . '" title="Autocitação - '.$vlr2.'">';
+			}
 		}
-	/* Sem autocitacao */
-	function citacoes_do_autor_sem_autocitacao($autor,$ano)
-		{
-		$autor = '0000234';
-		$sql = "
-		SELECT marcado, sum(total) as citacoes, count(*) as artigos, ar_codigo, m_work 
-		FROM brapci_article
-			inner join brapci_article_author on ae_article = ar_codigo
-			left join (select m_bdoi, 1 as total, m_work from mar_works
-				where m_bdoi <> '' and m_status <> 'X'
-	           	group by m_bdoi, m_work)
-			as tebela on ar_bdoi = m_bdoi
-			left join (select 1 as marcado, ae_article as artigo_original from brapci_article_author where ae_author = '$autor') as origiem
-			on ar_codigo = artigo_original 
-			WHERE ae_author = '$autor' and ar_status <> 'X'
-			and ar_ano <= '$ano'
-			group by ar_codigo, m_work, marcado
-		";
+		$sx .= '<TR valign="bottom">' . $s3 . '<TD height="100">';
+		$sx .= '<TR>' . $s2;
+		$sx .= '<TR>' . $s1;
+		$sx .= '<TR><TD colspan=40 class="lt0">';
+		$sx .= '<img src="img/nada_azul.png" width="10"> Citações recebidas<BR>';
+		$sx .= '<img src="img/nada_vermelho.png" width="10"> Autocitações<BR>';
+		$sx .= '</table>';
+		return ($sx);
+	}
+
+	function processa_citacoes_do_autor() {
+		$sql = "select * from bris_autor 
+					where au_processado = 0 
+					order by au_ano desc
+					limit 50";
 		$rlt = db_query($sql);
-		while ($line = db_read($rlt))
-			{
-				print_r($line);
-				echo '<HR>';
-				$cited = $cited + $line['total'];
+		$id = 0;
+		$sx = '';
+		while ($line = db_read($rlt)) {
+			$id++;
+			$id = $line['id_au'];
+			$autor = $line['au_codigo'];
+			$ano = $line['au_ano'];
+			$sx .= '<BR>[' . $autor . ']';
+
+			$cit = $this -> citacoes_do_autor($autor, $ano);
+			$cited = $cit[0];
+			$cited_auto = $cit[1];
+			$sql = "update bris_autor set 
+					au_processado = 1,
+					au_citacoes = $cited,
+					au_autocitacao = $cited_auto
+					where id_au = " . round($id);
+			$sx .= ' - ' . $sql;
+			$rrr = db_query($sql);
+		}
+		$sql = "select count(*) as total from bris_autor where au_processado = 0 ";
+		$rlt = db_query($sql);
+		$line = db_read($rlt);
+		echo '<h1>' . $line['total'] . '</h1>';
+		echo $sx;
+		return ($id);
+	}
+
+	function citacoes_do_autor($autor, $ano) {
+		global $db_public;
+		$sql = "
+			select a1,a2, ae_author from (
+			select brapci_article.ar_codigo as a1, citado.ar_codigo as a2
+				FROM brapci_article
+				INNER JOIN brapci_edition on ar_edition = ed_codigo and ed_ano = '$ano' 
+				INNER JOIN brapci_article_author as citante on ar_codigo = citante.ae_article 
+				INNER JOIN mar_works on ar_codigo = m_work 
+    			INNER JOIN brapci_article as citado on m_bdoi = citado.ar_bdoi 
+				INNER JOIN brapci_article_author as au_citado on citado.ar_codigo = au_citado.ae_article 
+				WHERE ed_status <> 'X' and m_ano <= $ano and m_status <> 'X' and m_bdoi <> ''
+    			and au_citado.ae_author = '$autor'
+			) as resultado 
+			left join brapci_article_author on ae_article = a1 and ae_author = '$autor'
+			group by a1,a2	
+			";
+		$rlt = db_query($sql);
+		$auto = 0;
+		$cited = 0;
+		while ($line = db_read($rlt)) {
+			$autor2 = trim($line['ae_author']);
+			if (strlen($autor2) > 0) {
+				$auto = $auto + 1;
+				$cited = $cited + 1;
+			} else {
+				$cited = $cited + 1;
 			}
-		return($cited);
-		}		
-	function journal_fi_issn($jnl)
-		{
-			$sql = "select * from bris_rank 
-						where rk_journal = '".$jnl."' 
+		}
+		$rs = array($cited, $auto);
+		return ($rs);
+	}
+
+	function journal_fi_issn($jnl) {
+		$sql = "select * from bris_rank 
+						where rk_journal = '" . $jnl . "' 
 					order by rk_ano desc	
 					";
-			$rlt = db_query($sql);
-			$sx = '<table class="tabela00 lt1">';
-			$sx .= '<TR class="lt0"><TH>Ano</TH>
+		$rlt = db_query($sql);
+		$sx = '<table class="tabela00 lt1">';
+		$sx .= '<TR class="lt0"><TH>Ano</TH>
 						<TH>FI2</TH>
 						<TH>FI3</TH>
 						<TH>FI5</TH>
 						<TH>II</TH>
 						<TH>Índice h</TH>';
-			while ($line = db_read($rlt))
-				{
-					$sx .= '<tr align="center">';
-					$sx .= '<TD width="40" align="center">'.$line['rk_ano'];
-					$sx .= '<TD width="60">'.number_format($line['rk_fi2'],4,',','.').'</td>';
-					$sx .= '<TD width="60">'.number_format($line['rk_fi3'],4,',','.').'</td>';
-					$sx .= '<TD width="60">'.number_format($line['rk_fi5'],4,',','.').'</td>';
-					$sx .= '<TD width="60">'.number_format($line['rk_ii'],4,',','.').'</td>';
-					$sx .= '<TD width="60">'.number_format($line['rk_h'],0,',','.').'</td>';
-					$sx .= '</tr>';
-				}
-			$sx .= '</table>';
-			return($sx);
+		while ($line = db_read($rlt)) {
+			$sx .= '<tr align="center">';
+			$sx .= '<TD width="40" align="center">' . $line['rk_ano'];
+			$sx .= '<TD width="60">' . number_format($line['rk_fi2'], 4, ',', '.') . '</td>';
+			$sx .= '<TD width="60">' . number_format($line['rk_fi3'], 4, ',', '.') . '</td>';
+			$sx .= '<TD width="60">' . number_format($line['rk_fi5'], 4, ',', '.') . '</td>';
+			$sx .= '<TD width="60">' . number_format($line['rk_ii'], 4, ',', '.') . '</td>';
+			$sx .= '<TD width="60">' . number_format($line['rk_h'], 0, ',', '.') . '</td>';
+			$sx .= '</tr>';
 		}
-	
-	function journal_fi($ano='',$tipo='J')
-		{
-			$cr = chr(13).chr(10);
-			$sql = "select * from bris_rank
+		$sx .= '</table>';
+		return ($sx);
+	}
+
+	function journal_fi($ano = '', $tipo = 'J') {
+		$cr = chr(13) . chr(10);
+		$sql = "select * from bris_rank
 						inner join brapci_journal on rk_journal = jnl_codigo 
 						where rk_ano = '$ano' and jnl_tipo = '$tipo'
 						order by rk_fi2 desc
 					";
-			$rlt = db_query($sql);
-			$sx .= '<table width="98%" class="tabela00 lt1">';
-			$sx .= '<thead>';
-			$sx .= '<TR align="center"><TH align="center">Pos</TH>
+		$rlt = db_query($sql);
+		$sx .= '<table width="98%" class="tabela00 lt1">';
+		$sx .= '<thead>';
+		$sx .= '<TR align="center"><TH align="center">Pos</TH>
 						<TH align="center">Título<TH>ISSN</TH>
 						<TH width="8%" align="center">FI (2anos)</TH>
 						<TH width="8%" align="center">FI (3anos)</TH>
 						<TH width="8%" align="center">FI (5anos)</TH>
 						<TH width="8%" align="center">Impacto Imediato</TH>
-					</tr>'.$cr;
-			$sx .= '</thead>'.$cr;
-			$sx .= '<tbody>'.$cr;
-			$id = 0;
-			while ($line = db_read($rlt))
-				{
-					$link = '<A HREF="bris_journal_view.php?dd0='.$line['id_jnl'].'">';
-					$id++;
-					$sx .= '<TR>'.$cr;
-					$sx .= '<TD align="center">'.$id.'.'.'</td>'.$cr;
-					$sx .= '<TD>';
-					$sx .= $link;
-					$sx .= $line['jnl_nome'];
-					$sx .= '</A>'.'</td>'.$cr;
-					$sx .= '<TD align="center">';
-					$sx .= $line['jnl_issn_impresso'].'</td>'.$cr;
-					$sx .= '<TD align="center">';
-					$sx .= number_format($line['rk_fi2'],4,',','.').'</td>'.$cr;
-					$sx .= '<TD align="center">';
-					$sx .= number_format($line['rk_fi3'],4,',','.').'</td>'.$cr;
-					$sx .= '<TD align="center">';
-					$sx .= number_format($line['rk_fi5'],4,',','.').'</td>'.$cr;
-					$sx .= '<TD align="center">';
-					$sx .= number_format($line['rk_ii'],4,',','.').'</td>'.$cr;
-					$sx .= '</tr>'.$cr;
-				}
-			$sx .= '</tbody>'.$cr;
-			$sx .= '</table>'.$cr;
-			return($sx);
+					</tr>' . $cr;
+		$sx .= '</thead>' . $cr;
+		$sx .= '<tbody>' . $cr;
+		$id = 0;
+		while ($line = db_read($rlt)) {
+			$link = '<A HREF="bris_journal_view.php?dd0=' . $line['id_jnl'] . '">';
+			$id++;
+			$sx .= '<TR>' . $cr;
+			$sx .= '<TD align="center">' . $id . '.' . '</td>' . $cr;
+			$sx .= '<TD>';
+			$sx .= $link;
+			$sx .= $line['jnl_nome'];
+			$sx .= '</A>' . '</td>' . $cr;
+			$sx .= '<TD align="center">';
+			$sx .= $line['jnl_issn_impresso'] . '</td>' . $cr;
+			$sx .= '<TD align="center">';
+			$sx .= number_format($line['rk_fi2'], 4, ',', '.') . '</td>' . $cr;
+			$sx .= '<TD align="center">';
+			$sx .= number_format($line['rk_fi3'], 4, ',', '.') . '</td>' . $cr;
+			$sx .= '<TD align="center">';
+			$sx .= number_format($line['rk_fi5'], 4, ',', '.') . '</td>' . $cr;
+			$sx .= '<TD align="center">';
+			$sx .= number_format($line['rk_ii'], 4, ',', '.') . '</td>' . $cr;
+			$sx .= '</tr>' . $cr;
 		}
-	
-	function fluxo_citacao($ano1='',$ano2='')
-		{
-			$ano1 = '2012';
-			$ano2 = '2013';
-			$sql = "select count(*) as total, cit_jnl_citado, cit_jnl_citante from bris_cited 
+		$sx .= '</tbody>' . $cr;
+		$sx .= '</table>' . $cr;
+		return ($sx);
+	}
+
+	function fluxo_citacao($ano1 = '', $ano2 = '') {
+		$ano1 = '2012';
+		$ano2 = '2013';
+		$sql = "select count(*) as total, cit_jnl_citado, cit_jnl_citante from bris_cited 
 						where cit_ano_pub = '$ano1' or cit_ano_pub = '$ano2' 
 						group by cit_jnl_citado, cit_jnl_citante
-					"; 
-			$rlt = db_query($sql);
-			while ($line = db_read($rlt))
-				{
-					echo ''.$line['cit_jnl_citado'].';'.$line['cit_jnl_citante'].';'.$line['total'];
-					echo '<BR>';
-				}
-			return(1);
+					";
+		$rlt = db_query($sql);
+		while ($line = db_read($rlt)) {
+			echo '' . $line['cit_jnl_citado'] . ';' . $line['cit_jnl_citante'] . ';' . $line['total'];
+			echo '<BR>';
 		}
+		return (1);
+	}
 
 	function mostra_fi($ano = '') {
 		if (strlen($ano) == 0) {
@@ -177,7 +214,7 @@ class bris {
 		$rlt = db_query($sql);
 		$sx .= '<table class="tabela00" width="100%">';
 		$sx .= '<TR><TH>Pos<TH>ISSN<TH>Revista<TH>Índice h';
-		$sx .= '<TH>Tot.<BR>Docs.<BR>('.$ano.')';
+		$sx .= '<TH>Tot.<BR>Docs.<BR>(' . $ano . ')';
 		$sx .= '<TH>Total<BR>Docs.<BR>(2anos)';
 		$sx .= '<TH>Total<BR>Docs.<BR>(3anos)';
 		$sx .= '<TH>Total<BR>Docs.<BR>(5anos)';
@@ -938,7 +975,7 @@ class bris {
 		/* IFFA */
 		$this -> mostra_iffa($autor, $ano);
 
-		$sx = '<table width="400">';
+		$sx = '<table width="200">';
 		$sx .= '<TR><TH colspan=2 align="center">Indicador</TH></TR>';
 
 		$sx .= '<TR><TD WIDTH="50%"><TD value="50%">';
@@ -1040,16 +1077,17 @@ class bris {
 	}
 
 	function ranking_author($ano = '', $anof = '') {
-		if (strlen($anof) == 0) { $anof = $ano; }
+		if (strlen($anof) == 0) { $anof = $ano;
+		}
 		$sql = "select sum(au_artigos) as au_artigos, autor_nome, autor_codigo from bris_autor
-						inner join brapci_autor on au_codigo = autor_codigo 
+						left join brapci_autor on au_codigo = autor_codigo 
 						where au_ano >= '$ano' and au_ano <= $anof
 						group by autor_nome, autor_codigo
 						order by au_artigos desc
 						limit 200
 						";
 		$rlt = db_query($sql);
-		
+
 		$sx .= '<table width="100%" align="center" border=0 class="tabela00" cellpadding=0 cellspacing=0 > ';
 		$sx .= '<TR>
 						<TH>Autor
@@ -1078,24 +1116,28 @@ class bris {
 	function ranking_author_create($ano = '') {
 		/* Metodo 23-09-2014 */
 		$sql = "
-					select count(*) as total, ae_author  from brapci_article 
-					inner join brapci_edition on ar_edition = ed_codigo
-					inner join brapci_article_author on ar_codigo = ae_article
-					inner join brapci_journal on ae_journal_id = jnl_codigo
+				SELECT count(*) as total, ae_author  
+				FROM brapci_article 
+					INNER JOIN brapci_edition on ar_edition = ed_codigo
+					INNER JOIN brapci_article_author on ar_codigo = ae_article
+					INNER JOIN brapci_journal on ae_journal_id = jnl_codigo
 		
-					where ar_status <> 'X' and ed_ano = '$ano' and jnl_tipo = 'J'
+				WHERE ar_status <> 'X' and ed_ano = '$ano' 
+				and ae_author = '0002870'
 					
-					group by ae_author
-					order by total desc, ae_author
-					";
+				GROUP BY ae_author
+				ORDER BY total desc, ae_author
+				";
 		$rlt = db_query($sql);
 
 		while ($line = db_read($rlt)) {
+			print_r($line);
+			echo '<HR>';
 			$autor = trim($line['ae_author']);
 			$total = trim($line['total']);
 			$this -> atualiza_producao($autor, $ano, $total);
 		}
-		
+
 		/* Atualiza citacoes */
 
 	}
