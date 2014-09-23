@@ -14,7 +14,7 @@ require($include.'sisdoc_debug.php');
 	$http_edit = 'admin_perfil_ed.php';
 	$http_redirect = '';
 
-	/** Comandos de Edi��o */
+	/** Comandos de Edicao */
 	echo '<CENTER><font class=lt5>'.msg('titulo').'</font></CENTER>';
 	?><TABLE width="<?=$tab_max;?>" align="center" bgcolor="<?=$tab_color;?>"><TR><TD><?
 	editar();

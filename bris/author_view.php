@@ -36,7 +36,7 @@ echo '<TD>';
 	echo $br->indicador_autor($au->codigo);
 echo '</table>';
 echo '<BR><BR>';
-echo '<h3>Publicaï¿½ï¿½es do autor</h3>';
+echo '<h3>Publicações do autor</h3>';
 echo '<BR>';
 
 echo '<font class="lt0">';

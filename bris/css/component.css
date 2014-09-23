@@ -9,7 +9,7 @@
 	margin: 30px auto;
 	padding: 0;
 	list-style: none;
-	min-height: 300px;
+	min-height: 200px;
 }
 
 .js .grid {
@@ -55,6 +55,26 @@
 
 .title-box h2 a:hover {
 	color: #D3EEE2;
+}
+
+/* Title box */
+.title-box2 h2 {
+	display: block;
+	margin: 7px;
+	padding: 20px;
+	background: #2E3444;
+	color: #D3EEE2;
+	letter-spacing: 1px;
+	font-weight: 600;
+}
+
+.title-box2 h2 a {
+	display: block;
+	font-weight: 900;
+}
+
+.title-box2 h2 a:hover {
+	color: #A0A0ff;
 }
 
 /* Anchor and image */

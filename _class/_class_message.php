@@ -56,7 +56,7 @@ class message
 	
 	
 	/**
-	 * Identifica��o de idioma
+	 * Identificacao de idioma
 	 */
 	
 	function edit_mode($op)
@@ -93,7 +93,7 @@ class message
 	}
 
 	/**
-	 * Campos de edi��o e altera��o da tabela
+	 * Campos de edicao e altera��o da tabela
 	 */
 	function cp() {
 		$cp = array();
@@ -132,7 +132,7 @@ class message
 		return ($idi);
 	}
 	/**
-	 * Formul�rio para sele��o de idioma
+	 * Formulario para selecao de idioma
 	 */
 	function idioma_form()
 		{
@@ -173,7 +173,7 @@ class message
 	}
 
 	/**
-	 * Exporta��o - criar arquivo com mensagens das p�ginas
+	 * Exportacao - criar arquivo com mensagens das p�ginas
 	 */
 	function language_page_create() {
 		$cr = chr(13).chr(10);
@@ -254,7 +254,7 @@ class message
 }
 /**
  * Mostra mensagem de texto conforme o conte�do gravado
- * Caso n�o exista a mensagem, envia para fun��o de cadastrar nova
+ * Caso n�o exista a mensagem, envia para funcao de cadastrar nova
  */
 function msg($s) {
 	global $LANG;

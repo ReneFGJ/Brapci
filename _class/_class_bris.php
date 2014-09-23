@@ -7,6 +7,66 @@ class bris {
 
 	var $keys;
 	
+	function processa_citacoes_do_autor()
+		{
+			$sql = "select * from bris_autor where au_processado = 0 limit 1";
+			$rlt = db_query($sql);
+			while ($line = db_read($rlt))
+				{
+					$autor = $line['au_codigo'];
+					$ano = $line['au_ano'];
+					$cited = $this->citacoes_do_autor($autor,$ano);
+					$cited_without = $this->citacoes_do_autor_sem_autocitacao($autor,$ano);
+					echo '-->'.$cited;
+					echo '-->'.$cited_without;
+					//exit;
+				}
+		}
+	function citacoes_do_autor($autor,$ano)
+		{
+		$sql = "
+		SELECT sum(total) as citacoes, count(*) as artigos FROM brapci_article
+			inner join brapci_article_author on ae_article = ar_codigo
+			left join (select m_bdoi, count(*) as total from mar_works where m_bdoi <> '' and m_status <> 'X'
+	           	group by m_bdoi)
+			as tebela on ar_bdoi = m_bdoi
+			WHERE ae_author = '$autor' and ar_status <> 'X'
+			and ar_ano <= '$ano'
+		";
+		$rlt = db_query($sql);
+		if ($line = db_read($rlt))
+			{
+				$cited = $line['citacoes'];
+			}
+		return($cited);
+		}
+	/* Sem autocitacao */
+	function citacoes_do_autor_sem_autocitacao($autor,$ano)
+		{
+		$autor = '0000234';
+		$sql = "
+		SELECT marcado, sum(total) as citacoes, count(*) as artigos, ar_codigo, m_work 
+		FROM brapci_article
+			inner join brapci_article_author on ae_article = ar_codigo
+			left join (select m_bdoi, 1 as total, m_work from mar_works
+				where m_bdoi <> '' and m_status <> 'X'
+	           	group by m_bdoi, m_work)
+			as tebela on ar_bdoi = m_bdoi
+			left join (select 1 as marcado, ae_article as artigo_original from brapci_article_author where ae_author = '$autor') as origiem
+			on ar_codigo = artigo_original 
+			WHERE ae_author = '$autor' and ar_status <> 'X'
+			and ar_ano <= '$ano'
+			group by ar_codigo, m_work, marcado
+		";
+		$rlt = db_query($sql);
+		while ($line = db_read($rlt))
+			{
+				print_r($line);
+				echo '<HR>';
+				$cited = $cited + $line['total'];
+			}
+		return($cited);
+		}		
 	function journal_fi_issn($jnl)
 		{
 			$sql = "select * from bris_rank 
@@ -979,40 +1039,44 @@ class bris {
 		}
 	}
 
-	function ranking_author($ano = '') {
-		$sql = "select * from bris_autor
+	function ranking_author($ano = '', $anof = '') {
+		if (strlen($anof) == 0) { $anof = $ano; }
+		$sql = "select sum(au_artigos) as au_artigos, autor_nome, autor_codigo from bris_autor
 						inner join brapci_autor on au_codigo = autor_codigo 
-						where au_ano = '$ano' ";
+						where au_ano >= '$ano' and au_ano <= $anof
+						group by autor_nome, autor_codigo
+						order by au_artigos desc
+						limit 200
+						";
 		$rlt = db_query($sql);
-
+		
 		$sx .= '<table width="100%" align="center" border=0 class="tabela00" cellpadding=0 cellspacing=0 > ';
 		$sx .= '<TR>
 						<TH>Autor
 						<TH>Trabalhos
 						<TH>índice h
-						<TH>II
-						<TH>FI<BR>2 anos
-						<TH>FI<BR>3 anos
-						<TH>FI<BR>4 anos
+						<TH>Citações recebidas
+						<TH>Autocitações
+						<TH>Citações sem autocitação
 			';
 		while ($line = db_read($rlt)) {
 			$link = '<A HREF="author_view.php?dd0=' . $line['autor_codigo'] . '" target="_new">';
 			$sx .= '<TR>';
 			$sx .= '<TD align="left" class="tabela01">';
 			$sx .= $link . $line['autor_nome'] . '</A>';
-			$sx .= '<TD width="5%" align="center" class="tabela01">';
+			$sx .= '<TD width="8%" align="center" class="tabela01">';
 			$sx .= $line['au_artigos'];
-			$sx .= '<TD width="5%" align="center" class="tabela01">' . $h;
-			$sx .= '<TD width="5%" align="center" class="tabela01">' . $ii;
-			$sx .= '<TD width="5%" align="center" class="tabela01">' . $fi2;
-			$sx .= '<TD width="5%" align="center" class="tabela01">' . $fi3;
-			$sx .= '<TD width="5%" align="center" class="tabela01">' . $fi5;
+			$sx .= '<TD width="8%" align="center" class="tabela01">' . $h;
+			$sx .= '<TD width="8%" align="center" class="tabela01">' . $ii;
+			$sx .= '<TD width="8%" align="center" class="tabela01">' . $fi2;
+			$sx .= '<TD width="8%" align="center" class="tabela01">' . $fi3;
 		}
 		$sx .= '</table>';
 		return ($sx);
 	}
 
 	function ranking_author_create($ano = '') {
+		/* Metodo 23-09-2014 */
 		$sql = "
 					select count(*) as total, ae_author  from brapci_article 
 					inner join brapci_edition on ar_edition = ed_codigo
@@ -1031,6 +1095,8 @@ class bris {
 			$total = trim($line['total']);
 			$this -> atualiza_producao($autor, $ano, $total);
 		}
+		
+		/* Atualiza citacoes */
 
 	}
 

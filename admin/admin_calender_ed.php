@@ -25,7 +25,7 @@ require($include.'sisdoc_form2.php');
 	$http_redirect = '';
 	$label = msg('tit_'.$tabela);
 
-	/** Comandos de Edi��o */
+	/** Comandos de Edicao */
 	
 	echo '<h2>'.$label.'</h2>';
 	?><TABLE width="<?=$tab_max;?>" align="center" bgcolor="<?=$tab_color;?>"><TR><TD><?
