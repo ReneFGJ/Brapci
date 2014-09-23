@@ -3,8 +3,6 @@ require("cab.php");
 require("../_class/_class_bris.php");
 $br = new bris;
 
-$br->processa_citacoes_do_autor();
-
 /* Atualização de dados */
 if ($dd[1]=='1')
 	{
