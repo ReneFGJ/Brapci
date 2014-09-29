@@ -307,6 +307,7 @@ class article {
 						inner join " . $this -> tabela_edition . " on ar_edition = ed_codigo
 						inner join " . $this -> tabela_journal . " on ar_journal_id = jnl_codigo
 						where id_ar = " . round($id);
+
 		$rlt = db_query($sql);
 		if ($line = db_read($rlt)) {
 			$this -> title = $line['ar_titulo_1'];

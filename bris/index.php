@@ -13,19 +13,25 @@ echo '
 						<h2>Indicadores de produção e citação</h2>
 					</li>
 					<li><a href="index_author.php"><img src="img/img_author_group.jpg" alt="dummy"><h3>Indicadores de Autores</h3></a></li>
-					<li class="title-box2">					
-						<h2>38 Revistas Indedadas, 27 ativas e 11 descontinuadas, 12.000 trabalhos indexados</h2>
+					<li class="title-box">					
+						<h2>38 Revistas Indedadas, 27 ativas e 11 descontinuadas</h2>
 					</li>
-					<li><a href="#"><img src="img/dummy.png" alt="dummy"><h3>Indicadores de Eventos</h3></a></li>
+					<li><a href="indicador_producao_ano.php?dd0='.date("Y").'"><img src="img/img_prod_journals.jpg" alt="produção"><h3>Indicador de Produção Anual</h3></a></li>
+					<li class="title-box">					
+						<h2>mais de 12.000 trabalhos indexados</h2>
+					</li>
 					<li><a href="#"><img src="img/dummy.png" alt="dummy"><h3>Indicadores de Livros & Capítulos de Livros</h3></a></li>
-					<li><a href="#"><img src="img/icone_rk_journal.png" alt="dummy"><h3>Indicadores de Revistas</h3></a></li>
-					<li><a href="#"><img src="img/dummy.png" alt="dummy"><h3>Indicadores de Teses e Dissertações</h3></a></li>
+					<li class="title-box">					
+						<h2>mais de 70.000 referências processadas</h2>
+					</li>
+					<li><a href="index_journal.php"><img src="img/icone_rk_journal.png" alt="dummy"><h3>Indicadores de Revistas</h3></a></li>
+					<li><a href="indicador_colaboracao.php"><img src="img/img_colaboration.jpg" alt="dummy"><h3>Indicadores de Colaboração</h3></a></li>
 					
-					<li class="title-box2">
+					<li class="title-box">
 						<h2><a href="http://www.brapci.inf.br/">Brapci</a></h2>
 					</li>
 					<li><a href="#"><img src="img/dummy.png" alt="dummy"><h3>Indicadores de TCC</h3></a></li>
-					<li><a href="#"><img src="img/dummy.png" alt="dummy"><h3>Indicadores de Relatórios</h3></a></li>
+					<li><a href="indicador_icpa.php?dd0='.(date("Y")-1).'"><img src="img/img_dispersion.jpg" alt="iCPA"><h3>Indice de Concentração de Produção por Autor (iCPA)</h3></a></li>
 					<li><a href="#"><img src="img/dummy.png" alt="dummy"><h3>Indicadores de Links de Internet</h3></a></li>
 				</ul>
 			</section>
@@ -42,24 +48,4 @@ echo '
 		</script>
 ';
 
-echo '<table width="98%" align="center" class="tabela00" border=0 cellspacing=10>';
-echo '<TR><TD width="5%"></TD><td rowspan=10 width="20">&nbsp;&nbsp;</td>';
-/* Journal */
-echo '<TR valign="top">
-		<TD><img src="img/icone_rk_journal.png"  width="80"></TD>
-		<TD width="45%">
-			<UL>
-				<LI><A HREF="indicador_jnl_fi.php" class="lt1">Fator de Impacto</A></LI>
-			</UL>
-		<TD><img src="img/icone_rk_autor.png"  width="80"></TD>	
-		<TD width="5%"></TD>
-		<TD width="45%">
-			<UL>
-				<LI><A HREF="indicador_autor_prod.php" class="lt1">Produção</A></LI>
-				<LI><A HREF="indicador_autor_h.php" class="lt1">Índice h</A></LI>
-			</UL>
-		</TD></TR>';
-
-
-echo '</table>';
 ?>

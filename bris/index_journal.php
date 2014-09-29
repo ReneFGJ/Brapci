@@ -18,6 +18,4 @@ if ($form->saved > 0)
 	} else {
 		echo $tela;
 	}
-
-
 ?>

@@ -753,13 +753,14 @@ class bris {
 			if ($tota != $xtota) { $rank++;
 				$xtota = $tota;
 			}
+			$link = '<A HREF="author_view.php?dd0='.$line['autor_codigo'].'" class="bris_link" target="new_autor">';
 			$sx .= '<TR>';
 			$sx .= '<TD align="center" width="20">';
 			$sx .= $rank;
 			$sx .= '<TD align="center" width="20">';
 			$sx .= $line['total'];
 			$sx .= '<TD>';
-			$sx .= $line['autor_nome'];
+			$sx .= $link.$line['autor_nome'].'</A>';
 		}
 		$sx .= '<TR><TD colspan=2>Total ' . $tot . ' autores';
 		$sx .= '</table>';
@@ -861,12 +862,17 @@ class bris {
 		//ar_section = 'ARTIG' and
 		$rlt = db_query($sql);
 		$sx .= '<Table>';
-
+		$google = '';
 		while ($line = db_read($rlt)) {
+			$total = $line['total'];
+			$ano = $line['ed_ano'];
+			if (strlen($google) > 0) { $google .= ', '; }
+			$google .= " ['$ano', $total ] ";
 			$sx .= '<TR><TD>' . $line['ed_ano'];
 			$sx .= '    <TD>' . $line['total'];
 		}
 		$sx .= '</Table>';
+		$this->google_data = $google;
 		return ($sx);
 	}
 
@@ -1098,7 +1104,7 @@ class bris {
 						<TH>Citações sem autocitação
 			';
 		while ($line = db_read($rlt)) {
-			$link = '<A HREF="author_view.php?dd0=' . $line['autor_codigo'] . '" target="_new">';
+			$link = '<A HREF="author_view.php?dd0=' . $line['autor_codigo'] . '" target="_new" class="bris_link">';
 			$sx .= '<TR>';
 			$sx .= '<TD align="left" class="tabela01">';
 			$sx .= $link . $line['autor_nome'] . '</A>';
@@ -1515,7 +1521,7 @@ class bris {
 		$rlt = db_query($sql);
 		$it = 0;
 		while ($line = db_read($rlt)) {
-			$link = '<A HREF="index_about_journal.php?dd0=' . $line['id_jnl'] . '" target="_new">';
+			$link = '<A HREF="index_about_journal.php?dd0=' . $line['id_jnl'] . '" target="_new" class="bris_link">';
 			$it++;
 			$sx .= '<TR>';
 			$sx .= '<TD class="tabela01" align="center"><nobr>';
@@ -1577,7 +1583,7 @@ class bris {
 					';
 		while ($line = db_read($rlt)) {
 			$tot++;
-			$link = '<A HREF="author_view.php?dd0=' . $line['autor_codigo'] . '" target="_new">';
+			$link = '<A HREF="author_view.php?dd0=' . $line['autor_codigo'] . '" target="_new" class="bris_link">';
 			$sx .= '<TR>';
 			$sx .= '<TD>';
 			$sx .= $link;

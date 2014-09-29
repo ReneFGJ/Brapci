@@ -23,7 +23,9 @@ $edi = new issue;
 
 
 /* Le dados do artigo */
+
 $art->le($dd[0]);
+
 $journals->le($art->journal_id);
 $issue = $art->line['ar_edition'];
 

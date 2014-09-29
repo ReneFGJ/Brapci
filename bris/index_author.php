@@ -1,8 +1,11 @@
 <?php
 require("cab.php");
+require($include."_class_form.php");
+$form = new form;
+
 require("../_class/_class_bris.php");
 $br = new bris;
-
+	
 /* Atualização de dados */
 if ($dd[1]=='1')
 	{
@@ -13,9 +16,12 @@ if ($dd[1]=='1')
 				echo ' Gerando dados';
 			}
 	} else {
-		echo '<H1>Autor Ranking</h1>';
-		$ano = '2014';
-		echo $br->ranking_author(1900,$ano);
+		$anoi = '1972';
+		$anof = date("Y");
+		echo '<H1>Autor Ranking '.$anoi.' - '.$anof.'</h1>';
+		echo '<div id="relatorio">';
+		echo $br->ranking_author($anoi,$anof);
+		echo '</div>';
 	}
 
 

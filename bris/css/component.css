@@ -28,6 +28,13 @@
 	vertical-align: top;
 }
 
+.grid .li2 {
+    display: inline-block;
+    overflow: hidden;
+    width: 214px;
+    text-align: left;
+    vertical-align: top;
+}
 .js .grid li {
 	display: none;
 	float: left;
