@@ -1,13 +1,13 @@
 <?php
 require("cab.php");
-require('include/sisdoc_windows.php');
 
+require('include/sisdoc_windows.php');
 require("_class/_class_referencia.php");
 $ref = new referencia;
-
 /* Classe do journal */
 require("_class/_class_journals.php");
 $journals = new journals;
+
 
 /* Classe do autor */
 require("_class/_class_author.php");
@@ -21,9 +21,11 @@ $art = new article;
 require("_class/_class_issue.php");
 $edi = new issue;
 
-
 /* Le dados do artigo */
 $art->le($dd[0]);
+
+echo '5'; exit;
+
 $journals->le($art->journal_id);
 $issue = $art->line['ar_edition'];
 

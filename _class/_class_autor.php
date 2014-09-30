@@ -199,6 +199,7 @@ class autor {
 		$vlr = $this -> dados;
 		$vlr2 = $this -> dados_evento;
 		$vlr3 = $this -> dados_livro;
+		$vlr4 = $this -> dados_tcc;
 		
 		$sx = '<Table width="500" class="lt0">';
 		$sx .= '<TR><TD colspan=15 ><h2>Publicações por ano</h2>';
@@ -206,14 +207,17 @@ class autor {
 			$size = $vlr[$r] * 5;
 			$size2 = $vlr2[$r] * 5;
 			$size3 = $vlr3[$r] * 5;
+			$size4 = $vlr4[$r] * 5;
 			$s1 .= '<td align="center" style="border-top: 1px solid #404040;">' . (date("Y") + $r - $ano);
 			$s2 .= '<td align="center" style="border-top: 1px solid #404040;">' . ($vlr[$r] + $vlr2[$r]);
 			$s3 .= '<td align="center">';
-			if ($size > 0) { $s3 .= '<img src="img/nada_verde.png" width="20" title="Artigos - '.$vlr1[$r].'" height="' . $size . '"><BR>';
+			if ($size > 0) { $s3 .= '<img src="img/nada_verde.png" width="20" title="Artigos - '.$vlr[$r].'" height="' . $size . '"><BR>';
 			}
-			if ($size2 > 0) { $s3 .= '<img src="img/nada_azul.png" width="20" title="Eventos - '.$vlr2[$r].'" height="' . $size2 . '">';
+			if ($size2 > 0) { $s3 .= '<img src="img/nada_azul.png" width="20" title="Eventos - '.$vlr2[$r].'" height="' . $size2 . '"><BR>';
 			}
-			if ($size3 > 0) { $s3 .= '<img src="img/nada_laranja.png" title="Livros - '.$vlr3[$r].'" width="20" height="' . $size3 . '">';
+			if ($size3 > 0) { $s3 .= '<img src="img/nada_laranja.png" title="Livros - '.$vlr3[$r].'" width="20" height="' . $size3 . '"><BR>';
+			}
+			if ($size4 > 0) { $s3 .= '<img src="img/nada_vermelho.png" title="Tese, Dissertação e TCC - '.$vlr4[$r].'" width="20" height="' . $size4 . '">';
 			}
 		}
 		$sx .= '<TR valign="bottom">' . $s3 . '<TD height="100">';
@@ -223,6 +227,7 @@ class autor {
 		$sx .= '<img src="img/nada_verde.png" width="10"> Artigo<BR>';
 		$sx .= '<img src="img/nada_azul.png" width="10"> Evento<BR>';
 		$sx .= '<img src="img/nada_laranja.png" width="10"> Livros<BR>';
+		$sx .= '<img src="img/nada_vermelho.png" width="10"> Tese, Dissertação e TCCs<BR>';
 		$sx .= '</table>';
 		return ($sx);
 	}
@@ -244,6 +249,7 @@ class autor {
 		$pub = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		$eve = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		$liv = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		$tcc = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 		$anos = 15;
 		$this -> anos = $anos;
 		$anoi = date("Y");
@@ -264,7 +270,13 @@ class autor {
 					break;
 				case 'L' :
 					$liv[$ano] = $liv[$ano] + 1;
-					break;					
+					break;	
+				case 'A' :
+					$tcc[$ano] = $tcc[$ano] + 1;
+					break;	
+				case 'B' :
+					$tcc[$ano] = $tcc[$ano] + 1;
+					break;															
 				default :
 					echo '[' . $tp . ']';
 					exit ;
@@ -286,8 +298,10 @@ class autor {
 		$this -> dados = $pub;
 		$this -> dados_evento = $eve;
 		$this -> dados_livro = $liv;
+		$this -> dados_tcc = $tcc;
 		$this -> total_producao = $total;
 		$this -> total_citacoes = $tcit;
+		
 
 		$br = new bris;
 		$ano = '0000';

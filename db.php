@@ -1,4 +1,6 @@
 <?php
+echo 'WAIT...';
+exit;
     /**
      * DB
 	 * @author Rene Faustino Gabriel Junior <renefgj@gmail.com> (Analista-Desenvolvedor)

@@ -21,8 +21,8 @@ class keyword
 		{
 			global $cdf, $cdm,$masc;
 			$idcp = 'kw';
-			$cdf = array('id_'.$idcp,$idcp.'_word',$idcp.'_codigo',$idcp.'_use',$idcp.'_idioma');
-			$cdm = array('Código','Nome','Citação','Codigo','Alias');
+			$cdf = array('id_'.$idcp,$idcp.'_word',$idcp.'_codigo',$idcp.'_use','kw_tipo',$idcp.'_idioma');
+			$cdm = array('Código','Nome','Citação','Codigo','Tipo','Alias');
 			$masc = array('','','','','','','','','','','');			
 		}	
 	

@@ -18,7 +18,7 @@ class bris {
 		/* Cria grafico */
 		$multi= 5;
 		$sx = '<Table width="500" class="lt0">';
-		$sx .= '<TR><TD colspan=15 ><h2>Citações recebidas por ano</h2>';
+		$sx .= '<TR><TD colspan=15 >citações recebidas por ano ';
 		while ($line = db_read($rlt)) {
 			$vlr2 = $line['au_autocitacao'];
 			$vlr = $line['au_citacoes'] - $vlr2;
@@ -28,17 +28,17 @@ class bris {
 			$s1 .= '<td align="center" style="border-top: 1px solid #404040;">' . $line['au_ano'];
 			$s2 .= '<td align="center" style="border-top: 1px solid #404040;">' . ($vlr + $vlr2);
 			$s3 .= '<td align="center">';
-			if ($size > 0) { $s3 .= '<img src="img/nada_azul.png" width="20" height="' . $size . '" title="Citacoes - '.$vlr.'"><BR>';
+			if ($size > 0) { $s3 .= '<img src="img/nada_azul.png" width="20" height="' . $size . '" title="Citacoes"><BR>';
 			}
-			if ($size2 > 0) { $s3 .= '<img src="img/nada_vermelho.png" width="20" height="' . $size2 . '" title="Autocitação - '.$vlr2.'">';
+			if ($size2 > 0) { $s3 .= '<img src="img/nada_vermelho.png" width="20" height="' . $size2 . '" title="Autocitação">';
 			}
 		}
 		$sx .= '<TR valign="bottom">' . $s3 . '<TD height="100">';
 		$sx .= '<TR>' . $s2;
 		$sx .= '<TR>' . $s1;
 		$sx .= '<TR><TD colspan=40 class="lt0">';
-		$sx .= '<img src="img/nada_azul.png" width="10"> Citações recebidas<BR>';
-		$sx .= '<img src="img/nada_vermelho.png" width="10"> Autocitações<BR>';
+		$sx .= '<img src="img/nada_verde.png" width="10"> Citações recebidas no ano<BR>';
+		//$sx .= '<img src="img/nada_azul.png" width="10"> Evento<BR>';
 		$sx .= '</table>';
 		return ($sx);
 	}
@@ -753,14 +753,13 @@ class bris {
 			if ($tota != $xtota) { $rank++;
 				$xtota = $tota;
 			}
-			$link = '<A HREF="author_view.php?dd0='.$line['autor_codigo'].'" class="bris_link" target="new_autor">';
 			$sx .= '<TR>';
 			$sx .= '<TD align="center" width="20">';
 			$sx .= $rank;
 			$sx .= '<TD align="center" width="20">';
 			$sx .= $line['total'];
 			$sx .= '<TD>';
-			$sx .= $link.$line['autor_nome'].'</A>';
+			$sx .= $line['autor_nome'];
 		}
 		$sx .= '<TR><TD colspan=2>Total ' . $tot . ' autores';
 		$sx .= '</table>';
@@ -862,17 +861,12 @@ class bris {
 		//ar_section = 'ARTIG' and
 		$rlt = db_query($sql);
 		$sx .= '<Table>';
-		$google = '';
+
 		while ($line = db_read($rlt)) {
-			$total = $line['total'];
-			$ano = $line['ed_ano'];
-			if (strlen($google) > 0) { $google .= ', '; }
-			$google .= " ['$ano', $total ] ";
 			$sx .= '<TR><TD>' . $line['ed_ano'];
 			$sx .= '    <TD>' . $line['total'];
 		}
 		$sx .= '</Table>';
-		$this->google_data = $google;
 		return ($sx);
 	}
 
@@ -1104,7 +1098,7 @@ class bris {
 						<TH>Citações sem autocitação
 			';
 		while ($line = db_read($rlt)) {
-			$link = '<A HREF="author_view.php?dd0=' . $line['autor_codigo'] . '" target="_new" class="bris_link">';
+			$link = '<A HREF="author_view.php?dd0=' . $line['autor_codigo'] . '" target="_new">';
 			$sx .= '<TR>';
 			$sx .= '<TD align="left" class="tabela01">';
 			$sx .= $link . $line['autor_nome'] . '</A>';
@@ -1521,7 +1515,7 @@ class bris {
 		$rlt = db_query($sql);
 		$it = 0;
 		while ($line = db_read($rlt)) {
-			$link = '<A HREF="index_about_journal.php?dd0=' . $line['id_jnl'] . '" target="_new" class="bris_link">';
+			$link = '<A HREF="index_about_journal.php?dd0=' . $line['id_jnl'] . '" target="_new">';
 			$it++;
 			$sx .= '<TR>';
 			$sx .= '<TD class="tabela01" align="center"><nobr>';
@@ -1583,7 +1577,7 @@ class bris {
 					';
 		while ($line = db_read($rlt)) {
 			$tot++;
-			$link = '<A HREF="author_view.php?dd0=' . $line['autor_codigo'] . '" target="_new" class="bris_link">';
+			$link = '<A HREF="author_view.php?dd0=' . $line['autor_codigo'] . '" target="_new">';
 			$sx .= '<TR>';
 			$sx .= '<TD>';
 			$sx .= $link;
