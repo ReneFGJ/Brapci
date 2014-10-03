@@ -703,7 +703,7 @@ class cited {
 		$sql = "select * from mar_works 
 				inner join mar_journal on m_journal = mj_codigo
 						where $wh and m_processar = 'S'
-						order by m_ano desc, m_ref limit 150 offset 0 ";
+						order by m_ref DESC, m_ano desc limit 250 offset 0 ";
 		$rlt = db_query($sql);
 		$proc = 0;
 		$idx = 0;
@@ -875,6 +875,8 @@ class cited {
 		array_push($cp, array('$S40', 'm_bdoi', '', False, True));
 		array_push($cp, array('$HV', 'm_status', '@', True, True));
 		array_push($cp, array('$S4', 'm_ano', '', True, True));
+		array_push($cp, array('$S5', 'm_tipo', '', False, True));
+		
 		return ($cp);
 	}
 

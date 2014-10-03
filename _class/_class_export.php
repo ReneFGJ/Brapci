@@ -128,7 +128,7 @@ class export
 					{
 					$ii++;
 					$ini++;
-					/* Edião */
+					/* Edicão */
 					$pag = '';
 					$pag_i = $line['ar_pg_inicial'];
 					$pag_f = $line['ar_pg_final'];

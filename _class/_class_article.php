@@ -289,9 +289,9 @@ class article {
 		array_push($cp, array('$HV', 'ar_edition', strzero($dd[2], 7), True, True));
 
 		array_push($cp, array('$T80:6', 'ar_titulo_1', msg('work_title'), True, True));
-		array_push($cp, array('$O pt_BR:Português&us:Inglês&es:Espanhol', 'ar_idioma_1', msg('idioma'), True, True));
+		array_push($cp, array('$O pt_BR:Português&en:Inglês&es:Espanhol', 'ar_idioma_1', msg('idioma'), True, True));
 		array_push($cp, array('$T80:6', 'ar_titulo_2', msg('work_title'), True, True));
-		array_push($cp, array('$O us:Inglês&pt_BR:Português&es:Espanhol', 'ar_idioma_2', msg('idioma') . ' ' . msg('alternative'), True, True));
+		array_push($cp, array('$O en:Inglês&pt_BR:Português&es:Espanhol', 'ar_idioma_2', msg('idioma') . ' ' . msg('alternative'), True, True));
 		array_push($cp, array('$HV', 'ar_codigo', '', False, True));
 		array_push($cp, array('$HV', 'ar_status', '@', True, True));
 		array_push($cp, array('$Q se_descricao:se_codigo:select * from brapci_section order by se_descricao', 'ar_tipo', msg("session"), True, True));
