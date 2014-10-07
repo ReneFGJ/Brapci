@@ -12,7 +12,8 @@ $ano = $dd[0];
 echo '<H1>Contração de Assunto</h1>';
 echo '<h3>Ano Base: '.$ano.'</h3>';
 if (strlen($ano)==0) { $ano = date("Y"); }
-echo $bris->indicador_keys($ano-1,$ano);
+//echo $bris->indicador_keys($ano-1,$ano);
+echo $bris->indicador_keys(2013,2014);
 echo $bris->show_cloud('1');
 
 echo $bris->show_keyswords();
@@ -20,12 +21,16 @@ echo $bris->show_keyswords();
 		<style type="text/css">
 			.wordcloud {
 				border: 1px solid #036;
-				height: 1024px;
+				/* height: 1024px; */
+				/* width: 800px; */
+				height: 1600px;
+				width: 2048px;
 				margin: 0.5in auto;
 				padding: 0;
 				page-break-after: always;
 				page-break-inside: avoid;
-				width: 800px;
+				background-color: #000000;
+				
 			}
 		</style>
 		
@@ -39,7 +44,7 @@ echo $bris->show_keyswords();
 					"options" : {
 						"color" : "random-dark",
 						"rotationRatio" : 0.15,
-						"printMultiplier" : 6,
+						"printMultiplier" : 1,
 						"sort" : "random"
 					},
 					"font" : "'Arial','Times New Roman', Times, serif",
