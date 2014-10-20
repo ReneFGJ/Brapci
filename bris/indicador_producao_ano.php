@@ -8,7 +8,7 @@ $ano = $dd[0];
 echo '<H1>Indice de Concentração de Produção por Autor (iCPA)</h1>';
 echo '<h3>Ano Base: ' . $ano . '</h3>';
 
-$bris -> indicador_pa($ano);
+$sd = $bris -> indicador_pa($ano);
 $sx = '
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 <script type="text/javascript">
@@ -38,4 +38,5 @@ $sx = '
 <div id="chart_div" style="width: 900px; height: 500px;"></div>
 ';
 echo $sx;
+echo $sd;
 ?>

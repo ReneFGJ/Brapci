@@ -833,6 +833,85 @@ class bris {
 		return ($sx);
 	}
 
+	function indicador_pa_journals($ano = '') {
+		$tipo = '1';
+		$ano = '1972';
+		$ano = date("Y");
+$dmax = $dd[2] - $dd[1];
+if ($dmax > 40)
+	{
+	echo 'Diferença entre anos é superior a 40 anos. ';
+	exit;
+	}
+$ano1 = intval($dd[1]);
+$ano2 = intval($dd[2]);
+
+$sql = "
+select at_tecnica, count(*) as total, `at_tecnica` AS mt2,
+ m2.`bmt_descricao` AS dt2
+from (
+select ar_section, ar_edition,`ar_codigo`,`at_analise_1` as at_tecnica from brapci_article as tb1 where not isnull(at_metodo_2 ) and ar_status <> 'X' and ar_journal_id = '0000003'
+union 
+select ar_section, ar_edition,`ar_codigo`,`at_analise_2` as at_tecnica from brapci_article as tb2 where not isnull(at_metodo_2 ) and ar_status <> 'X' and ar_journal_id = '0000003'
+) as tabela
+inner join brapci_edition on ar_edition = ed_codigo  
+inner join brapci_section on ar_section = se_codigo  
+LEFT JOIN brapci_metodologias AS m2 ON at_tecnica = m2.`bmt_codigo`
+where (se_tipo = 'B' ) ";
+if (strlen($dd[1]) > 0) { $sql .= " and ( ed_ano >= '".$dd[1]."') "; }
+if (strlen($dd[2]) > 0) { $sql .= " and ( ed_ano <= '".$dd[2]."') "; }
+$sql .= " group by at_tecnica ";
+
+
+$rlt = db_query($sql);
+
+$x = "X";
+$to1 = 0;
+$tot = 0;
+while ($line = db_read($rlt))
+	{
+	$link = '<A HREF="rel_metodologia_2_detalhes.php?dd1='.$line['mt1'].'&dd2='.$line['at_tecnica'].'&dd3='.$line['mt3'].'" target="_news" class="lt1">';
+	$tp1 = $line['dt1'];
+	if ($tp1 != $x)
+		{
+		if ($to1 > 0)
+			{
+			$sr .= '<TR class="lt1"><TD colspan="3" align="right"><B>Total de '.$to1.' trabalhos</B></TD></TR>';
+			$to1 = 0;
+			}
+		$sr .= '<TR><TD class="lt4" colspan="3">'.$tp1.'</TD></TR>';
+		$x = $tp1;
+		}
+	$sr .= '<TR '.coluna().'>';
+	$sr .= '<TD>';
+	$sr .= $link;	
+	$sr .= $line['dt2'];	
+	$sr .= '<TD>';
+	$sr .= $link;	
+	$sr .= $line['dt3'];	
+	$sr .= '<TD align="right">';	
+	$sr .= $link;
+	$sr .= $line['total'];	
+	$sr .= '</TR>';
+	$tot = $tot + $line['total'];
+	$to1 = $to1 + $line['total'];
+	}
+$sr = troca($sr,'-- sem classificacao --','-');
+?>
+<table width="90%" cellpadding="4" cellspacing="0" border="1">
+<TR>
+<TH width="45%">Meios</TH>
+<TH width="45%">Enfoque</TH>
+<TH width="10%">Quantidade</TH>
+</TR>
+<?=$sr;?>
+<TR class="lt1"><TD colspan="3" align="right"><B>Total de <?=$to1;?> trabalhos</B></TD></TR>
+<TR class="lt2"><TD colspan="3" align="right">Total de <?=$tot;?> trabalhos</TD></TR>
+</table>
+</DIV>
+		return ($sx);
+	}
+
 	function indicador_pa($ano = '') {
 		$tipo = '1';
 		$ano = '1972';
@@ -861,15 +940,16 @@ class bris {
 
 		//ar_section = 'ARTIG' and
 		$rlt = db_query($sql);
-		$sx .= '<Table>';
+		$sx .= '<Table class="tabela00" width="200">';
 		$google = '';
+		$st = 0;
 		while ($line = db_read($rlt)) {
 			$total = $line['total'];
 			$ano = $line['ed_ano'];
 			if (strlen($google) > 0) { $google .= ', '; }
 			$google .= " ['$ano', $total ] ";
-			$sx .= '<TR><TD>' . $line['ed_ano'];
-			$sx .= '    <TD>' . $line['total'];
+			$sx .= '<TR><TD align="center">' . $line['ed_ano'];
+			$sx .= '    <TD align="center">' . $line['total'];
 		}
 		$sx .= '</Table>';
 		$this->google_data = $google;
