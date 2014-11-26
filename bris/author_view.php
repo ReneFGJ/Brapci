@@ -1,5 +1,8 @@
 <?php
 require("cab.php");
+
+$dd[0] = strzero($dd[0],7);
+
 require("../_class/_class_bris.php");
 $br = new bris;
 
@@ -15,6 +18,10 @@ $au->le($dd[0]);
 $foto = $au->mostra_foto();
 echo $au->mostra();
 
+/* Calcula indice h */
+$br->processa_citacoes_do_autor($dd[0]);
+$br->calcular_indice_h_autor($dd[0]);
+$br->calcular_citacoes_autor($dd[0]);
 
 
 $br->citacoes_por_ano();
@@ -29,7 +36,9 @@ echo '<table border=0 width="100%">';
 	echo $au->grafico();
 echo '<TD>';
 	echo $foto;
+	$br->le_indicadores($dd[0]);	
 	echo $br->indicador_autor($au->codigo);
+	echo $br->indice_h_tabela;
 	
 	echo '<TR><TD align="left">';
 	//echo $au->grafico_minhas_citacoes();

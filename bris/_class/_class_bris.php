@@ -6,13 +6,25 @@ class bris {
 	var $idh = 0;
 
 	var $keys;
+	
+	function le_indicadores($autor)
+		{
+			$sql = "select * from bris_autor where au_codigo = '$autor' order by au_ano desc";
+			$rlt = db_query($sql);
+			while ($line = db_read($rlt))
+				{
+					print_r($line);
+				}
+				
+			
+		}
 
 	function citacoes_do_autor_grafico($autor) {
 		$ano = $this -> anos;
 		$sql = "select * from bris_autor 
 					where au_codigo = '$autor' 
 					and au_ano >= (" . (date("Y") - $ano) . ")
-					order by au_ano
+					order by au_ano desc
 					";
 		$rlt = db_query($sql);
 		/* Cria grafico */
@@ -476,7 +488,7 @@ class bris {
 							au_h = $h, 
 							au_update = $data
 								where id_au = " . $line['id_au'];
-			$xxx = db_query($sql);
+			//$xxx = db_query($sql);
 			echo '<BR>' . $sql;
 		}
 

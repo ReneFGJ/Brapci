@@ -123,6 +123,17 @@ if (strlen($sa) > 0)
 		echo '</div>';
 	}
 
+/* ctapod por */
+$sql = "select * from mar_works where m_bdoi = '".$art->bdoi."' and m_status <> 'X'";
+$rlt = db_query($sql);
+$it = 0;
+while ($line = db_read($rlt))
+	{
+		$it++;
+		echo $line['m_work'].' ';
+	}
+echo '<BR>Total: '.$it;
+
 echo $art->seek_google();
 echo '</table>';
 ?>

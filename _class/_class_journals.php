@@ -221,11 +221,17 @@ class journals
 				$sx .= '</fieldset>';
 				return($sx);
 			}
-		function list_journals($sta)
+		function list_journals($tipo='J',$sta='')
 			{
-				$sql = "select * from ".$this->tabela." where jnl_tipo = 'J' and jnl_status = '$sta'
-						order by jnl_nome
+				$sql = "select * from ".$this->tabela." 
+							where jnl_tipo = '$tipo' 
+							and jnl_status <> 'X'	
 				";
+				if (strlen($sta) > 0)
+					{
+						$sql .= " and jnl_status = '$sta' ";
+					}
+				$sql .= " order by jnl_nome ";
 				$rlt = db_query($sql);
 				
 				/* gera resultados */
@@ -254,7 +260,7 @@ class journals
 					} else {
 						$linkf='';
 					}
-				$sx .= '<TR '.coluna().'>';
+				$sx .= '<TR>';
 				$sx .= '<TD>';
 				$sx .= $link;
 				$sx .= trim($line['jnl_nome']);

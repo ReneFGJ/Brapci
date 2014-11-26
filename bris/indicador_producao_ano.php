@@ -39,4 +39,5 @@ $sx = '
 ';
 echo $sx;
 echo $sd;
+echo $bris->indicador_pa_journal();
 ?>

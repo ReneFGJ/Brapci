@@ -16,8 +16,10 @@ if ($dd[1]=='1')
 				echo ' Gerando dados';
 			}
 	} else {
-		$anoi = '1972';
-		$anof = date("Y");
+		$anoi = $dd[1];
+		$anof = $dd[2];
+		if (strlen($anoi) == 0) { $anoi = '1972'; }
+		if (strlen($anof) == 0) { $anof = date("Y"); }
 		echo '<H1>Autor Ranking '.$anoi.' - '.$anof.'</h1>';
 		echo '<div id="relatorio">';
 		echo $br->ranking_author($anoi,$anof);
@@ -26,3 +28,4 @@ if ($dd[1]=='1')
 
 
 ?>
+

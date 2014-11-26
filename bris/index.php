@@ -21,6 +21,7 @@ echo '
 						<h2>mais de 12.000 trabalhos indexados</h2>
 					</li>
 					<li><a href="#"><img src="img/dummy.png" alt="dummy"><h3>Indicadores de Livros & Capítulos de Livros</h3></a></li>
+					<li><a href="indicador_autocitacao.php?dd0='.date("Y").'"><img src="img/img_prod_journals.jpg" alt="autocitação"><h3>Indicador de Autocitação</h3></a></li>
 					<li class="title-box">					
 						<h2>mais de 70.000 referências processadas</h2>
 					</li>
