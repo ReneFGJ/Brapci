@@ -5,7 +5,8 @@ require("cab.php");
 require("../_class/_class_journals.php");
 $jnl = new journals;
 
-echo $jnl->jnl_resumo();
+$sta = $dd[1];
+echo $jnl->journals_articles_status($sta);
 
 require("foot.php");
 ?>

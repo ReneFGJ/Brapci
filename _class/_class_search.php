@@ -179,6 +179,19 @@ class search {
 		}
 		$wh = troca($wh,'AND  AND','AND');
 		for ($r=0;$r < $par;$r++) { $wh .= ')'; }
+		
+		$tps = array('srcid','srcid2','srcid6','srcid8');
+		$tpf = array('J','E','T','D');
+		$sqlw = '';
+		for ($r=0;$r < count($tps);$r++)
+			{
+				if ($_SESSION[$tps[$r]]==1)
+					{
+					if (strlen($sqlw) > 0) { $sqlw .= ' and '; }
+					$sqlw .= " (jnl_tipo = '".$tpf[$r]."') ";
+					}
+			}
+		if (strlen($sqlw) > 0) { $wh .= ' AND '.$sqlw; }
 		return ($wh);
 	}
 
@@ -237,6 +250,7 @@ class search {
 		}
 
 		$sql = "select count(*) as total from " . $db_public . "artigos 
+					inner join brapci_journal on jnl_codigo = ar_journal_id
 					where " . $wh . "
 					";
 		$rlt = db_query($sql);
@@ -527,6 +541,23 @@ class search {
 		return ($sx);
 
 	}
+	function send_to_email($article,$size=32)
+		{
+			global $user_email;
+			$sx = '';
+			if (strlen($user_email) > 0)
+				{
+				$link = nwin('article_send_email.php?dd0='.$cod.'&dd99='.checkpost($cod),200,200);
+				$sx = '<img src="img/icone_send_to_email_off.png" 
+							border=0 title="'.msg('send_to_email').'" 
+							height="'.$size.'"
+							onmouseover="this.src=\'img/icone_send_to_email.png\'"
+							onmouseout="this.src=\'img/icone_send_to_email_off.png\'"
+							'.$link.'
+							>';
+				}
+			return($sx);
+		}
 
 	function show_article_mini($line) {
 		global $id, $email;
@@ -583,7 +614,7 @@ class search {
 		$sx .= '<BR>';
 		$sx .= '<img src="img/icone_abstract.png" height="16" style="cursor: pointer;" id="it' . $cod . '" ' . $jscmd . ' align="left">';
 		/* enviar por e-mail */
-		if (isset($email)) { $sx .= $email -> send_to_email($cod, 16);
+		if (isset($email)) { $sx .= $this -> send_to_email($cod, 16);
 		}
 
 		//$sx .= '<TD colspan=3 class="lt0">';
@@ -697,6 +728,7 @@ class search {
 		if (strlen($wh) == 0) { $wh = '(1 = 1)';
 		}
 		$sql = "select count(*) as total, ar_ano from " . $db_public . "artigos 
+				inner join brapci_journal on jnl_codigo = ar_journal_id
 			where $wh ";
 
 		$sql .= "group by ar_ano order by ar_ano desc, total desc ";
@@ -725,11 +757,13 @@ class search {
 		$sql = "
 			select autor_nome, autor_codigo, sum(total) as total from (
 				select count(*) as total, ae_author from " . $db_public . "artigos 
-				inner join " . $db_base . "brapci_article_author on ae_article = ar_codigo 
+				inner join " . $db_base . "brapci_article_author on ae_article = ar_codigo
+				inner join brapci_journal on jnl_codigo = ar_journal_id 
 				where $wh
 				group by ae_author 
 			) as tabela 
 				inner join " . $db_base . "brapci_autor on ae_author = autor_codigo
+				
 				group by autor_nome, autor_codigo
 				order by total desc, autor_nome
 				limit 20
@@ -760,6 +794,7 @@ class search {
 			select kw_word,kw_keyword, sum(total) as total from (
 				select count(*) as total, kw_keyword from " . $db_public . "artigos 
 				inner join " . $db_base . "brapci_article_keyword on ar_codigo = kw_article
+				inner join brapci_journal on jnl_codigo = ar_journal_id
 				where $wh
 				group by kw_keyword 
 			) as tabela 
@@ -795,6 +830,7 @@ class search {
 			select kw_word,kw_keyword, sum(total) as total from (
 				select count(*) as total, kw_keyword from " . $db_public . "artigos 
 				inner join " . $db_base . "brapci_article_keyword on ar_codigo = kw_article
+				inner join brapci_journal on jnl_codigo = ar_journal_id
 				where $wh
 				group by kw_keyword 
 			) as tabela 

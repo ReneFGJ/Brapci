@@ -1,0 +1,103 @@
+body {
+	font-family: "CICPG", "Tahoma", "Verdana", "Arial";
+	font-size: 12px;
+}
+#content
+    {
+        
+        margin: 0 auto;
+        border: 1px solid #313131;
+        width: 90%;
+        margin-top: 20px;
+        padding: 10px;
+    }
+#foot
+	{
+		position: fixed;
+		bottom: 0px;
+		right: 0;
+		width: 10px;
+		height: 10px;
+		background-color:#E0E0E0;
+	}
+.lt1 {
+	font-size: 12px;
+}
+.lt0 {
+    font-size: 10px;
+}
+.lt2 {
+    font-size: 16px;
+}
+.lt3 {
+    font-size: 22px;
+}
+.lt4 {
+	font-size: 26px;
+}
+.lt5 {
+	font-size: 32px;
+}
+.justify
+    {
+        text-align: justify;
+    }
+
+/* Tabelas */
+.resumo {
+	font-size: 12px;
+}
+.resumo tr {
+	background-color: #E0E0E0;
+}
+.resumo td {
+	background-color: #FFFFFF;
+	text-decoration: none;
+	border: 1px solid #000000;
+}
+.link {
+	text-decoration: none;
+	color: #555590;
+}
+.link:hover {
+	text-decoration: underline;
+	color: #000050;
+}
+
+/* Article */
+#article_data
+	{
+		background-color: #E0E0FF;
+		max-height: 800px;
+	}
+#article_pdf
+	{
+	    padding: 2%;
+		width: 46%;
+		height: 600px;
+		background-color: #E0FFE0;
+		float: right;
+		position: relative;
+	}
+#article_content
+	{
+	    padding: 2%;
+		width: 46%;
+		height: 600px;
+		background-color: #FFE0E0;
+		float: left;
+		position: relative;
+	}
+
+#article_title
+	{
+		
+	}
+#article_abstract_1
+	{
+		
+	}
+#article_abstract_2
+	{
+		
+	}
