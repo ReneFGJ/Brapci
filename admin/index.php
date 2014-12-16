@@ -7,5 +7,7 @@ $jnl = new journals;
 
 echo $jnl->jnl_resumo();
 
+echo '<a href="export_public.php">EXPORT</A>';
+
 require("foot.php");
 ?>

@@ -30,6 +30,7 @@ class oauth {
 	var $email;
 	var $cidade;
 	var $id;
+	var $nivel;
 	var $autenticado;
 	
 	var $tabela = "users";
@@ -37,6 +38,7 @@ class oauth {
 	function recupera_id($email) {
 		$sql = "select * from " . $this -> tabela . " where us_email = '" . $email . "'";
 		$rlt = db_query($sql);
+		$line = db_read($rlt);
 		return (trim($line['us_codigo']));
 	}
 	
@@ -96,6 +98,7 @@ class oauth {
 		$this -> name = $_SESSION['user_nome'];
 		$this -> cidade = $_SESSION['user_localizacao'];
 		$this -> email = $_SESSION['user_email'];
+		$this -> nivel = $_SESSION['user_nivel'];
 		if (strlen($_SESSION['user_email']) > 0)
 			{
 				$this->autenticado = 1;

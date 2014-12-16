@@ -6,6 +6,36 @@ class export
 		var $ini=0;
 		var $total=0;
 		
+		function exporta_texto()
+			{
+				global $db_apoio;
+				$sql = "select * from brapci_article ";
+				$sql .= " left join brapci_journal on ar_journal_id = id_jnl ";
+				$sql .= " left join ".$db_apoio."ajax_cidade on jnl_cidade = cidade_codigo ";
+				$sql .= " inner join brapci_edition on ed_codigo = ar_edition ";
+				$sql .= " left join brapci_section on ar_section = se_codigo ";
+				//$sql .= " where ar_status <> 'X' and (se_tipo <> '-' and se_tipo <> 'Z' and se_tipo <> 'E' and se_tipo <> 'H')";
+				$sql .= " where ar_status <> 'X' 							";
+				$sql .= " order by ar_codigo ";
+				$rlt = db_query($sql);
+				$sf = '';
+				$sa = '';	
+				while ($line = db_read($rlt))
+					{
+						$st = '';
+						$st .= '[art]';
+						$st .= '[0]'.$line['ar_codigo'].'[/0]]';
+						$st .= '[1]'.trim(UpperCaseSql($line['ar_titulo_1'])).'[/1]';
+						$st .= '[2]'.trim(UpperCaseSql($line['ar_titulo_2'])).'[/2]';
+						$st .= '[/art]';
+						
+						$st = troca($st,chr(13),'');
+						$st = troca($sr,chr(10),''); 
+						print_r($line);
+						exit;
+					}
+			}
+		
 		function total_trabalhos()
 			{
 				global $db_public;
