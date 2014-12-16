@@ -26,96 +26,165 @@ class article {
 	var $keyword_array = array();
 
 	var $page_load_type = 'C';
-	
-	function verifica_artigo_sem_edicao()
-		{
-			$sql = "select id_ar, ar_ano, ed_ano, ar_codigo from brapci_article
+
+	function actions() {
+		$act = array();
+		$sta = $this -> line['ar_status'];
+		switch ($sta) {
+			case 'A' :
+				array_push($act, array('B', 'Enviar para Revisão 1'));
+				array_push($act, array('C', 'Enviar para Revisão 2'));
+				array_push($act, array('D', 'Finalizar revisão'));
+		}
+
+		$sx = '';
+		$sx .= '<UL>';
+		for ($r = 0; $r < count($act); $r++) {
+			$href = '<A HREF="' . page() . '?dd0=' . $dd[0] . '&dd90=' . $dd[90] . '&dd1=' . $act[$r][0] . '&dd2=ACT">';
+			$sx .= '<LI>' . $href . $act[$r][1] . '</A>' . '</LI>' . chr(13);
+		}
+		$sx .= '</UL>';
+		return ($sx);
+	}
+
+	function verifica_artigo_sem_edicao() {
+		$sql = "select id_ar, ar_ano, ed_ano, ar_codigo from brapci_article
 					left join brapci_edition on ar_edition = ed_codigo 
 					where (ed_ano is null) and ar_status <> 'X' 
 					limit 5000";
-			$rlt = db_query($sql);
-			while ($line = db_read($rlt))
-				{
-					$sql = "update brapci_article set ar_status = 'X' ,
-							ar_resumo_3 = '**Cancelado automaticamente por falta da edição **** ".date("d/m/Y H:i:s")."'
-							where id_ar = ".$line['id_ar'];
-					$xrlt = db_query($sql);
-				}
+		$rlt = db_query($sql);
+		while ($line = db_read($rlt)) {
+			$sql = "update brapci_article set ar_status = 'X' ,
+							ar_resumo_3 = '**Cancelado automaticamente por falta da edição **** " . date("d/m/Y H:i:s") . "'
+							where id_ar = " . $line['id_ar'];
+			$xrlt = db_query($sql);
 		}
-	
-	function atualizar_ano_do_artigo($tipo=1)
-		{
-			$sql = "select id_ar, ar_ano, ed_ano, ar_codigo from brapci_article
+	}
+
+	function atualizar_ano_do_artigo($tipo = 1) {
+		$sql = "select id_ar, ar_ano, ed_ano, ar_codigo from brapci_article
 					inner join brapci_edition on ar_edition = ed_codigo 
 					where (ar_ano = 0 or ar_ano is null) and ar_status <> 'X' 
 					limit 5000";
-			$rlt = db_query($sql);
-			$sql = "";
-			$id = 0;
-			while ($line = db_read($rlt))
-				{
-					$id++;
-					$sql = "update brapci_article set ar_ano = '".$line['ed_ano']."' where id_ar = ".$line['id_ar'].';'.chr(13).chr(10);
-					$rrr = db_query($sql);
-				}
-			return($id);
+		$rlt = db_query($sql);
+		$sql = "";
+		$id = 0;
+		while ($line = db_read($rlt)) {
+			$id++;
+			$sql = "update brapci_article set ar_ano = '" . $line['ed_ano'] . "' where id_ar = " . $line['id_ar'] . ';' . chr(13) . chr(10);
+			$rrr = db_query($sql);
 		}
+		return ($id);
+	}
 
 	function cp_issue() {
 		global $dd;
-		$sql = "select * from ".$this->tabela." where id_ar = ".round($dd[0]);
+		$sql = "select * from " . $this -> tabela . " where id_ar = " . round($dd[0]);
 		$rlt = db_query($sql);
-		if ($line = db_read($rlt))
-			{
+		if ($line = db_read($rlt)) {
 			$cp = array();
 			$sql = "select * from brapci_edition ";
-			$sql .= " where ed_journal_id = '".$line['ar_journal_id']."'
+			$sql .= " where ed_journal_id = '" . $line['ar_journal_id'] . "'
 						order by ed_ano desc, ed_vol desc, ed_nr desc
 					";
 			$rlt = db_query($sql);
-			while ($line = db_read($rlt))
-				{
-					$ed = '';
-					$ed .= 'v. '.$line['ed_vol'];
-					$ed .= ', n. '.$line['ed_nr'];
-					$ed .= ', '.$line['ed_ano'];
-					$op .= '&'.trim($line['ed_codigo']).':'.$ed;
-				}
-			array_push($cp, array('$H8', 'id_ar', 'id_ar', True, True, ''));
-			array_push($cp, array('$O '.$op, 'ar_edition', 'Edição', False, True, ''));
-			return($cp);
-			} else {
-				echo 'Erro na identificacao do registro';
-				return(0);
-				exit;
+			while ($line = db_read($rlt)) {
+				$ed = '';
+				$ed .= 'v. ' . $line['ed_vol'];
+				$ed .= ', n. ' . $line['ed_nr'];
+				$ed .= ', ' . $line['ed_ano'];
+				$op .= '&' . trim($line['ed_codigo']) . ':' . $ed;
 			}
-	}
-	function tirar_espaco($s)
-		{
-			$s = troca($s,chr(13),' ');
-			$s = troca($s,chr(10),'');
-			$s = troca($s,'  ',' ');
-			return($s);
+			array_push($cp, array('$H8', 'id_ar', 'id_ar', True, True, ''));
+			array_push($cp, array('$O ' . $op, 'ar_edition', 'Edição', False, True, ''));
+			return ($cp);
+		} else {
+			echo 'Erro na identificacao do registro';
+			return (0);
+			exit ;
 		}
-	function cp_abstract()
+	}
+
+	function tirar_espaco($s) {
+		$s = troca($s, chr(13), ' ');
+		$s = troca($s, chr(10), '');
+		$s = troca($s, '  ', ' ');
+		return ($s);
+	}
+
+	function atualiza_keyword($id,$sa,$cpo)
 		{
+				switch ($cpo)
+				{
+					case '1':
+							$sql = "update ".$this->tabela." set ar_key1 = '".$sa."'
+								where ar_codigo = '".$id."' ";
+							$rlt = db_query($sql);
+							break;
+					case '2':
+							$sql = "update ".$this->tabela." set ar_key2 = '".$sa."'
+								where ar_codigo = '".$id."' ";
+							$rlt = db_query($sql);
+							break;
+				}
+				return('');
+		}
+	function cp_abs1()
+		{
+		global $dd,$acao;
+		
 		$cp = array();
 		global $dd;
-		$dd[1] = $this->tirar_espaco($dd[1]);
-		$dd[3] = $this->tirar_espaco($dd[3]);
-			
+		$dd[2] = $this -> tirar_espaco($dd[2]);
+		$dd[3] = $this -> tirar_espaco($dd[3]);
+
+		array_push($cp, array('$H8', 'id_ar', 'id_ar', True, True, ''));
+		array_push($cp, array('$HV', '', $dd[1], True, True, ''));
+		array_push($cp, array('$T60:8', 'ar_resumo_1', 'Resumo:', True, True, ''));
+		array_push($cp, array('$T60:2', 'ar_key1', 'Palavras-chave:', True, True, ''));
+		array_push($cp, array('$Q ido_descricao:ido_codigo:select * from ajax_idioma order by ido_ordem, ido_descricao', 'ar_idioma_1', 'Idioma', False, True, ''));
+		
+		return ($cp);
+		}
+		
+	function cp_abs2()
+		{
+		global $dd,$acao;
+		
+		$cp = array();
+		global $dd;
+		$dd[2] = $this -> tirar_espaco($dd[2]);
+		$dd[3] = $this -> tirar_espaco($dd[3]);
+
+		array_push($cp, array('$H8', 'id_ar', 'id_ar', True, True, ''));
+		array_push($cp, array('$HV', '', $dd[1], True, True, ''));
+		array_push($cp, array('$T60:8', 'ar_resumo_2', 'Resumo:', True, True, ''));
+		array_push($cp, array('$T60:2', 'ar_key2', 'Palavras-chave:', True, True, ''));
+		array_push($cp, array('$Q ido_descricao:ido_codigo:select * from ajax_idioma order by ido_ordem, ido_descricao', 'ar_idioma_2', 'Idioma', False, True, ''));
+		
+		return ($cp);
+		}
+
+	function cp_abstract() {
+		$cp = array();
+		global $dd;
+		$dd[1] = $this -> tirar_espaco($dd[1]);
+		$dd[3] = $this -> tirar_espaco($dd[3]);
+
 		array_push($cp, array('$H8', 'id_ar', 'id_ar', True, True, ''));
 		array_push($cp, array('$T60:8', 'ar_resumo_1', 'Resumo', True, True, ''));
 		array_push($cp, array('$Q ido_descricao:ido_codigo:select * from ajax_idioma order by ido_ordem, ido_descricao', 'ar_idioma_1', 'Idioma', False, True, ''));
 		array_push($cp, array('$T60:8', 'ar_resumo_2', 'Resumo (alt)', False, True, ''));
 		array_push($cp, array('$Q ido_descricao:ido_codigo:select * from ajax_idioma order by ido_ordem, ido_descricao', 'ar_idioma_2', 'Idioma', False, True, ''));
 
-		return($cp);
-		}
-		
+		return ($cp);
+	}
+
 	function cp_title() {
+		global $dd;
 		$cp = array();
 		array_push($cp, array('$H8', 'id_ar', 'id_ar', True, True, ''));
+		array_push($cp, array('$HV', '', $dd[1], False, True, ''));
 		array_push($cp, array('$T60:3', 'ar_titulo_1', 'Título principal', True, True, ''));
 		array_push($cp, array('$Q ido_descricao:ido_codigo:select * from ajax_idioma order by ido_ordem, ido_descricao', 'ar_idioma_1', 'Idioma', False, True, ''));
 		array_push($cp, array('$T60:3', 'ar_titulo_2', 'Título 2º idioma', False, True, ''));
@@ -125,7 +194,9 @@ class article {
 
 		array_push($cp, array('$S8', 'ar_pg_inicial', 'Pág inicial', False, True, ''));
 		array_push($cp, array('$S8', 'ar_pg_final', 'Pág Final', False, True, ''));
-		return($cp);
+		
+		array_push($cp, array('$S80', 'ar_doi', 'DOI', False, True, ''));
+		return ($cp);
 	}
 
 	function update_title_asc($id) {
@@ -411,9 +482,52 @@ class article {
 		return ($keys);
 	}
 
+	function show_titulo_resumo($idioma)
+		{
+			switch ($idioma)
+				{
+				case 'pt_BR':
+					$sx = 'Resumo';
+					break;
+				case 'en':
+					$sx = 'Abstract';
+					break;
+				default:
+					$sx = 'Resumo '.$idioma;
+					break;
+				}
+			return($sx);
+		}
+	function show_abstract($id) {
+		$sx = '';
+
+		if ($id == 1) {
+			$sx .= '<div class="resumo">';
+			$sx .= '<B>'.$this->show_titulo_resumo($this -> idioma_1).'</B>: ';
+			$sx .= $this -> resumo;
+			$sx .= '</div>';
+			$sx .= '<div class="keywords">';
+			$sx .= '<BR><B>' . $this -> display_keyword($this -> idioma_1) . '</B> ';
+			$sx .= $this -> keyword;
+			$sx .= '</div>';
+		} else {
+			$sx .= '<BR><BR>';
+			$sx .= '<div class="resumo">';
+			$sx .= '<B>'.$this->show_titulo_resumo($this -> idioma_2).'</B>: ';
+			$sx .= $this -> resumo_alt;
+			$sx .= '</div>';
+			$sx .= '<div class="keywords">';
+			$sx .= '<BR><B>' . $this -> display_keyword($this -> idioma_2) . '</B> ';
+			$sx .= $this -> keyword_alt;
+			$sx .= '</div>';
+			$sx .= '<BR><BR>';
+		}
+		return($sx);
+	}
+
 	function mostra() {
 		$sx = '<h2>' . $this -> title . '</h2>';
-		$sx .= '<div style="float: right">'.$this->bdoi.'</div>';
+		$sx .= '<div style="float: right">' . $this -> bdoi . '</div>';
 		$sx .= '<h3><I>' . $this -> title_alt . '</I></h3>';
 
 		$sx .= '<div class="autores">';
@@ -453,7 +567,7 @@ class article {
 					left join " . $db_public . "artigos on " . $this -> tabela . ".ar_codigo = artigos.ar_codigo
 					where ar_edition = '" . strzero(round($id), 7) . "' 
 					order by se_ordem, se_descricao, ar_pg_inicial ";
-					
+
 		$rlt = db_query($sql);
 		$sx .= '<table width="99%" class="lt1" cellpadding=0 cellspacing=2 >';
 		$sx .= '<TR class="lt1">';
@@ -553,19 +667,17 @@ class article {
 	function coleta_e_salva_pdf($url, $article, $id, $journal) {
 		$dt = date("Ymd");
 		$url = trim($url);
-		if (is_dir("_repositorio"))
-			{
-				$path = "_repositorio/";
-			} else {
-				$path = "../_repositorio/";
-			}
+		if (is_dir("_repositorio")) {
+			$path = "_repositorio/";
+		} else {
+			$path = "../_repositorio/";
+		}
 		$filename = $path . substr($dt, 0, 4) . "/" . substr($dt, 4, 2);
 
 		$this -> checkdir($filename);
 		$filename .= '/pdf_' . checkpost($id) . '_' . strzero($id, 7) . '.pdf';
-		
-		if (substr($filename,0,1) == '.')
-		{
+
+		if (substr($filename, 0, 1) == '.') {
 			$file_name .= substr($filename, 3, strlen($filename));
 		} else {
 			$file_name .= substr($filename, 0, strlen($filename));

@@ -24,7 +24,55 @@ class keyword
 			$cdf = array('id_'.$idcp,$idcp.'_word',$idcp.'_codigo',$idcp.'_use','kw_tipo',$idcp.'_idioma');
 			$cdm = array('Código','Nome','Citação','Codigo','Tipo','Alias');
 			$masc = array('','','','','','','','','','','');			
+		}
+	function recupera_keyword($id,$idioma)
+		{
+			if (round($id) == 0) { return(''); }
+			$id = strzero($id,10);			
+			$sql = "select * from brapci_article_keyword 
+						inner join brapci_keyword on kw_keyword = kw_codigo
+						where kw_article = '".$id."' and kw_idioma = '$idioma'";	
+			$rlt = db_query($sql);
+			$sx = '';
+			while ($line = db_read($rlt))
+				{
+					if (strlen($sx) > 0)
+						{ $sx .= '. '; }
+					$sx .= trim($line['kw_word']);
+				}			
+			return($sx);
 		}	
+	
+	function save_keyword_article_v2($id,$keys,$idioma)
+			{
+			if (round($id) == 0) { return(''); }
+			$id = strzero($id,10);
+			
+			$sql = "select * from brapci_article_keyword 
+						inner join brapci_keyword on kw_keyword = kw_codigo
+						where kw_article = '".$id."' and kw_idioma = '$idioma'";	
+			$rlt = db_query($sql);
+			while ($line = db_read($rlt))
+				{
+					$sqlx = "delete from brapci_article_keyword where id_ak = ".$line['id_ak'];
+					$xrlt = db_query($sqlx);
+				}
+
+			for ($rx=0;$rx < count($keys);$rx++)
+				{
+					$nome_ref = $keys[$rx];
+
+					$cod = $this->keyword_find($nome_ref,$idioma);
+					$sql = "insert into brapci_article_keyword
+							(
+							kw_article, kw_keyword, kw_ord
+							) value (
+							'$id','$cod',$rx)
+							";
+					$rlt = db_query($sql);
+				}
+			return(1);
+			}	
 	
 	function save_keyword_article($id,$keys)
 			{

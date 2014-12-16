@@ -10,10 +10,36 @@ class referencia
 				
 				$sx = '<div id="export">'.chr(13);
 				$sx .= '<fieldset><legend class="lt1">Exportar referências para</legend>';
+				
+				$link_abnt = 'style="cursor: pointer;" onclick="newxy2(\''.$http.'article_ref_show.php?dd0='.trim($line['ar_codigo']).'&dd1=ABNT\',800,300);" ';
+				$sx .= '<IMG src="'.$http.'/img/logo/logo_abnt.png" height="20" border=0 '.$link_abnt.'>';
+				
 				$link_endnote = 'style="cursor: pointer;" onclick="newxy2(\''.$http.'article_ref_show.php?dd0='.trim($line['ar_codigo']).'&dd1=ENDNOTE\',800,300);" ';
 				$sx .= '<IMG src="'.$http.'/img/logo/logo_endnote.gif" height="20" border=0 '.$link_endnote.'>';
 				$sx .= '</fieldset>';
 				$sx .= '</div>'.chr(13);
+				return($sx);
+			}
+		function abnt($art)
+			{
+				$sx = '';
+				$autores = $art->autores_row;
+				for ($r=0;$r < count($autores);$r++)
+					{
+						if (strlen($sx) > 0) { $sx .= '; '; }
+						$sx .= $autores[$r];
+					}
+				$sx .= '. ';
+
+				$sx .= $art->title.'. ';
+				$sx .= '<B>'.trim($art->line['jnl_nome']).'</B>';
+				$vol = $art->line['ed_vol'];
+				$nr = $art->line['ed_nr'];
+				$ano = $art->line['ar_ano'];
+				if (strlen($vol) > 0) { $sx .= ', v. '.$vol; }
+				if (strlen($nr) > 0) { $sx .= ', n. '.$vol; }
+				if (strlen($ano) > 0) { $sx .= ', '.$ano; }
+				$sx .= '.';
 				return($sx);
 			}
 		function show_ref($art,$type='ABNT')
@@ -24,6 +50,10 @@ class referencia
 						$xml = $this->endnote($art);
 						header ("Content-Type:text/xml");
 						echo utf8_encode($xml);
+						break;
+					case 'ABNT':
+						echo $this->abnt($art);
+						break;						
 					}
 			}
 		function type_of_work($type)
