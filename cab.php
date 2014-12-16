@@ -52,12 +52,12 @@ $path_ini = $include;
 		<img src="img/logo_brapci_face.png" id="logo">
 		<ul>
 		<li><a id="current" href="index.php" title="Home Page">Home</a></li>
-		<li><a  href="/menu.php?dd1=0" title="Sobre a base">Sobre a base</a></li>
-		<li><a  href="/menu.php?dd1=1" title="Corpus da base">Corpus da Base</a></li>
-		<li><a  href="/menu.php?dd1=2" title="Citation Reports">Relatório de Citações</a></li>
-		<li><a  href="/menu.php?dd1=3" title="Índice de palavras chave">Índicde de palavras-chave</a></li>
-		<li><a  href="/menu.php?dd1=4" title="Índice de autores">Índice de autores</a></li>
-		<li><a  href="/menu.php?dd1=5" title="Map Generator">Ajuda</a></li>
+		<li><a  href="/about.php?dd1=0" title="Sobre a base">Sobre a base</a></li>
+		<li><a  href="/about.php?dd1=1" title="Corpus da base">Corpus da Base</a></li>
+		<li><a  href="/about.php?dd1=2" title="Citation Reports">Relatório de Citações</a></li>
+		<li><a  href="/about.php?dd1=3" title="Índice de palavras chave">Índicde de palavras-chave</a></li>
+		<li><a  href="/about.php?dd1=4" title="Índice de autores">Índice de autores</a></li>
+		<li><a  href="/about.php?dd1=5" title="Map Generator">Ajuda</a></li>
 		</ul></div>
 		';
 		echo utf8_encode($menu_google);
@@ -66,7 +66,7 @@ $path_ini = $include;
 			<div class="cab">
 				<div class="menu_left">
         				<UL class="nav_menu">
-        					<LI><a href="'.$http.'/menu.php"><img src="'.$http.'img/icone_menu.png" border=0 height="20" title="main menu"></LI>
+        					<LI><a href="'.$http.'/about.php"><img src="'.$http.'img/icone_menu.png" border=0 height="20" title="main menu"></LI>
         				</UL>
 				</div>
 				<div class="geral">

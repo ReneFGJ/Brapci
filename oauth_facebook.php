@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['code'])) {
 				$id = $user->recupera_id($email);
 				$_SESSION['user_id'] = $id;
 				$_SESSION['user_email'] = $email;
+				$_SESSION['user_nivel'] = $nivel;
 				$_SESSION['user_nome'] = $userx -> name;
 				$_SESSION['user_genero'] = $userx -> gender;
 				$_SESSION['user_idioma'] = $userx -> locale;
@@ -54,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['code'])) {
 		exit(0);
 	}
 } else if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['error'])) {
-	echo 'Permissão não concedida';
+	echo 'Permissao nao concedida';
 }
 
 function fileload($token_url)

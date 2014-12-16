@@ -34,7 +34,7 @@ class header {
 	
 
 	function foot() {
-		$sx = '';
+		$sx = '<BR><BR><BR>';
 		$sx .= '<div id="foot">';
 		$sx .= '&copy; '.date("Y").'- sisDOC ';
 		$sx .= '<div id="foot">';
@@ -92,10 +92,10 @@ class header {
 	function cab() {
 		$sx = $this -> head();
 		$sx .= $this -> api_google;
-		$sx .= '<header>';
+		$sx .= '<div id="cab">';
 		$sx .= $this->cab_html;
-		//$sx .= $this->menu_top();
-		$sx .= '</header>';
+		$sx .= $this->menu_top();
+		$sx .= '</div>';
 		return ($sx);
 	}
 

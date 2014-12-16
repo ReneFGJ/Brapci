@@ -4,6 +4,43 @@ class search {
 
 	var $sessao = '001122';
 
+	function metodo_pontos($titulo, $resumo, $keyword, $rla) {
+
+		$pt = 0;
+		$pt1 = 0;
+		$pt2 = 0;
+		$pt3 = 0;
+
+		for ($r = 0; $r < count($rla); $r++) {
+			$ttt = trim($rla[$r]);
+			if (strpos(' '.$titulo, $ttt) > 0) { $pt1++; 
+			}
+			if (strpos(' '.$resumo, $ttt) > 0) { $pt2++;
+			}
+			if (strpos(' '.$keyword, $ttt) > 0) { $pt3++;
+			}
+
+		}
+		
+		$total = count($rla);
+		//echo "<BR>==><B>($pt1)</B>, <B>($pt2)</B> e ($pt3) = ($total)";
+		//echo $titulo;
+		
+		$pt1 = ($pt1 == count($rla));
+		$pt2 = ($pt2 == count($rla));
+		$pt3 = ($pt3 == count($rla));		
+		
+		$pt = ($pt1 * 4) + ($pt2 * 1) + ($pt3 * 2);
+		if ($pt > 0) { $srt = ' <A HREF="about.php#pontos" target="_new"><img src="img/star_' . $pt . '.png"  alt="" border="0" align="absmiddle"></A>';
+			$mst = true;
+		} else { $srt = '';
+			$mst = false;
+			$totr--;
+		}
+		$smetodo = 'Metodo 1';
+		return ($srt);
+	}
+
 	function result_cited() {
 		/* m_works */
 		$wh = troca($this -> query, 'ar_codigo', 'm_work');
@@ -30,7 +67,7 @@ class search {
 			}
 			$sx .= '<BR>';
 		}
-		$sx .= 'Total de '.$to.' referências';
+		$sx .= 'Total de ' . $to . ' referências';
 		return ($sx);
 
 	}
@@ -153,7 +190,7 @@ class search {
 			if (strlen($term) > 2) {
 				$term = troca($term, '_', ' ');
 				if (($term == 'NOT') or ($term == 'AND')) {
-					$pre = ' '.UpperCase($term).' ';
+					$pre = ' ' . UpperCase($term) . ' ';
 				} else {
 					if ((strlen($wh) > 0) and ($bor == 0)) { $wh .= ' AND ';
 					}
@@ -163,35 +200,37 @@ class search {
 					$bor = 0;
 				}
 			} else {
-				if ($term == 'OR') { $pre = ' OR '; }
+				if ($term == 'OR') { $pre = ' OR ';
+				}
 				if (trim($term) == '(') { $bor = 1;
 					$par++;
-					$wh .= $pre.' '.$term;
+					$wh .= $pre . ' ' . $term;
 					$pre = '';
 				}
 				if (trim($term) == ')') { $bor = 1;
 					$par--;
-					$wh .= $pre.' '.$term;
+					$wh .= $pre . ' ' . $term;
 					$pre = '';
 				}
 				//$wh .= $term;
 			}
 		}
-		$wh = troca($wh,'AND  AND','AND');
-		for ($r=0;$r < $par;$r++) { $wh .= ')'; }
-		
-		$tps = array('srcid','srcid2','srcid6','srcid8');
-		$tpf = array('J','E','T','D');
+		$wh = troca($wh, 'AND  AND', 'AND');
+		for ($r = 0; $r < $par; $r++) { $wh .= ')';
+		}
+
+		$tps = array('srcid', 'srcid2', 'srcid6', 'srcid8');
+		$tpf = array('J', 'E', 'T', 'D');
 		$sqlw = '';
-		for ($r=0;$r < count($tps);$r++)
-			{
-				if ($_SESSION[$tps[$r]]==1)
-					{
-					if (strlen($sqlw) > 0) { $sqlw .= ' and '; }
-					$sqlw .= " (jnl_tipo = '".$tpf[$r]."') ";
-					}
+		for ($r = 0; $r < count($tps); $r++) {
+			if ($_SESSION[$tps[$r]] == 1) {
+				if (strlen($sqlw) > 0) { $sqlw .= ' and ';
+				}
+				$sqlw .= " (jnl_tipo = '" . $tpf[$r] . "') ";
 			}
-		if (strlen($sqlw) > 0) { $wh .= ' AND '.$sqlw; }
+		}
+		if (strlen($sqlw) > 0) { $wh .= ' AND ' . $sqlw;
+		}
 		return ($wh);
 	}
 
@@ -215,7 +254,7 @@ class search {
 		} else {
 			$wha = '';
 			if ((strlen($_SESSION['srcid1']) == 0) or ($_SESSION['srcid1'] == '1')) {
-				 $wha .= " Call_Number = '1' ";
+				$wha .= " Call_Number = '1' ";
 			}
 			if ((strlen($_SESSION['srcid2']) == 0) or ($_SESSION['srcid2'] == '1')) {
 				if (strlen($wha) > 0) { $wha .= ' or ';
@@ -541,26 +580,25 @@ class search {
 		return ($sx);
 
 	}
-	function send_to_email($article,$size=32)
-		{
-			global $user_email;
-			$sx = '';
-			if (strlen($user_email) > 0)
-				{
-				$link = nwin('article_send_email.php?dd0='.$cod.'&dd99='.checkpost($cod),200,200);
-				$sx = '<img src="img/icone_send_to_email_off.png" 
-							border=0 title="'.msg('send_to_email').'" 
-							height="'.$size.'"
+
+	function send_to_email($article, $size = 32) {
+		global $user_email;
+		$sx = '';
+		if (strlen($user_email) > 0) {
+			$link = nwin('article_send_email.php?dd0=' . $cod . '&dd99=' . checkpost($cod), 200, 200);
+			$sx = '<img src="img/icone_send_to_email_off.png" 
+							border=0 title="' . msg('send_to_email') . '" 
+							height="' . $size . '"
 							onmouseover="this.src=\'img/icone_send_to_email.png\'"
 							onmouseout="this.src=\'img/icone_send_to_email_off.png\'"
-							'.$link.'
+							' . $link . '
 							>';
-				}
-			return($sx);
 		}
+		return ($sx);
+	}
 
 	function show_article_mini($line) {
-		global $id, $email;
+		global $id, $email, $dd;
 
 		$ar = new article;
 		$js = '<script>' . chr(13) . chr(10);
@@ -593,7 +631,7 @@ class search {
 		$sx .= '<TR valign="top">';
 		$sx .= '<TD rowspan=1>';
 
-		/* Marcacaoo */
+		/* Marcacao */
 		$selected = round($line['sel_ativo']);
 		if ($selected == 1) { $selected = 'checked';
 		} else { $selected = '';
@@ -606,6 +644,7 @@ class search {
 		$sx .= $id . '. ';
 		$sx .= $link;
 		$sx .= (trim(UpperCase($line['Article_Title'])));
+
 		$sx .= '</A>';
 		/* Show */
 
@@ -648,15 +687,49 @@ class search {
 		/* DIV */
 		$hid = 'display: none;';
 		$sx .= '<div style="text-align: justify; ' . $hid . ' color: #A0A0A0; line-height:130%; margin: 8px; 8px; 8px; 8px;" id="mt' . $cod . '">';
-		$sx .= trim($line['ar_resumo_1']);
+		$abst1 = trim($line['ar_resumo_1']);
+		$abst2 = trim($line['ar_resumo_2']);
+		
+		if (strlen($abst1) == 0)
+			{
+				$resumo = $abst2;
+			} else {
+				$resumo = $abst1;
+				if (strlen($abst2) > 0)
+					{
+						$resumo .= '<BR><BR>'.$abst2;
+					}
+			}
+		$sx .= $resumo;
 		$sx .= '<BR>';
 		$keys = trim($line['Idoma']);
 		$key = trim($line['ar_keyword_1']);
+		$key .= ' '.trim($line['ar_keyword_2']);
 		$key = trim(troca($key, ' /', ','));
 		if ($keys == 'pt_BR') { $sx .= '<B>Palavras-chave</B>: ' . $key;
 		} else { $sx .= '<BR><B>Keywords</B>: ' . $key;
 		}
+
+		/* Pontos */
+
 		$sx .= '</div>';
+
+		/* Para a marcação de pontos */
+		$titulo = trim(UpperCaseSQL($line['Article_Title']));
+		$titulo .= trim(UpperCaseSQL($line['Title_2']));
+
+		$resumo = trim(UpperCaseSQL($line['ar_resumo_1']));
+		$resumo .= ' ' . trim(UpperCaseSQL($line['ar_resumo_2']));
+
+		$keyword = trim(UpperCaseSQL($line['Keywords']));
+		$keyword .= trim(UpperCaseSQL($line['ar_keyword_1']));
+		$keyword .= trim(UpperCaseSQL($line['ar_keyword_2']));
+
+		$termos = $dd[2] . ' ';
+		$termos = troca($termos, ' ', ';');
+		$termos = splitx(";", UpperCaseSql($termos));
+
+		$sx .= $this -> metodo_pontos($titulo, $resumo, $keyword, $termos);
 
 		return ($sx);
 	}
@@ -666,10 +739,10 @@ class search {
 		switch ($tipo) {
 			case 'A' :
 				$sx = 'Tese';
-				break;			
+				break;
 			case 'B' :
 				$sx = 'Dissertação';
-				break;			
+				break;
 			case 'J' :
 				$sx = 'Artigo';
 				break;

@@ -23,5 +23,7 @@ echo '<A HREF="__documentos/POLITICA DE INDEXACAO - v0.14.34.pdf">Documento v0.1
 
 echo '<BR><BR>';
 
+require("about_pontos.php");
+
 require("foot.php");
 ?>

@@ -26,41 +26,6 @@ class article {
 	var $keyword_array = array();
 
 	var $page_load_type = 'C';
-	function action($to)
-		{
-			$sql = "update ".$this->tabela." set ar_status = '".$to."' where ar_codigo = '".$this->line['ar_codigo']."'";
-			$rlt = db_query($sql);
-			return('');
-		}
-	function actions()
-		{
-			global $dd,$acao;
-			$sta = $this->line['ar_status'];
-			$menu = array();
-			switch ($sta)
-				{
-				case '@':
-						array_push($menu,array('A','Enviar para Revisão 1'));
-						break;
-				}
-			$sx = '<form method="post" action="'.page().'">';
-			$sx .= '<input type="hidden" name="dd0" value="'.$dd[0].'">';
-			$sx .= '<input type="hidden" name="dd90" value="'.$dd[90].'">';
-			$action = '';
-			for ($r = 0; $r < count($menu);$r++)
-				{
-					if ($menu[$r][1]==$dd[3]) { $action = $menu[$r][0]; }
-					$sx .= '<input name="dd3" type="submit" value="'.$menu[$r][1].'">';
-				}
-			$sx .= '</form>';
-			
-			if (strlen($action) > 0)
-				{
-					$this->action($action);
-				}
-			
-			return($sx);
-		}
 	
 	function verifica_artigo_sem_edicao()
 		{
@@ -487,19 +452,16 @@ class article {
 					left join brapci_section on se_codigo = ar_tipo 
 					left join " . $db_public . "artigos on " . $this -> tabela . ".ar_codigo = artigos.ar_codigo
 					where ar_edition = '" . strzero(round($id), 7) . "' 
-					order by se_ordem, ar_pg_inicial ";
+					order by se_ordem, se_descricao, ar_pg_inicial ";
 					
 		$rlt = db_query($sql);
 		$sx .= '<table width="99%" class="lt1" cellpadding=0 cellspacing=2 >';
 		$sx .= '<TR class="lt1">';
 		$sx .= '<Th>título<Th>pag.<Th>cited';
 		$xsection = 'x';
-		$img_path = "../img/";
 		while ($line = db_read($rlt)) {
 			$this -> journal_id = $line['ar_journal_id'];
 			$cited = $line['at_citacoes'];
-			$status = trim($line['ar_status']);
-			$status = '<IMG SRC="'.$img_path.'/subm_bar_'.$status.'.png" height="30">';
 			$section = trim($line['se_descricao']);
 			if ($xsection != $section) {
 				$sx .= '<TR><TD class="lt1" class="issue_td"><B>' . $section . '</B>';
@@ -515,7 +477,6 @@ class article {
 
 			$sx .= '<TD><nobr>' . $pag;
 			$sx .= '<TD align="center">' . $cited;
-			$sx .= '<TD align="center">' . $status;
 		}
 		$sx .= '</table>';
 		return ($sx);
@@ -592,11 +553,23 @@ class article {
 	function coleta_e_salva_pdf($url, $article, $id, $journal) {
 		$dt = date("Ymd");
 		$url = trim($url);
-		$filename = '../_repositorio/' . substr($dt, 0, 4) . "/" . substr($dt, 4, 2);
+		if (is_dir("_repositorio"))
+			{
+				$path = "_repositorio/";
+			} else {
+				$path = "../_repositorio/";
+			}
+		$filename = $path . substr($dt, 0, 4) . "/" . substr($dt, 4, 2);
 
 		$this -> checkdir($filename);
 		$filename .= '/pdf_' . checkpost($id) . '_' . strzero($id, 7) . '.pdf';
-		$file_name .= substr($filename, 3, strlen($filename));
+		
+		if (substr($filename,0,1) == '.')
+		{
+			$file_name .= substr($filename, 3, strlen($filename));
+		} else {
+			$file_name .= substr($filename, 0, strlen($filename));
+		}
 
 		$sx = $this -> page_load($url);
 

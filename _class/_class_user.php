@@ -71,6 +71,7 @@ class user
 		{
 			$sql = "select * from ".$this->tabela." where us_email = '".$email."'";
 			$rlt = db_query($sql);
+			$line = db_read($rlt);			
 			return(trim($line['us_codigo']));			
 		}
 	function user_insert($email,$nome,$pais,$cidade,$link,$image,$genero,$autenticador)
