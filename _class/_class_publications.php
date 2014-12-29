@@ -7,6 +7,61 @@ class publications
 	
 	var $tabela = 'brapci_journal';
 	
+	function insere_link_artigo($artigo='',$link='',$tipo='',$journal='')
+		{
+			$data = date("Ymd");
+			$sql = "insert into brapci_article_suporte	
+				(bs_article, bs_type, bs_adress,
+				bs_status, bs_journal_id, bs_update)
+				values
+				('$artigo','$tipo','$link',
+				'A','$journal',$data)";
+			$rlt = db_query($sql);
+		}
+	function desabilita_link($art)
+		{
+			if (strlen($art) == 10)
+				{
+				$sql = "delete from brapci_article_suporte 
+							where bs_article = '$art'
+							";
+				$rlt = db_query($sql);
+				}
+		}
+	function novo_link()
+		{
+			global $dd,$acao;
+			
+			if (strlen($dd[80]) > 0)
+				{
+					$sql = "select * from brapci_article_suporte 
+							where bs_article = '$art'
+							order by bs_type
+							";
+							
+					$artigo = strzero(round($dd[0]),10);
+					
+					/* Desativa links anteriores */
+					$this->desabilita_link($artigo);
+					
+					$link = $dd[80];
+					$tipo = 'URL';
+					$journal = '';
+
+					$this->insere_link_artigo($artigo,$link,$tipo,$journal);
+					redirecina(page().'?dd0='.$dd[0].'&dd90='.$dd[90]);						
+				}
+			
+			$cr = chr(13).chr(10);
+			$sx .= '<form method="post" action="'.page().'">'.$cr;
+			$sx .= '<input type="hidden" name="dd0" value="'.$dd[0].'">'.$cr;
+			$sx .= '<input type="hidden" name="dd90" value="'.$dd[90].'">'.$cr;
+			$sx .= '<input type="text" name="dd80" size=100 value="'.$dd[80].'">'.$cr;
+			$sx .= '<input type="submit" name="acao" value="adicionar >>>">'.$cr;
+			$sx .= '</form>';
+			return($sx);
+		}
+	
 	
 	/************************************ ACOES */
 	
@@ -389,9 +444,11 @@ class publications
 				{
 					if (trim($line['bs_type']) == 'PDF') { $hpdf = 1; }
 					$link = '<A HREF="'.trim($line['bs_adress']).'" target="_new">';
+					$linkh = trim($line['bs_adress']);
 					
 					if ($line['bs_type']!='URL') { $link = ''; }
 					if ($line['bs_type']=='PDF') { $link = '<A HREF="'.$http.trim($line['bs_adress']).'" target="_new">'; }
+					if (($line['bs_type']=='URL') and (substr($linkh,0,4) != 'http')) { $link = ''; }
 					$sx .= '<TR>';
 					$sx .= '<TD class="tabela01" height="30" align="center">';
 					$sx .= $line['bs_type'];
@@ -399,7 +456,8 @@ class publications
 					$sx .= $link;
 					$sx .= $line['bs_adress'];
 					$sx .= '</A>';
-					if (strlen($link) > 0)
+					
+					if ((strlen($linkh) > 0) and (substr($linkh,0,4) == 'http'))
 						{
 							$idx = $line['id_bs'];
 							$sx .= '<TD class="tabela01" width="30" height="30" align="center">';

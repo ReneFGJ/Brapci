@@ -1,17 +1,19 @@
 <?php
-require("_class/_class_publications.php");
+require("db.php");
+echo date("d/m/Y H:i:s").'<BR>';	
+
+require("../_class/_class_publications.php");
 $res = new publications;
 
-require("_class/_class_article.php");
+require("../_class/_class_article.php");
 $art = new article;
 
-require("_class/_class_oai.php");
+require("../_class/_class_oai.php");
 $oai = new oai;
-
-echo date("d/m/Y H:i:s").'<BR>';
 
 $sql = "select * from brapci_article_suporte
 			where id_bs = ".round($dd[0]);
+			echo $sql;
 $rlt = db_query($sql);
 
 if ($line = db_read($rlt))
@@ -20,7 +22,7 @@ if ($line = db_read($rlt))
 	$journal = $line['bs_journal_id'];
 
 	/* Phase VIEW */
-	if (strpos($url,'/view/') > 0)
+	if ((strpos($url,'/view/') > 0) or (strpos($url,'/viewFile/') > 0) or (strpos($url,'/download/') > 0))
 		{
 			$idx = $line['id_bs'];
 			$arti = trim($line['bs_article']);

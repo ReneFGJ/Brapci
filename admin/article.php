@@ -61,6 +61,20 @@ echo '<div><iframe id="abs2" width="100%" height="300px"
 			style="display: none;"
 			>
 			</iframe></div>';
+			
+/* Links */
+echo '<TR valign="top"><TD>';
+require ("../_class/_class_publications.php");
+$res = new publications;
+$art = strzero($dd[0],10);
+//$res -> article_id = $art;
+//$res -> le($art);
+echo $res -> show_files($art);
+echo $res -> upload_files($art);
+echo $res -> novo_link();
+
+//http://revista.ibict.br/liinc/index.php/liinc/article/viewFile/727/504
+echo '</TD></TR>';
 echo '</table>';
 
 echo '
@@ -82,4 +96,6 @@ echo $ar->actions();
 
 echo '</div>';
 require("foot.php");
+
+function msg($sx) { return($sx); }
 ?>
