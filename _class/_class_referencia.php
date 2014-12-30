@@ -220,7 +220,7 @@ class referencia
 				if (strlen($pag) > 0) { $pag = 'p. '.$pag.''; }
 				
 				/* */
-				$link = '<A HREF="article.php?dd0='.$line['id_ar'].'&dd90='.checkpost($line['id_ar']).'" class="lt1">';
+				$link = '<A HREF="article.php?dd0='.$line['id_ar'].'&dd90='.checkpost($line['id_ar']).'" class="lt1" target="_new">';
 				$pag = '';
 				$sx = $link.$titulo.' '.$pag.trim($year).'</A>';
 				$sx .= '<BR><i>'.$line['Author_Analytic'].'</A>';

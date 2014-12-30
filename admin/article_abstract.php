@@ -37,7 +37,7 @@ switch($dd[1])
 $tabela = $ar->tabela;
 $tela = $form->editar($cp,$tabela);
 
-echo $tela;
+
 
 if ($form->saved > 0)
 	{
@@ -47,7 +47,14 @@ if ($form->saved > 0)
 
 		$keys = splitx(';',$key.';');
 		$kw->save_keyword_article_v2($id,$keys,$dd[4]);
+		echo '
+		<script>
+			
+		</script>
+		';
 		
+	} else {
+		echo $tela;
 	}
 function msg($x) { return($x); }
 ?>

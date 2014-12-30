@@ -16,22 +16,67 @@ class journals {
 	var $periodicidade;
 	var $periodicidade_nome;
 	
-	function journals_articles_lista($status='',$journal='')
-		{
-			$sql = "select count(*) as total, jnl_nome , ar_status, ar_journal_id,
+	function journals_articles_lista_simple($status = '', $journal = '') {
+		if (strlen($status)) {
+			$wh = " ar_status = '$status' and  ";
+		}
+		$sql = "select ar_status, ar_journal_id,
+						ed_ano, ed_vol, ed_nr, ed_codigo, 
+						ed_status
+						from brapci_article
+						
+						inner join brapci_edition on ed_codigo = ar_edition
+						where $wh ed_journal_id = '$journal'
+					group by ar_status, ar_journal_id,
+								ed_ano, ed_vol, ed_nr, ed_codigo, ed_status
+					order by ed_ano desc, ed_vol desc, ed_nr desc
+					";
+		
+		$rlt = db_query($sql);
+		$sx = '<table width="100%" class="resumo">';
+		$sx .= '<TR><TH>Volume</TR>';
+		$xano = '';
+		
+		while ($line = db_read($rlt)) {
+			$ano = $line['ed_ano'];
+			$link = 'row_articles.php?dd0=' . $line['ed_codigo'] . '&dd90=' . checkpost($line['ed_codigo']);
+			$link = '<A HREF="' . $link . '" class="link" target="frame_articles">';
+			if ($xano != $ano) {
+				$sx .= '<TR>';
+				$xano = $ano;
+			}
+			$sx .= '<TR>';
+			$sx .= '<TD>';
+			$sx .= $link;
+			$sx .= $line['ed_ano'] . ', ';
+			$sx .= 'vol. ' . trim($line['ed_vol']);
+			$nr = trim($line['ed_nr']);
+			if (strlen($nr) > 0) { $sx .= ', nr. ' . $nr . '';
+			$sx .= '<TD align="center">'.$line['ed_status'];
+			}
+		}
+		$sx .= '</table>';
+		return ($sx);
+	}	
+
+	function journals_articles_lista($status = '', $journal = '') {
+		if (strlen($status)) {
+			$wh = " ar_status = '$status' and  ";
+		}
+		$sql = "select count(*) as total, jnl_nome , ar_status, ar_journal_id,
 						ed_ano, ed_vol, ed_nr, ed_codigo
 						from brapci_article
 						inner join brapci_journal on jnl_codigo = ar_journal_id
 						inner join brapci_edition on ed_codigo = ar_edition
-						where ar_status = '$status' and ar_journal_id = '$journal'
+						where $wh ar_journal_id = '$journal'
 					group by ar_status, jnl_nome, ar_journal_id,
 								ed_ano, ed_vol, ed_nr, ed_codigo
 					order by ed_ano, ed_vol, ed_nr, jnl_nome
 					";
-				
-			$rlt = db_query($sql);
-			$sx = '<table width="100%" class="resumo">';
-			$sx .= '<TR><TH>Volume<TH>Total</TH>
+
+		$rlt = db_query($sql);
+		$sx = '<table width="100%" class="resumo">';
+		$sx .= '<TR><TH>Volume<TH>Total</TH>
 			<TH>Volume<TH>Total</TH>
 			<TH>Volume<TH>Total</TH>
 			<TH>Volume<TH>Total</TH>
@@ -39,55 +84,52 @@ class journals {
 			<TH>Volume<TH>Total</TH>
 			<TH>Volume<TH>Total</TH>
 			</TR>';
-			$xano = '';
-			while ($line = db_read($rlt))
-				{
-					$ano = $line['ed_ano'];
-					$link = 'issue.php?dd0='.$line['ed_codigo'].'&dd90='.checkpost($line['ed_codigo']);
-					$link = '<A HREF="'.$link.'" class="link">';
-					if ($xano != $ano)
-						{
-							$sx .= '<TR>';
-							$xano = $ano;
-						}
-					$sx .= '<TD>';
-					$sx .= $line['ed_ano'].', ';
-					$sx .= 'vol. '.trim($line['ed_vol']);
-					$nr = trim($line['ed_nr']);
-					if (strlen($nr) > 0) { $sx .= ', nr. '.$nr.''; }
-					
-					$sx .= '<TD align="center">';
-					$sx .= $link.trim($line['total']).'</A>';
-				}
-			$sx .= '</table>';
-			return($sx);
+		$xano = '';
+		while ($line = db_read($rlt)) {
+			$ano = $line['ed_ano'];
+			$link = 'issue.php?dd0=' . $line['ed_codigo'] . '&dd90=' . checkpost($line['ed_codigo']);
+			$link = '<A HREF="' . $link . '" class="link">';
+			if ($xano != $ano) {
+				$sx .= '<TR>';
+				$xano = $ano;
+			}
+			$sx .= '<TD>';
+			$sx .= $line['ed_ano'] . ', ';
+			$sx .= 'vol. ' . trim($line['ed_vol']);
+			$nr = trim($line['ed_nr']);
+			if (strlen($nr) > 0) { $sx .= ', nr. ' . $nr . '';
+			}
+
+			$sx .= '<TD align="center">';
+			$sx .= $link . trim($line['total']) . '</A>';
 		}
-	
-	function journals_articles_status($status='')
-		{
-			$sql = "select count(*) as total, jnl_nome , ar_status, ar_journal_id 
+		$sx .= '</table>';
+		return ($sx);
+	}
+
+	function journals_articles_status($status = '') {
+		$sql = "select count(*) as total, jnl_nome , ar_status, ar_journal_id 
 						from brapci_article
 						inner join brapci_journal on jnl_codigo = ar_journal_id
 						where ar_status = '$status'
 					group by ar_status, jnl_nome, ar_journal_id
 					order by jnl_nome
 					";
-			$rlt = db_query($sql);
-			$sx = '<table width="100%" class="resumo">';
-			$sx .= '<TR><TH>Publicação</TH><TH>Total</TH></TR>';
-			while ($line = db_read($rlt))
-				{
-					$link = 'articles_resumo_lista.php?dd1='.$status.'&dd2='.$line['ar_journal_id'].'&dd90='.checkpost($status.$line['ar_journal_id']);
-					$link = '<A HREF="'.$link.'" class="link">';
-					$sx .= '<TR>';
-					$sx .= '<TD>';
-					$sx .= trim($line['jnl_nome']);
-					$sx .= '<TD align="center">';
-					$sx .= $link.trim($line['total']).'</A>';
-				}
-			$sx .= '</table>';
-			return($sx);
+		$rlt = db_query($sql);
+		$sx = '<table width="100%" class="resumo">';
+		$sx .= '<TR><TH>Publicação</TH><TH>Total</TH></TR>';
+		while ($line = db_read($rlt)) {
+			$link = 'articles_resumo_lista.php?dd1=' . $status . '&dd2=' . $line['ar_journal_id'] . '&dd90=' . checkpost($status . $line['ar_journal_id']);
+			$link = '<A HREF="' . $link . '" class="link">';
+			$sx .= '<TR>';
+			$sx .= '<TD>';
+			$sx .= trim($line['jnl_nome']);
+			$sx .= '<TD align="center">';
+			$sx .= $link . trim($line['total']) . '</A>';
 		}
+		$sx .= '</table>';
+		return ($sx);
+	}
 
 	function jnl_resumo() {
 		$sx = $this -> jnl_resumo_journals();
@@ -96,37 +138,37 @@ class journals {
 	}
 
 	function jnl_resumo_articles() {
-		
+
 		$sql = "select count(*) as total, ar_status from brapci_article
 					where ar_status <> 'X'
 					group by ar_status 
 					order by ar_status ";
 		$rlt = db_query($sql);
-		$st = array("" => "Não classficado", "@" => "Coletado", "A" => "1ª Revisão", "B" => "2º Revisão", "C" => "3º Revisão", "D" => "Concluído", "X" => "Cancleado","F"=>"Metodologia");
+		$st = array("" => "Não classficado", "@" => "Coletado", "A" => "1ª Revisão", "B" => "2º Revisão", "C" => "3º Revisão", "D" => "Concluído", "X" => "Cancleado", "F" => "Metodologia");
 		$th = '';
 		$tv = '';
 		$tt = 0;
 		$sz = 1;
-		
+
 		while ($line = db_read($rlt)) {
-			$link = '<A href="articles_resumo.php?dd1='.$line['ar_status'].'&dd90='.checkpost($line['ar_status']).'" class="link">';
+			$link = '<A href="articles_resumo.php?dd1=' . $line['ar_status'] . '&dd90=' . checkpost($line['ar_status']) . '" class="link">';
 			$sz++;
 			$tt = $tt + $line['total'];
-			$th .= '<TH $sz >' . $st[$line['ar_status']]. ' ('.$line['ar_status'].')';
-			$tv .= '<TD class="lt4">' . $link. $line['total'] .'</A>';
+			$th .= '<TH $sz >' . $st[$line['ar_status']] . ' (' . $line['ar_status'] . ')';
+			$tv .= '<TD class="lt4">' . $link . $line['total'] . '</A>';
 		}
-		
+
 		if ($sz > 0) { $sz = (int)(100 / $sz);
 		}
 		$th = troca($th, ' $sz', ' width="' . $sz . '%" ');
-		
+
 		$th .= '<Th>Total';
-		$tv .= '<TD class="lt4">'.$tt;
+		$tv .= '<TD class="lt4">' . $tt;
 		$sx .= '<table width="100%" class="resumo">';
 		$sx .= '<TR align="center">' . $th;
 		$sx .= '<TR align="center">' . $tv;
 		$sx .= '</table>';
-		return($sx);
+		return ($sx);
 	}
 
 	function jnl_resumo_journals() {
@@ -312,72 +354,80 @@ class journals {
 			}
 			if ($sta == 'X') { $sta = msg('cancel');
 			}
-
-		function list_journals($tipo='J',$sta='')
-			{
-				$sql = "select * from ".$this->tabela." 
-							where jnl_tipo = '$tipo' 
-							and jnl_status <> 'X'	
-				";
-				if (strlen($sta) > 0)
-					{
-						$sql .= " and jnl_status = '$sta' ";
-					}
-				$sql .= " order by jnl_nome ";
-				$rlt = db_query($sql);
-				
-				/* gera resultados */
-				$sx .= '<table class="lt1" width="100%">';
-				$sx .= '<TR><TH>'.msg('journal_name');
-				$sx .= '    <TH>'.msg('journal_issn');
-				$sx .= '    <TH>'.msg('journal_status');
-				$tot = 0;
-				while ($line = db_read($rlt))
-					{
-						$tot++;
-						$sx .= $this->mostra_journal_linha($line,'journal_mostra.php');
-					}
-				$sx .= '<TR><TD colspan=5><B>'.msg('found').' '.$tot.' '.msg('register');
-				$sx .= '</table>';
-				
-				return($sx);
-			}
-		function mostra_journal_linha($line,$link='')
-			{
-				if (strlen($link) > 0)
-					{
-						$linkf = "</A>";
-						$link .= '?dd0='.$line['id_jnl'].'&dd90='.checkpost($line['id_jnl']);
-						$link = '<A HREF="'.$link.'">';
-					} else {
-						$linkf='';
-					}
-				$sx .= '<TR>';
-				$sx .= '<TD>';
-				$sx .= $link;
-				$sx .= trim($line['jnl_nome']);
-				$sx .= $linkf;
-
-				$sx .= '<TD align="center">';
-				$sx .= $link;
-				$sx .= trim($line['jnl_issn_impresso']);
-				$sx .= $linkf;
-
-				$sta = trim($line['jnl_status']);
-				if ($sta=='A') { $sta = msg('current'); }
-				if ($sta=='B') { $sta = msg('closed'); }
-
-				$sx .= '<TD align="center">';
-				$sx .= $link;
-				$sx .= $sta;
-				$sx .= $linkf;
-
-				return($sx);
-			}
-
-			$this -> status_nome = $sta;
-			$this -> line = $line;
 		}
+	}
+
+	function list_journals($tipo = 'J', $sta = '', $linkr = '', $target = '') {
+		if (strlen($linkr) == 0) {
+			$linkd = 'journal_mostra.php';
+		} else {
+			$linkd = $linkr;
+		}
+		if (strlen($tipo) > 0) { $wh = " and jnl_tipo = '$tipo' ";
+		}
+		$sql = "select * from " . $this -> tabela . " 
+							where jnl_status <> 'X'
+				";
+		if (strlen($sta) > 0) {
+			$sql .= " and jnl_status = '$sta' ";
+		}
+		$sql .= " order by jnl_tipo desc, jnl_nome ";
+		$rlt = db_query($sql);
+
+		/* gera resultados */
+		$sx .= '<table class="lt1" width="100%">';
+		$sx .= '<TR><TH>' . msg('journal_name');
+		$sx .= '    <TH>' . msg('journal_issn');
+		$sx .= '    <TH>' . msg('journal_status');
+		$tot = 0;
+		while ($line = db_read($rlt)) {
+			$tot++;
+			$sx .= $this -> mostra_journal_linha($line, $linkd, $target);
+		}
+		$sx .= '<TR><TD colspan=5><B>' . msg('found') . ' ' . $tot . ' ' . msg('register');
+		$sx .= '</table>';
+
+		return ($sx);
+	}
+
+	function mostra_journal_linha($line, $link = '', $target) {
+		if (strlen($target) > 0) { $target = ' target="' . $target . '"';
+		}
+
+		if (strlen($link) > 0) {
+			$linkf = "</A>";
+			$link .= '?dd0=' . $line['id_jnl'] . '&dd90=' . checkpost($line['id_jnl']);
+			$link = '<A HREF="' . $link . '" ' . $target . '>';
+		} else {
+			$linkf = '';
+		}
+		$sx .= '<TR>';
+		$sx .= '<TD>';
+		$sx .= $link;
+		$sx .= trim($line['jnl_nome']);
+		$sx .= $linkf;
+
+		$sx .= '<TD align="center">';
+		$sx .= $link;
+		$sx .= trim($line['jnl_issn_impresso']);
+		$sx .= $linkf;
+
+		$sta = trim($line['jnl_status']);
+		if ($sta == 'A') { $sta = msg('current');
+		}
+		if ($sta == 'B') { $sta = msg('closed');
+		}
+
+		$sx .= '<TD align="center">';
+		$sx .= $link;
+		$sx .= $sta;
+		$sx .= $linkf;
+
+		return ($sx);
+		//		}
+
+		$this -> status_nome = $sta;
+		$this -> line = $line;
 	}
 
 	function jourmal_legenda() {
@@ -411,62 +461,6 @@ class journals {
 
 		$sx .= '</table>';
 		$sx .= '</fieldset>';
-		return ($sx);
-	}
-
-	function list_journals($sta) {
-		$sql = "select * from " . $this -> tabela . " where jnl_tipo = 'J' and jnl_status = '$sta'
-						order by jnl_nome
-				";
-		$rlt = db_query($sql);
-
-		/* gera resultados */
-		$sx .= '<table class="lt1" width="100%">';
-		$sx .= '<TR><TH>' . msg('journal_name');
-		$sx .= '    <TH>' . msg('journal_issn');
-		$sx .= '    <TH>' . msg('journal_status');
-		$tot = 0;
-		while ($line = db_read($rlt)) {
-			$tot++;
-			$sx .= $this -> mostra_journal_linha($line, 'journal_mostra.php');
-		}
-		$sx .= '<TR><TD colspan=5><B>' . msg('found') . ' ' . $tot . ' ' . msg('register');
-		$sx .= '</table>';
-
-		return ($sx);
-
-	}
-
-	function mostra_journal_linha($line, $link = '') {
-		if (strlen($link) > 0) {
-			$linkf = "</A>";
-			$link .= '?dd0=' . $line['id_jnl'] . '&dd90=' . checkpost($line['id_jnl']);
-			$link = '<A HREF="' . $link . '">';
-		} else {
-			$linkf = '';
-		}
-		$sx .= '<TR ' . coluna() . '>';
-		$sx .= '<TD>';
-		$sx .= $link;
-		$sx .= trim($line['jnl_nome']);
-		$sx .= $linkf;
-
-		$sx .= '<TD align="center">';
-		$sx .= $link;
-		$sx .= trim($line['jnl_issn_impresso']);
-		$sx .= $linkf;
-
-		$sta = trim($line['jnl_status']);
-		if ($sta == 'A') { $sta = msg('current');
-		}
-		if ($sta == 'B') { $sta = msg('closed');
-		}
-
-		$sx .= '<TD align="center">';
-		$sx .= $link;
-		$sx .= $sta;
-		$sx .= $linkf;
-
 		return ($sx);
 	}
 
