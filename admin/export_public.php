@@ -12,12 +12,13 @@ echo '<BR>';
 
 if (strlen($dd[0]) == 0)
 	{
-		//$exp->zera_public();
-		echo '<h3>Zerar base de dados pública</h3>';
-		
+		echo '<h3>Exporta dados para arquivo texto</h3>';
 		$exp->exporta_texto();
-		echo '<h3>Zerar base de dados pública</h3>';
+		exit;
 		
+		echo '<h3>Zerar base de dados pública</h3>';		
+		$exp->zera_public();
+
 		$ini = 0;
 	} else {
 		$ini = round($dd[0]);

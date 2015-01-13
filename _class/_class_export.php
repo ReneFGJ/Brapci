@@ -8,18 +8,16 @@ class export
 		
 		function exporta_texto()
 			{
-				global $db_apoio;
-				$sql = "select * from brapci_article ";
-				$sql .= " left join brapci_journal on ar_journal_id = id_jnl ";
-				$sql .= " left join ".$db_apoio."ajax_cidade on jnl_cidade = cidade_codigo ";
-				$sql .= " inner join brapci_edition on ed_codigo = ar_edition ";
-				$sql .= " left join brapci_section on ar_section = se_codigo ";
-				//$sql .= " where ar_status <> 'X' and (se_tipo <> '-' and se_tipo <> 'Z' and se_tipo <> 'E' and se_tipo <> 'H')";
-				$sql .= " where ar_status <> 'X' 							";
-				$sql .= " order by ar_codigo ";
+				global $db_public;
+				$sql = "select * from ".$db_public."artigos ";
+				$sql .= " order by ar_ano, ar_titulo_1, ar_vol, ar_nr ";
 				$rlt = db_query($sql);
 				$sf = '';
 				$sa = '';	
+				$txt = '';
+				
+				$fl = fopen('search.txt','w+');
+				
 				while ($line = db_read($rlt))
 					{
 						$st = '';
@@ -27,13 +25,23 @@ class export
 						$st .= '[0]'.$line['ar_codigo'].'[/0]]';
 						$st .= '[1]'.trim(UpperCaseSql($line['ar_titulo_1'])).'[/1]';
 						$st .= '[2]'.trim(UpperCaseSql($line['ar_titulo_2'])).'[/2]';
+						$st .= '[3]'.trim(UpperCaseSql($line['ar_resumo_1'])).'[/3]';
+						$st .= '[4]'.trim(UpperCaseSql($line['ar_resumo_2'])).'[/4]';
+						$st .= '[5]'.trim(UpperCaseSql($line['Journal_Title'])).'[/5]';
+						$st .= '[6]'.trim(UpperCaseSql($line['ar_keyword_1'])).'[/6]';
+						$st .= '[7]'.trim(UpperCaseSql($line['ar_keyword_2'])).'[/7]';
+						$st .= '[8]'.trim(UpperCaseSql($line['Author_Analytic'])).'[/8]';
+						
 						$st .= '[/art]';
 						
 						$st = troca($st,chr(13),'');
-						$st = troca($sr,chr(10),''); 
-						print_r($line);
-						exit;
+						$st = troca($st,chr(10),''); 
+						
+						$txt = $st . chr(13).chr(10);
+						
+						fwrite($fl,$txt);
 					}
+				fclose($fl);
 			}
 		
 		function total_trabalhos()
@@ -145,7 +153,12 @@ class export
 				$sql .= " left join ".$db_apoio."ajax_cidade on jnl_cidade = cidade_codigo ";
 				$sql .= " inner join brapci_edition on ed_codigo = ar_edition ";
 				$sql .= " left join brapci_section on ar_section = se_codigo ";
-				//$sql .= " where ar_status <> 'X' and (se_tipo <> '-' and se_tipo <> 'Z' and se_tipo <> 'E' and se_tipo <> 'H')";
+				$sql .= " where ar_status <> 'X' and (
+							se_tipo <> '-' and 
+							se_tipo <> 'Z' and 
+							se_tipo <> 'E' and 
+							se_tipo <> 'H'
+							)";
 				$sql .= " where ar_status <> 'X' 							";
 				$sql .= " order by ar_codigo ";
 				$sql .= " limit ".($ini+1).", ".$max." ";
