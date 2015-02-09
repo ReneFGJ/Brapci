@@ -23,9 +23,9 @@ class journals {
 		$sql = "select ar_status, ar_journal_id,
 						ed_ano, ed_vol, ed_nr, ed_codigo, 
 						ed_status
-						from brapci_article
+						from brapci_edition
 						
-						inner join brapci_edition on ed_codigo = ar_edition
+						left join brapci_article on ed_codigo = ar_edition
 						where $wh ed_journal_id = '$journal'
 					group by ar_status, ar_journal_id,
 								ed_ano, ed_vol, ed_nr, ed_codigo, ed_status
@@ -33,7 +33,7 @@ class journals {
 					";
 		
 		$rlt = db_query($sql);
-		$sx = '<table width="100%" class="resumo">';
+		$sx = '<table width="100%" class="tabela00 lt1">';
 		$sx .= '<TR><TH>Volume</TR>';
 		$xano = '';
 		
@@ -45,19 +45,32 @@ class journals {
 				$sx .= '<TR>';
 				$xano = $ano;
 			}
-			$sx .= '<TR>';
-			$sx .= '<TD>';
+			$sx .= '<TR class="border_top_1">';
+			$sx .= '<TD class="border_top_1">';
 			$sx .= $link;
 			$sx .= $line['ed_ano'] . ', ';
 			$sx .= 'vol. ' . trim($line['ed_vol']);
 			$nr = trim($line['ed_nr']);
 			if (strlen($nr) > 0) { $sx .= ', nr. ' . $nr . '';
-			$sx .= '<TD align="center">'.$line['ed_status'];
+			$sx .= '<TD align="center" class="border_top_1">';
+			$sx .= $this->mostra_issue_status($line['ed_status']);
 			}
 		}
 		$sx .= '</table>';
 		return ($sx);
 	}	
+	
+	function mostra_issue_status($sta)
+		{
+			switch ($sta)
+				{
+					case 'A': $sta = msg('edition'); break;
+					case 'C': $sta = msg('to_check'); break;
+					case 'F': $sta = msg('checked'); break;
+				}
+			return($sta);
+		}
+	
 
 	function journals_articles_lista($status = '', $journal = '') {
 		if (strlen($status)) {
@@ -117,7 +130,7 @@ class journals {
 					";
 		$rlt = db_query($sql);
 		$sx = '<table width="100%" class="resumo">';
-		$sx .= '<TR><TH>Publicação</TH><TH>Total</TH></TR>';
+		$sx .= '<TR><TH>Publicaï¿½ï¿½o</TH><TH>Total</TH></TR>';
 		while ($line = db_read($rlt)) {
 			$link = 'articles_resumo_lista.php?dd1=' . $status . '&dd2=' . $line['ar_journal_id'] . '&dd90=' . checkpost($status . $line['ar_journal_id']);
 			$link = '<A HREF="' . $link . '" class="link">';
@@ -144,7 +157,7 @@ class journals {
 					group by ar_status 
 					order by ar_status ";
 		$rlt = db_query($sql);
-		$st = array("" => "Não classficado", "@" => "Coletado", "A" => "1ª Revisão", "B" => "2º Revisão", "C" => "3º Revisão", "D" => "Concluído", "X" => "Cancleado", "F" => "Metodologia");
+		$st = array("" => "Nï¿½o classficado", "@" => "Coletado", "A" => "1ï¿½ Revisï¿½o", "B" => "2ï¿½ Revisï¿½o", "C" => "3ï¿½ Revisï¿½o", "D" => "Concluï¿½do", "X" => "Cancleado", "F" => "Metodologia");
 		$th = '';
 		$tv = '';
 		$tt = 0;
@@ -210,7 +223,7 @@ class journals {
 							<TD width="7%">e-ISSN</TD>
 							<TD width="5%">Ano inicial</TD>
 							<TD>Periodicidade</TD>
-							<TD width="5%">Fascículos</TD>
+							<TD width="5%">Fascï¿½culos</TD>
 							<TD width="5%">Artigos</TD>
 							<TD width="4%">Link</TD>
 							</TR>';
@@ -284,7 +297,7 @@ class journals {
 	function row() {
 		global $cdf, $cdm, $masc;
 		$cdf = array('id_jnl', 'jnl_nome', 'jnl_issn_impresso');
-		$cdm = array('Código', 'Nome', 'ISSN');
+		$cdm = array('Cï¿½digo', 'Nome', 'ISSN');
 		$masc = array('', '', '');
 		return (1);
 	}
@@ -377,8 +390,6 @@ class journals {
 		/* gera resultados */
 		$sx .= '<table class="lt1" width="100%">';
 		$sx .= '<TR><TH>' . msg('journal_name');
-		$sx .= '    <TH>' . msg('journal_issn');
-		$sx .= '    <TH>' . msg('journal_status');
 		$tot = 0;
 		while ($line = db_read($rlt)) {
 			$tot++;
@@ -397,20 +408,19 @@ class journals {
 		if (strlen($link) > 0) {
 			$linkf = "</A>";
 			$link .= '?dd0=' . $line['id_jnl'] . '&dd90=' . checkpost($line['id_jnl']);
-			$link = '<A HREF="' . $link . '" ' . $target . '>';
+			$link = '<A HREF="' . $link . '" ' . $target . ' class="link">';
 		} else {
 			$linkf = '';
 		}
 		$sx .= '<TR>';
-		$sx .= '<TD>';
+		$sx .= '<TD colspan=2 class="border_top_1">';
 		$sx .= $link;
 		$sx .= trim($line['jnl_nome']);
 		$sx .= $linkf;
 
-		$sx .= '<TD align="center">';
-		$sx .= $link;
+		$sx .= '<TR class="lt0">';
+		$sx .= '<TD align="left">';
 		$sx .= trim($line['jnl_issn_impresso']);
-		$sx .= $linkf;
 
 		$sta = trim($line['jnl_status']);
 		if ($sta == 'A') { $sta = msg('current');
@@ -418,10 +428,8 @@ class journals {
 		if ($sta == 'B') { $sta = msg('closed');
 		}
 
-		$sx .= '<TD align="center">';
-		$sx .= $link;
+		$sx .= '<TD align="right">';
 		$sx .= $sta;
-		$sx .= $linkf;
 
 		return ($sx);
 		//		}

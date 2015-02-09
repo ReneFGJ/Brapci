@@ -1,6 +1,4 @@
-<A name="ponto">
-<h1>Metodologia de Pontos para Recuperação da Informação - Pontos</h1>
-</A>
+<h1>Metodologia de Pontos para Recuperação da Informação - Estrelas</h1>
 
 <div style="text-align: justify">
 A metodologia de atribuição de pesos define

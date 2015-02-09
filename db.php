@@ -1,6 +1,4 @@
 <?php
-echo 'WAIT...';
-exit;
     /**
      * DB
 	 * @author Rene Faustino Gabriel Junior <renefgj@gmail.com> (Analista-Desenvolvedor)
@@ -10,17 +8,31 @@ exit;
 	 * @package System
 	 * @subpackage Database connection
     */
-    
-    if (!isset($include)) { $include = '_include/'; }
-	else { $include .= '_include/'; }
+//$path_info = trim($_SERVER['PATH_INFO']);
+date_default_timezone_set('GMT');
+
+
+/* Logical Adress */
+$http = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$_SERVER['CONTEXT_PREFIX'].'/';
+
+/* Find Include Directory */
+$include = '';
+$path = array('_include/','../_include/','../../_include/','../../../_include/');
+for ($r=0;$r < count($path);$r++)
+	{
+		if (is_dir($path[$r]))
+			{
+				$include = $path[$r];
+				$r = 99;
+			}
+	}
 
     ob_start();
 	session_start();
 
 	/* Noshow Errors */
-	$debug = 0; 	
+	$debug = 1; 	
 	if (file_exists('DEBUG')) { $debug1 = 0; $debug2 = 0; }
-
 	require($include.'_class_debug.php');
 	
 	/* Path Directory */
@@ -54,6 +66,7 @@ exit;
 		}	
 	/* Data base */
 	$filename = "_db/db_mysql_".$ip.".php";
+
 	for ($r=0; $r < 2;$r++)
 		{ if (!file_exists($filename)) { $filename = '../'.$filename; } }
 	if (file_exists($filename))

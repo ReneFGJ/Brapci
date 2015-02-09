@@ -32,9 +32,9 @@ class article {
 		$sta = $this -> line['ar_status'];
 		switch ($sta) {
 			case 'A' :
-				array_push($act, array('B', 'Enviar para Revisão 1'));
-				array_push($act, array('C', 'Enviar para Revisão 2'));
-				array_push($act, array('D', 'Finalizar revisão'));
+				array_push($act, array('B', 'Enviar para Revisï¿½o 1'));
+				array_push($act, array('C', 'Enviar para Revisï¿½o 2'));
+				array_push($act, array('D', 'Finalizar revisï¿½o'));
 		}
 
 		$sx = '';
@@ -55,7 +55,7 @@ class article {
 		$rlt = db_query($sql);
 		while ($line = db_read($rlt)) {
 			$sql = "update brapci_article set ar_status = 'X' ,
-							ar_resumo_3 = '**Cancelado automaticamente por falta da edição **** " . date("d/m/Y H:i:s") . "'
+							ar_resumo_3 = '**Cancelado automaticamente por falta da ediï¿½ï¿½o **** " . date("d/m/Y H:i:s") . "'
 							where id_ar = " . $line['id_ar'];
 			$xrlt = db_query($sql);
 		}
@@ -96,7 +96,7 @@ class article {
 				$op .= '&' . trim($line['ed_codigo']) . ':' . $ed;
 			}
 			array_push($cp, array('$H8', 'id_ar', 'id_ar', True, True, ''));
-			array_push($cp, array('$O ' . $op, 'ar_edition', 'Edição', False, True, ''));
+			array_push($cp, array('$O ' . $op, 'ar_edition', 'Ediï¿½ï¿½o', False, True, ''));
 			return ($cp);
 		} else {
 			echo 'Erro na identificacao do registro';
@@ -185,15 +185,15 @@ class article {
 		$cp = array();
 		array_push($cp, array('$H8', 'id_ar', 'id_ar', True, True, ''));
 		array_push($cp, array('$HV', '', $dd[1], False, True, ''));
-		array_push($cp, array('$T60:3', 'ar_titulo_1', 'Título principal', True, True, ''));
+		array_push($cp, array('$T60:3', 'ar_titulo_1', 'Tï¿½tulo principal', True, True, ''));
 		array_push($cp, array('$Q ido_descricao:ido_codigo:select * from ajax_idioma order by ido_ordem, ido_descricao', 'ar_idioma_1', 'Idioma', False, True, ''));
-		array_push($cp, array('$T60:3', 'ar_titulo_2', 'Título 2º idioma', False, True, ''));
+		array_push($cp, array('$T60:3', 'ar_titulo_2', 'Tï¿½tulo 2ï¿½ idioma', False, True, ''));
 		array_push($cp, array('$Q ido_descricao:ido_codigo:select * from ajax_idioma order by ido_ordem, ido_descricao', 'ar_idioma_2', 'Idioma', False, True, ''));
 
 		array_push($cp, array('$Q se_descricao:se_codigo:select * from brapci_section order by se_descricao', 'ar_tipo', msg("session"), True, True));
 
-		array_push($cp, array('$S8', 'ar_pg_inicial', 'Pág inicial', False, True, ''));
-		array_push($cp, array('$S8', 'ar_pg_final', 'Pág Final', False, True, ''));
+		array_push($cp, array('$S8', 'ar_pg_inicial', 'Pï¿½g inicial', False, True, ''));
+		array_push($cp, array('$S8', 'ar_pg_final', 'Pï¿½g Final', False, True, ''));
 		
 		array_push($cp, array('$S80', 'ar_doi', 'DOI', False, True, ''));
 		return ($cp);
@@ -292,7 +292,7 @@ class article {
 					";
 		$rlt = db_query($sql);
 		$sx = '<table width="100%" class="tabela00">';
-		$sx .= '<TR><TH>Arquivos disponíveis
+		$sx .= '<TR><TH>Arquivos disponiveis
 						<TH>Status
 						<TH>Tipo';
 		$sxt = '</table>';
@@ -336,7 +336,7 @@ class article {
 		}
 		$sx .= '</P>';
 		if ($id > 0) {
-			$sx = '<BR><BR><B>Referências</B><BR><BR>' . $sx;
+			$sx = '<BR><BR><B>Referencias</B><BR><BR>' . $sx;
 		}
 		return ($sx);
 	}
@@ -352,7 +352,9 @@ class article {
 
 	function cp_new() {
 		global $dd;
-		if (strlen($dd[4]) == 0) { $dd[4] = 'en';
+		if (strlen($dd[5]) == 0) { $dd[5] = 'pt_BR';
+		}
+		if (strlen($dd[7]) == 0) { $dd[7] = 'en';
 		}
 		$cp = array();
 		array_push($cp, array('$H8', 'id_ar', '', False, True));
@@ -360,9 +362,10 @@ class article {
 		array_push($cp, array('$HV', 'ar_edition', strzero($dd[2], 7), True, True));
 
 		array_push($cp, array('$T80:6', 'ar_titulo_1', msg('work_title'), True, True));
-		array_push($cp, array('$O pt_BR:Português&en:Inglês&es:Espanhol', 'ar_idioma_1', msg('idioma'), True, True));
+		array_push($cp, array('$HV', 'ar_titulo_1_asc', UpperCaseSql($dd[3]), False, True));
+		array_push($cp, array('$O pt_BR:Portugues&en:Ingles&es:Espanhol', 'ar_idioma_1', msg('idioma'), True, True));
 		array_push($cp, array('$T80:6', 'ar_titulo_2', msg('work_title'), True, True));
-		array_push($cp, array('$O en:Inglês&pt_BR:Português&es:Espanhol', 'ar_idioma_2', msg('idioma') . ' ' . msg('alternative'), True, True));
+		array_push($cp, array('$O en:Ingles&pt_BR:Portugues&es:Espanhol', 'ar_idioma_2', msg('idioma') . ' ' . msg('alternative'), True, True));
 		array_push($cp, array('$HV', 'ar_codigo', '', False, True));
 		array_push($cp, array('$HV', 'ar_status', '@', True, True));
 		array_push($cp, array('$Q se_descricao:se_codigo:select * from brapci_section order by se_descricao', 'ar_tipo', msg("session"), True, True));
@@ -571,7 +574,7 @@ class article {
 		$rlt = db_query($sql);
 		$sx .= '<table width="99%" class="lt1" cellpadding=0 cellspacing=2 >';
 		$sx .= '<TR class="lt1">';
-		$sx .= '<Th>título<Th>pag.<Th>cited';
+		$sx .= '<Th>'.msg('titulo').'<Th>'.msg('pag').'<Th>'.msg('cited');
 		$xsection = 'x';
 		while ($line = db_read($rlt)) {
 			$this -> journal_id = $line['ar_journal_id'];

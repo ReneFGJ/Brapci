@@ -3,7 +3,7 @@ require("db.php");
 require("_class/_class_header.php");
 $hd = new header;
 
-
+/* Seguranca */
 	require('../_class/_class_oauth_v1.php');
 	$user = new oauth;
 	$user->token();	
@@ -15,6 +15,8 @@ $hd = new header;
 
 $user_name = $user->name;
 $user_email = $user->email;
+
+/* Montagem do cabecalho */
 $logout = '<A HREF="../logout.php"><I>Sair</I></A>';
 
 $head = '<table width="100%" border=1 ><TR><TD>';
@@ -35,11 +37,10 @@ $head = '
 $hd->cab_html = $head;
 
 /* Mostra cabecalho */
-echo $hd->head();
+$hd->title = ':: Brapci - Administracao ::';
 echo $hd->cab();
-
 echo '
-<script src="../js/header_rezise.js"></script>';
+<script src="'.$http.'js/header_rezise.js"></script>';
 
 ?>
 <div id="content">

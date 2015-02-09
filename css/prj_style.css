@@ -14,3 +14,60 @@ body
         left:0;                             /* added */  
         text-align: center;   
     }
+
+.link
+	{
+		font-color: #303030;
+		text-decoration: none;
+		font-family: "CICPG","Roboto","Tahoma","Verdana","Arial";
+	}
+.link:hover
+	{
+		text-decoration: underline;
+		font-color: #000010;
+	}
+	
+h1 
+	{
+		font-family: "CICPG","Roboto","Tahoma","Verdana","Arial";
+		font-size: 20px;
+	}
+h2 
+	{
+		font-family: "CICPG","Roboto","Tahoma","Verdana","Arial";
+		font-size: 16px;
+	}
+h3 
+	{
+		font-family: "CICPG","Roboto","Tahoma","Verdana","Arial";
+		font-size: 14px;
+	}
+h4 
+	{
+		font-family: "CICPG","Roboto","Tahoma","Verdana","Arial";
+		font-size: 12px;
+	}
+.border_top_1
+	{
+		border-top: 1px solid #303030;
+	}
+.border0
+	{
+		border: 0px solid #000000;
+	}
+.padding0
+	{
+		padding: 0px;
+	}
+.lt0
+	{
+		font-size: 8px;
+	}
+.lt1
+	{
+		font-size: 12px;
+	}
+.lt2
+	{
+		font-seize:14px;
+	}

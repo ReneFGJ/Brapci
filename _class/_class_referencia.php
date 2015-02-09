@@ -9,7 +9,7 @@ class referencia
 				global $http;
 				
 				$sx = '<div id="export">'.chr(13);
-				$sx .= '<fieldset><legend class="lt1">Exportar referências para</legend>';
+				$sx .= '<fieldset><legend class="lt1">Exportar referï¿½ncias para</legend>';
 				
 				$link_abnt = 'style="cursor: pointer;" onclick="newxy2(\''.$http.'article_ref_show.php?dd0='.trim($line['ar_codigo']).'&dd1=ABNT\',800,300);" ';
 				$sx .= '<IMG src="'.$http.'/img/logo/logo_abnt.png" height="20" border=0 '.$link_abnt.'>';
@@ -207,7 +207,7 @@ class referencia
 		function mostra_artigo_lista($line)
 			{
 				$titulo = trim($line['ar_titulo_1']);
-
+				
 				$pagi = trim($line['ar_pg_inicial']);
 				$pagf = trim($line['ar_pg_final']);
 				if (strlen($pagi) > 0)
@@ -220,7 +220,7 @@ class referencia
 				if (strlen($pag) > 0) { $pag = 'p. '.$pag.''; }
 				
 				/* */
-				$link = '<A HREF="article.php?dd0='.$line['id_ar'].'&dd90='.checkpost($line['id_ar']).'" class="lt1" target="_new">';
+				$link = '<A HREF="article.php?dd0='.$line['id_ar'].'&dd90='.checkpost($line['id_ar']).'" class="link lt1" target="_new">';
 				$pag = '';
 				$sx = $link.$titulo.' '.$pag.trim($year).'</A>';
 				$sx .= '<BR><i>'.$line['Author_Analytic'].'</A>';

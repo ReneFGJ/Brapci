@@ -1,7 +1,6 @@
 <?
 require ("db.php");
 require ("_class/_class_header.php");
-require ('../'.$include."sisdoc_debug.php");
 $hd = new header;
 echo $hd -> head();
 

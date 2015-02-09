@@ -18,6 +18,9 @@ $jnl->le($dd[0]);
 echo $jnl->mostra();
 
 $journal = strzero($dd[0],7);
+/* Link new issue */
+$sx = '<A HREF="publications_issue_ed.php?dd2='.$journal.'" target="frame_articles">'.msg('new_article').'</A>';
+echo $sx;
 
 echo $jnl->journals_articles_lista_simple('',$journal);
 

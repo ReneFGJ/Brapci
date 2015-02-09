@@ -1,6 +1,6 @@
 <?php
 require("db.php");
-require('../'.$include.'_class_form.php');
+require($include.'_class_form.php');
 $form = new form;
 
 require("../_class/_class_keyword.php");

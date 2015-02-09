@@ -23,6 +23,10 @@ $ar = new article;
 require("../_class/_class_referencia.php");
 
 echo $is->issue_legend($dd[0]);
+/* Link new issue */
+$journal = $is->journal;
+$sx = '<A HREF="article_ed.php?dd1='.$journal.'&dd2='.$dd[0].'" target="frame_articles">'.msg('new_issue').'</A>';
+echo $sx;
 
 echo $ar->article_issue($dd[0]);
 ?>

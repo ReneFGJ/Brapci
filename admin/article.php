@@ -13,7 +13,7 @@ $ar = new article;
 $ar->le($dd[0]);
 $id = $dd[0];
 
-require('../'.$include.'_class_form.php');
+require($include.'_class_form.php');
 $form = new form;
 
 $issue = $ar->issue;
@@ -27,11 +27,12 @@ echo '<table border=1 id="article_info" >';
 echo '<TR valign="top">';
 echo '<TD width="60%" id="article_data">';
 
-echo '<table border=1 class="article_abs"><TR><TD width="60%">';
+echo '<table border=0 class="tabela00"><TR><TD width="60%">';
 /* Title */
 echo '<div id="ab0" class="article_title">'.$ar->title.'</div>';
 echo '<div><iframe id="abs0" width="100%" height="300px" 
 			src="article_abstract.php?dd0='.$dd[0].'&dd1=ABS0"
+			class="border0 padding0"
 			style="display: none;">
 			</iframe></div>';
 /* View PDF File */
