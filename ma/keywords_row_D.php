@@ -17,7 +17,7 @@ echo '<H1>Não catalogados</h1>';
 	$clx->row();
 	$busca = true;
 	$offset = 20;
-	$pre_where = " kw_tipo = 'N' ";
+	$pre_where = " kw_tipo = 'D' ";
 	
 	if ($order == 0) { $order  = $cdf[1]; }
 	$tab_max = '100%';

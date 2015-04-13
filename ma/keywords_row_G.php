@@ -5,7 +5,7 @@ require($include.'sisdoc_colunas.php');
 require('../_class/_class_keyword.php');
 $clx = new keyword;
 
-echo '<H1>Não catalogados</h1>';
+echo '<H1>Geográficos</h1>';
 
 	$tabela = $clx->tabela;
 	
@@ -17,7 +17,7 @@ echo '<H1>Não catalogados</h1>';
 	$clx->row();
 	$busca = true;
 	$offset = 20;
-	$pre_where = " kw_tipo = 'N' ";
+	$pre_where = " kw_tipo = 'G' ";
 	
 	if ($order == 0) { $order  = $cdf[1]; }
 	$tab_max = '100%';
