@@ -27,7 +27,7 @@ class articles extends CI_model {
 		$query = $query -> result();
 		$arq = array();
 		$line = db_read($query);
-		return($line['bs_adress']);
+		return('http://www.brapci.inf.br/'.$line['bs_adress']);
 	}
 
 	function cited($id) {

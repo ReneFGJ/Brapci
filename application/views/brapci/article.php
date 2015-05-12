@@ -14,7 +14,6 @@ echo '<h1>' . $ar_titulo_1 . '</h1>';
 echo '<h2>' . $ar_titulo_2 . '</h2>';
 
 echo '<div id="authors">';
-
 echo $author;
 echo '</div>';
 
@@ -27,7 +26,6 @@ echo '<div id="pdf">
 				<span id="download"  onclick="$(\'#pdf\').toggle();"  class="link">fechar</span> | 
 				<a href="'.$link_pdf.'" id="download" class="link" target="new0000010946">download</a>&nbsp;</div>
 			</div>';
-
 
 echo '<div id="rs1">';
 echo '<div id="asb1">' . $ar_resumo_1 . '</div>';
