@@ -3,7 +3,11 @@ body
     {
         margin: 0px;
     }
-
+.form_submit_big
+	{
+	height: 50px;
+	width: 200px;	
+	}
 #foot
     {
         background-color:#D0D0D0;

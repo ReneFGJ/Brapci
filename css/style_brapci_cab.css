@@ -1,0 +1,66 @@
+.versao {
+	background: url("/img/img_versao.png") no-repeat scroll left top;
+	position: fixed;
+	top: 0px;
+	height: 90px;
+	width: 140px;
+	right: 0px;
+	z-index: 100;
+}
+
+.fullscreen
+	{
+		width: 98%;
+	}
+
+.cab_title
+	{
+		font-family: 'CICPG','RobotoThin', Tahoma, verdana, Helvetica;
+		font-size: 25px;
+		color: white;
+		position: fixed;
+		margin-top: 0px !important;		
+		top: 10px;
+	}
+
+.cab_admin {
+	top: 0;
+	min-height: 10px;
+	height: 90px;
+	width: 100%;
+	border-bottom: 1px solid #808080;
+	box-shadow: 0px 3px 3px #888888;
+	padding: 0px 20px 20px 20px;
+	background-color: #1D4161;
+	position: fixed;
+	margin-top: 0px !important;
+}
+
+/* TOPO */
+div.cab_logo {
+	width: 96%;
+	background-color: #808080;
+	margin-right: 0px;
+	width: 98%;
+	min-height: 40px;
+	border: 1px solid #FFFFF;
+}
+div.cab_admin_logo_01 {
+	position: absolute;
+	background: url('../img/logo_full.png') no-repeat;
+	background-position: right top;
+	padding-top: 0px;
+	height: 81px;
+	background-size: 565px 81px;
+	right: 50px;
+}
+div.cab_admin_logo_02 {
+	position: absolute;
+	background: url('../img/logo.png') no-repeat;
+	background-position: right;
+	padding-top: 0px;
+	height: 41px;
+	top: -100px;
+	right: 50px;
+	background-size: 183px 41px;
+}

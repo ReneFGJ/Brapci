@@ -1,6 +1,0 @@
-<?
-		if ($sta == 'A') { $status = "Catalogação / Indexação"; }
-		if ($sta == 'B') { $status = "Revisão 1."; }
-		if ($sta == 'C') { $status = "Revisão 2."; }
-		if ($sta == 'D') { $status = "Concluído"; }
-?>
