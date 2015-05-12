@@ -13,7 +13,7 @@ class articles extends CI_model {
 		$line['ar_keyw_2'] = 'key2';
 		$line['author'] = $this -> author_article($id);
 		$line['cited'] = $this -> cited($id);
-		$line['link_pdf'] = 'http://www.brapci.inf.br/_repositorio/2015/04/pdf_fc4b213028_0010946.pdf';
+		$line['link_pdf'] = $this->arquivos($id);
 
 		if (strlen(trim($line['ar_doi'])) == 0) { $line['ar_doi'] = '<font color="red">empty</font>';
 		}
@@ -21,21 +21,28 @@ class articles extends CI_model {
 		return ($line);
 	}
 
+	function arquivos($id) {
+		$sql = "select * from brapci_article_suporte where bs_article = '$id' order by bs_type ";
+		$query = $this -> db -> query($sql);
+		$query = $query -> result();
+		$arq = array();
+		$line = db_read($query);
+		return($line['bs_adress']);
+	}
+
 	function cited($id) {
 
 		$sql = "select * from mar_works
 						where m_work = '$id' 
 					order by m_ref";
-		echo $sql;
 		$query = $this -> db -> query($sql);
 		$query = $query -> result();
 		$sx = '<ul id="refs">';
 		while ($line = db_read($query)) {
 			$bdoi = trim($line['m_bdoi']);
-			if (strlen($bdoi) > 0)
-				{
-					$bdoi = ' <font color="blue">('.$bdoi.')</font>';
-				}
+			if (strlen($bdoi) > 0) {
+				$bdoi = ' <font color="blue">(' . $bdoi . ')</font>';
+			}
 			$sx .= '<li>' . htmlspecialchars($line['m_ref']) . $bdoi . '</li>';
 		}
 		$sx .= '</ul>';
@@ -54,14 +61,13 @@ class articles extends CI_model {
 		$id = 0;
 		while ($line = db_read($query)) {
 			$id++;
-			if (strlen($sx) > 0)
-				{ $sx .= '; '; }
+			if (strlen($sx) > 0) { $sx .= '; ';
+			}
 			$sx .= htmlspecialchars($line['autor_nome']);
 			$info = trim($line['ae_bio']);
-			if (strlen($info) > 0)
-				{
-					$sx .= ' <sup><a href="#" title="'.$info.'">'.$id.'</a></sup>';
-				}
+			if (strlen($info) > 0) {
+				$sx .= ' <sup><a href="#" title="' . $info . '">' . $id . '</a></sup>';
+			}
 		}
 		$sx .= '.';
 		return ($sx);
