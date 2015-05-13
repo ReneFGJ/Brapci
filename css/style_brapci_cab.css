@@ -36,6 +36,12 @@
 	margin-top: 0px !important;
 }
 
+.bgblue
+	{
+	background-color: #2076A7;
+	color: white;	
+	}
+
 /* TOPO */
 div.cab_logo {
 	width: 96%;

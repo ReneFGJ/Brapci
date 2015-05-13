@@ -217,7 +217,7 @@ echo '<div id="ref"><B>Referências</B><BR>'.$refs.'</div>';
 
 	.link {
 		font-size: 11px;
-		color: #000000;
+		color: #000080;
 		text-decoration: none;
 	}
 	.link a {

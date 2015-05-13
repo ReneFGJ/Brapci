@@ -102,19 +102,19 @@ body {
 		padding: 20px;
 	}
 
-.link
+.links
 	{
 		font-size: 11px;
 		color: #000000;
 		text-decoration: none;
 	}
-.link a
+.links a
 	{
 		font-size: 11px;
 		color: #000000;
 		text-decoration: none;
 	}
-.link:hover
+.links:hover
 	{
 		font-size: 11px;
 		color: #000000;

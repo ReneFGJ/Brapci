@@ -24,6 +24,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 $dd = array();
 
+function strzero($ddx, $ttz) {
+	$ddx = round($ddx);
+	while (strlen($ddx) < $ttz) { $ddx = "0" . $ddx;
+	}
+	return ($ddx);
+}
+
 function UpperCase($s) {
 	$s = strtoupper($s);
 	return ($s);
