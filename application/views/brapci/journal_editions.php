@@ -17,6 +17,8 @@ echo "
 </table>
 ";
 
+echo '<div style="float: right">'.$logo.'</div>';
+
 echo "
 
 

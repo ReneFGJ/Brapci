@@ -1,4 +1,4 @@
-<?php
+<?php 
 class journals extends CI_model {
 	
 	function le($id=0)
@@ -33,6 +33,16 @@ class journals extends CI_model {
 			$rlt = $query->result();
 			$xline = db_read($rlt);
 			$line['nr'] = $xline['edicoes'];
+			
+			$line['logo'] = '';
+			$logo = trim($line['jnl_codigo']).'.jpg';
+			$file_logo = 'img/journals/'.$logo;
+			if (file_exists($file_logo))
+				{
+					$line['logo'] = '<img src="'.base_url('img/journals/'.$logo).'" width="150">';
+				} else {
+					
+				}							
 						
 			return($line);
 			
