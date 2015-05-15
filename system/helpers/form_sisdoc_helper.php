@@ -41,6 +41,8 @@ function msg($x) {
 }
 
 function db_query($sql) {
+	global $dbn;
+	$dbn = 0;
 	$CI = &get_instance();
 	$query = $CI -> db -> query($sql);
 	return ($query -> result());
@@ -99,23 +101,26 @@ function post_security($s) {
 }
 
 function db_read($rlt) {
-	global $dba;
-	if (!isset($dba)) { $dba = array();
-	}
+	global $dba, $dbn;
+	if (!isset($dba)) { $dba = array(); }
+	
 	/* */
-	if (count($rlt) == 0) {
-		return (FALSE);
-	}
+	if (count($rlt) == 0) { return (FALSE); }
+	
+	/* */
+	if (!isset($dbn)) { $dbn = 0; }
+	
 	$row = object_to_array($rlt[0]);
 
 	$keys = array_keys($row);
 	$key = $keys[0];
 
-	if (!isset($dba[$key])) { $dba[$key] = 0;
+	if ((!isset($dba[$key])) or ($dbn == 0)) {
+		 $dba[$key] = 0;
 	} else {
 		$dba[$key] = $dba[$key] + 1;
 	}
-
+	$dbn = 1;
 	$id = round($dba[$key]);
 
 	if ($id >= count($rlt)) {
