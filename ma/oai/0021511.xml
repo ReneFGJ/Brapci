@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:33:09Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42375">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42375</identifier>
+				<datestamp>2015-04-14T11:19:16Z</datestamp>
+				<setSpec>incid:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="pt-BR">Redes Sociais Virtuais de Informação sobre Amor</dc:title>
+	<dc:title xml:lang="en-US">Virtual social networks of information on love</dc:title>
+	<dc:creator>Cruz, Ruleandson do Carmo; Ufop</dc:creator>
+	<dc:creator>Silveira, Júlia Gonçalves da; Doutora em Ciência da Informação 
+Professora Adjunta da Escola de Ciência da Informação da Universidade Federal de Minas Gerais – UFMG</dc:creator>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="pt-BR">Amor; Comportamento e cultura Informacional; Orkut e redes sociais virtuais; Representações sociais</dc:subject>
+	<dc:subject xml:lang="en-US">Love, Social virtual network, Information behaviour</dc:subject>
+	<dc:description xml:lang="pt-BR">Apresenta resultados de dissertação defendida junto ao Programa de Pós-Graduação em Ciência da Informação da Escola de Ciência da Informação da UFMG. Estuda redes sociais virtuais de informação sobre amor formadas por usuários do Orkut, focando-se no comportamento e na cultura informacional de tais usuários, bem como na representação social do amor por eles criada. Tem como objeto de estudo cinco comunidades virtuais: “Se é amor q... seja verdadeiro!”, “Amor e sexo em debate”, “Eu ACREDITO no amor”, “Amor, Respeito e Confiança” e “O mito do amor romântico”. Considera como universo empírico: em análise geral, as listagens de tópicos e de enquetes presentes nas referidas comunidades; em análise específica, cinco tópicos de definição do amor e 103 dos perfis de usuários mais ativos nas comunidades em estudo. Estrutura-se metodologicamente como um estudo de casos múltiplos incorporados. Traça o perfil informacional amoroso dos usuários, em sua maioria, adultos, mulheres, envolvidos em relacionamentos amorosos, desejosos por se casar, e que utilizam informações sobre amor para personalizarem seus perfis no Orkut. Caracteriza o comportamento informacional como sendo motivado por sentimentos de saudade da pessoa amada, extrema felicidade ou tristeza no amor e pelo interesse em estudar o amor. Configura a cultura informacional como sem normas e orientações explícitas na maioria das comunidades. Desenha as redes sociais virtuais de informação sobre amor e considera-as como redes de baixa densidade, centralidade e intermediação. Conclui que as redes sociais em estudo fornecem informação de ajuda e suporte aos seus usuários e funcionam como comunidades-cabide.</dc:description>
+	<dc:description xml:lang="en-US">The article presents the results of the dissertation developed in the Graduate Program of the School of Information Science of UFMG. It analyses the virtual social networks of information on love formed by the users of Orkut. As study object, it takes five virtual communities: &amp;ldquo;If it's love may it... be true!&amp;rdquo;, &amp;ldquo;Love and sex on debate&amp;rdquo;, &amp;ldquo;I BELIEVE in love&quot;, &amp;ldquo;Love, Respect and Trust&amp;rdquo; and &amp;ldquo;The myth of romantic love&amp;rdquo;. As empirical universe the study considers, in general analysis, the topic and enquiry listings that can be found on the cited communities; in&amp;nbsp;&amp;nbsp;specific analysis, five topics of definitions of love and 103 profiles from the most active users of the studied communities. Methodologically, the study is structured by multiple incorporated cases. The study delineates the informational love profile of users, most of them adults, women, involved in relationships, wishful for marriage and who use information about love to personalize their profiles on Orkut. Users informational behavior is characterized as motivated, mainly, by feelings of missing the loved person, extreme happiness, extreme disappointment in love, and also as the interest in studying love. The study defines informational culture as something without rules and explicit orientation in most part of the communities, and traces the social networks of information on love and consider them as networks of&amp;nbsp;&amp;nbsp;low density, centrality and intermediation. Among other findings, the study concludes that the social networks in study provide helpful information and support to users, and work as coat hanger-communities.</dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2012-06-28</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42375</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v3i1p146-167</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 3, n. 1 (2012); 146-167</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42375/46046</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:31:23Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42351">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42351</identifier>
+				<datestamp>2015-04-14T11:19:53Z</datestamp>
+				<setSpec>incid:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">Discursive practices in body care in Almodóvar: current family ties imposed by the female subject</dc:title>
+	<dc:title xml:lang="pt-BR">Práticas discursivas no cuidado com os corpos em Almodóvar:  laços familiares atuais instituídos pelo sujeito feminino</dc:title>
+	<dc:creator>Gaspar, Nadea Regina; UFScar</dc:creator>
+	<dc:creator>Malvestio, Eliana Mantovani</dc:creator>
+	<dc:subject xml:lang="en-US">Análise do discurso</dc:subject>
+	<dc:subject xml:lang="en-US">Discourse analysis; film analysis; Michel Foucault; Almodóvar</dc:subject>
+	<dc:subject xml:lang="pt-BR">Análise do discurso</dc:subject>
+	<dc:subject xml:lang="pt-BR">Análise fílmica, Michel Foucault, Almodóvar</dc:subject>
+	<dc:description xml:lang="en-US">This research aims to understand the function of the subject &quot;women&quot; in the films of Pedro Almodóvar. For that we recourse to the theory of discourse analysis of Michel Foucault (1995), in its understanding of “statement&quot; and &quot;discursive formation.&quot; This text presents aspects of this theoretical approach to deal with the issues presented initially: what to select for analysis in a film archive, since, in almost all texts, in this case, of that director, women are present? How to select and relate the scenes and/or film sequences in the analysis this universe of images in movement? In the above sense, we have looked at the first sixteen (16) out of the eighteen films of Almodóvar, and of those, separated three (3) for this analysis: &quot;All About My Mother&quot; (1999), &quot;Talk to her&quot; (2002) and &quot;Volver&quot; (2006). As a result, we observed the constant presence of a statement that permeated the work: &quot;the practice of care performed by female subjects to their family members.&quot; This statement, although it seems common in films of this director, are surprising because he is linked to formation of a very contemporary discourse: &quot;the new family constitutions derived from the practices of female care.&quot;</dc:description>
+	<dc:description xml:lang="pt-BR">Esta pesquisa tem por objetivo compreender a função do sujeito “feminino” nos filmes de Pedro Almodóvar. Recorremos para tanto, à teoria da análise do discurso de Michel Foucault (1995), em sua compreensão sobre “enunciado” e “formações discursivas”. Este texto expõe aspectos desse percurso teórico para lidar com as questões que se nos apresentavam inicialmente: o que eleger na análise de um acervo fílmico, uma vez que, em quase todos os textos, no caso, desse diretor, as mulheres se fazem presentes? Como selecionar e relacionar nas análises as cenas e/ou as sequências fílmicas, neste universo de imagens em movimento? No sentido exposto, debruçamo-nos inicialmente frente a dezesseis (16) dos dezoito filmes de Almodóvar, e desses, delimitamos três (3) para esta análise: “Tudo sobre minha mãe” (1999), “Fale com ela” (2002) e “Volver”(2006). Como resultado, foi observado à presença constante de um enunciado que permeou o trabalho: “a prática dos cuidados realizados por sujeitos femininos aos seus familiares”. Este enunciado, embora pareça comum, nos filmes desse diretor surpreende, pois ele está vinculado a formação de um discurso bastante atual: “as novas constituições familiares derivadas das práticas do cuidado feminino”</dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2011-12-09</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/save-as</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42351</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v2i2p54-66</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 2, n. 2 (2011); 54-66</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42351/46022</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

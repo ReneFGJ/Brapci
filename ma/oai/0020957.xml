@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://periodicos.ufsc.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T20:49:15Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:periodicos.ufsc.br:article/196">https://periodicos.ufsc.br/index.php/eb/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:periodicos.ufsc.br:article/196</identifier>
+				<datestamp>2015-01-26T15:38:41Z</datestamp>
+				<setSpec>eb:NOR</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">Normas para publicação – Português, n. 15, 2003</dc:title>
+	<dc:title xml:lang="pt-BR">Normas para publicação – Português e Espanhol, n. 15, 2003</dc:title>
+	<dc:creator>Encontros Bibli, Editor</dc:creator>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação; Information Science; Biblioteconomia; Library Science</dc:subject>
+	<dc:description xml:lang="en-US">NORMAS PARA PUBLICACIÓN  - ESPANHOL, n. 15, 2003
+
+Encontros Bibli, es la revista electrónica del Departamento de Ciencia de la Información de la Universidad Federal de Santa Catarina (UFSC, Brasil). Aceptamos colaboraciones nacionales y estranjeras en los idiomas español y portugues de materiales inéditos de caracter teórico, metodológico y contribuciones que tienen su fundamento en investigaciones. Se admiten, ademas, relatos de trabajos prácticos que se basean en experiencias. 
+ 
+Las contribuciones aceptadas se publicaran en su idioma original y su contenido es de responsabilidad exlcusiva de los autores. Los trabajos seran aprobados en la íntegra ou con modificaciones. Si estas modificaciones son apenas de orden gramatical, el Comité de Redacción se reserva el derecho de hacerlas.  Las  otras modificaciones solicitadas por la Comisión Editorial son de responsabilidad de cada autor. Los trabajos cuyo contenido no fué aprobado por tres árbitros seran rechazados. 
+ 
+Los trabajos presentados en español deben seguir las normas  ISO ou equivalentes y deben ser enviados en disco de 3,5&quot; para la siguiente dirección postal: 
+
+DEPARTAMENTO DE CIÊNCIA DA INFORMAÇÃO
+
+CENTRO DE CIÊNCIAS DA EDUCAÇÃO
+
+UNIVERSIDADE FEDERAL DE SANTA CATARINA
+
+Campus Universitário – Trindade – Caixa Postal 476
+
+CEP 88.010-970 – FLORIANÓPOLIS – SANTA CATARINA
+
+Tel. 0xx 48 331.904 – Fax 0 xx 48 331.9756
+
+Los trabajos tambien puden ser enviados por correo electrónico con la publicación en attachment (adjunto) para el e-mail: bibli@ced.ufsc.br.  En el campo asunto debe constar la siguiente información: trabajo para  Encontros Bibli. 
+ 
+Los textos deben ser digitados em Word  7.0 (ou superior), con la siguiente  configuración: espacio 1,5, corpo 12, tipo Time News Roman, formato de papel = A4, sin marcaciones de los  parágrafos. Pueden tambien ser digitados em HTML (Hyper Text Markup Language).  Los trabajos no pueden tener menos de 10 pájinas y no deben exeder las  20 pájinas. 
+ 
+En la primera pájina del trabajo deben constar las siguientes informaciones: título del trabajo; nombre completo del autor ou autores con indicación de su grado académico seguido del nombre de la institución a la cual esta vinculado y su dirección electrónica. .Los términos llaves que representen mejor el asunto tratado (en español e ingles); um resumo informativo de acuerdo com la  norma ISO y un abtract en ingles. Las citaciones y referencias bibliográficas debem seguir tambien la Norma ISO.</dc:description>
+	<dc:description xml:lang="pt-BR">NORMAS PARA PUBLICAÇÃO 
+
+1. A publicação eletrônica Encontros Bibli, revista de Biblioteconomia e Ciência da Informação do Departamento de Ciência da  Informação da UFSC, recebe artigos inéditos de Biblioteconomia e Ciência da Informação, de caráter opinativo, fundamentados em revisão de literatura ou de caráter científico, fundamentados em pesquisas e/ou relatos de experiências. 
+2. Os artigos deverão ser aprovados por, no mínimo, três avaliadores. 
+3. Os originais poderão ser: 
+3.1 Aceitos na íntegra, sem restrições; 
+3.2 Aceitos na íntegra, com algumas alterações; ou 
+3.3 Rejeitados. 
+4. Quando as alterações forem referentes apenas a aspectos gramaticais com vistas a manter a homogeneidade da publicação, a Comissão Editorial se dá o direito de fazer as modificações necessárias, respeitando o estilo do autor. 
+5. Nos demais casos, o autor reformulará o texto conforme o que for solicitado pela Comissão. 
+6. Os textos deverão ser apresentados em português ou em espanhol. 
+7. Os  artigos  em língua portuguesa deverão ser redigidos conforme a norma de apresentação de artigos da Associação Brasileira de Normas Técnicas – ABNT – NBR6022 de agosto de 1994. Para os   artigos em língua espanhola deverá ser utilizada a norma ISO equivalente. Os artigos deverão ser remetidos em disquete de 3,5&quot; para o endereço postal informado abaixo ou por correio eletrônico em “attach&quot; para o e-mail: bibli@cin.ufsc.br, constando, no assunto, a seguinte informação: artigo para o Encontros Bibli, preferencialmente em RTF (rich text format). 
+8. Os textos deverão ser digitados em Word  7.0 (ou superior), com a seguinte configuração: espaço 1,5, corpo 12, tipo Time News Roman, formato de papel = A4, entre 10 e 20 páginas, sem marcações de parágrafo. Poderão também ser digitados em HTML (Hyper Text Markup Language). 
+9. A primeira lauda deve  conter: o título e o nome do(s) autor(es), seguidos de sua qualificação, nome da instituição a que está vinculado e e-mail. 
+10. Na segunda lauda, o cabeçalho deverá conter: 
+10.1 O título em português ou em espanhol, quando for o caso, e em inglês, expressando, de forma clara, a idéia do trabalho; 
+10.2 As palavras-chave que melhor representem o assunto do artigo em português ou em espanhol quando for o caso, e em inglês; 
+10.3 Um resumo informativo em português ou em espanhol, redigido de acordo com a NBR6028 ou norma ISO equivalente e um abstract em inglês. 
+11. As citações no corpo do texto deverão ser redigidas de acordo com a NBR10520 ou norma ISO equivalente. 
+12. As referências bibliográficas deverão ser redigidas de acordo com a NBR6023 ou norma ISO equivalente. 
+13. O conteúdo dos trabalhos são de responsabilidade exclusiva de seus autores.
+
+DEPARTAMENTO DE CIÊNCIA DA INFORMAÇÃO - CENTRO DE CIÊNCIAS DA EDUCAÇÃO
+
+UNIVERSIDADE FEDERAL DE SANTA CATARINA - Campus Universitário – Trindade – Caixa Postal 476 –
+
+CEP 88.010-970 – FLORIANÓPOLIS – SANTA CATARINA - Tel. 0xx 48 331.904 – Fax 0 xx 48 331.9756</dc:description>
+	<dc:publisher xml:lang="pt-BR">Departamento de Ciência da Informação – UFSC</dc:publisher>
+	<dc:date>2003-01-01</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>https://periodicos.ufsc.br/index.php/eb/article/view/196</dc:identifier>
+	<dc:identifier>10.5007/196</dc:identifier>
+	<dc:source xml:lang="en-US">Encontros Bibli: revista eletrônica de biblioteconomia e ciência da informação; v. 8, n. 15 (2003); v</dc:source>
+	<dc:source xml:lang="pt-BR">Encontros Bibli: revista eletrônica de biblioteconomia e ciência da informação; v. 8, n. 15 (2003); v</dc:source>
+	<dc:source>1518-2924</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>https://periodicos.ufsc.br/index.php/eb/article/view/196/5243</dc:relation>
+	<dc:relation>https://periodicos.ufsc.br/index.php/eb/article/view/196/5244</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

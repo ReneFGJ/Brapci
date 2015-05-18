@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:31:02Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42346">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42346</identifier>
+				<datestamp>2015-04-14T11:20:51Z</datestamp>
+				<setSpec>incid:AVN</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="pt-BR">Avaliadores desta edição</dc:title>
+	<dc:creator>Takahashi de Oliveira, Sumeire Tamiko</dc:creator>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:date>2011-06-10</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42346</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v2i1pi-i</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 2, n. 1 (2011); i-i</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42346/46017</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

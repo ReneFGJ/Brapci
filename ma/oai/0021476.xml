@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:30:30Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42339">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42339</identifier>
+				<datestamp>2015-04-14T11:20:28Z</datestamp>
+				<setSpec>incid:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">Ontological evolution of documentary language: report of an organized course experience jointly to DT/SIBi-USP and PPGCI/ECA</dc:title>
+	<dc:title xml:lang="pt-BR">Evolução ontológica das linguagens documentárias. Relato de uma experiência de curso organizado conjuntamente para o DT/SIBI-USP e o PPGCI/ECA</dc:title>
+	<dc:creator>Moreiro González, José Antonio; Departamento de Biblioteconomía y Documentación 
+Universidad Carlos III de Madrid</dc:creator>
+	<dc:subject xml:lang="en-US">Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="en-US">Concepts and context; Conceptual Review; Thesaurus; Taxonomies; Ontologies; KOS; Conceptual Thesaurus; Semantic Networks; Topic maps; Folksonomies; Relate of experience; Update Course; DT/SIBiUSP; PPGCI/ECA</dc:subject>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="pt-BR">Conceitos, Contexto, Revisão conceitual, Tesauros, Taxonomias, Ontologias, KOS, Tesauros conceituais, Redes semânticas, Topic maps, Folksonomias, Relato da experiência, Curso de atualização</dc:subject>
+	<dc:description xml:lang="en-US">Is addresses the context in which it has produced the review of the thesaurus concept like prototypic documentary language. The context is determined by the Taxonomies revalorization, the apparition of the Ontologies like KOS; and the evolution of the own thesauri to his conceptual enrichment and his transformation in semantic networks. It attends also to the new model of visualization and conceptual representation contributed by the Topic maps, as well as to importance achieved by the Folksonomies to reinterpret the key-words system. Finally, it describes an experience of update course given jointly to librarians of the DT/SIBi-USP and to students of the PPGCI/ECA.</dc:description>
+	<dc:description xml:lang="pt-BR"> Aborda-se o contexto no que se produziu a revisão do conceito de tesauro como linguagem documental prototípico. O contexto vem determinado pela revalorização das Taxonomias, o aparecimento das Ontologias como KOS; e a evolução dos próprios tesauros para o seu enriquecimento conceitual e a sua transformação em redes semânticas. Atende-se também ao novo modelo de visualização e representação conceitual contribuído pelos Topic maps, bem como a relevância atingida pelas Folksonomias à hora de reinterpretar o sistema das palavras-chave. Finalmente, descreve-se uma experiência de curso de atualização dado conjuntamente a bibliotecárias do DT/SIBi-USP e a alunas do PPGCI/ECA.</dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2011-06-07</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42339</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v2i1p143-164</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 2, n. 1 (2011); 143-164</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42339/46010</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

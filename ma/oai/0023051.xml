@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://revista.ibict.br/cienciadainformacao/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:37:23Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:ojs.ibict.ciinf:article/2335">http://revista.ibict.br/cienciadainformacao/index.php/p2pinovacao/oai/</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:ojs.ibict.ciinf:article/2335</identifier>
+				<datestamp>2015-04-30T00:02:22Z</datestamp>
+				<setSpec>p2pinovacao:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">THE END OF CAPITALISM AND THE RETURN OF KOINONÍA</dc:title>
+	<dc:creator>Suárez Müller, Fernando</dc:creator>
+	<dc:description xml:lang="en-US">The financial crisis of global capitalism and the writings that criticize capitalism do not imply the end of it. Alternatives need to be built. From this point of view, this article presents a theoretical basis, at first, founded on the Hegelian notion of society organized in communities, opposed to Marxist conceptions. Then, its relationship to the concept of koinonia in Plato and Christianism. The Hegelian conception of a parliamentary system based on participatory economy as well as autonomous communities, and not on individuals, proposes to reconcile the private and the public interests, a conception that is not Marxist, however it is close to the ones in current movements seeking alternative models for capitalism. Hegel's conceptions and such movements as Michel Bauwens' P2P, Alan Caillé's 'convivialism', and the 'common good' movement created by Christian Felber, have the notion of koinonia in common. The Platonic notion refers to the force that holds ideas and material things together, notion used in Christianism to refer to the force that maintains the connection among human beings. In this sense, these new contemporary contributions from Bauwens, Caillé, and Felber, which are alternatives to capitalism, suggest the construction of collaborative communities and of local and global ventures, another step in the evolution of society, from capitalism to koinonia. O FIM DO CAPITALISMO E O RETORNO DA KOINONIAResumoA crise financeira do capitalismo globalizado e os trabalhos que lhe apresentam críticas não implicam no fim do capitalismo, é preciso construir alternativas. Em vista disso, primeiro apresenta-se uma base teórica, alicerçada na noção de sociedade organizada a partir de comunidades, de Hegel, contraposta às concepções marxistas. Em seguida sua relação como conceito de koinonia, presente em Platão e no cristianismo. A concepção hegeliana de um sistema parlamentar baseado tanto na economia participativa como em comunidades autônomas, e não indivíduos, propõe reconciliar os interesses privados e públicos, o que não é possível na concepção marxista, mas é aproximada de atuais movimentos que buscam modelos alternativos para o capitalismo. As concepções de Hegel e movimentos como o P2P de Michel Bauwens, o 'convivialismo' de Alan Caillé e o movimento bem-comum criado por Christian Felber, têm em comum a noção de koinonia. A noção platônica remete-se à força que mantém juntos as ideias e as coisas materiais, tendo sido apropriado pelo cristianismo para referir-se aquilo que mantém a conexão entre os homens. Neste sentido a novos aportes contemporâneos como os de Bawens, Caillé e Felber, alternativos ao capitalismo, propõem construções de comunidades colaborativas e empreendimentos cooperativos locais e globais que apontam a um passo na evolução da sociedade, do capitalismo à koinonia.</dc:description>
+	<dc:publisher xml:lang="pt-BR">P2P &amp; INOVAÇÃO</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:date>2015-04-29</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://revista.ibict.br/cienciadainformacao/index.php/p2pinovacao/article/view/2335</dc:identifier>
+	<dc:source xml:lang="pt-BR">P2P &amp; INOVAÇÃO; v. 1, n. 2 (2015): P2P &amp; inovação; 01-27</dc:source>
+	<dc:source>2358-7814</dc:source>
+	<dc:language>eng</dc:language>
+	<dc:relation>http://revista.ibict.br/cienciadainformacao/index.php/p2pinovacao/article/view/2335/1889</dc:relation>
+	<dc:rights xml:lang="0">Direitos autorais 2015 P2P &amp; INOVAÇÃO</dc:rights>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

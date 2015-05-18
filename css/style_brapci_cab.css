@@ -12,7 +12,19 @@
 	{
 		width: 98%;
 	}
-
+.s96
+	{
+		width: 96%;
+	}
+.ml5
+	{
+		margin-left: 5px;
+	}
+.pad5
+	{
+		padding: 5px 5px 5px 5px;
+	}
+	
 .cab_title
 	{
 		font-family: 'CICPG','RobotoThin', Tahoma, verdana, Helvetica;

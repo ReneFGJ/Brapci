@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:31:32Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42353">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42353</identifier>
+				<datestamp>2015-04-14T11:19:54Z</datestamp>
+				<setSpec>incid:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">The electronic patient record in the twenty-first century: the required contributions of information science</dc:title>
+	<dc:title xml:lang="pt-BR">O prontuário eletrônico do paciente no século XXI: contribuições necessárias da ciência da informação</dc:title>
+	<dc:creator>Galvao, Maria Cristiane Barbosa; Universidade de São Paulo</dc:creator>
+	<dc:creator>Ricarte, Ivan Luiz Marques; Universidade Estadual de Campinas</dc:creator>
+	<dc:subject xml:lang="en-US">Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="en-US">Electronic health Record; Information science; Informational processes; Clinical information</dc:subject>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="pt-BR">Prontuário eletrônico do paciente, Ciência da informação, Processos informacionais, Informação clínica</dc:subject>
+	<dc:description xml:lang="en-US">The electronic health record raises informational and technological issues, including some that can be addressed using knowledge from the information science field and from informational professionals. To explore these issues, this article departs from the scope of electronic health record and establishes possible connections within the scope of information science. In these connections, information from literature reviews was combined with knowledge obtained by observation of contexts of health records production and use, by observation and analysis of health records in different formats and from different institutions, and by contact with health professionals, information professionals, computing professionals, managers, and researchers that work directly with health records. Results describe informational and technological issues of electronic health record that are related to the processes of creation, communication, identification, selection, acquisition, organization and retrieval, storage, preservation, analysis and synthesis, and assessment of information. Conclusions show that in the 21st Century, the electronic health record, when considered in its local, regional, national and international dimensions, presents issues that are adequate to the purposeful activity of information professionals, and constitutes research field for the information science, which can contribute to health improvement and, simultaneously, can expand, test, and refine its theories, hypotheses, and methodologies.</dc:description>
+	<dc:description xml:lang="pt-BR">A construção do prontuário eletrônico do paciente demanda metodologias informacionais e tecnológicas. Tem-se por objetivo levantar aquelas que podem ter resolubilidade por meio dos conhecimentos da ciência da informação e de seus profissionais. Como metodologia para elaborar o estudo, partiu-se do escopo de prontuário eletrônico do paciente estabelecendo-se conexões possíveis com o escopo da ciência da informação. Nestas conexões, combinaram-se os conhecimentos adquiridos por revisão da literatura, por observação de contextos de produção e uso do prontuário do paciente, por observação e análise de prontuários em diferentes suportes e em diferentes instituições, pelo contato direto com profissionais da saúde, da informação e da informática que trabalham diretamente com o prontuário do paciente, gestores, docentes e pesquisadores que fazem uso de prontuários de pacientes. O resultado descreve demandas informacionais e tecnológicas do prontuário eletrônico do paciente relacionadas aos processos de criação, comunicação, identificação, seleção, aquisição, organização e recuperação, armazenagem, preservação, análise e síntese, e avaliação da informação. Conclui-se que, no século XXI, o prontuário eletrônico do paciente, se considerado em sua dimensão local, regional, nacional e internacional, apresenta demandas propícias para a atuação propositiva do profissional da informação e constitui campo de pesquisa para que a ciência da informação, de um lado, contribua com a saúde e, de outro, amplie, teste e aperfeiçoe suas teorias, hipóteses e metodologias.</dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2011-12-09</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/save-as</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42353</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v2i2p77-100</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 2, n. 2 (2011); 77-100</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42353/46024</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

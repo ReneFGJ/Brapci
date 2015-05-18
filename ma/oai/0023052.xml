@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://revista.ibict.br/cienciadainformacao/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:37:27Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:ojs.ibict.ciinf:article/2319">http://revista.ibict.br/cienciadainformacao/index.php/p2pinovacao/oai/</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:ojs.ibict.ciinf:article/2319</identifier>
+				<datestamp>2015-04-30T00:02:23Z</datestamp>
+				<setSpec>p2pinovacao:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">AN ASSESSMENT OF THE FLOK PROCESS AND WHY THE P2P FOUNDATION WILL NOT USE THE FLOK BRAND IN THE FUTURE</dc:title>
+	<dc:creator>Bauwens, Michel</dc:creator>
+	<dc:description xml:lang="en-US">Experience report on the implementation of P2P process, collaboration and knowledge sharing, called flok (Free/Libre Open Knowledge) in Equator. In the face of difficulties, we highlight the government's reluctance to give effective support, not considered strategic. Often, in order not explicit, the government claims to support but eventually affects the progress of the project. Another challenge faced was mistrust of civil society on a project allegedly sponsored by the government. With the Ecuadorian experience, the author concludes that the FLOK process should not be deployed in future P2P plans and must consider issues such as political and historical context of the country in the next projects. UMA AVALIAÇÃO DO PROCESSO FLOK E POR QUE A FUNDAÇÃO P2P NÃO USARÁ A MARCA FLOK NO FUTURO  ResumoRelato de experiência na implementação do processo P2P, de colaboração e compartilhamento de conhecimento, denominado FLOK (Free/Libre Open Knowledge) no Equador. Diante das dificuldades encontradas, destaca-se a resistência do governo em dar efetivo apoio, considerado não estratégico. Muitas vezes, de forma não explicita, o governo diz apoiar, mas prejudica o andamento do projeto. Outro desafio encontrado foi a desconfiança da sociedade civil diante de um projeto supostamente patrocinado pelo governo. Com a experiência do Equador, o autor conclui que o processo FLOK não deve ser implantado em futuros planos P2P, devendo-se considerar questões como contexto político e histórico do país nos próximos projetos.</dc:description>
+	<dc:publisher xml:lang="pt-BR">P2P &amp; INOVAÇÃO</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:date>2015-03-02</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://revista.ibict.br/cienciadainformacao/index.php/p2pinovacao/article/view/2319</dc:identifier>
+	<dc:source xml:lang="pt-BR">P2P &amp; INOVAÇÃO; v. 1, n. 2 (2015): P2P &amp; inovação; 96-101</dc:source>
+	<dc:source>2358-7814</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://revista.ibict.br/cienciadainformacao/index.php/p2pinovacao/article/view/2319/1860</dc:relation>
+	<dc:rights xml:lang="0">Direitos autorais 2015 P2P &amp; INOVAÇÃO</dc:rights>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

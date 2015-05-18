@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://periodicos.ufsc.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T20:49:58Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:periodicos.ufsc.br:article/36">https://periodicos.ufsc.br/index.php/eb/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:periodicos.ufsc.br:article/36</identifier>
+				<datestamp>2015-01-26T15:38:58Z</datestamp>
+				<setSpec>eb:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">The reading as a therapeutical function: bibliotherapy</dc:title>
+	<dc:title xml:lang="pt-BR">A leitura como função terapêutica: biblioterapia 10.5007/1518-2924.2001v6n12p32</dc:title>
+	<dc:creator>Caldin, Clarice Fortkamp; UFSC - Florianópolis - SC</dc:creator>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação; Information Science; Biblioteconomia; Library Science; Terapia; Therapy</dc:subject>
+	<dc:subject xml:lang="pt-BR">Biblioterapia; bibliotherapy; Função terapêutica da leitura; therapeutical function of reading; Catarse; catharsis</dc:subject>
+	<dc:subject xml:lang="pt-BR">CF. Reading and story telling</dc:subject>
+	<dc:description xml:lang="en-US">The classic bibliotherapy admits the possibility of therapy by means of reading of literary texts. It contemplates the reading of stories and commentaries about them. It considers the practical f reading that provides text interpretation. The philosophical essential of bibliotherapy is their &quot;dynamic identity&quot;. The process of identification of the reader and or listening, uses the introjection and the projection. It estimates that all poetical experience is cathartic and that the clearing of emotions produces a reaction of relief of tensions, purifying the psique, with therapeutical value.</dc:description>
+	<dc:description xml:lang="pt-BR">A biblioterapia clássica admite a possibilidade de terapia por meio da leitura de textos literários. Contempla a leitura de histórias e os comentários adicionais a ela. Propõe práticas de leitura que proporcionem a interpretação do texto. O fundamento filosófico essencial da biblioterapia é a &quot;identidade dinâmica&quot;. O processo de identificação do leitor/ouvinte vale-se da introjeção e da projeção. Parte-se do pressuposto que toda experiência poética é catártica e que a liberação da emoção produz uma reação de alívio da tensão e purifica a psique, com valor terapêutico.</dc:description>
+	<dc:publisher xml:lang="pt-BR">Departamento de Ciência da Informação – UFSC</dc:publisher>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2001-01-01</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2001v6n12p32</dc:identifier>
+	<dc:identifier>10.5007/1518-2924.2001v6n12p32</dc:identifier>
+	<dc:source xml:lang="en-US">Encontros Bibli: revista eletrônica de biblioteconomia e ciência da informação; v. 6, n. 12 (2001); 32-44</dc:source>
+	<dc:source xml:lang="pt-BR">Encontros Bibli: revista eletrônica de biblioteconomia e ciência da informação; v. 6, n. 12 (2001); 32-44</dc:source>
+	<dc:source>1518-2924</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2001v6n12p32/5200</dc:relation>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

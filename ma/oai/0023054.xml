@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://revista.ibict.br/cienciadainformacao/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:37:34Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:ojs.ibict.ciinf:article/2322">http://revista.ibict.br/cienciadainformacao/index.php/p2pinovacao/oai/</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:ojs.ibict.ciinf:article/2322</identifier>
+				<datestamp>2015-04-30T00:02:22Z</datestamp>
+				<setSpec>p2pinovacao:EDI</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="pt-BR">Apresentação</dc:title>
+	<dc:creator>Lima, Clóvis Ricardo Montenegro de</dc:creator>
+	<dc:description xml:lang="pt-BR"></dc:description>
+	<dc:publisher xml:lang="pt-BR">P2P &amp; INOVAÇÃO</dc:publisher>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2015-03-02</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://revista.ibict.br/cienciadainformacao/index.php/p2pinovacao/article/view/2322</dc:identifier>
+	<dc:source xml:lang="pt-BR">P2P &amp; INOVAÇÃO; v. 1, n. 2 (2015): P2P &amp; inovação; i-iv</dc:source>
+	<dc:source>2358-7814</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://revista.ibict.br/cienciadainformacao/index.php/p2pinovacao/article/view/2322/1861</dc:relation>
+	<dc:rights xml:lang="0">Direitos autorais 2015 P2P &amp; INOVAÇÃO</dc:rights>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:30:04Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42334">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42334</identifier>
+				<datestamp>2015-04-14T11:20:24Z</datestamp>
+				<setSpec>incid:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">Between Rhetoric and Philology: from humanism to pragmatism in Information Science epistemology</dc:title>
+	<dc:title xml:lang="pt-BR">Entre a Retórica e a Filologia: do pragmatismo ao humanismo na epistemologia da Ciência da Informação</dc:title>
+	<dc:creator>Saldanha, Gustavo Silva; Doutorando em Ciência da Informação – Instituto Brasileiro de Informação em Ciência e Tecnologia/FACC/UFRJ, Professor Assistente da Escola de Biblioteconomia da Universidade Federal do Estado do Rio de Janeiro (UNIRIO)</dc:creator>
+	<dc:subject xml:lang="en-US">Epistemologia da Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="en-US">Epistemology of Information Science; Humanism; Rhetoric; Philology</dc:subject>
+	<dc:subject xml:lang="pt-BR">Epistemologia da Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="pt-BR">Epistemologia da Ciência da Informação, Humanismo, Retórica, Filologia</dc:subject>
+	<dc:description xml:lang="en-US">Discusses the presence of humanism in the epistemology of Information Science. Examines the contemporary development of the pragmatism discourse in information studies. Defines the notion of the humanism and approaches philology and rhetoric as two areas that define the general concept of the traditional humanism. Concludes that the epistemological development of information science is directed at the horizon of the intervention methods that are based between the rhetoric and philology. It points theoretical and methodological possibilities of recognition of humanism in epistemology informational.</dc:description>
+	<dc:description xml:lang="pt-BR">Identifica e discute a presença do humanismo na epistemologia da Ciência da Informação. Analisa o desenvolvimento contemporâneo do discurso epistemológico informacional e apresenta o pragmatismo, enquanto filosofia e método, como via que conduz o campo à recuperação dos elementos do olhar humanista sobre a realidade. Define a noção de humanismo a partir de um enfoque disciplinar, tendo Filologia e Retórica como duas matérias que definem o conceito geral do movimento e da tradição humanista. A partir de uma hermenêutica da linguagem da produção científica na Ciência da Informação interpreta as abordagens que recuperam os elementos identitários do conceito de humanismo no campo informacional. Conclui que o desenvolvimento epistemológico da Ciência da Informação se direciona no horizonte dos métodos de intervenção que se fundamentam entre a Retórica e a Filologia. Aponta as possibilidades teórico-metodológicas de reconhecimento do humanismo na epistemologia informacional. </dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2011-06-07</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42334</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v2i1p47-67</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 2, n. 1 (2011); 47-67</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42334/46005</dc:relation>
+	<dc:relation>http://www.revistas.usp.br/incid/article/downloadSuppFile/42334/92</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

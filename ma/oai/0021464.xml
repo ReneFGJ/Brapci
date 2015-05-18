@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://seer.ufrgs.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T20:44:48Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:seer.ufrgs.br:article/49231">http://seer.ufrgs.br/index.php/EmQuestao/oai/</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:seer.ufrgs.br:article/49231</identifier>
+				<datestamp>2015-05-09T02:11:48Z</datestamp>
+				<setSpec>EmQuestao:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="pt-BR">Contribuição da análise multivariada para os indicadores de avaliação dos programas de pós-graduação: uma análise na área de Matemática (2007-2009)</dc:title>
+	<dc:creator>Gutierres Castanha, Renata Cristina; UNESP - Univ Estadual Paulista</dc:creator>
+	<dc:creator>Cabrini Grácio, Maria Cláudia; UNESP - Univ Estadual Paulista</dc:creator>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="pt-BR">Indicadores bibliométricos; Avaliação dos Programas de Pós-Graduação; Pós-Graduação em Matemática</dc:subject>
+	<dc:subject xml:lang="pt-BR"></dc:subject>
+	<dc:description xml:lang="pt-BR">O objetivo desta pesquisa é analisar a relação entre os indicadores quantitativos, utilizados da CAPES, e o conceito final de cada programa de pós-graduação, por meio da aplicação de procedimentos estatísticos multivariados, a fim de contribuir para a compreensão do sistema de avaliação da pós-graduação brasileira. Para o conjunto dos 26 programas de pós-graduação da área de Matemática, no triênio 2007-2009, foram avaliados, por meio de métodos multivariados, os seguintes indicadores: total de teses e dissertações defendidas e média de artigos por docente permanente, segundo a estratificação Qualis. Observou-se, em todas as Análises de clusters realizadas, que os programas com conceito 3 aglutinaram-se sempre em um único grupo, ao passo que os demais foram se separando à medida em que foram inseridos mais indicadores na análise. Ainda, quanto mais indicadores foram incluídos na análise, mais refinado e próximo do conceito atribuído pela CAPES foi o resultado.</dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade Federal do Rio Grande do Sul</dc:publisher>
+	<dc:contributor xml:lang="pt-BR">CAPES - Coordenação de Aperfeiçoamento de Pessoal de Nível Superior</dc:contributor>
+	<dc:date>2015-05-08</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR">Avaliado por Pares</dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://seer.ufrgs.br/index.php/EmQuestao/article/view/49231</dc:identifier>
+	<dc:source xml:lang="pt-BR">Em Questão; v.21, n.1, jan./abr. 2015; 130-149</dc:source>
+	<dc:source>1808-5245</dc:source>
+	<dc:source>1807-8893</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://seer.ufrgs.br/index.php/EmQuestao/article/view/49231/33749</dc:relation>
+	<dc:relation>http://seer.ufrgs.br/index.php/EmQuestao/article/view/49231/33750</dc:relation>
+	<dc:relation>http://seer.ufrgs.br/index.php/EmQuestao/article/downloadSuppFile/49231/25510</dc:relation>
+	<dc:relation>http://seer.ufrgs.br/index.php/EmQuestao/article/downloadSuppFile/49231/25511</dc:relation>
+	<dc:relation>http://seer.ufrgs.br/index.php/EmQuestao/article/downloadSuppFile/49231/25512</dc:relation>
+	<dc:relation>http://seer.ufrgs.br/index.php/EmQuestao/article/downloadSuppFile/49231/25513</dc:relation>
+	<dc:relation>http://seer.ufrgs.br/index.php/EmQuestao/article/downloadSuppFile/49231/25514</dc:relation>
+	<dc:rights xml:lang="en-US">Authors who publish with this journal agree to the following terms:Authors will keep their copyright and grant the journal with the right of first publication, the work licensed under License Creative Commons Attribution 3.0 (CC BY-NC 3.0), which allows for the sharing of work and the recognition of authorship.Authors can take on additional contracts separately for non-exclusive distribution of the version of the work published in this journal, such as publishing in an institutional repository, acknowledging its initial publication in this journal.The articles are for open access and free use in research, educational and non-commercial activities.</dc:rights>
+	<dc:rights xml:lang="es-ES">Autores que publican en esta revista están de acuerdo con las siguientes condiciones:    1. autores mantienen los derechos autorales y ceden a la Revista el derecho de la primera publicación, con el trabajo licenciado bajo la Licencia Creative Commons Attribution 3.0, que admite el compartimento del trabajo con reconocimiento de la autoria;2. autores tienen autorización para asumir contratos adicionales separadamente, para la distribución no exclusiva de la versión del trabajo publicada en esta revista, como para publicar en repositorio institucional, con reconocimiento de autoria y publicación inicial en esta revista.Los artículos son de acceso abierto y gratuito, con atribuciones propias, en actividades educacionales, de pesquisa y sin cuño comercial. </dc:rights>
+	<dc:rights xml:lang="fr-CA">Les Droits d’Auteur des articles publiés dans ce périodique appartiennent aux auteurs, les droits de la première publication étant réservés à la revue. Du fait d’être publiés dans une revue d’accès libre, les articles sont d’utilisation gratuite, avec leurs propres attributions, dans le cadre d’activités éducationnelles et non-commerciales.</dc:rights>
+	<dc:rights xml:lang="pt-BR">Autores que publicam nesta revista concordam com os seguintes termos:Autores mantêm os direitos autorais e concedem à revista o direito de primeira publicação, com o trabalho licenciado sob a Licença Creative Commons Attribution (CC BY-NC 3.0), que permite o compartilhamento do trabalho com reconhecimento da autoria.Autores têm autorização para assumir contratos adicionais separadamente, para distribuição não exclusiva da versão do trabalho publicada nesta revista, como publicar em repositório institucional, com reconhecimento de autoria e publicação inicial nesta revista.Os artigos são de acesso aberto e uso gratuito, com atribuições próprias em atividades educacionais, de pesquisa e não comerciais. </dc:rights>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

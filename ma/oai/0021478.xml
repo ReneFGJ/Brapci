@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:30:39Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42341">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42341</identifier>
+				<datestamp>2015-04-14T11:20:29Z</datestamp>
+				<setSpec>incid:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="pt-BR">Apropriações sociais da tecnologia: ética e netiqueta no universo da infocomunicação</dc:title>
+	<dc:title xml:lang="en-US">Technology social appropriates: ethics and netiquette in the infocommunicational universe</dc:title>
+	<dc:creator>Biscalchin, Ana Carolina Silva; PPGCI ECA/USP</dc:creator>
+	<dc:creator>Almeida, Marco Antonio de; PPGCI ECA/USP
+USP - FFCLRP (Ribeirão Preto - SP)</dc:creator>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="pt-BR">Informação, Comunicação, Ética, Tecnologia, Teoria Social</dc:subject>
+	<dc:subject xml:lang="en-US">Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="en-US">Information; Communication; Ethics; Technology; Social Theory</dc:subject>
+	<dc:description xml:lang="pt-BR">O artigo enfoca como a relação tecnologia-sociedade foi pensada na teoria social: quase sempre um dos pólos foi privilegiado às custas do outro. Procura-se mostrar as insuficiências desse tipo de abordagem, propondo pensar numa relação de co-determinação, na linha de Latour e Miège. São abordadas questões relativas à ética e ao comportamento dos indivíduos nos blogs para ilustrar as potencialidades dessa abordagem. Finalmente, observa-se a incipiência desse tipo de estudo na área de CI, e são referidos alguns dos desafios teóricos e metodológicos que eles apontam.</dc:description>
+	<dc:description xml:lang="en-US">The article focuses on how the relationship between technology and society was thought in social theory: almost always one of the poles was privileged at the expense of another. Attempts to show the shortcomings of this approach, proposing to think of a relationship of co-determination, in line with Latour and Miège. Some questions related to ethics and behavior of individuals in the blogs to illustrate the potential of this approach. Finally, there is a incipience of such studies in the area of IC, and are referred to some of the theoretical and methodological challenges which they point.</dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:date>2011-06-07</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42341</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v2i1p193-207</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 2, n. 1 (2011); 193-207</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42341/46012</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://periodicos.ufsc.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T20:48:35Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:periodicos.ufsc.br:article/309">https://periodicos.ufsc.br/index.php/eb/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:periodicos.ufsc.br:article/309</identifier>
+				<datestamp>2015-01-26T15:37:57Z</datestamp>
+				<setSpec>eb:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">The RPG and knowledge socialization</dc:title>
+	<dc:title xml:lang="pt-BR">O jogo RPG e a socialização do conhecimento 10.5007/1518-2924.2004v9nesp2p75</dc:title>
+	<dc:creator>Nunes, Helena de Fátima; UFPR - Curitiba - PR</dc:creator>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação; Information Science; Biblioteconomia; Library Science</dc:subject>
+	<dc:subject xml:lang="pt-BR">Gestão do conhecimento; Jogo RPG; Compartilhamento de conhecimentos; Knowledge management; RPG; Knowledge sharing</dc:subject>
+	<dc:subject xml:lang="pt-BR">BD. Information society</dc:subject>
+	<dc:description xml:lang="en-US">This paper points out the Role Playing Game – RPG – as a tool for the socialization of knowledge in the organizations. It analyses the different meanings and uses of knowledge throughout history, clarifying its importance in the world of work, particularly at the end of XXth Century and in the beginning of XXIst Century. It describes the characteristics of the game and the possibilities of using it in sharing knowledge, emotions, beliefs and values. By sharing adventures and situations, the players also share feelings which result from it, as say, emotions which are perceptible, although not expressed, and all the team work can be improved by the mutual insights of the members of the group. It points the methodological steps necessary to adapt the RPG as a tool to make the conversion of tacit knowledge of the organizartions easier.</dc:description>
+	<dc:description xml:lang="pt-BR">Aponta o jogo Role Playing Game - RPG como uma ferramenta para a socialização do conhecimento nas organizações. Analisa os diferentes significados e usos do conhecimento ao longo da história, evidenciando sua importância no mundo do trabalho, especialmente no final do Século XX e início do Século XXI. Descreve as características do jogo e as possibilidades de utilização no compartilhamento de conhecimentos, emoções, crenças e valores. Ao compartilhar aventuras e situações, os participantes trocam sentimentos daí resultantes, ou seja, as emoções perceptíveis, mas não expressas e todo o processo de trabalho conjunto pode ser beneficiado pelos insights mútuos dos membros da equipe. Indica os passos metodológicos para a adaptação do jogo RPG como uma ferramenta facilitadora na conversão do conhecimento tácito nas organizações.</dc:description>
+	<dc:publisher xml:lang="pt-BR">Departamento de Ciência da Informação – UFSC</dc:publisher>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2004-01-01</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2004v9nesp2p75</dc:identifier>
+	<dc:identifier>10.5007/1518-2924.2004v9nesp2p75</dc:identifier>
+	<dc:source xml:lang="en-US">Encontros Bibli: revista eletrônica de biblioteconomia e ciência da informação; Especial - segundo semestre de 2004: Metodologias em Informação; 75-85</dc:source>
+	<dc:source xml:lang="pt-BR">Encontros Bibli: revista eletrônica de biblioteconomia e ciência da informação; Especial - segundo semestre de 2004: Metodologias em Informação; 75-85</dc:source>
+	<dc:source>1518-2924</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2004v9nesp2p75/5490</dc:relation>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

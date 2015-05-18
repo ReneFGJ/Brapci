@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://periodicos.ufsc.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T20:50:07Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:periodicos.ufsc.br:article/298">https://periodicos.ufsc.br/index.php/eb/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:periodicos.ufsc.br:article/298</identifier>
+				<datestamp>2015-01-26T15:37:14Z</datestamp>
+				<setSpec>eb:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">On the pedagogical policies project: syllabus flexibility</dc:title>
+	<dc:title xml:lang="pt-BR">Sobre o projeto político pedagógico: a flexibilização curricular 10.5007/1518-2924.2006v11n22p158</dc:title>
+	<dc:creator>Maia, Manuela Eugênia; UFPB - João Pessoa - PB</dc:creator>
+	<dc:creator>Albuquerque, Maria Elizabeth Baltar Carneiro de; UFPB - João Pessoa - PB</dc:creator>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação; Information Science; Biblioteconomia; Library Science</dc:subject>
+	<dc:subject xml:lang="pt-BR">Projeto Político-Pedagógico; Flexibilização curricular; Biblioteconomia; Pedagogical Policies Project; Syllabus Flexibility</dc:subject>
+	<dc:subject xml:lang="pt-BR">GG. Curricula aspects.</dc:subject>
+	<dc:description xml:lang="en-US">This article presents questions concerning the syllabus of the Library Science School at the Universidade Federal da Paraíba. The methodology is based on a qualitative approach, and the main data come from legal sources (laws and similar normative pieces) and institutional sources (registered discussions about the pedagogical policies projects [PPPs], formal proposals, and others). In sketching our proposal of flexibility of curricula, we focus on some strategic actions which aim to strengthen the connection between the courses offered and labor market. Besides, we discuss the flexibility of the syllabus as a tool to expande/garantee the students’ right to choose the convenient subjects to their academic formation; to strengthen the academic self-management of the Schools; and to stimulate the School staff (especially teachers) to assume a more reflective attitude toward the internal demands concerning their courses.</dc:description>
+	<dc:description xml:lang="pt-BR">Este artigo apresenta questões curriculares do curso de graduação em Biblioteconomia da Universidade Federal da Paraíba. O objetivo é analisar elementos que subsidiem a proposta de flexibilização curricular para o referido curso. Do ponto de vista metodológico, a pesquisa respalda-se em uma abordagem qualitativa, utilizando documentos legais (Leis, Pareceres, Editais e Resoluções) e documentos institucionais (materiais produzidos pela academia na área pedagógica voltada para discussões referentes ao PPP, currículo e flexibilização curricular e seus enlaces teóricos). Como proposta, verifica-se na flexibilização curricular uma ação estratégica na tentativa de garantir o diálogo permanente entre cursos de formação e mercado de trabalho, favorecendo, assim, a conexão com a realidade social na qual o aluno egresso será inserido. Além disso, a flexibilização curricular amplia o direito de escolha dos alunos, possibilita uma maior participação dos colegiados dos cursos e produz reflexão nos docentes quanto ao atendimento das necessidades internas dos próprios cursos de formação.</dc:description>
+	<dc:publisher xml:lang="pt-BR">Departamento de Ciência da Informação – UFSC</dc:publisher>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2007-11-10</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2006v11n22p158</dc:identifier>
+	<dc:identifier>10.5007/1518-2924.2006v11n22p158</dc:identifier>
+	<dc:source xml:lang="en-US">Encontros Bibli: revista eletrônica de biblioteconomia e ciência da informação; v. 11, n. 22 (2006); 158-177</dc:source>
+	<dc:source xml:lang="pt-BR">Encontros Bibli: revista eletrônica de biblioteconomia e ciência da informação; v. 11, n. 22 (2006); 158-177</dc:source>
+	<dc:source>1518-2924</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2006v11n22p158/370</dc:relation>
+	<dc:coverage xml:lang="pt-BR">Brasil</dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

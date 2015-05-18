@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:33:04Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42374">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42374</identifier>
+				<datestamp>2015-04-14T11:19:15Z</datestamp>
+				<setSpec>incid:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="pt-BR">Busca e recuperação da informação científica na web: comportamento informacional de profissionais da informação</dc:title>
+	<dc:title xml:lang="en-US">Search and retrieval of scientific information on the web: the information behavior of information professionals</dc:title>
+	<dc:creator>Giordano, Rafaela Boeira; Instituto Brasileiro de Informação em Ciência e Tecnologia (IBICT)</dc:creator>
+	<dc:creator>Biolchini, Jorge Calmon de Almeida; Instituto Brasileiro de Informação em Ciência e Tecnologia (IBICT)</dc:creator>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="pt-BR">Recuperação da informação. Recuperação da informação na web. Competência em informação. Informação científica. Comportamento informacional.</dc:subject>
+	<dc:subject xml:lang="en-US">Information retrieval, Information retrieval on the web, Information literacy, Scientific information, Information behavior</dc:subject>
+	<dc:description xml:lang="pt-BR">Avan&amp;ccedil;os tecnol&amp;oacute;gicos, crescimento exponencial de conte&amp;uacute;dos na web, aumento da busca on-line por informa&amp;ccedil;&amp;atilde;o especializada alteraram o comportamento de cientistas no acesso &amp;agrave; informa&amp;ccedil;&amp;atilde;o. Nesse contexto, revela-se de import&amp;acirc;ncia capital a compet&amp;ecirc;ncia em informa&amp;ccedil;&amp;atilde;o. Por meio deste estudo, objetiva-se analisar o comportamento informacional do cientista da informa&amp;ccedil;&amp;atilde;o no processo de busca e recupera&amp;ccedil;&amp;atilde;o na web, evidenciando a&amp;ccedil;&amp;otilde;es adotadas, estrat&amp;eacute;gias, formula&amp;ccedil;&amp;otilde;es, pontos cr&amp;iacute;ticos, decis&amp;otilde;es tomadas, resultados obtidos e grau de satisfa&amp;ccedil;&amp;atilde;o. Para isso, realizou-se pesquisa explorat&amp;oacute;ria sobre o comportamento de p&amp;oacute;s-graduandos na busca de informa&amp;ccedil;&amp;atilde;o cient&amp;iacute;fica na web. Utilizou-se question&amp;aacute;rio e entrevista elaborados a partir da t&amp;eacute;cnica do incidente cr&amp;iacute;tico. A aprendizagem informal constitui o modo principal para adquirir habilidades em busca e recupera&amp;ccedil;&amp;atilde;o da informa&amp;ccedil;&amp;atilde;o. A utiliza&amp;ccedil;&amp;atilde;o de mecanismo gen&amp;eacute;rico de busca, sem o emprego de recursos avan&amp;ccedil;ados, o baixo uso de operadores, o n&amp;uacute;mero reduzido de termos constituem estrat&amp;eacute;gias de busca predominantes. Resultados apontam a necessidade de fomentar o aprimoramento da compet&amp;ecirc;ncia em informa&amp;ccedil;&amp;atilde;o a fim de contribuir na qualidade do processo de busca e recupera&amp;ccedil;&amp;atilde;o entre cientistas da informa&amp;ccedil;&amp;atilde;o.</dc:description>
+	<dc:description xml:lang="en-US">Technological advances, exponential growth of web content and increase of online search for specialized information contributed to changes on the information accessing behavior of scientists.&amp;nbsp; In this context, the capital importance of information literacy was revealed. The study aimed to analyze the information behavior of information scientists during the search and retrieval process on internet, highlighting actions, strategies, formulations, critical points, decisions taken, and satisfaction evaluation.&amp;nbsp; Therefore, the study constitutes an exploratory investigation into the behavior of post-graduate students while searching for scientific information on the web. Questionnaire and interview based on the critical incident technique were applied.&amp;nbsp; Informal learning constitutes the main mode of skill acquisition in information search and retrieval. The use of a generic search engine without employing its advanced resources, few operators and reduced number of terms constitute the most common search strategies. Results point to the need of fostering information literacy improvement in order to contribute to the search and retrieval process quality among information scientists</dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:date>2012-06-28</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42374</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v3i1p125-145</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 3, n. 1 (2012); 125-145</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42374/46045</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

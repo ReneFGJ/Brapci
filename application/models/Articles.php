@@ -1,16 +1,59 @@
 <?php
 class articles extends CI_model {
-
+	
+	
+	function save_TITLE($id, $title_1,$title_2,$idioma_1,$idioma_2)
+		{
+			/* title 1 */
+			$title_1 = trim($title_1);
+			$title_1 = troca($title_1,chr(13),' ');
+			$title_1 = troca($title_1,chr(10),'');
+			$title_1 = troca($title_1,'  ',' ');
+			/* title 2 */
+			$title_2 = trim($title_2);
+			$title_2 = troca($title_2,chr(13),' ');
+			$title_2 = troca($title_2,chr(10),'');
+			$title_2 = troca($title_2,'  ',' ');
+			
+			$sql = "update brapci_article set
+					ar_titulo_1 = '$title_1',
+					ar_titulo_2 = '$title_2',
+					ar_idioma_1 = '$idioma_1',
+					ar_idioma_2 = '$idioma_2' 
+					where id_ar = ".$id;
+			$this->db->query($sql);
+		}
+	function save_ABSTRACT($id,$abstract,$lc=1)
+		{
+			if ($lc == 2) { $fld = 'ar_resumo_2'; }
+			else { $fld = 'ar_resumo_1'; }
+			/* Abstract */
+			$abstract = trim($abstract);
+			$abstract = troca($abstract,chr(13),' ');
+			$abstract = troca($abstract,chr(10),'');
+			$abstract = troca($abstract,'  ',' ');
+			$sql = "update brapci_article set
+					$fld = '$abstract'
+					where id_ar = ".$id;
+			$this->db->query($sql);
+			return(1);		
+		}
 	function le($id) {
+		$id = strzero($id,10);
 		$sql = "select * from brapci_article
 						inner join brapci_journal on ar_journal_id = jnl_codigo
 						inner join brapci_edition on ar_edition = ed_codigo 
 						where ar_codigo = '$id' ";
+					
 		$query = $this -> db -> query($sql);
 		$query = $query -> result();
 		$line = db_read($query);
-		$line['ar_keyw_1'] = 'key1';
-		$line['ar_keyw_2'] = 'key2';
+		
+		/* Kwywords */
+		$this->load->model('keywords');
+		
+		$line['ar_keyw_1'] = $this->keywords->retrieve_keywords($id,$line['ar_idioma_1']);
+		$line['ar_keyw_2'] = $this->keywords->retrieve_keywords($id,$line['ar_idioma_2']);
 		$line['author'] = $this -> author_article($id);
 		$line['cited'] = $this -> cited($id);
 		$line['link_pdf'] = $this->arquivos($id);

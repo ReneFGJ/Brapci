@@ -7,6 +7,7 @@
 <link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_form.css');?>">
 <link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_menu.css');?>">
 <link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_roboto.css');?>">
+<link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_issue.css');?>">
 <link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_brapci_cab.css');?>">
 <script type="text/javascript" src="<?echo base_url('js/jquery.js');?>"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">

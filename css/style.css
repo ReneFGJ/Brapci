@@ -546,6 +546,20 @@ echo '<div id="ref"><B>Referências</B><BR>'.$refs.'</div>';
 		-ms-box-shadow: 0px 0px 13px 0px #000000;
 		-o-box-shadow: 0px 0px 13px 0px #000000;
 	}
+	/* pdf */
+	#pdf2 {
+		width: 100%;
+		min-height: 1024px;
+		border: 1px solid #808080;
+		float: right;
+		margin-left: 20px;
+		margin-bottom: 20px;
+		box-shadow: 0px 0px 13px 0px #000000;
+		-webkit-box-shadow: 0px 0px 13px 0px #000000;
+		-moz-box-shadow: 0px 0px 13px 0px #000000;
+		-ms-box-shadow: 0px 0px 13px 0px #000000;
+		-o-box-shadow: 0px 0px 13px 0px #000000;
+	}	
 
 	/* MEIO */
 	#conteudo {

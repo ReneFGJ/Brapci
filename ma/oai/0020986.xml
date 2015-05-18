@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://periodicos.ufsc.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T20:49:33Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:periodicos.ufsc.br:article/362">https://periodicos.ufsc.br/index.php/eb/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:periodicos.ufsc.br:article/362</identifier>
+				<datestamp>2015-01-26T15:37:22Z</datestamp>
+				<setSpec>eb:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">A quality evaluation model for digital university libraries based on fuzzy tools</dc:title>
+	<dc:title xml:lang="pt-BR">Un modelo de evaluación de la calidad de las bibliotecas universitarias digitales basado en técnicas difusas 10.5007/1518-2924.2006v11nesp2p35</dc:title>
+	<dc:creator>Herrera-Viedma, S. Alonso E.; Universida de Granada - Espanha</dc:creator>
+	<dc:creator>Ávila, Javier López Gijón B.; Universida de Granada - Espanha</dc:creator>
+	<dc:creator>Pardo, Josefina Vílchez; Universida de Granada - Espanha</dc:creator>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação; Information Science; Biblioteconomia; Library Science</dc:subject>
+	<dc:subject xml:lang="pt-BR">Evaluación de calidad; Bibliotecas universitárias; Bibliotecas digitales; Indicadores de calidad; Modelado lingüístico difuso; Quality evaluation; University libraries; Digital libraries; Quality criteria; Fuzzy linguistic modelling</dc:subject>
+	<dc:subject xml:lang="pt-BR">DD. Academic libraries</dc:subject>
+	<dc:description xml:lang="en-US">A quality evaluation model for digital university libraries based on fuzzy tools is presented. This model offers both objective and subjective quality criteria. It uses a fuzzy linguistic modelling to represent quality values and linguistic aggregation operators to obtain them.</dc:description>
+	<dc:description xml:lang="pt-BR">Se presenta un modelo para la evaluación de la calidad de las bibliotecas universitarias digitales basado en técnicas difusas. El modelo contiene tanto criterios objetivos como subjetivos. Usa información difusa lingüística para la representación de las valores de calidad y operadores de agregación de información lingüística para obtenerlos.</dc:description>
+	<dc:publisher xml:lang="pt-BR">Departamento de Ciência da Informação – UFSC</dc:publisher>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2007-12-13</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="pt-BR">Descritivo</dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2006v11nesp2p35</dc:identifier>
+	<dc:identifier>10.5007/1518-2924.2006v11nesp2p35</dc:identifier>
+	<dc:source xml:lang="en-US">Encontros Bibli: revista eletrônica de biblioteconomia e ciência da informação; Especial - primeira do segundo semestre de 2006: Cenário global; 35-48</dc:source>
+	<dc:source xml:lang="pt-BR">Encontros Bibli: revista eletrônica de biblioteconomia e ciência da informação; Especial - primeira do segundo semestre de 2006: Cenário global; 35-48</dc:source>
+	<dc:source>1518-2924</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2006v11nesp2p35/426</dc:relation>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://revista.ibict.br/cienciadainformacao/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:37:31Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:ojs.ibict.ciinf:article/2318">http://revista.ibict.br/cienciadainformacao/index.php/p2pinovacao/oai/</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:ojs.ibict.ciinf:article/2318</identifier>
+				<datestamp>2015-04-30T00:02:23Z</datestamp>
+				<setSpec>p2pinovacao:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="es-ES">FLOK SOCIETY EN ECUADOR 1.0. LA TRANSICIÓN HACIA LA ECONOMÍA SOCIAL DEL CONOCIMIENTO A PIE DE OBRA</dc:title>
+	<dc:creator>Vila Viñas, David</dc:creator>
+	<dc:description xml:lang="es-ES">Describe los procesos, los colaboradores involucrados y la repercusión del desarrollo del proyecto ecuatoriano &quot;Sociedad FLOK - Free Libre Open Knowledge Society&quot;, con miras a la construcción de planos para fortalecer la economía social del conocimiento social común y abierto. El proyecto dio lugar a la Cumbre del Conocer Bien en mayo de 2014 en Quito, con diferentes actores e instituciones sociales. Sus resultados serán publicados en un libro con las principales directrices disponibles en un número especial del &quot;Journal of Peer Production&quot;. Durante la elaboración del proyecto y  en la Cumbre se asistió a una intensa participación de varias instituciones, entre ellas de la comunidad internacional. La  inicialmente difícil participación de la sociedad civil que por las barreras del idioma fue superada a partir de la idea de &quot;Bueno saber cómo habitar Bien Vivir&quot;, marco político ecuatoriano desde 2008, y por los esfuerzos de instituciones, tornando posible aumentar la participación de la sociedad civil. De este modo, a través de una red participativa, las discusiones que produjeran contenidos en 190 documentos iniciales fueron publicadas, lo que llamamos &quot;propio contenido&quot;. Su impacto y discusión aparecieron en los medios de comunicación tradicionales, un total de 130, lo que llamamos &quot;contenido en medios&quot;, en las discusiones en los &quot;medios de comunicación de redes sociales &quot; y de diversas acciones de comunicación y equipo FLOK . Por último, también alcanzamos lo que llamamos redes de territorios  que hibridaran territorios digitales y geográficos en las reuniones # Beer2peer en los bares de Quito. A pesar de alta visibilidad dada al contenido propuesto, la eficacia de las recomendaciones de política y de proyectos productivos aún tiene bajo rendimiento por el pequeño número actual de participantes en el equipo. Todavía hay cuellos de botella como la necesidad de programas de capacitación, programas piloto y tácticas para promover los ya posibles planes y profundizar los iniciados. A SOCIEDADE FLOK NO EQUADOR 1.0: A TRANSIÇÃO LOCAL PARA A ECONOMIA SOCIAL DO CONHECIMENTO EM MARCHA ResumoDescreve processos, colaboradores envolvidos e repercussão da elaboração do projeto equatoriano &quot;FLOK Society _ Free Libre Open Knowledge Society&quot;, com vistas à construção de planos que visem reforçar a economia social do conhecimento social comum e aberto. Projeto ensejou a Cúpula do Bem Conhecer, em maio de 2014 em Quito, contando com diversos atores e instituições sociais, e seus resultados serão publicados em um livro, estando as principais diretrizes disponíveis em um número especial do &quot;Journal of Peer Production&quot;. Durante a elaboração do projeto e na Cúpula contou-se com uma intensa participação de diversas instituições, inclusive da comunidade internacional. Inicialmente a difícil participação da sociedade civil, pelas barreiras de língua, foi contornada a partir da ideia de &quot;Bem Conhecer como habitat do Bem Viver&quot;, marco político equatoriano desde 2008 e pelos esforços de instituições, sendo possível reforçar a participação da sociedade civil. Assim, através de uma rede participativa, as discussões que produziram conteúdos em 190 documentos iniciais foram publicados, que chamamos &quot;conteúdo próprio&quot;. Sua repercussão e discussão apareceu nas mídias tradicionais, num total de 130, que chamamos de &quot;conteúdos de mídias&quot;, nas discussões em &quot;mídias de redes sociais&quot; e a partir de diversas ações de comunicação da equipe do FLOK. Finalmente, também chegou ao que chamamos redes territórios que hibridizaram os territórios digitais e geográficos nos encontros #Beer2peer nos bares de Quito. Apesar da ampla visibilidade dada aos conteúdos propostos, a eficácia das recomendações políticas e dos projetos produtivos ainda apresenta baixa concretização pelo atual reduzido número de participantes na equipe. Existem ainda gargalos como a necessidade de planos de formação, programas pilotos e táticas para levar adiante os planos já possíveis e aprofundar os processos iniciados. FLOK SOCIETY IN ECUADOR 1.0. THE TRANSITION TO THE SOCIAL ECONOMY OF THE LOCAL KNOWLEDGEAbstractDescribes processes, collaborators involved and impact of the development of the Ecuadorian project &quot;Flok Society _ FreeLibre Open Knowledge Society&quot; with a view to building plans to strengthen the social economy of the common and open social knowledge. Project gave rise to the Summit  Conocer Bien in May 2014 in Quito, with different actors and social institutions, and their results will be published in a book, with the main guidelines available in a special issue of the &quot;Journal of Peer Production&quot;. During the project design and the Summit was attended up with an intense participation of several institutions, including the international community. The initially difficult participation of civil society, by language barriers, was dealt from the idea of &quot;Well know as habitat of the Good Life&quot;, Ecuadorian political landmark since 2008 and the institutions of efforts, it is possible to increase the participation of civil society. Thus, through a participatory network, the discussions that produced content in 190 initial documents were published, which we call &quot;own content&quot;. Its impact and discussion appeared in traditional media, a total of 130, which we call &quot;media content&quot; in discussions &quot;social networking media&quot; and from diverse and communication actions of flok team. Finally, also reached what we call territories networks hybridized digital and geographical territories in meetings #Beer2peer in the bars of Quito. For the sake of high visibility given to the proposed content the effectiveness of the policy recommendations and productive projects still has low achievement by the current small number of participants in the team. There are still bottlenecks as the need for training programs, pilot programs and tactics to further the already possible plans and deepen the initiated.</dc:description>
+	<dc:publisher xml:lang="pt-BR">P2P &amp; INOVAÇÃO</dc:publisher>
+	<dc:contributor xml:lang="es-ES"></dc:contributor>
+	<dc:date>2015-03-02</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://revista.ibict.br/cienciadainformacao/index.php/p2pinovacao/article/view/2318</dc:identifier>
+	<dc:source xml:lang="pt-BR">P2P &amp; INOVAÇÃO; v. 1, n. 2 (2015): P2P &amp; inovação; 86-95</dc:source>
+	<dc:source>2358-7814</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://revista.ibict.br/cienciadainformacao/index.php/p2pinovacao/article/view/2318/1859</dc:relation>
+	<dc:rights xml:lang="0">Direitos autorais 2015 P2P &amp; INOVAÇÃO</dc:rights>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:32:30Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42366">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42366</identifier>
+				<datestamp>2015-04-14T11:18:51Z</datestamp>
+				<setSpec>incid:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="pt-BR">Estudos sobre o objeto da Ciência da Informação: da constituição de um grupo de pesquisa a um de seus resultados</dc:title>
+	<dc:title xml:lang="en-US">Studies on the subject of information science: the creation of a research group to one of your results</dc:title>
+	<dc:creator>Ortega, Cristina Dotta; Doutora em Ciência da Informação pela ECA/USP. 
+Professora Adjunta da Escola de Ciência da Informação da Universidade Federal de Minas Gerais – ECI/UFMG.</dc:creator>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação; Grupos de Pesquisa</dc:subject>
+	<dc:subject xml:lang="en-US">Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="en-US">Information Science; Group of research</dc:subject>
+	<dc:description xml:lang="pt-BR">Trata da constituição do grupo ibero-americano de pesquisa sobre Ciência da Informação, depois reconfigurado na perspectiva de uma rede com a entrada de mais pesquisadores brasileiros. A seguir, são apresentados alguns conceitos básicos e as relações entre eles como parte da proposta explicativa de objeto da Ciência da Informação, que foi um dos produtos individuais dos debates realizados no âmbito do grupo.</dc:description>
+	<dc:description xml:lang="en-US">It is about the constitution of the Ibero-American group of research on Information Science, which was afterwards reconfigured within the perspective of a net with the entry of more Brazilian researchers. Then we present some basic concepts and the relations among them as part of the explanatory proposal of the object of Information Science, which was one of the individual products from the debates carried out within the group.</dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2012-06-28</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42366</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v3i1p15-20</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 3, n. 1 (2012); 15-20</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42366/46037</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

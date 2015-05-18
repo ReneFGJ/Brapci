@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:32:48Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42370">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42370</identifier>
+				<datestamp>2015-04-14T11:19:12Z</datestamp>
+				<setSpec>incid:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="pt-BR">Mediação da informação e estudos de usuários: interrelações</dc:title>
+	<dc:title xml:lang="en-US">Information Mediation and User Studies: Interrelations</dc:title>
+	<dc:creator>Sirihal Duarte, Adriana Bogliolo; Universidade Federal de Minas Gerais</dc:creator>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="pt-BR">Mediação. Estudos de Usuários. Comportamento Informacional.</dc:subject>
+	<dc:subject xml:lang="en-US">Mediation,  User studies,  Information behavior</dc:subject>
+	<dc:description xml:lang="pt-BR"> A partir da experi&amp;ecirc;ncia na condu&amp;ccedil;&amp;atilde;o da disciplina Usu&amp;aacute;rios da Informa&amp;ccedil;&amp;atilde;o e de a&amp;ccedil;&amp;otilde;es de extens&amp;atilde;o e de pesquisa desenvolvidas junto a usu&amp;aacute;rios de uma biblioteca itinerante, objetiva-se a reflex&amp;atilde;o sobre o relacionamento entre os estudos sistem&amp;aacute;ticos de usu&amp;aacute;rios da informa&amp;ccedil;&amp;atilde;o e o papel de media&amp;ccedil;&amp;atilde;o informacional. A fundamenta&amp;ccedil;&amp;atilde;o te&amp;oacute;rica baseia-se em defini&amp;ccedil;&amp;otilde;es de estudos de usu&amp;aacute;rios correntes na literatura da Ci&amp;ecirc;ncia da Informa&amp;ccedil;&amp;atilde;o bem como em autores que discutem o conceito de media&amp;ccedil;&amp;atilde;o. Descrevem-se, sucintamente, pesquisas (estudos de usu&amp;aacute;rio) realizadas em situa&amp;ccedil;&amp;otilde;es que privilegiam a fun&amp;ccedil;&amp;atilde;o de media&amp;ccedil;&amp;atilde;o. Tr&amp;ecirc;s estudos de usu&amp;aacute;rios s&amp;atilde;o mencionados: dois estudos qualitativos, em que entrevistas foram utilizadas como m&amp;eacute;todo de coleta de dados, para propiciar o desenvolvimento de a&amp;ccedil;&amp;otilde;es de media&amp;ccedil;&amp;atilde;o; e um estudo quantitativo, que visou avaliar os resultados obtidos por uma a&amp;ccedil;&amp;atilde;o de media&amp;ccedil;&amp;atilde;o j&amp;aacute; implementada. Conclui-se que a media&amp;ccedil;&amp;atilde;o pode ser facilitada pela pr&amp;aacute;tica de se realizar sistematicamente estudos de usu&amp;aacute;rios bem como pela ado&amp;ccedil;&amp;atilde;o de alguns m&amp;eacute;todos e t&amp;eacute;cnicas dos estudos de usu&amp;aacute;rios no cotidiano do trabalho do mediador. E ainda que, embora o trabalho do mediador esteja mudando devido &amp;agrave; mudan&amp;ccedil;a de suporte da informa&amp;ccedil;&amp;atilde;o (informa&amp;ccedil;&amp;atilde;o em suporte eletr&amp;ocirc;nico), sua fun&amp;ccedil;&amp;atilde;o de media&amp;ccedil;&amp;atilde;o permanece cada vez mais necess&amp;aacute;ria e deve ser cada vez mais privilegiada na forma&amp;ccedil;&amp;atilde;o do profissional. &amp;nbsp;</dc:description>
+	<dc:description xml:lang="en-US">Based on the experience of conducting the Information Users discipline in graduate courses and on extension and research activities developed with the users of a mobile library, the goal is to reflect on the relationship between the systematic study of information users and the role of mediation. The theoretical framework is based on the definitions of users and information behavior currently used in Information Science literature as well as on authors who discuss the concept of mediation. The article briefly describes surveys (user studies) performed in situations that emphasize the role of mediation. Three user studies are mentioned: two qualitative studies, in which interviews were used as data collection method, aiming at the development of mediation actions; and a quantitative study, which aims to evaluate the results of a mediation action already implemented. The study concludes that mediation can be facilitated by the practice of conducting systematic user studies as well as by the adoption of some methods and techniques of user studies in the mediator's daily work. And although the mediator's work is changing due to changes in information support (information in electronic media), its function of mediation remains increasingly necessary and should be more favored in the educational training of professionals.&amp;nbsp;</dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:date>2012-06-28</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42370</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v3i1p70-86</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 3, n. 1 (2012); 70-86</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42370/46041</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

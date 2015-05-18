@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:32:39Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42368">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42368</identifier>
+				<datestamp>2015-04-14T11:19:11Z</datestamp>
+				<setSpec>incid:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="pt-BR">Amnésia Organizacional: em Estudo de Caso Sobre a Memória na Administração Pública Federal</dc:title>
+	<dc:title xml:lang="en-US">Organizational Amnesia: a case study on memory in Brazilian Public Administration</dc:title>
+	<dc:creator>Santos, Aleksandra Pereira; Universidade de Brasília e Ministério do Planejamento, Orçamento e Gestão</dc:creator>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="pt-BR">memória organizacional, gestão do conhecimento, aprendizagem organizacional, administração pública e amnésia organizacional</dc:subject>
+	<dc:subject xml:lang="en-US">organizational memory, learning organization, knowledge management, public administration and organizational amnesia</dc:subject>
+	<dc:description xml:lang="pt-BR">Compreender as características da memória na administração pública mostra-se relevante para o entendimento do papel e da atuação do Estado brasileiro. Este texto buscou tal compreensão, a partir de estudo de caso da memória organizacional no Ministério do Planejamento, Orçamento e Gestão. Para tanto, buscou-se um referencial teórico integrando as Ciências da Informação e Administração, uma vez que o tema abrange teorias de gestão do conhecimento e aprendizagem organizacional. A análise de documentos e as entrevistas foram as técnicas de coleta de dados utilizadas. Foram analisados os aspectos relativos à percepção dos dirigentes sobre os processos de retenção, recuperação e uso de informações e/ou conhecimentos, evidenciando-se as barreiras culturais e técnicas. Os resultados apontam para a percepção da memória organizacional enquanto processo implícito, natural, em permanente desenvolvimento, composta de repositórios múltiplos não integrados, cuja fonte principal é o indivíduo.</dc:description>
+	<dc:description xml:lang="en-US">Knowing characteristics of the public administration memory is relevant to understanding the role of the Brazilian state. This is a case study on organizational memory at the Ministry of Planning, Budget and Administration. The theoretical framework integrates Information and Management Science, since the theme holds up Knowledge Management and Learning Organization theories. Documental analysis and interviews were techniques for data collection. Features related to the perception of management about processes of information and/or knowledge retention, recovery and use were analyzed. Cultural and technical barriers were revealed. The results pointed out to the perception of organizational memory as an implicit and natural process, in permanent development. This memory is composed by multiple and unintegrated repositories, which main source is the individual.&amp;nbsp;</dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2012-06-28</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42368</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v3i1p36-56</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 3, n. 1 (2012); 36-56</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42368/46039</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

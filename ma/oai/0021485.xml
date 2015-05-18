@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:31:10Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42348">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42348</identifier>
+				<datestamp>2015-04-14T11:19:51Z</datestamp>
+				<setSpec>incid:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">Rereading the final chapter of Understanding Media. A tribute to Marshall McLuhan on the centenary of his birth</dc:title>
+	<dc:title xml:lang="pt-BR">Relendo o último capítulo de Understanding media. Um tributo a Marshall McLuhan no centenário de seu nascimento</dc:title>
+	<dc:creator>Salarelli, Alberto; Universidade de Parma</dc:creator>
+	<dc:subject xml:lang="en-US"></dc:subject>
+	<dc:subject xml:lang="en-US">Marshall McLuhan; Media Theory; Network Society; Technopower</dc:subject>
+	<dc:subject xml:lang="pt-BR"></dc:subject>
+	<dc:subject xml:lang="pt-BR">Marshall McLuhan, Teoria da Media, Sociedade em Rede, Tecnopoder.</dc:subject>
+	<dc:description xml:lang="en-US">The article examines the arguments made by Marshall McLuhan in the last chapter of his book Understanding Media related to the impact of information technology on social organization. Written fifty years ago, they show today, with the advent of the network society, their full value by contributing to a real “McLuhan renaissance”. Particularly this essay points out that McLuhan was not at all optimistic and enthusiastic about the computer revolution but instead, he expressed a very strong concern about the growing power of technology. This worldview relates McLuhan’s thought to the theories of contemporary authors such as Lanier, Carr and Schirrmarcher.</dc:description>
+	<dc:description xml:lang="pt-BR">O artigo examina os argumentos de Marshall McLuhan no último capítulo de seu livro Understanding Media, relativos ao impacto da tecnologia da informação na organização social. Escritos há cinqüenta anos, esses argumentos revelam, hoje, com a realização da sociedade em rede, seu valor pleno, contribuindo para um verdadeiro “Renascimento McLuhan”. Em específico, o ensaio aponta que McLuhan não era absolutamente otimista ou entusiasta em relação à revolução digital, mas sim, pelo contrário, expressava uma profunda preocupação sobre o poder crescente da tecnologia. Essa visão do mundo coloca emrelação as reflexões de McLuhan com as teorias de autores contemporâneos tais como Lanier, Carr e Schirrmarcher.</dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2011-12-09</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/save-as</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42348</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v2i2p3-18</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 2, n. 2 (2011); 3-18</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42348/46019</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

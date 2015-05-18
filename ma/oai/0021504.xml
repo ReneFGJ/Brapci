@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:32:35Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42367">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42367</identifier>
+				<datestamp>2015-04-14T11:19:10Z</datestamp>
+				<setSpec>incid:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="pt-BR">Pós-fenomenologia e Ciência da Informação: aportes epistêmicos para acesso ao conhecimento</dc:title>
+	<dc:title xml:lang="en-US">Postphenomenology and Information Science: epistemics contributions to knowledge access</dc:title>
+	<dc:creator>Figueiredo, Márcia Feijão de; Colégio Pedro II. Mestre pelo PPGCI do IBICT/UFRJ-Facc.</dc:creator>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="pt-BR">Pós-Fenomenologia; Fenomenologia; Informação imagética</dc:subject>
+	<dc:subject xml:lang="en-US">Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="en-US">Postphenomenology; Phenomenology; Imagetic information</dc:subject>
+	<dc:description xml:lang="pt-BR">Apresenta estudos preliminares sobre o uso da Pós-Fenomenologia na Ciência da Informação, fundamentando o acesso ao conhecimento fornecido pela informação imagética produzida por tecnologias e disponibilizada na web. Descreve os principais elementos que ajudaram a desenvolver essa escola de pensamento e os autores da Fenomenologia que contribuíram para o seu desenvolvimento teórico, Husserl e Merleau-Ponty. Analisa o autor Don Ihde, um dos mais apontados na literatura sobre Pós-Fenomenologia e sua importância para os estudos que relacionam o acesso ao conhecimento mediado na relação homem-tecnologia-mundo, sobretudo numa perspectiva visual dentro da ciência. Aponta abordagens possíveis para estudos futuros que envolvam o uso de tecnologias de comunicação e informação (TICs) e o compartilhamento de informações imagéticas na web. </dc:description>
+	<dc:description xml:lang="en-US">Presents preliminary studies on the use of Postphenomenology in Information Science, supporting access to knowledge provided by imagetic information produced by different technologies and available on the web. Describes the main elements that helped build this school of thought and the authors of phenomenology who contributed to the development of the theory, Husserl and Merleau-Ponty. Analyses of the author Don Ihde, one of the most mentioned in the literature on Postphenomenology and its importance for studies that relate the mediated access to knowledge in the man-technology-world relationship, especially under a visual perspective in science. Points out possible approaches for future studies involving the use of information and communication technologies (ICTs) and imagetic information sharing on the web.</dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2012-06-28</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42367</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v3i1p21-35</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 3, n. 1 (2012); 21-35</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42367/46038</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

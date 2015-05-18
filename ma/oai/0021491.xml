@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:31:37Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42354">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42354</identifier>
+				<datestamp>2015-04-14T11:19:57Z</datestamp>
+				<setSpec>incid:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">Brazilian journals of public health: the issue of financing</dc:title>
+	<dc:title xml:lang="pt-BR">Periódicos brasileiros de saúde pública – a questão do financiamento</dc:title>
+	<dc:creator>Cuenca, Angela Maria Belloni; Faculdade de Saúde Publica - USP</dc:creator>
+	<dc:creator>Noronha, Daisy Pires; Escola de Comunicações e Artes da USP</dc:creator>
+	<dc:creator>Ueno, Helene Mariko; Escola de Artes, Ciências e Humanidades da USP</dc:creator>
+	<dc:creator>Kobayashi, Keilla M.; Faculdade de Saúde Pública da USP</dc:creator>
+	<dc:subject xml:lang="en-US">Comunicação científica</dc:subject>
+	<dc:subject xml:lang="en-US">Research Support as Topic; Journal Article; Scientific Journals; Evaluation; Public Health; Scientific research; Researchers; Scientific production</dc:subject>
+	<dc:subject xml:lang="pt-BR">Comunicação científica</dc:subject>
+	<dc:subject xml:lang="pt-BR">Apoio à Pesquisa; Financiamento; Artigos de Revista; Periódicos científicos; Avaliação; Saúde Pública; Pesquisa; Pesquisadores; Indicadores de produção científica</dc:subject>
+	<dc:description xml:lang="en-US">Descriptive study based on public health journals indexed in LILACS database in 2009. It´s based on the identification of funding sources for publication the journals (22) and scientific research reported by these journals (1529), in 2008. Most journals of public health relies on funding from federal agencies for their publication and about 30% of published articles come from some kind of research funding or research grants. CNPq and Capes are consecrated as the agencies that granted more financial aid for the production of journals. The journals internal financial aid have been valid subscriptions, sales of single issues, recovery of cost and expenses of the publication, among others. Maybe the open access to journal contents has been resulted in a decrease in paid subscriptions, which may have reflected negatively on their revenues. Studies about the identification of donors for the publication of Brazilian scientific journals and the development of research will allow us to establish the relationship between funding and quality.</dc:description>
+	<dc:description xml:lang="pt-BR">Estudo descritivo baseado nas revistas especializadas em saúde pública indexadas na base LILACS, em 2009. Trata da identificação das fontes de financiamento dos periódicos (22)  e da produção dos artigos por eles gerados (1529),  no ano de 2008. A maioria das revistas de saúde pública conta com algum tipo de financiamento de órgãos federais para sua publicação e cerca 30% dos artigos publicados citam financiamento à pesquisa ou bolsa de pesquisador. O CNPq e a Capes se consagram como as agências que mais concederam auxílio financeiro para produção  de revistas. Quanto às fontes de ajuda financeira internas, as revistas têm-se valido de assinaturas, venda de números avulsos e despesas de custo da publicação, entre outras. É possível o acesso aberto ao conteúdo das revistas possam ter refletido em diminuição das assinaturas pagas, o que pode ter repercutido negativamente em suas receitas. Estudos sobre as agências financiadoras para a publicação das revistas científicas brasileiras e para o desenvolvimento de pesquisas permitirá estabelecer relação entre financiamento e qualidade.</dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2011-12-09</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/save-as</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42354</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v2i2p101-110</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 2, n. 2 (2011); 101-110</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42354/46025</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

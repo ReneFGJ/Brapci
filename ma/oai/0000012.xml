@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://periodicos.puc-campinas.edu.br/seer/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T20:42:11Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:ojs.200.18.252.94:article/2929">http://periodicos.puc-campinas.edu.br/seer/index.php/transinfo/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:ojs.200.18.252.94:article/2929</identifier>
+				<datestamp>2015-05-07T19:07:30Z</datestamp>
+				<setSpec>transinfo:EN</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="pt-BR">Ritos de passagem e conhecimento: uma relação de cunho simbólico e cognitivo nas organizações</dc:title>
+	<dc:creator>Brasileiro, Fellipe Sá</dc:creator>
+	<dc:creator>Vieira, Fernando Augusto Alves</dc:creator>
+	<dc:creator>Helal, Diogo Henrique</dc:creator>
+	<dc:description xml:lang="pt-BR">Este artigo tem por objetivo analisar a relação existente entre os ritos de passagem inerentes à cultura organizacional e o processo de construção do conhecimento nos sujeitos. São descritas, inicialmente, as correntes teóricas que influenciam os estudos da cultura organizacional, bem como os conceitos que fundamentam o processo de apropriação da informação pelos sujeitos no sentido de evidenciar a dimensão simbólica dos ritos de passagem estabelecidos nas organizações e suas influências nos aspectos cognitivos que afetam a construção do conhecimento. Para tanto, utilizou-se como estratégia de análise a concepção de ritos de passagem adotada por Van Gennep e a dinâmica dos modelos organizadores do pensamento apresentada por Moreno e colaboradores. Observa que os valores e as crenças compartilhados pela organização a partir dos ritos de passagem são abstraídos, significados e organizados como informação de acordo com os valores centrais e crenças estabelecidas pelo sujeito ao longo da vida. Conclui-se que os ritos de passagem planejados e elaborados pelas organizações influenciam a construção de conhecimentos distintos nos sujeitos que, naturalmente, fogem das expectativas de homogeneização das organizações.Palavras-chave: Apropriação da informação. Construção do conhecimento. Cultura organizacional. Ritos de passagem.</dc:description>
+	<dc:publisher xml:lang="en-US">Transinformação</dc:publisher>
+	<dc:publisher xml:lang="es-ES">Transinformação</dc:publisher>
+	<dc:publisher xml:lang="pt-BR">Transinformação</dc:publisher>
+	<dc:date>2015-05-07</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type xml:lang="en-US">Peer-reviewed Article</dc:type>
+	<dc:type xml:lang="es-ES">Artículo revisado por pares</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://periodicos.puc-campinas.edu.br/seer/index.php/transinfo/article/view/2929</dc:identifier>
+	<dc:source xml:lang="en-US">Transinformação; v. 27, n. 2 (2015)</dc:source>
+	<dc:source xml:lang="es-ES">Transinformação; v. 27, n. 2 (2015)</dc:source>
+	<dc:source xml:lang="pt-BR">Transinformação; v. 27, n. 2 (2015)</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://periodicos.puc-campinas.edu.br/seer/index.php/transinfo/article/view/2929/1967</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

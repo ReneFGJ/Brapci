@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://periodicos.ufsc.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T20:48:57Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:periodicos.ufsc.br:article/61">https://periodicos.ufsc.br/index.php/eb/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:periodicos.ufsc.br:article/61</identifier>
+				<datestamp>2015-01-26T15:39:20Z</datestamp>
+				<setSpec>eb:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="pt-BR">A leitura e os canais intermediários de informação na formação continuada de professores universitários 10.5007/1518-2924.2000v5n10p1</dc:title>
+	<dc:creator>Rosemberg, Dulcinéa Sarmento; UFES, Vitória, ES</dc:creator>
+	<dc:subject xml:lang="pt-BR"></dc:subject>
+	<dc:subject xml:lang="pt-BR">Leitura; Professor universitário; Canais de informação; Formação continuada; University lectures, intermediate information channels, Access and use of information, Continuing education</dc:subject>
+	<dc:subject xml:lang="pt-BR"></dc:subject>
+	<dc:description xml:lang="en-US">This article discusses the role of intermediate information channels in continuing education, and shows that  reading is the most frequently used information channel of college and university lectures.</dc:description>
+	<dc:description xml:lang="pt-BR">Apresenta a leitura como o canal de informação mais utilizado pelos professores universitários, bem como discute o papel dos canais intermediários de informação no seu processo de formação continuada.</dc:description>
+	<dc:publisher xml:lang="pt-BR">Departamento de Ciência da Informação – UFSC</dc:publisher>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2000-01-01</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2000v5n10p1</dc:identifier>
+	<dc:identifier>10.5007/1518-2924.2000v5n10p1</dc:identifier>
+	<dc:source xml:lang="en-US">Encontros Bibli: revista eletrônica de biblioteconomia e ciência da informação; v. 5, n. 10 (2000); 1-10</dc:source>
+	<dc:source xml:lang="pt-BR">Encontros Bibli: revista eletrônica de biblioteconomia e ciência da informação; v. 5, n. 10 (2000); 1-10</dc:source>
+	<dc:source>1518-2924</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2000v5n10p1/5091</dc:relation>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

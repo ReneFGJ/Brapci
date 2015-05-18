@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:31:50Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42357">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42357</identifier>
+				<datestamp>2015-04-14T11:19:59Z</datestamp>
+				<setSpec>incid:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">Historical collections and school archives: limits and possibilities of research into the history of education</dc:title>
+	<dc:title xml:lang="pt-BR">Os Arquivos Escolares e sua Documentação: possibilidades e limites para a pesquisa em História da Educação</dc:title>
+	<dc:creator>Furtado, Alessandra Cristina; Universidade Federal da Grande Dourados</dc:creator>
+	<dc:subject xml:lang="en-US">História da Educação, Arquivologia</dc:subject>
+	<dc:subject xml:lang="en-US">School Archive; Documentation; Research; History of Education</dc:subject>
+	<dc:subject xml:lang="pt-BR">História da Educação, Arquivologia</dc:subject>
+	<dc:subject xml:lang="pt-BR">Arquivo Escolar. Documentos. Pesquisa. História da Educação.</dc:subject>
+	<dc:description xml:lang="en-US">The purpose of this article is to discuss the possibility to make archival materials available to researches as important sources for the History of Education. This discussion paper is based on a particular experience in archival research conducted at Colegio Nossa Senhora Auxiliadora in Ribeirao Preto, covering the period 1918 to 1961. Important events in the history of this School as well as in the History of Education and Education Policy in Brazil are represented by this time period. The discussion centered on archival materials housed at this School used the conceptual framework for analysis of the History, History of Education and Archival, among others. The Schools have been found to be important places to get access to information in many formats and from many sources about their archival material to better understand the learning process, the cultural education and, consequently, the History of Education. The findings of our Archival Research at Colegio Nossa Senhora Auxiliadora allowed us to examine important documentation for the study of the History of this Institution and its cultural education, as well as they showed the possibilities and limits of use of these documents for research in the History of Education. Furthermore, this particular archive as well as the archives of other schools can provide key elements as indicators to allow reflections on the various aspects such as the History of the Institution, the students enrolled in this School, the practices adopted by the School, and even the relations between the school and the surrounding community.</dc:description>
+	<dc:description xml:lang="pt-BR">O presente artigo tem como propósito discutir como os arquivos escolares podem constituir-se em locais importantes para a pesquisa em História da Educação. Trata-se de uma discussão baseada numa experiência de pesquisa empreendida acerca do arquivo do Colégio Nossa Senhora Auxiliadora, de Ribeirão Preto, no período compreendido entre 1918 e 1961. O recorte temporal corresponde a momentos significativos da história do Colégio, da História da Educação e da Política Educacional Brasileira. A discussão acerca do arquivo desse Colégio está aliada a um referencial teórico voltado para a História, História da Educação e Arquivologia, entre outros. As instituições escolares apresentam-se como espaços portadores de fontes de informações fundamentais para a formulação de pesquisas, interpretações e análises sobre elas próprias, as quais permitem a compreensão do processo de ensino, da cultura escolar e, consequentemente, da História da Educação. Na pesquisa empreendida sobre o Arquivo do Colégio Nossa Senhora Auxiliadora, foi possível localizar uma documentação importante para o estudo da história dessa instituição e de sua cultura escolar, bem como mostrar as possibilidades e os limites do uso desses documentos para a pesquisa em História da Educação. Apesar disto, esse arquivo em especial, como o de outras escolas, pode fornecer elementos significativos para a reflexão sobre o passado da instituição, das pessoas que a frequentaram, das práticas que nela circularam e, mesmo, sobre as relações que estabeleceu com o seu entorno.   </dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2011-12-12</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/save-as</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42357</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v2i2p145-159</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 2, n. 2 (2011); 145-159</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42357/46028</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

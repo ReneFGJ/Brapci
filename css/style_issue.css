@@ -1,0 +1,9 @@
+/* ISSUE - CSS */
+#issue_row 
+{
+    width: 250px;   
+    overflow: auto;    
+    height: 100%;
+    scrollbar-base-color:#ffeaff
+    border: 1px solid green;
+}

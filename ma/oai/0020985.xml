@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://periodicos.ufsc.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T20:49:28Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:periodicos.ufsc.br:article/163">https://periodicos.ufsc.br/index.php/eb/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:periodicos.ufsc.br:article/163</identifier>
+				<datestamp>2015-01-26T15:38:07Z</datestamp>
+				<setSpec>eb:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">New midias, citizenship and digital exclusion in the context of the information society</dc:title>
+	<dc:title xml:lang="pt-BR">Novas midias, cidadania e exclusão digital no contexto da sociedade da informação 10.5007/1518-2924.2004v9n18p125</dc:title>
+	<dc:creator>Mota, Francisca Rosaline Leite; UFAL - Maceió - AL</dc:creator>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação; Information Science; Biblioteconomia; Library Science</dc:subject>
+	<dc:subject xml:lang="pt-BR">Novas Mídias; Cidadania; Exclusão Digital; New Medias; Citizenship; Digital Exclusion</dc:subject>
+	<dc:subject xml:lang="pt-BR">L. Information technology and library technology</dc:subject>
+	<dc:description xml:lang="en-US">The article approaches relative questions to the role of the New Medias for the conquest of the Citizenship in the Information Society. It points some of the main factors that contribute to aggravate the Digital Exclusion and tell initiatives that objectify to promote the citizenship by means of the info-inclusion in Brazil, giving special emphasis to some experiences in the state of Ceará.</dc:description>
+	<dc:description xml:lang="pt-BR">O artigo aborda questões relativas ao papel das Novas Mídias para a conquista da Cidadania na chamada Sociedade da Informação. Aponta alguns dos principais fatores que contribuem para agravar a Exclusão Digital e relata iniciativas que objetivam promover a cidadania por meio da info-inclusão no Brasil, dando ênfase especial a algumas experiências no contexto cearense.</dc:description>
+	<dc:publisher xml:lang="pt-BR">Departamento de Ciência da Informação – UFSC</dc:publisher>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2004-01-01</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2004v9n18p125</dc:identifier>
+	<dc:identifier>10.5007/1518-2924.2004v9n18p125</dc:identifier>
+	<dc:source xml:lang="en-US">Encontros Bibli: revista eletrônica de biblioteconomia e ciência da informação; v. 9, n. 18 (2004); 125-138</dc:source>
+	<dc:source xml:lang="pt-BR">Encontros Bibli: revista eletrônica de biblioteconomia e ciência da informação; v. 9, n. 18 (2004); 125-138</dc:source>
+	<dc:source>1518-2924</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2004v9n18p125/5478</dc:relation>
+	<dc:coverage xml:lang="pt-BR">Brasil</dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:30:08Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42335">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42335</identifier>
+				<datestamp>2015-04-14T11:20:24Z</datestamp>
+				<setSpec>incid:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">BIBLON: platform to incentive literary reading to children</dc:title>
+	<dc:title xml:lang="pt-BR">BIBLON: plataforma de incentivo a leitura literária para crianças</dc:title>
+	<dc:creator>Furtado, Cassia Cordeiro; Universidade Federal do Maranhão/BR, Universidade de Aveiro/PT e Fundação de Amparo à Pesquisa e ao Desenvolvimento Científico e Tecnológico do Maranhão/BR</dc:creator>
+	<dc:creator>Oliveira, Lidia; Universidade de Aveiro e CETAC.MEDIA</dc:creator>
+	<dc:subject xml:lang="en-US">Ciência da Informação; Educação; Comunicação</dc:subject>
+	<dc:subject xml:lang="en-US">reading; writing; social networking; children's literature; Biblon</dc:subject>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação; Educação; Comunicação</dc:subject>
+	<dc:subject xml:lang="pt-BR">Leitura-Escrita, Redes Sociais, Literatura Infantil, Biblioteca Escolar, Biblon</dc:subject>
+	<dc:description xml:lang="en-US">With the breathtaking advance of TIC, and ultimately with web 2.0, there is very new phenomenon in relation to reading and literature, have a new generation of readers-writers, with features and contemporary needs and educational institutions, especially the library, must rethink their strategies in training readers in the Information Society. This paper describes research on the school library and the use of social media (social networking), in encouraging the practice of reading, writing, having as main objective to propose a model for constructing social network of readers and writers for the school community 1st cycle of basic education. In the empirical phase is being worked the platform Biblon, the community of the Agrupamento de Escolas de Aveiro, Portugal. As result it is expected to improve the quality and motivation for read-write, expand the presence of content in Portuguese in the web environment, enhance use computer Magalhães; contribute to the integration of TIC in school libraries, activities with child literature and creating an space of creation and interaction around the literary text.</dc:description>
+	<dc:description xml:lang="pt-BR">Com o avanço vertiginoso das TIC, e ultimamente com a web 2.0, presencia-se um novo fenômeno com relação à leitura e a literatura, têm-se uma nova geração de leitores-escritores, com características e necessidades contemporâneas e as instituições educacionais, em especial a biblioteca, devem repensar suas estratégias na formação de leitores na Sociedade da Informação. O presente artigo descreve  pesquisa sobre  a biblioteca escolar e o uso dos social media (redes sociais), no incentivo à prática da leitura-escrita,  tendo como objetivo principal propor um modelo de construção de rede social de leitores e escritores, para a comunidade  escolar do 1º ciclo do ensino básico.  Na fase empírica está sendo trabalhada a plataforma Biblon, pela comunidade do Agrupamento das Escolas de Aveiro, Portugal. Como resultado espera-se melhorar a qualidade e motivação para leitura-escrita; ampliar a presença de conteúdos na língua portuguesa no ambiente da web; potencializar o uso do computador Magalhães; contribuir para integração das TIC com as bibliotecas escolares, nas atividades com a literatura infantil e oportunizar espaço para criação e interação em torno do texto literário.</dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2011-06-07</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42335</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v2i1p68-85</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 2, n. 1 (2011); 68-85</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42335/46006</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

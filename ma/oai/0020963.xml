@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://periodicos.ufsc.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T20:49:20Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:periodicos.ufsc.br:article/272">https://periodicos.ufsc.br/index.php/eb/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:periodicos.ufsc.br:article/272</identifier>
+				<datestamp>2015-01-26T15:37:43Z</datestamp>
+				<setSpec>eb:RES</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">Dissertations abstracts</dc:title>
+	<dc:title xml:lang="pt-BR">Resumo de dissertações 10.5007/1518-2924.2005v10n20pii</dc:title>
+	<dc:creator>Encontros Bibli, Editor</dc:creator>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação; Information Science; Biblioteconomia; Library Science</dc:subject>
+	<dc:subject xml:lang="pt-BR"></dc:subject>
+	<dc:subject xml:lang="pt-BR"></dc:subject>
+	<dc:description xml:lang="pt-BR">ALMEIDA, Carlos Cândido de. O campo da ciência da informação: suas representações no discurso coletivo dos pesquisadores do campo no Brasil. Florianópolis, 2005. 395 p. Dissertação (Mestrado em Ciência da Informação) - Universidade Federal de Santa Catarina - UFSC, Florianópolis, 2005.  Texto na íntegra http://www.cin.ufsc.br/pgcin/CarlosAlmeida.pdf ARAÚJO, Nelma Camêlo de. Análise do uso efetivo da informação por empresários de microempresas alimentícias do estado de Minas Gerais. Florianópolis, 2005. 119 p. Dissertação (Mestrado em Ciência da Informação) - Universidade Federal de Santa Catarina - UFSC, Florianópolis, 2005.  Texto na íntegra http://www.cin.ufsc.br/pgcin/NelmaAraujo.pdf CASTRO, Gardenia de. Gestão do conhecimento em bibliotecas universitárias: proposta de modelo. 2005. 151 f. Dissertação (Mestrado em Ciência da Informação) - Programa de Pós-Graduação em Ciência da Informação da Universidade Federal de Santa Catarina, Florianópolis, 2005.  Texto na íntegra http://www.cin.ufsc.br/pgcin/GardeniaCastro.pdf CURTY, Renata Gonçalves. O fluxo da informação tecnológica no projeto de produtos em indústrias de alimentos. Florianópolis, 2005. 246 p. Dissertação (Mestrado em Ciência da Informação) - Universidade Federal de Santa Catarina - UFSC, Florianópolis, 2005.  Texto na íntegra http://www.cin.ufsc.br/pgcin/RenataCurty.pdf DE LUCCA FILHO, Vinicius. Estudo do fluxo de informações em centros de informações turísticas de Santa Catarina: Programa Portais do Lazer. Florianópolis, 2005. 132f. Dissertação (Mestrado em Ciência da Informação) - Universidade Federal de Santa Catarina, Florianópolis, 2005.  Texto na íntegra http://www.cin.ufsc.br/pgcin/ViniciusLucca.pdf LOPES, Marili lsensee. A Internet e a busca da informação em comunidades científicas. 2005. 176f. Dissertação (Mestrado em Ciência da Informação) - UniversidadeFederalde SantaCatarina, Florianópolis, 2005.  Texto na íntegra http://www.cin.ufsc.br/pgcin/MariliLopes.pdf PEREIRA, Eliane Aparecida Junckes. O perfil do bibliotecário da área de ciências da saúde em Santa Catarina. 2005. 113f. Dissertação (Mestrado em Ciência da Informação) - Programa de Pós-Graduação em Ciência da Informação. Universidade Federal de Santa Catarina, Florianópolis, 2005.  Texto na íntegra  http://www.cin.ufsc.br/pgcin/ElianePereira.pdf RASCHE, Francisca. Ética em bibliotecas públicas: representações de ética de profissionais da infonnação bibliotecários. Florianópolis, 2005. 280f. Dissertação (Mestrado em Ciência da Infonnação) - Programa de Pós-Graduação em Ciência da Informação. Universidade Federal de Santa Catarina, Florianópolis, 2005.  Texto na íntegra  http://www.cin.ufsc.br/pgcin/FranciscaRasche.pdf REIS, Margarida Maria de Oliveira. Acesso e uso do Portal de Periódicos CAPES pelos professores da Universidade Federal do Acre. Florianópolis, 2005. 102f. Dissertação (Mestrado em Ciência da Informação) - Universidade Federal de Santa Catarina, Florianópolis, 2005.  Texto na íntegra  http://www.cin.ufsc.br/pgcin/MargaridaReis.pdf</dc:description>
+	<dc:publisher xml:lang="pt-BR">Departamento de Ciência da Informação – UFSC</dc:publisher>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2007-11-06</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:format>application/pdf</dc:format>
+	<dc:format>application/pdf</dc:format>
+	<dc:format>application/pdf</dc:format>
+	<dc:format>application/pdf</dc:format>
+	<dc:format>application/pdf</dc:format>
+	<dc:format>application/pdf</dc:format>
+	<dc:format>application/pdf</dc:format>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2005v10n20pii</dc:identifier>
+	<dc:identifier>10.5007/1518-2924.2005v10n20pii</dc:identifier>
+	<dc:source xml:lang="en-US">Encontros Bibli: revista eletrônica de biblioteconomia e ciência da informação; v. 10, n. 20 (2005); ii</dc:source>
+	<dc:source xml:lang="pt-BR">Encontros Bibli: revista eletrônica de biblioteconomia e ciência da informação; v. 10, n. 20 (2005); ii</dc:source>
+	<dc:source>1518-2924</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2005v10n20pii/306</dc:relation>
+	<dc:relation>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2005v10n20pii/307</dc:relation>
+	<dc:relation>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2005v10n20pii/308</dc:relation>
+	<dc:relation>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2005v10n20pii/309</dc:relation>
+	<dc:relation>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2005v10n20pii/310</dc:relation>
+	<dc:relation>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2005v10n20pii/311</dc:relation>
+	<dc:relation>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2005v10n20pii/312</dc:relation>
+	<dc:relation>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2005v10n20pii/313</dc:relation>
+	<dc:relation>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2005v10n20pii/314</dc:relation>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:32:53Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42372">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42372</identifier>
+				<datestamp>2015-04-14T11:19:12Z</datestamp>
+				<setSpec>incid:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="pt-BR">Competência em Informação na Área da Saúde</dc:title>
+	<dc:title xml:lang="en-US">Information competence in the health area</dc:title>
+	<dc:creator>Cavalcante, Lídia Eugenia; Universidade Federal do Ceará</dc:creator>
+	<dc:creator>Costa, Rosane Maria; Universidade Federal do Ceará</dc:creator>
+	<dc:creator>Campos do Nascimento, Raimundo Cézar; Universidade Federal do Ceará</dc:creator>
+	<dc:creator>Souza Santos, Raquel Jenyffer; Universidade Federal do Ceará</dc:creator>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="pt-BR">Competência informacional, Acesso à informação, Pesquisa documentária em Saúde</dc:subject>
+	<dc:subject xml:lang="en-US">Information Science</dc:subject>
+	<dc:subject xml:lang="en-US">Information literacy, Access to information, Documentary research in health</dc:subject>
+	<dc:description xml:lang="pt-BR">Apresenta os resultados da pesquisa sobre compet&amp;ecirc;ncia informacional dos estudantes da &amp;aacute;rea da sa&amp;uacute;de, na Universidade Federal do Cear&amp;aacute;, objetivando analisar o comportamento informacional desse p&amp;uacute;blico e como compreendem o acesso &amp;agrave; informa&amp;ccedil;&amp;atilde;o mediada por computador no &amp;acirc;mbito da sa&amp;uacute;de para a realiza&amp;ccedil;&amp;atilde;o de pesquisa cient&amp;iacute;fica e produ&amp;ccedil;&amp;atilde;o de trabalhos acad&amp;ecirc;micos. O estudo foi realizado mediante a aplica&amp;ccedil;&amp;atilde;o de question&amp;aacute;rio para o referido grupo focal. Os resultados evidenciam que os participantes possuem bons conhecimentos no uso das ferramentas tecnol&amp;oacute;gicas e internet, por&amp;eacute;m demonstram dificuldades em rela&amp;ccedil;&amp;atilde;o ao uso dos reposit&amp;oacute;rios e das fontes especializadas de informa&amp;ccedil;&amp;atilde;o em sa&amp;uacute;de. Pode-se concluir que se faz necess&amp;aacute;ria a implanta&amp;ccedil;&amp;atilde;o de pol&amp;iacute;ticas e programas de compet&amp;ecirc;ncia em informa&amp;ccedil;&amp;atilde;o na Biblioteca de Ci&amp;ecirc;ncias da Sa&amp;uacute;de (BCS/UFC), de modo a ampliar o n&amp;iacute;vel de compreens&amp;atilde;o e uso competente da informa&amp;ccedil;&amp;atilde;o para a produ&amp;ccedil;&amp;atilde;o do conhecimento em sa&amp;uacute;de.</dc:description>
+	<dc:description xml:lang="en-US">The study presents the results of the assessment on information literacy of health students in the Federal University of Cear&amp;aacute;. This research aims to analyze the informational behavior of this group, and how they include access to computer-mediated information in health to carry out scientific research and production of academic work. The data was collected through a questionnaire applied to the group mentioned. The results show that the participants have good knowledge in the use of technological tools and the Internet, but they demonstrate difficulties in the use of repositories and sources of specialized information. The study concluded that it is necessary for to the librarians from the Library of Health Sciences to implement policies and programs of information literacy in order to increase the level of understanding and competent use of information for the production of health knowledge.</dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:date>2012-06-28</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42372</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v3i1p87-104</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 3, n. 1 (2012); 87-104</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42372/46043</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://periodicos.ufsc.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T20:48:48Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:periodicos.ufsc.br:article/351">https://periodicos.ufsc.br/index.php/eb/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:periodicos.ufsc.br:article/351</identifier>
+				<datestamp>2015-01-26T15:37:34Z</datestamp>
+				<setSpec>eb:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">Computerization and organization of the work in university libraries: compared study between Brazil, Mmozambique and South África</dc:title>
+	<dc:title xml:lang="pt-BR">Informatização e organização do trabalho em bibliotecas universitárias: estudo comparado entre Brasil, Moçambique e Africa do Sul 10.5007/1518-2924.2006v11nesp1p147</dc:title>
+	<dc:creator>Mangue, Manuel Valente; UFMG - Belo Horizonte - MG</dc:creator>
+	<dc:creator>Crivellari, Helena Maria Tarchi; UFMG - Belo Horizonte - MG</dc:creator>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação; Information Science; Biblioteconomia; Library Science</dc:subject>
+	<dc:subject xml:lang="pt-BR">Informatização de bibliotecas; Gestão de unidades de informação; Organização do processo de trabalho em biblioteca; Computerization of Libraries; Management of Information Units; Organization of the Work Process in the Library</dc:subject>
+	<dc:subject xml:lang="pt-BR">L. Information technology and library technology</dc:subject>
+	<dc:description xml:lang="en-US">The article, based on a comparative study between university libraries of some developing countries like Brazil, South-Africa and Mozambique, discusses the information process of these libraries, from an integrated angle, which includes, beyond the technological aspects, those related to the management of the process, the organization of the work and the qualification of the employees, treating them like equally importance. Although it represents a partial analysis, the data points at a direct relation between a technological adoption within these libraries and the economic, political and social macro-environment. It is also evident, that the technological adoption is a process endogenous to the institution and that every stage must go with the corresponding improvement of the administrative mechanics; if this doesn’t happen, the whole information unit will decline, even with the use of the most advanced technology.</dc:description>
+	<dc:description xml:lang="pt-BR">O artigo, baseado em estudo comparativo entre bibliotecas universitárias de alguns países em desenvolvimento (Brasil, África do Sul e Moçambique) discute o processo de informatização dessas bibliotecas a partir de um enfoque integrado, que inclui, além dos aspectos tecnológicos, os relacionados à gestão do processo, à organização do trabalho e à qualificação dos trabalhadores, tratando-os como igualmente relevantes. Embora represente uma análise parcial, os dados apontam para uma relação direta entre a adoção tecnológica nessas bibliotecas e o macro ambiente econômico, político e social em que estão inseridas. Fica também evidente que a adoção tecnológica é um processo endógeno à instituição e que cada fase deve ser acompanhada pelo correspondente aperfeiçoamento dos mecanismos administrativos, sob pena de involução, no caso, da unidade de informação como um todo, a despeito do uso da mais alta tecnologia.</dc:description>
+	<dc:publisher xml:lang="pt-BR">Departamento de Ciência da Informação – UFSC</dc:publisher>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2007-12-06</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2006v11nesp1p147</dc:identifier>
+	<dc:identifier>10.5007/1518-2924.2006v11nesp1p147</dc:identifier>
+	<dc:source xml:lang="en-US">Encontros Bibli: revista eletrônica de biblioteconomia e ciência da informação; Especial - primeira do primeiro semestre de 2006: VI ENANCIB; 147-163</dc:source>
+	<dc:source xml:lang="pt-BR">Encontros Bibli: revista eletrônica de biblioteconomia e ciência da informação; Especial - primeira do primeiro semestre de 2006: VI ENANCIB; 147-163</dc:source>
+	<dc:source>1518-2924</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>https://periodicos.ufsc.br/index.php/eb/article/view/1518-2924.2006v11nesp1p147/419</dc:relation>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

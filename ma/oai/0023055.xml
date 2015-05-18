@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://revista.ibict.br/cienciadainformacao/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:37:38Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:ojs.ibict.ciinf:article/2316">http://revista.ibict.br/cienciadainformacao/index.php/p2pinovacao/oai/</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:ojs.ibict.ciinf:article/2316</identifier>
+				<datestamp>2015-04-30T00:02:22Z</datestamp>
+				<setSpec>p2pinovacao:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="pt-BR">AS INSTRUÇÕES AOS AUTORES PODEM ESTIMULAR O ACESSO ABERTO NO BRASIL?</dc:title>
+	<dc:creator>Reis, Juliana Gonçalves</dc:creator>
+	<dc:creator>Kuramoto, Helio</dc:creator>
+	<dc:creator>Aventurier, Pascal</dc:creator>
+	<dc:creator>Murtinho, Rodrigo</dc:creator>
+	<dc:description xml:lang="pt-BR">Um recurso imprescindível ao desenvolvimento da Ciência Aberta é ter padrões mínimos de informação sobre Política de Acesso Aberto nas instruções aos autores. Foram analisadas n=93 instruções aos autores de periódicos de Ciências da Saúde da Coleção SciELO Brasil.  Observou-se que os periódicos estão disponíveis na Web, possuem ISSN Versão online, não contemplam informações divulgação em recursos digitais, refletem o modelo impresso em suas diretrizes, não informam sobre a disseminação da produção científica por meio de redes sociais, revistas secundárias e repositórios institucionais ou temáticos.  A ausência de tais estímulos nas instruções aos autores não apoia as Políticas de Acesso Aberto. INSTRUCTIONS TO AUTHORS CAN ENCOURAGE THE OPEN ACCESS IN BRAZIL?AbstractAn essential resource for the development of the Open Science is to have minimum standards of information about Open Access Policy in the guidelines. Were analyzed n = 93 instructions to journal authors of Health Sciences Collection SciELO Brazil. It was observed that the journals are available on the web, have ISSN online version, does not include disclosure information in digital resources, reflect the printed pattern in its guidelines, do not report on the dissemination of scientific production through social networks, secondary journals and repositories institutional or thematic. The absence of such stimuli in the guidelines does not support the Open Access Policies.</dc:description>
+	<dc:publisher xml:lang="pt-BR">P2P &amp; INOVAÇÃO</dc:publisher>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2015-03-02</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://revista.ibict.br/cienciadainformacao/index.php/p2pinovacao/article/view/2316</dc:identifier>
+	<dc:source xml:lang="pt-BR">P2P &amp; INOVAÇÃO; v. 1, n. 2 (2015): P2P &amp; inovação; 54-59</dc:source>
+	<dc:source>2358-7814</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://revista.ibict.br/cienciadainformacao/index.php/p2pinovacao/article/view/2316/1858</dc:relation>
+	<dc:rights xml:lang="0">Direitos autorais 2015 P2P &amp; INOVAÇÃO</dc:rights>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

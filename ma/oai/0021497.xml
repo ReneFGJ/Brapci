@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:32:04Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42360">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42360</identifier>
+				<datestamp>2015-04-14T11:20:01Z</datestamp>
+				<setSpec>incid:REL</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">Tibério Village: a patrimony of the city in transformation. Photographic Documentation and the Information Organization from the photographic collection of the Periodical of the Village of Ribeirão Preto – the month’s memory of a city</dc:title>
+	<dc:title xml:lang="pt-BR">Vila Tibério: um patrimônio da cidade em transformação. Documentação fotográfica e a Organização da Informação a partir do acervo do Jornal da Vila de Ribeirão Preto – a memória mensal de uma cidade</dc:title>
+	<dc:creator>Marcussi, Elaine; Escola de Enfermagem de Ribeirão Preto - EERP/USP.</dc:creator>
+	<dc:creator>Espírito Santo, Sílvia Maria do; Docente da Faculdade de Filosofia Ciências e Letras de Ribeirão Preto da Universidade de São Paulo.</dc:creator>
+	<dc:subject xml:lang="en-US">Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="en-US">Photograph; Tibério Village; Periodical of the Village; Information Science; Data base</dc:subject>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="pt-BR">Fotografia, Vila Tibério, Jornal da Vila, Ciência da Informação, Base de dados</dc:subject>
+	<dc:description xml:lang="pt-BR">Este artigo visa estudar as raízes de um bairro da cidade de Ribeirão Preto, a Vila Tibério, através do estudo do acervo fotográfico do Jornal da Vilasob a responsabilidade do jornalista Fernando Braga. A proposta apresentada baseia-se no desenvolvimento de uma base de dados informatizada a partir deste acervo, que garanta, do ponto de vista documentário, o devido tratamento ao mesmo. Bem como proporciona uma aproximação do curso de Bacharelado em Ciências da Informação e da Documentação com a história e comunidade locais, a fim de garantir a continuidade do tratamento ao acervo documental fotográfico da Vila Tibério. Além disso, acompanha a construção do Centro de Documentação e Memória da Vila Tibério. A metodologia contemplou a utilização de bibliografia produzida por áreas do conhecimento tangentes aos campos da Ciência da Informação tais como: História, História Oral, Estudos Culturais e Ciências Sociais no sentido de aplicar, no momento da análise dos documentos fotográficos, todo o conhecimento acumulado que pudesse contribuir para elucidar-lhes o significado, as lacunas deixadas pelo tempo possíveis de serem interpretados a partir dos documentos. O software proposto para a construção da base de dados do acervo fotográfico da Vila Tibério foi o software livre PostgreSQL, que, além de gratuito é bastante eficiente no que se refere a gestão de acervos fotográficos e capaz de disponibilizá–los via rede mundial de computadores (Internet). </dc:description>
+	<dc:description xml:lang="en-US">This article aims at to study the roots of a quarter of the city of Ribeirão Preto, the Tibério Village, through the study of the photographic collection of the Periodical of the Village under the responsibility of the journalist Fernando Braga. The proposal presented is based on the development of an informatized data base from this collection, that guarantees, of the documentary point of view, the had treatment the same. As well as it provides to an approach of the course of Graduation in Information Science and of the Documentation with the local history and community, in order to guarantee the continuity of the treatment to the photographic documentary collection of the Tibério Village. Moreover, it folloies the construction of the Documentation and Memory’s Center of the Tibério Village. The methodology contemplated the bibliography use produced for tangent areas of the knowledge to the fields of the Information Science such as: History, Verbal History, Cultural Studies and Social Sciences in the direction to apply, at the moment of the analysis of photographic documents, all the accumulated knowledge that could contribute to elucidate the meaning to them, the gaps left for the time possible to be interpreted to break documents. The software considered for the construction of the photographic collection’s data base of the Tibério Village was the free software PostgreSQL, that, beyond gratuitous is sufficiently efficient with respect to management of photographic collection and able to available them to theWorld Wide Web (Internet).</dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2011-12-12</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/save-as</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42360</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v2i2p189-207</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 2, n. 2 (2011); 189-207</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42360/46031</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

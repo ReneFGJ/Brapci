@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:30:21Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42337">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42337</identifier>
+				<datestamp>2015-04-14T11:20:26Z</datestamp>
+				<setSpec>incid:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">Bibliometric and scientometric analyses: challenges for specialists working in the field</dc:title>
+	<dc:title xml:lang="pt-BR">Análise bibliométrica e cientométrica: desafios para especialistas que atuam no campo</dc:title>
+	<dc:creator>da Silva, Márcia Regina; Departamento de Educação, Informação e Comunicação
+Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto
+
+Universidade de São Paulo</dc:creator>
+	<dc:creator>Hayashi, Carlos Roberto Massao; Departamento de Ciência da Informação
+Universidade Federal de São Carlos</dc:creator>
+	<dc:creator>Hayashi, Maria Cristina Piumbato Innocentini; Departamento de Ciência da Informação
+Universidade Federal de São Carlos</dc:creator>
+	<dc:subject xml:lang="en-US">Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="en-US">bibliometrics; scientometrics; bibliometric analysis</dc:subject>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação</dc:subject>
+	<dc:subject xml:lang="pt-BR">Análise Bibliométrica, Competências, Profissionais da Informação</dc:subject>
+	<dc:description xml:lang="en-US">Bibliometrics and scientometrics apply quantitative methods for statistical publications and scientific activities. Currently, researchers, information specialists and librarians as well as laboratories, directors of research, universities, governments, utilize techniques and scientometric and bibliometric methods to evaluate the scientific activities. This article discusses the use of bibliometrics and scientometrics by information professionals and specialists and aims to devise and propose a set of requirements for analysis of bibliometric and scientometric analysis. From the methodological point of view, the study is based on several areas of Information Science and Sociology of Science, which were mandatory in search of theories and explanatory models, as well as the convergent and divergent views existing within the study of the metric information. The text is organized into three parts and begins by presenting a historical and conceptual overview of bibliometrics and scientometrics. After that are focused in experts involved in conducting bibliometric and scientometric analysis: librarians and researchers. Finally, we present a set of requirements to perform scientometric and bibliometric analysis, formulated from the perspective that relates the different users of this methodology and procedures necessary for its realization. The findings highlight the need for greater interaction between the various specialists involved in conducting a bibliometric analysis in view of the quality of the studies.</dc:description>
+	<dc:description xml:lang="pt-BR"> A bibliometria e a cientometria aplicam métodos quantitativos para análises estatísticas de publicações e atividades científicas. Na atualidade, pesquisadores, especialistas em informação, bibliotecários e também laboratórios,diretores de pesquisa, universidades e governos, utilizam técnicas e métodos bibliométricos e cientométricos para avaliar as atividades científicas.Esse artigo discute a utilização da bibliometria e cientometria por profissionais da informação e especialistas e tem o objetivo de refletir e propor um conjunto de requisitos necessários para realização de análises bibliométricas e cientométricas. Do ponto de vista metodológico, o estudo está baseado na literatura das áreas da Ciência da Informação e da Sociologia da Ciência, que foram compulsadas em busca de teorias e modelos explicativos, bem como sobre as posições divergentes e convergentes existentes no campo dos estudos métricos da informação. O texto está organizado em três partes e inicia pela apresentação de um panorama histórico-conceitual da bibliometria e cientometria. Em seguida, são focalizados os especialistas envolvidos na realização de análise bibliométricas e cientométricas: os bibliotecários e os pesquisadores. Por fim, é apresentado um conjunto de requisitos para a realização de análises bibliométricas e cientométricas, formulados a partir da perspectiva que relaciona os diferentes usuários dessa metodologia e os procedimentos necessários para a sua realização. As conclusões apontam a necessidade de uma maior interação entre os diferentes especialistas envolvidos na realização de análises bibliométricas tendo em vista a qualidade dos estudos realizados. </dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2011-06-09</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42337</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v2i1p110-129</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 2, n. 1 (2011); 110-129</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42337/46008</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

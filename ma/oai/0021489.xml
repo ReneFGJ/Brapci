@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:31:28Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42352">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42352</identifier>
+				<datestamp>2015-04-14T11:19:53Z</datestamp>
+				<setSpec>incid:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">The &quot;anatomy as destiny&quot; to &quot;cross borders&quot;: gender and sexuality in the world of Almodóvar</dc:title>
+	<dc:title xml:lang="pt-BR">Da “anatomia como destino” ao “cruzamento das fronteiras”: gênero e sexualidade no mundo de Almodóvar</dc:title>
+	<dc:creator>Nascimento, Marcos</dc:creator>
+	<dc:creator>Fonseca, Vanessa</dc:creator>
+	<dc:subject xml:lang="en-US"></dc:subject>
+	<dc:subject xml:lang="en-US">Gender; Sexuality; Femininity; Masculinity; Cinema</dc:subject>
+	<dc:subject xml:lang="pt-BR"></dc:subject>
+	<dc:subject xml:lang="pt-BR">Gênero, Sexualidade, Feminilidade, Masculinidade, Cinema.</dc:subject>
+	<dc:description xml:lang="en-US">This article intends to propose a reflection on the process of building, negotiation and reconstruction of femininity and masculinity as gender constructions. Inspired by the plots presented in some films of Pedro Almodóvar's work, the authors intend to toast the readers with a critical reflection on the crystallization of the boundaries between what we conventionally call &quot;feminine&quot; and &quot;masculine.&quot;</dc:description>
+	<dc:description xml:lang="pt-BR"> Esse artigo pretende propor uma reflexão sobre o processo de construção, negociação e reconstrução de feminilidades e masculinidades como construções de gênero. Inspirado nas tramas apresentadas em alguns filmes da obra de Pedro Almodóvar, os autores pretendem brindar os leitores com uma reflexão crítica sobre a cristalização das fronteiras entre o que convencionalmente denominamos de “feminino” e “masculino”.</dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2011-12-13</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/save-as</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42352</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v2i2p67-76</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 2, n. 2 (2011); 67-76</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42352/46023</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

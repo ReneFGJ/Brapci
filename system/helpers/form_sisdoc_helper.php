@@ -24,6 +24,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 $dd = array();
 
+function load_page($url) {
+	$options = array(CURLOPT_RETURNTRANSFER => true, // return web page
+	CURLOPT_HEADER => false, // don't return headers
+	CURLOPT_FOLLOWLOCATION => true, // follow redirects
+	CURLOPT_ENCODING => "", // handle all encodings
+	CURLOPT_USERAGENT => "spider", // who am i
+	CURLOPT_AUTOREFERER => true, // set referer on redirect
+	CURLOPT_CONNECTTIMEOUT => 120, // timeout on connect
+	CURLOPT_TIMEOUT => 120, // timeout on response
+	CURLOPT_MAXREDIRS => 10, // stop after 10 redirects
+	);
+
+	$ch = curl_init($url);
+	curl_setopt_array($ch, $options);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	$content = curl_exec($ch);
+	$err = curl_errno($ch);
+	$errmsg = curl_error($ch);
+	$header = curl_getinfo($ch);
+	curl_close($ch);
+
+	$header['errno'] = $err;
+	$header['errmsg'] = $errmsg;
+	$header['content'] = $content;
+	return $header;
+}
+
 function strzero($ddx, $ttz) {
 	$ddx = round($ddx);
 	while (strlen($ddx) < $ttz) { $ddx = "0" . $ddx;
@@ -66,6 +93,15 @@ function array_to_object($array) {
  * Rene
  */
 
+function stodbr($data = 0) {
+	if ($data < 19100101) {
+		return ('');
+	} else {
+		$dt = substr($data, 6, 2) . '/' . substr($data, 4, 2) . '/' . substr($data, 0, 4);
+		return ($dt);
+	}
+}
+
 function form_sisdoc_getpost() {
 	global $dd, $acao;
 
@@ -102,21 +138,25 @@ function post_security($s) {
 
 function db_read($rlt) {
 	global $dba, $dbn;
-	if (!isset($dba)) { $dba = array(); }
-	
+	if (!isset($dba)) { $dba = array();
+	}
+
 	/* */
-	if (count($rlt) == 0) { return (FALSE); }
-	
+	if (count($rlt) == 0) {
+		return (FALSE);
+	}
+
 	/* */
-	if (!isset($dbn)) { $dbn = 0; }
-	
+	if (!isset($dbn)) { $dbn = 0;
+	}
+
 	$row = object_to_array($rlt[0]);
 
 	$keys = array_keys($row);
 	$key = $keys[0];
 
 	if ((!isset($dba[$key])) or ($dbn == 0)) {
-		 $dba[$key] = 0;
+		$dba[$key] = 0;
 	} else {
 		$dba[$key] = $dba[$key] + 1;
 	}
@@ -152,6 +192,65 @@ function load_file_local($file) {
 /* Funcao */
 function UpperCaseSQL($d) {
 	$d = strtoupper($d);
+	$d = troca($d,'ç','C');
+	$d = troca($d,'Ç','C');
+	$d = troca($d,'ñ','N');
+	$d = troca($d,'Ñ','N');
+	
+	$d = troca($d,'ã','A');
+	$d = troca($d,'ä','A');
+	$d = troca($d,'à','A');
+	$d = troca($d,'á','A');
+	$d = troca($d,'â','A');
+	
+	$d = troca($d,'Ã','A');
+	$d = troca($d,'Ä','A');
+	$d = troca($d,'À','A');
+	$d = troca($d,'Á','A');
+	$d = troca($d,'Â','A');	
+
+	$d = troca($d,'ë','E');
+	$d = troca($d,'è','E');
+	$d = troca($d,'é','E');
+	$d = troca($d,'ê','E');
+
+	$d = troca($d,'Ë','E');
+	$d = troca($d,'É','E');
+	$d = troca($d,'É','E');
+	$d = troca($d,'Ê','E');
+
+	$d = troca($d,'ï','I');
+	$d = troca($d,'ì','I');
+	$d = troca($d,'í','I');
+	$d = troca($d,'î','I');
+
+	$d = troca($d,'Ï','I');
+	$d = troca($d,'Ì','I');
+	$d = troca($d,'Í','I');
+	$d = troca($d,'Î','I');
+
+	$d = troca($d,'õ','O');
+	$d = troca($d,'ö','O');
+	$d = troca($d,'ò','O');
+	$d = troca($d,'ó','O');
+	$d = troca($d,'ô','O');
+
+	$d = troca($d,'Õ','O');
+	$d = troca($d,'Ö','O');
+	$d = troca($d,'Ò','O');
+	$d = troca($d,'Ó','O');
+	$d = troca($d,'Ô','O');
+
+	$d = troca($d,'ü','U');
+	$d = troca($d,'ù','U');
+	$d = troca($d,'ú','U');
+	$d = troca($d,'û','U');
+
+	$d = troca($d,'Ü','U');
+	$d = troca($d,'Ù','U');
+	$d = troca($d,'Ú','U');
+	$d = troca($d,'Û','U');
+
 	return $d;
 }
 
@@ -170,16 +269,19 @@ class form {
 	var $see = false;
 	var $new = false;
 
+	var $row_view = '';
+	var $row_edit = '';
+	var $offset = 30;
 }
 
 /* Paginacao */
-function npag($npage = 1, $tot = 10, $offset = 20) {
+function npag($obj, $npage = 1, $tot = 10, $offset = 20) {
 	$page = uri_string();
 	$pagm = $tot;
 
 	/* algoritimo */
 	$page = substr($page, 0, strpos($page, '/'));
-	$link = base_url() . $page . '/row';
+	$link = $obj->row;
 
 	$pagi = $npage;
 	$pagf = $npage + 10;
@@ -289,7 +391,7 @@ if (!function_exists('form_edit')) {
 
 	function row($obj, $pag = 1) {
 		$start = round($pag);
-		$offset = 15;
+		$offset = $obj->offset;
 		$start = $pag * $offset;
 		$CI = &get_instance();
 
@@ -323,6 +425,10 @@ if (!function_exists('form_edit')) {
 			/* campos da consulta */
 			$fld .= ', ' . $fd[$r];
 		}
+		if ($obj->edit==True)
+			{
+				$sh .= '<th>action</th>';
+			}
 		$sh .= '</tr></thead>';
 
 		/* Recupera dados */
@@ -363,20 +469,27 @@ if (!function_exists('form_edit')) {
 		$total = $row -> total;
 
 		/* mostra */
+		$start_c = ($start - $offset);
+		if ($start_c < 1) { $start_c = 1;
+		}
+
 		$sql = "select $fld from " . $tabela . ' ' . $wh;
 		$sql .= " order by " . $fd[1];
-		$sql .= " limit " . ($start - $offset) . " , " . $offset;
+		$sql .= " limit " . $start_c . " , " . $offset;
 		$query = $CI -> db -> query($sql);
 		$data = '';
 
 		/* Metodo de chamada */
 		$url_pre = uri_string();
 		$url_pre = substr($url_pre, 0, strpos($url_pre, '/')) . '/view';
+		
+		$url_pre = $obj->row_view;
 
 		foreach ($query->result_array() as $row) {
 			/* recupera ID */
 			$flds = trim($fd[0]);
 			$id = $row[$flds];
+			
 			/* mostra resultado da query */
 			$data .= '<tr>';
 			for ($r = 1; $r < count($fd); $r++) {
@@ -398,7 +511,7 @@ if (!function_exists('form_edit')) {
 
 				/* see */
 				if ($see == TRUE) {
-					$link = '<A HREF="' . base_url() . $url_pre . '/' . $id . '/' . checkpost_link($id) . '">';
+					$link = '<A HREF="' . $url_pre . '/' . $id . '/' . checkpost_link($id) . '">';
 					$linkf = '</A>';
 				} else {
 					$link = '';
@@ -406,6 +519,11 @@ if (!function_exists('form_edit')) {
 				}
 				$data .= chr(15) . '<td ' . $mskm . '>' . $link . trim($row[$flds]) . $linkf . '</td>';
 			}
+			if ($obj->edit==True)
+				{
+				$idr = trim($row[$fd[0]]);
+				$data .= chr(15) . '<td ' . $mskm . '><A HREF="'.$obj->row_edit.'/'.$idr.'/'.checkpost_link($idr).'"><img src="'.base_url('/img/icone_edit.gif').'" border=0 height="16"></td>';	
+				}
 			$data .= '</tr>' . chr(13) . chr(10);
 		}
 
@@ -418,7 +536,7 @@ if (!function_exists('form_edit')) {
 
 		$total_page = (int)($total / $offset) + 1;
 
-		$pags = npag($pag, $total_page, $offset);
+		$pags = npag($obj, $pag, $total_page, $offset);
 
 		return ($pags . $tela);
 	}
@@ -549,8 +667,13 @@ if (!function_exists('form_edit')) {
 			$saved = form_save($obj);
 			if ($saved == 1) {
 				/* Redireciona */
-				$url_pre = uri_string();
-				$url_pre = substr($url_pre, 0, strpos($url_pre, '/')) . '/row';
+				if (strlen($obj->row) > 0)
+					{
+						$url_pre = $obj->row;
+					} else {
+						$url_pre = uri_string();
+						$url_pre = substr($url_pre, 0, strpos($url_pre, '/')) . '/row';
+					}	
 				redirect($url_pre);
 				//redirect($link, 'location', 301);
 			}

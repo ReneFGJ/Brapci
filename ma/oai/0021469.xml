@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.revistas.usp.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-05-17T21:29:59Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:www.revistas.usp.br:article/42333">http://www.revistas.usp.br/incid/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:www.revistas.usp.br:article/42333</identifier>
+				<datestamp>2015-04-14T11:20:23Z</datestamp>
+				<setSpec>incid:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="pt-BR">Movimentos de Espinosa e(m) Pêcheux</dc:title>
+	<dc:title xml:lang="en-US">Espinosa's movements in Pêcheux</dc:title>
+	<dc:creator>Nova Cruz, Denise Viuniski da; Universidade do Vale do Itajaí.</dc:creator>
+	<dc:creator>Romão, Lucilia Maria Sousa; FFCLRP - USP</dc:creator>
+	<dc:subject xml:lang="pt-BR">Análise do discurso</dc:subject>
+	<dc:subject xml:lang="pt-BR">Discurso, Espinosa, Pêcheux</dc:subject>
+	<dc:subject xml:lang="en-US">Análise do discurso</dc:subject>
+	<dc:subject xml:lang="en-US">discourse; Espinosa; Pêcheux</dc:subject>
+	<dc:description xml:lang="en-US">This paper aims to review [re-visit] the trajectory of French Discourse Analysis, taking as its point of departure (and arrival) the explicit citation about Espinosa made in Mexico in November 1977, by Michel Pêcheux during the symposium: The discourse policy: theory and analysis. Having as background Pecheux instigating provocations and remarks, during his speech entitled Remontons de Foucault à Spinoza we seek to rescue philosophical contributions of Spinoza's theory of discourse, especially in conceptualization of heterogeneities, as well as highlight the different understandings of ideology in the discourse according to the two most important theoretical for this area of knowledge: Michel Foucault and Michel Pêcheux.</dc:description>
+	<dc:description xml:lang="pt-BR"> O objetivo deste trabalho é revis[it]ar a trajetória da Análise do Discurso francesa, tomando como ponto de partida (e de chegada) a citação explícita à Espinosa na comunicação proferida no México, em novembro de 1977, por Michel Pêcheux durante o simpósio: O discurso  político: teorias e análises.  Tendo como pano de fundo as provocações e as observações instigantes de Pêcheux na comunicação intitulada Remontemos de Foucault a Spinoza, busca-se marcar as contribuições filosóficas de Espinosa à teoria do discurso, especialmente na conceituação das heterogeneidades, bem como salientar as diferentes concepções do termo ideologia produzem efeitos na formalização de Michel Pêcheux sobre a noção de interpelação.  </dc:description>
+	<dc:publisher xml:lang="pt-BR">Universidade de São Paulo. Faculdade de Filosofia, Ciências e Letras de Ribeirão Preto</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2011-06-02</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>http://www.revistas.usp.br/incid/article/view/42333</dc:identifier>
+	<dc:identifier>10.11606/issn.2178-2075.v2i1p31-46</dc:identifier>
+	<dc:source xml:lang="pt-BR">InCID: Revista de Ciência da Informação e Documentação; v. 2, n. 1 (2011); 31-46</dc:source>
+	<dc:source>2178-2075</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>http://www.revistas.usp.br/incid/article/view/42333/46004</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

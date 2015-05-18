@@ -1,6 +1,25 @@
 <?php 
 class journals extends CI_model {
 	
+	function row($obj) {
+		$obj -> fd = array('id_jnl', 'jnl_nome', 'jnl_tipo', 'jnl_issn_impresso');
+		$obj -> lb = array('ID', 'Nome do autor', 'Tipo', 'ISSN');
+		$obj -> mk = array('', 'L', 'C', 'C');
+		return ($obj);
+	}
+	
+
+	/* Dados CP*/
+	function cp() {
+		$cp = array();
+		array_push($cp, array('$H', 'id_jnl', '', True, True));
+		array_push($cp, array('$S100', 'jnl_nome', 'Nome de citação', False, True));
+
+		/* Botao */
+		array_push($cp, array('$B8', '', 'Gravar >>>', False, True));
+		return ($cp);
+	}
+	
 	function le($id=0)
 		{
 			$sql = "select * from brapci_journal
@@ -10,8 +29,7 @@ class journals extends CI_model {
 					where id_jnl = ".$id."
 					order by jtp_descricao, jnl_nome
 			 ";
-			$rlt = $this->db->query($sql);
-			$rlt = $rlt->result();
+			$rlt = db_query($sql);
 			$line = db_read($rlt);
 			
 			if (strlen(trim($line['jnl_issn_eletronico']))==0) { $line['jnl_issn_eletronico'] = '<font color="grey">não cadastrado</font>'; }

@@ -22,6 +22,7 @@ class article extends CI_Controller {
 		global $dd;
 		$this->load->view("brapci/article");
 	}
+	
 	function view($id='',$chk='') {
 		global $dd;
 		
