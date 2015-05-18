@@ -1,6 +1,8 @@
 <?php
 $edit_link1 = '<img src="'.base_url('img/icone_edit.gif').'" height="16" id="titles">';
 
+$edit_link2 = '<img src="'.base_url('img/icone_edit.gif').'" height="16" id="authors">';
+
 $edit_link4 = '<img src="'.base_url('img/icone_edit.gif').'" height="16" id="abstract1">';
 $edit_link5 = '<img src="'.base_url('img/icone_edit.gif').'" height="16" id="abstract2">';
 
@@ -77,7 +79,44 @@ echo '</div>';
 
 echo '<div id="authors">';
 echo $author;
+
+echo $edit_link2;
 echo '</div>';
+
+/* Form textarea titulo 
+ * 
+ * AUTHORS
+ * 
+ * 
+ * 
+ * */
+echo '<div id="author_id" style="display: none;">';
+
+/* Open form */
+echo form_open('admin/article_view/'.$id_ar.'/'.checkpost_link($id_ar));
+
+/* Hidden */
+$data = array('dd8'  => 'AUTHOR');
+echo form_hidden($data);
+
+/* Fieldset */
+$option = array('class'=>'s96 ml5 pad5');
+echo form_fieldset('AUTHOR',$option);
+
+/* Original title */
+echo form_label('Authors').'<BR>';
+$fld = Array ("name" => "dd10", "cols" => "80", "rows" => 5, 'value'=> $authores_row,'class'=>'fullscreen');
+echo form_textarea($fld);
+echo '<BR>';
+
+/* Submit button */
+echo '<BR>';
+echo form_submit('acao', 'save >>');
+
+echo form_close();
+echo '</div>';
+/* */
+
 
 echo '<div id="texto">';
 
@@ -205,6 +244,9 @@ echo '<td width="50%">
 		});
 	$("#abstract2").click(function() {
 		$("#abstract_id2").toggle(); 
-		});		
+		});
+	$("#authors").click(function() {
+		$("#author_id").toggle(); 
+		});					
 		
 </script>
