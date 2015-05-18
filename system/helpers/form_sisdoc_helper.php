@@ -58,9 +58,40 @@ function strzero($ddx, $ttz) {
 	return ($ddx);
 }
 
-function UpperCase($s) {
-	$s = strtoupper($s);
-	return ($s);
+function UpperCase($d) {
+	$d = strtoupper($d);
+	$d = troca($d, 'ç', 'Ç');
+	$d = troca($d, 'ñ', 'Ñ');
+
+	$d = troca($d, 'ã', 'Ã');
+	$d = troca($d, 'ä', 'Ä');
+	$d = troca($d, 'à', 'À');
+	$d = troca($d, 'á', 'Á');
+	$d = troca($d, 'â', 'Â');
+
+	$d = troca($d, 'ë', 'Ë');
+	$d = troca($d, 'è', 'È');
+	$d = troca($d, 'é', 'É');
+	$d = troca($d, 'ê', 'Ê');
+
+
+	$d = troca($d, 'ï', 'Ï');
+	$d = troca($d, 'ì', 'Ì');
+	$d = troca($d, 'í', 'Í');
+	$d = troca($d, 'î', 'Î');
+
+	$d = troca($d, 'õ', 'Õ');
+	$d = troca($d, 'ö', 'Ö');
+	$d = troca($d, 'ò', 'Ò');
+	$d = troca($d, 'ó', 'Ó');
+	$d = troca($d, 'ô', 'Ô');
+
+	$d = troca($d, 'ü', 'Ü');
+	$d = troca($d, 'ù', 'Ù');
+	$d = troca($d, 'ú', 'Ú');
+	$d = troca($d, 'û', 'Û');
+
+	return $d;	
 }
 
 function msg($x) {
@@ -136,6 +167,108 @@ function post_security($s) {
 	return ($s);
 }
 
+function nbr_autor($xa, $tp) {
+	if (strpos($xa, ',') > 0) {
+		$xb = trim(substr($xa, strpos($xa, ',') + 1, 100));
+		$xa = trim(substr($xa, 0, strpos($xa, ',')));
+		$xa = trim(trim($xb) . ' ' . $xa);
+	}
+	$xa = $xa . ' ';
+	$xp = array();
+	$xx = "";
+	for ($qk = 0; $qk < strlen($xa); $qk++) {
+		if (substr($xa, $qk, 1) == ' ') {
+			if (strlen(trim($xx)) > 0) {
+				array_push($xp, trim($xx));
+				$xx = '';
+			}
+		} else {
+			$xx = $xx . substr($xa, $qk, 1);
+		}
+	}
+
+	$xa = "";
+
+	/////////////////////////////
+	$xp1 = "";
+	$xp2 = "";
+	$er1 = array("JUNIOR", "JÚNIOR", "JúNIOR", "NETTO", "NETO", "SOBRINHO", "FILHO", "JR.");
+	///////////////////////////// SEPARA NOMES
+	{
+		$xop = 0;
+		for ($qk = count($xp) - 1; $qk >= 0; $qk--) {
+
+			$xa = trim($xa . ' - ' . $xp[$qk]);
+			if ($xop == 0) { $xp1 = trim($xp[$qk] . ' ' . $xp1);
+				$xop = -1;
+			} else { $xp2 = trim($xp[$qk] . ' ' . $xp2);
+			}
+
+			if ($xop == -1) {
+				$xop = 1;
+				for ($kr = 0; $kr < count($er1); $kr++) {
+					if (trim(UpperCaseSQL($xp[$qk])) == trim($er1[$kr])) {
+						$xop = 0;
+					}
+				}
+			}
+		}
+	}
+
+	////////// 1 e 2
+	$xp2a = strtolower($xp2);
+	$xa = trim(trim($xp2) . ' ' . trim($xp1));
+	if (($tp == 1) or ($tp == 2)) {
+		if ($tp == 1) { $xp1 = UpperCase($xp1);
+		}
+		$xa = trim(trim($xp1) . ', ' . trim($xp2));
+		if ($tp == 2) { $xa = UpperCaseSQL(trim(trim($xp1) . ', ' . trim($xp2)));
+		}
+	}
+	if (($tp == 3) or ($tp == 4)) {
+		if ($tp == 4) { $xa = UpperCaseSQL($xa);
+		}
+	}
+
+	if (($tp >= 5) or ($tp <= 6)) {
+		$xp2a = str_word_count(lowerCaseSQL($xp2), 1);
+		$xp2 = '';
+		for ($k = 0; $k < count($xp2a); $k++) {
+			if ($xp2a[$k] == 'do') { $xp2a[$k] = '';
+			}
+			if ($xp2a[$k] == 'da') { $xp2a[$k] = '';
+			}
+			if ($xp2a[$k] == 'de') { $xp2a[$k] = '';
+			}
+			if (strlen($xp2a[$k]) > 0) { $xp2 = $xp2 . substr($xp2a[$k], 0, 1) . '. ';
+			}
+		}
+		$xp2 = trim($xp2);
+		if ($tp == 6) { $xa = UpperCaseSQL(trim(trim($xp2) . ' ' . trim($xp1)));
+		}
+		if ($tp == 5) { $xa = UpperCaseSQL(trim(trim($xp1) . ', ' . trim($xp2)));
+		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////
+	if (($tp == 7) or ($tp == 8)) {
+		$mai = 1;
+		$xa = strtolower($xa);
+		for ($r = 0; $r < strlen($xa); $r++) {
+			if ($mai == 1) { $xa = substr($xa, 0, $r) . UpperCase(substr($xa, $r, 1)) . substr($xa, $r + 1, strlen($xa));
+				$mai = 0;
+			} else {
+				if (substr($xa, $r, 1) == ' ') { $mai = 1;
+				}
+			}
+		}
+		$xa = troca($xa, 'De ', 'de ');
+		$xa = troca($xa, 'Da ', 'da ');
+		$xa = troca($xa, 'Do ', 'do ');
+	}
+	return $xa;
+}
+
 function db_read($rlt) {
 	global $dba, $dbn;
 	if (!isset($dba)) { $dba = array();
@@ -192,68 +325,74 @@ function load_file_local($file) {
 /* Funcao */
 function UpperCaseSQL($d) {
 	$d = strtoupper($d);
-	$d = troca($d,'ç','C');
-	$d = troca($d,'Ç','C');
-	$d = troca($d,'ñ','N');
-	$d = troca($d,'Ñ','N');
-	
-	$d = troca($d,'ã','A');
-	$d = troca($d,'ä','A');
-	$d = troca($d,'à','A');
-	$d = troca($d,'á','A');
-	$d = troca($d,'â','A');
-	
-	$d = troca($d,'Ã','A');
-	$d = troca($d,'Ä','A');
-	$d = troca($d,'À','A');
-	$d = troca($d,'Á','A');
-	$d = troca($d,'Â','A');	
+	$d = troca($d, 'ç', 'C');
+	$d = troca($d, 'Ç', 'C');
+	$d = troca($d, 'ñ', 'N');
+	$d = troca($d, 'Ñ', 'N');
 
-	$d = troca($d,'ë','E');
-	$d = troca($d,'è','E');
-	$d = troca($d,'é','E');
-	$d = troca($d,'ê','E');
+	$d = troca($d, 'ã', 'A');
+	$d = troca($d, 'ä', 'A');
+	$d = troca($d, 'à', 'A');
+	$d = troca($d, 'á', 'A');
+	$d = troca($d, 'â', 'A');
 
-	$d = troca($d,'Ë','E');
-	$d = troca($d,'É','E');
-	$d = troca($d,'É','E');
-	$d = troca($d,'Ê','E');
+	$d = troca($d, 'Ã', 'A');
+	$d = troca($d, 'Ä', 'A');
+	$d = troca($d, 'À', 'A');
+	$d = troca($d, 'Á', 'A');
+	$d = troca($d, 'Â', 'A');
 
-	$d = troca($d,'ï','I');
-	$d = troca($d,'ì','I');
-	$d = troca($d,'í','I');
-	$d = troca($d,'î','I');
+	$d = troca($d, 'ë', 'E');
+	$d = troca($d, 'è', 'E');
+	$d = troca($d, 'é', 'E');
+	$d = troca($d, 'ê', 'E');
 
-	$d = troca($d,'Ï','I');
-	$d = troca($d,'Ì','I');
-	$d = troca($d,'Í','I');
-	$d = troca($d,'Î','I');
+	$d = troca($d, 'Ë', 'E');
+	$d = troca($d, 'È', 'E');
+	$d = troca($d, 'É', 'E');
+	$d = troca($d, 'Ê', 'E');
 
-	$d = troca($d,'õ','O');
-	$d = troca($d,'ö','O');
-	$d = troca($d,'ò','O');
-	$d = troca($d,'ó','O');
-	$d = troca($d,'ô','O');
+	$d = troca($d, 'ï', 'I');
+	$d = troca($d, 'ì', 'I');
+	$d = troca($d, 'í', 'I');
+	$d = troca($d, 'î', 'I');
 
-	$d = troca($d,'Õ','O');
-	$d = troca($d,'Ö','O');
-	$d = troca($d,'Ò','O');
-	$d = troca($d,'Ó','O');
-	$d = troca($d,'Ô','O');
+	$d = troca($d, 'Ï', 'I');
+	$d = troca($d, 'Ì', 'I');
+	$d = troca($d, 'Í', 'I');
+	$d = troca($d, 'Î', 'I');
 
-	$d = troca($d,'ü','U');
-	$d = troca($d,'ù','U');
-	$d = troca($d,'ú','U');
-	$d = troca($d,'û','U');
+	$d = troca($d, 'õ', 'O');
+	$d = troca($d, 'ö', 'O');
+	$d = troca($d, 'ò', 'O');
+	$d = troca($d, 'ó', 'O');
+	$d = troca($d, 'ô', 'O');
 
-	$d = troca($d,'Ü','U');
-	$d = troca($d,'Ù','U');
-	$d = troca($d,'Ú','U');
-	$d = troca($d,'Û','U');
+	$d = troca($d, 'Õ', 'O');
+	$d = troca($d, 'Ö', 'O');
+	$d = troca($d, 'Ò', 'O');
+	$d = troca($d, 'Ó', 'O');
+	$d = troca($d, 'Ô', 'O');
+
+	$d = troca($d, 'ü', 'U');
+	$d = troca($d, 'ù', 'U');
+	$d = troca($d, 'ú', 'U');
+	$d = troca($d, 'û', 'U');
+
+	$d = troca($d, 'Ü', 'U');
+	$d = troca($d, 'Ù', 'U');
+	$d = troca($d, 'Ú', 'U');
+	$d = troca($d, 'Û', 'U');
 
 	return $d;
 }
 
+function LowerCaseSQL($term)
+	{
+		$term = UpperCaseSql($term);
+		$term = Strtolower($term);
+		return($term);
+	}
 // ------------------------------------------------------------------------
 class form {
 	var $cp = array();
@@ -281,7 +420,7 @@ function npag($obj, $npage = 1, $tot = 10, $offset = 20) {
 
 	/* algoritimo */
 	$page = substr($page, 0, strpos($page, '/'));
-	$link = $obj->row;
+	$link = $obj -> row;
 
 	$pagi = $npage;
 	$pagf = $npage + 10;
@@ -391,7 +530,7 @@ if (!function_exists('form_edit')) {
 
 	function row($obj, $pag = 1) {
 		$start = round($pag);
-		$offset = $obj->offset;
+		$offset = $obj -> offset;
 		$start = $pag * $offset;
 		$CI = &get_instance();
 
@@ -425,10 +564,9 @@ if (!function_exists('form_edit')) {
 			/* campos da consulta */
 			$fld .= ', ' . $fd[$r];
 		}
-		if ($obj->edit==True)
-			{
-				$sh .= '<th>action</th>';
-			}
+		if ($obj -> edit == True) {
+			$sh .= '<th>action</th>';
+		}
 		$sh .= '</tr></thead>';
 
 		/* Recupera dados */
@@ -482,14 +620,14 @@ if (!function_exists('form_edit')) {
 		/* Metodo de chamada */
 		$url_pre = uri_string();
 		$url_pre = substr($url_pre, 0, strpos($url_pre, '/')) . '/view';
-		
-		$url_pre = $obj->row_view;
+
+		$url_pre = $obj -> row_view;
 
 		foreach ($query->result_array() as $row) {
 			/* recupera ID */
 			$flds = trim($fd[0]);
 			$id = $row[$flds];
-			
+
 			/* mostra resultado da query */
 			$data .= '<tr>';
 			for ($r = 1; $r < count($fd); $r++) {
@@ -519,11 +657,10 @@ if (!function_exists('form_edit')) {
 				}
 				$data .= chr(15) . '<td ' . $mskm . '>' . $link . trim($row[$flds]) . $linkf . '</td>';
 			}
-			if ($obj->edit==True)
-				{
+			if ($obj -> edit == True) {
 				$idr = trim($row[$fd[0]]);
-				$data .= chr(15) . '<td ' . $mskm . '><A HREF="'.$obj->row_edit.'/'.$idr.'/'.checkpost_link($idr).'"><img src="'.base_url('/img/icone_edit.gif').'" border=0 height="16"></td>';	
-				}
+				$data .= chr(15) . '<td ' . $mskm . '><A HREF="' . $obj -> row_edit . '/' . $idr . '/' . checkpost_link($idr) . '"><img src="' . base_url('/img/icone_edit.gif') . '" border=0 height="16"></td>';
+			}
 			$data .= '</tr>' . chr(13) . chr(10);
 		}
 
@@ -667,13 +804,12 @@ if (!function_exists('form_edit')) {
 			$saved = form_save($obj);
 			if ($saved == 1) {
 				/* Redireciona */
-				if (strlen($obj->row) > 0)
-					{
-						$url_pre = $obj->row;
-					} else {
-						$url_pre = uri_string();
-						$url_pre = substr($url_pre, 0, strpos($url_pre, '/')) . '/row';
-					}	
+				if (strlen($obj -> row) > 0) {
+					$url_pre = $obj -> row;
+				} else {
+					$url_pre = uri_string();
+					$url_pre = substr($url_pre, 0, strpos($url_pre, '/')) . '/row';
+				}
 				redirect($url_pre);
 				//redirect($link, 'location', 301);
 			}

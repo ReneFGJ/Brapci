@@ -55,6 +55,7 @@ class articles extends CI_model {
 		$line['ar_keyw_1'] = $this->keywords->retrieve_keywords($id,$line['ar_idioma_1']);
 		$line['ar_keyw_2'] = $this->keywords->retrieve_keywords($id,$line['ar_idioma_2']);
 		$line['author'] = $this -> author_article($id);
+		$line['authores_row'] = $this -> author_article_row($id);
 		$line['cited'] = $this -> cited($id);
 		$line['link_pdf'] = $this->arquivos($id);
 
@@ -92,7 +93,8 @@ class articles extends CI_model {
 		return ($sx);
 	}
 
-	function author_article($id) {			$sql = "
+	function author_article($id) {
+			$sql = "
 				SELECT * FROM `brapci_article_author` 
 				inner join brapci_autor on autor_codigo = ae_author
 				where ae_article = '$id'
@@ -116,6 +118,24 @@ class articles extends CI_model {
 		return ($sx);
 
 	}
+	function author_article_row($id) {
+			$sql = "
+				SELECT * FROM `brapci_article_author` 
+				inner join brapci_autor on autor_codigo = ae_author
+				where ae_article = '$id'
+				order by ae_pos			
+				 ";
+		$query = $this -> db -> query($sql);
+		$query = $query -> result_array();
+		$sx = '';
+		$id = 0;
+		for ($r=0;$r < count($query);$r++) {
+			$sx .= htmlspecialchars($query[$r]['autor_nome']).chr(13).chr(10);
+		}
+		return ($sx);
+
+	}
+
 
 	function articles_author($codigo) {
 		$sql = "

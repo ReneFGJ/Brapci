@@ -65,6 +65,7 @@ class admin extends CI_controller {
 		/* Article */
 		$this -> load -> model('articles');
 		$this -> load -> model('keywords');
+		$this -> load -> model('authors');
 				
 		
 		/* Save data */
@@ -74,6 +75,11 @@ class admin extends CI_controller {
 				$this->articles->save_TITLE($id,$dd[10],$dd[11],$dd[12],$dd[13]);
 				redirect(base_url('admin/article_view/'.$id.'/'.checkpost_link($id)));
 				break;
+			case 'AUTHOR':
+				$this->authors->save_AUTHORS($id,$dd[10]);
+				redirect(base_url('admin/article_view/'.$id.'/'.checkpost_link($id)));
+				break;
+				
 			case 'ABSTRACT1':
 				$this->keywords->save_KEYWORDS($id,$dd[11]);
 				$this->articles->save_ABSTRACT($id,$dd[10],1);

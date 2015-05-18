@@ -1,6 +1,76 @@
 <?php
 class authors extends CI_model {
 	var $tabela = 'brapci_autor';
+	
+	function save_AUTHORS($id, $au)
+		{
+			$au = troca($au,chr(13),';');
+			$au = troca($au,chr(10),'').';';
+			
+			$au = troca($au,'0','');
+			$au = troca($au,'1','');
+			$au = troca($au,'2','');
+			$au = troca($au,'3','');
+			$au = troca($au,'4','');
+			$au = troca($au,'5','');
+			$au = troca($au,'6','');
+			$au = troca($au,'7','');
+			$au = troca($au,'8','');
+			$au = troca($au,'9','');
+			
+			
+			$aut = splitx(';',$au);
+			$auts = array();
+			$aut_asc = array();
+			$hw = '';
+			for ($r=0;$r < count($aut);$r++)
+				{
+					$autor = $aut[$r];
+					if (strpos($autor,',') > 0)
+						{
+							$autor = substr($autor,strpos($autor,','),strlen($autor)).' '.substr($autor,0,strpos($autor,','));
+						}
+					$autor = trim(troca($autor,',',''));
+					$autor_nbr = nbr_autor($autor,1);
+					$autor_asc = UpperCaseSql($autor_nbr);
+					echo $autor.'='.$autor_nbr.'='.$autor_asc.'<BR>';
+					$auts[$autor_nbr] = '';
+					if (strlen($autor_nbr) > 0)
+						{
+						if (strlen($hw) > 0) { $hw .= ','; }
+						$hw .= "'$autor_nbr'";
+						$aut_asc[$autor_asc] = '';
+						}
+				}
+			/* Recupera nomes */
+			$sql = "select * from brapci_autor where autor_nome IN ($hw)";
+			$rlt = db_query($sql);
+			while ($line = db_read($rlt))
+				{
+					$aut1 = trim($line['autor_nome_asc']);
+					$aut_asc[$aut1] = $line['autor_alias'];
+				}
+
+			/* Valida recuperacao */
+			foreach ($aut_asc as $key => $value) {
+				echo '<BR>'.$key.'--'.$value;
+				if (strlen($value) == '')
+					{
+						/* Novo autor */
+					}
+			}
+			
+			/* salva na base */
+			$sql = "insert into brapci_article_author 
+				(ae_journal_id, ae_article, ae_position,
+				ae_author, ae_instituicao, ae_aluno, 
+				ae_professor, ae_ss, ae_pos,
+				ae_contact, ae_mestrado, ae_doutorado,
+				ae_profissional, ae_bio, ae_telefone,
+				ae_endereco)
+			";
+			
+		}
 
 	function row($obj) {
 		$obj -> fd = array('id_autor', 'autor_nome', 'autor_tipo', 'autor_nacionalidade', 'autor_codigo', 'autor_alias');
