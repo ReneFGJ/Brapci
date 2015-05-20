@@ -2,6 +2,7 @@
 
 class admin extends CI_controller {
 	var $tabela_journals = 'brapci_journal';
+	var $tabela_editions = 'brapci_edition';
 	function __construct() {
 		global $db_public;
 
@@ -50,14 +51,38 @@ class admin extends CI_controller {
 		//$this -> load -> view('header/foot');
 	}
 
-	function article_view($id, $check) {
-		global $dd,$acao;
+	function issue_edit($id = 0, $jid = 0) {
+		global $dd, $acao;
 		form_sisdoc_getpost();
+		$this -> load -> model('editions');
+
+		$data['title'] = 'Brapci : Admin';
+		$data['title_page'] = 'ADMIN';
+		$this -> load -> view("header/cab_admin", $data);
 		
+		/* Formulario */
+		$form = new form;
+		$form -> id = $id;
+		$form -> row = base_url('admin/issue_view');
+		$form -> cp = $this -> editions -> cp();
+		$form -> tabela = $this -> tabela_editions;
+
+		/* form */
+		$data['tela'] = form_edit($form);
+		$data['title'] = 'Journals';
+		$form -> cp = $this -> editions -> updatex();
+		
+		$this -> load -> view('form/form', $data);		
+	}
+
+	function article_view($id, $check) {
+		global $dd, $acao;
+		form_sisdoc_getpost();
+
 		if (($id < 1) or ($check != checkpost_link($id))) {
 			redirect(base_url('admin/journal'));
 		}
-		
+
 		$data['title'] = 'Brapci : Admin';
 		$data['title_page'] = 'ADMIN';
 		$this -> load -> view("header/cab_admin", $data);
@@ -66,35 +91,39 @@ class admin extends CI_controller {
 		$this -> load -> model('articles');
 		$this -> load -> model('keywords');
 		$this -> load -> model('authors');
-				
-		
+		$this -> load -> model('archives');
+
 		/* Save data */
-		switch($dd[8])
-			{
-			case 'TITLE':
-				$this->articles->save_TITLE($id,$dd[10],$dd[11],$dd[12],$dd[13]);
-				redirect(base_url('admin/article_view/'.$id.'/'.checkpost_link($id)));
+		switch($dd[8]) {
+			case 'ISSUE' :
+				$this -> articles -> save_ISSUE($id, $dd[11], $dd[12], $dd[13], $dd[14]);
+				redirect(base_url('admin/article_view/' . $id . '/' . checkpost_link($id)));
 				break;
-			case 'AUTHOR':
-				$this->authors->save_AUTHORS($id,$dd[10]);
-				redirect(base_url('admin/article_view/'.$id.'/'.checkpost_link($id)));
+			case 'TITLE' :
+				$this -> articles -> save_TITLE($id, $dd[10], $dd[11], $dd[12], $dd[13]);
+				redirect(base_url('admin/article_view/' . $id . '/' . checkpost_link($id)));
 				break;
-				
-			case 'ABSTRACT1':
-				$this->keywords->save_KEYWORDS($id,$dd[11]);
-				$this->articles->save_ABSTRACT($id,$dd[10],1);
-				redirect(base_url('admin/article_view/'.$id.'/'.checkpost_link($id)));
-				break;	
-			case 'ABSTRACT2':
-				$this->keywords->save_KEYWORDS($id,$dd[11]);
-				$this->articles->save_ABSTRACT($id,$dd[10],2);
-				redirect(base_url('admin/article_view/'.$id.'/'.checkpost_link($id)));
-				break;								
-			}
+			case 'AUTHOR' :
+				$this -> authors -> save_AUTHORS($id, $dd[10]);
+				redirect(base_url('admin/article_view/' . $id . '/' . checkpost_link($id)));
+				break;
+
+			case 'ABSTRACT1' :
+				$this -> keywords -> save_KEYWORDS($id, $dd[11]);
+				$this -> articles -> save_ABSTRACT($id, $dd[10], 1);
+				redirect(base_url('admin/article_view/' . $id . '/' . checkpost_link($id)));
+				break;
+			case 'ABSTRACT2' :
+				$this -> keywords -> save_KEYWORDS($id, $dd[11]);
+				$this -> articles -> save_ABSTRACT($id, $dd[10], 2);
+				redirect(base_url('admin/article_view/' . $id . '/' . checkpost_link($id)));
+				break;
+		}
 
 		$data = $this -> articles -> le($id);
-		
-		$this->load->view('admin/article_view',$data);	
+		$data['archives'] = $this -> archives -> show_files($id);
+
+		$this -> load -> view('admin/article_view', $data);
 
 	}
 

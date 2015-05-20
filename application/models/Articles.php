@@ -1,7 +1,20 @@
 <?php
 class articles extends CI_model {
 	
-	
+	function save_ISSUE($id,$p1,$p2,$issue,$doi)
+		{
+			/* title 1 */
+			$p1 = trim($p1);
+			$p2 = trim($p2);
+						
+			$sql = "update brapci_article set
+					ar_pg_inicial = '$p1',
+					ar_pg_final = '$p2',
+					ar_edition = '$issue',
+					ar_doi = '$doi' 
+					where id_ar = ".$id;
+			$this->db->query($sql);	
+		}
 	function save_TITLE($id, $title_1,$title_2,$idioma_1,$idioma_2)
 		{
 			/* title 1 */
@@ -58,6 +71,21 @@ class articles extends CI_model {
 		$line['authores_row'] = $this -> author_article_row($id);
 		$line['cited'] = $this -> cited($id);
 		$line['link_pdf'] = $this->arquivos($id);
+		
+		/* Pages */
+		$p1 = $line['ar_pg_inicial'];
+		$p2 = $line['ar_pg_final'];
+		$line['pages'] = '';
+		if ($p1 > 0)
+			{
+				$line['pages'] = ', p.'.$p1;
+				if (strlen($p2) > 0)
+					{
+						$line['pages'] .= '-'.$p2;		
+					}
+			}
+		
+		 
 
 		if (strlen(trim($line['ar_doi'])) == 0) { $line['ar_doi'] = '<font color="red">empty</font>';
 		}
@@ -66,12 +94,13 @@ class articles extends CI_model {
 	}
 
 	function arquivos($id) {
-		$sql = "select * from brapci_article_suporte where bs_article = '$id' order by bs_type ";
-		$query = $this -> db -> query($sql);
-		$query = $query -> result();
-		$arq = array();
-		$line = db_read($query);
-		return('http://www.brapci.inf.br/'.$line['bs_adress']);
+		$sql = "select * from brapci_article_suporte where bs_article = '$id' and bs_adress like '_repo%' order by bs_type ";
+		$rlt = db_query($sql);
+		$line = db_read($rlt);
+		$link = trim($line['bs_adress']);
+		if (strlen($link) > 0) { $fl = base_url($link); }
+		else {$fl = ''; }
+		return($fl);
 	}
 
 	function cited($id) {

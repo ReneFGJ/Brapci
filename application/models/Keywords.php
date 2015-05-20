@@ -21,7 +21,8 @@ class keywords extends CI_model
 								}
 						}
 				}
-			
+			/* retorna se vazio */
+			if (count($akeys) == 0) { return(''); }
 			
 			$sql = "select * from brapci_keyword where kw_word_asc IN ($nkeys) and kw_idioma = '$idioma'";
 			$rlt = db_query($sql);
@@ -125,6 +126,7 @@ class keywords extends CI_model
 					where kw_article = '$id' and kw_idioma = '$idioma'
 					order by kw_ord
 			";
+			
 			$rlt = db_query($sql);
 			$keys = '';
 			while ($line = db_read($rlt))

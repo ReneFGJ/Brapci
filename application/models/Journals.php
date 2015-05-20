@@ -14,6 +14,13 @@ class journals extends CI_model {
 		$cp = array();
 		array_push($cp, array('$H', 'id_jnl', '', True, True));
 		array_push($cp, array('$S100', 'jnl_nome', 'Nome de citação', False, True));
+		array_push($cp, array('$S40', 'jnl_nome_abrev', 'Nome abreviado', False, True));
+		array_push($cp, array('$S14', 'jnl_issn_impresso', 'ISSN', False, True));
+		array_push($cp, array('$S14', 'jnl_issn_eletronico', 'ISSN Eletrônico', False, True));
+		array_push($cp, array('$S100', 'jnl_url', 'URL da publicação', False, True));
+		array_push($cp, array('$S100', 'jnl_url_oai', 'Link do OAI-PMH', False, True));
+		//array_push($cp, array('$O 1:Ativo&0:Inativo', 'jnl_oai_from', 'OAI Ativo', False, True));
+		array_push($cp, array('$S20', 'jnl_patch', 'Atalho', False, True));
 
 		/* Botao */
 		array_push($cp, array('$B8', '', 'Gravar >>>', False, True));

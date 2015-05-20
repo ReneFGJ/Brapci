@@ -1,18 +1,70 @@
 <?php
 $edit_link1 = '<img src="'.base_url('img/icone_edit.gif').'" height="16" id="titles">';
-
 $edit_link2 = '<img src="'.base_url('img/icone_edit.gif').'" height="16" id="authors">';
-
 $edit_link4 = '<img src="'.base_url('img/icone_edit.gif').'" height="16" id="abstract1">';
 $edit_link5 = '<img src="'.base_url('img/icone_edit.gif').'" height="16" id="abstract2">';
+$edit_link6 = '<img src="'.base_url('img/icone_edit.gif').'" height="16" id="issue">';
 
 echo '<div id="ccab">';
 
 echo '<div id="bdoi">BDOI: ' . $ar_bdoi .
 		'<BR>DOI: '.$ar_doi. 
 		'</div>
-<div id="journal">' . $jnl_nome . ', v.' . $ed_vol . ', n.' . $ed_nr . ', ' . $ed_ano . '.</div>
-</div>
+<div id="journal" >' . $jnl_nome . ', v.' . $ed_vol . ', n.' . $ed_nr . ', ' . $ed_ano . $pages.' '.$edit_link6.'</div><BR>
+
+<div id="issue_id" style="display: none;">';
+/* FORMULARIO */
+
+$sql = "select * from brapci_edition where ed_journal_id = '".$jnl_codigo."' order by ed_ano desc, ed_vol desc, ed_nr";
+$rlt = db_query($sql);
+$dt = array();
+while ($line = db_read($rlt))
+	{
+		$dk = $line['ed_codigo'];
+		$ds = trim($line['ed_ano']).', v.'.trim($line['ed_vol']).', '.trim($line['ed_nr']).' '.trim($line['ed_tematica_titulo']);
+		$dt[$dk] = $ds;
+	}
+
+/* ISSE e PAGES *************************************************************************************************************************************/
+
+/* Open form */
+echo form_open('admin/article_view/'.$id_ar.'/'.checkpost_link($id_ar));
+
+/* Hidden */
+$data = array('dd8'  => 'ISSUE');
+echo form_hidden($data);
+
+if ($ar_doi == '<font color="red">empty</font>') { $ar_doi = ''; }
+$fld1 = Array ("name" => "dd11", "maxsize" => "6", "size" => 6, 'value'=> $ar_pg_inicial);
+$fld2 = Array ("name" => "dd12", "maxsize" => "6", "size" => 6, 'value'=> $ar_pg_final);
+$fld3 = Array ();
+$fld4 = Array ("name" => "dd14", "maxsize" => "50", "size" => 50, 'value'=> $ar_doi);
+echo '<table border="1" class="tabela00 lt1">
+		<TR>
+		<TD>paginação:</td>
+		<td>'.form_input($fld1).'-'.form_input($fld2).'</td>
+		</tr>
+		<TR>
+		<TD>fasciculo:</td>
+		<td>'.form_dropdown('dd13',$dt,$ar_edition).'</td>
+		</tr>
+		<TR>
+		<TD>DOI:</td>
+		<td>'.form_input($fld4).'</td>
+		</tr>
+	  </table>';
+	  
+/* Submit button */
+echo '<BR>';
+echo form_submit('acao', 'save >>');
+
+/* Close form */
+echo form_close();
+echo form_fieldset_close();
+echo '</div>';
+	  
+
+echo '</div>
 
 <div id="pdf_icone">
 		<A HREF="'.$link_pdf.' target="new'.$ar_bdoi.'"><img src="'.base_url('img/icone_pdf.png').'" height="64" border=0 title="download pdf" ></A>
@@ -123,7 +175,7 @@ echo '<div id="texto">';
 echo '<div id="rs1">';
 echo '<B>Resumo</B>'.$edit_link4;
 echo '<div id="asb1">' . $ar_resumo_1 . '</div>';
-echo '<div id="key1">' . $ar_keyw_1 . '</div>';
+echo '<div id="key1"><B>Keywords</B>:' . $ar_keyw_1 . '</div>';
 
 /* Form textarea titulo 
  * 
@@ -171,7 +223,7 @@ echo '<BR>';
 echo '<div id="rs2">';
 echo '<B>Resumo</B>'.$edit_link5;
 echo '<div id="asb2">' . $ar_resumo_2 . '</div>';
-echo '<div id="key2">' . $ar_keyw_2 . '</div>';
+echo '<div id="key2"><B>Keywords</B>:' . $ar_keyw_2 . '</div>';
 
 /* Form textarea titulo 
  * 
@@ -217,6 +269,9 @@ echo '</div>';
 echo '</div>';
 
 echo '<BR>';
+echo $archives;
+
+echo '<BR>';
 echo '<div id="cited">[Cited by ' . $at_citacoes . ']</div>';
 
 echo '<BR>';
@@ -232,9 +287,11 @@ echo '<td width="50%">
 				<span id="download"  onclick="$(\'#pdf\').toggle();"  class="link">fechar</span> | 
 				<a href="'.$link_pdf.'" id="download" class="link" target="new0000010946">download</a>&nbsp;</div>
 			</div>';
-
 ?>
 <script>
+	$("#issue").click(function() {
+		$("#issue_id").toggle(); 
+		});
 	$("#titles").click(function() {
 		$("#titles_id").toggle(); 
 		});

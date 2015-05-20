@@ -18,6 +18,113 @@ class oai extends CI_controller {
 		$db_public = 'brapci_public.';
 	}
 
+	function coletar_pdf($id = 0) {
+		$sql = "select * from brapci_article_suporte where id_bs = '$id'";
+		$rlt = db_query($sql);
+		if ($line = db_read($rlt)) {
+			$link = trim($line['bs_adress']);
+			$arti = trim($line['bs_article']);
+			$jour = trim($line['bs_journal_id']);
+			$stat = trim($line['bs_status']);
+		}
+		
+		/* Arquivo não localizado */
+		if (strlen($link) == 0)
+			{
+				echo 'Erro no ID';
+				return('');
+			}
+			
+		/* Status já coletado */
+		if ($stat == 'B')
+			{
+				echo '<font color="red">Já coletado</font>';
+				return('');
+			}
+
+		/* Methods */
+
+	
+		if (strlen($link) > 0) {
+
+			/* Try One */
+			/* If "/view/" in link */
+			if (strpos($link, '/view/')) {
+				$txt = load_page($link);
+				$txt = $txt['content'];
+
+				$comp = 'citation_pdf_url';
+				if (strpos($txt, $comp) > 0) {
+					$link = substr($txt, strpos($txt, $comp), 120);
+					$link = substr($link, strpos($link, 'http:'), strlen($link));
+					$link = substr($link, 0, strpos($link, '"'));
+					if (strpos($link, 'download')) {
+					} else {
+						echo 'ops, error ' . $link;
+						return('');
+					}
+				} else {
+					echo '<font color="red">Invalid link</font>';
+					return('');
+				}
+			} else {
+				echo 'Link inválido';
+				return('');
+			}
+
+			/* Try End */
+			if (strpos($link, 'download')) {
+				$filename = '_repositorio';
+				$this->check_dir($filename);
+				$filename .= '/' . date("Y");
+				$this->check_dir($filename);
+				$filename .= '/' . date("m");
+				$this->check_dir($filename);
+				$filename .= '/pdf_' . substr(md5(date("Ymdis")), 10, 10) . '_' . $arti . '.pdf';
+				
+				/* Conclui processo */				
+				$this->download_and_save($link,$filename);
+				/* Novo registro do PDF */
+				$sql = "insert brapci_article_suporte 
+						(
+						bs_status, bs_article, bs_type, 
+						bs_adress, bs_journal_id, bs_update
+						) values (
+						'B','$arti','PDF',
+						'$filename','$jour',".date("Ymd").')';
+				$this->db->query($sql);
+				
+				/* Atualiza registro anterior */
+				$sql = "update brapci_article_suporte set bs_status = 'B' where id_bs = '$id'";
+				$this->db->query($sql);
+				echo '<font color="green">Successful!</font>';
+			}
+
+		}
+	}
+
+	function check_dir($dir)
+		{
+			if (is_dir($dir))
+				{
+					return(1);
+				} else {
+					mkdir($dir);
+					$rlt = fopen($dir.'index.php','w+');
+					fwrite($rlt,'<TT>Acesso negado</tt>');
+					fclose($rlt);
+				}
+		}
+
+	function download_and_save($link, $file_name) {
+		$txt = $txt = load_page($link);
+		$txt = $txt['content'];
+		$fl = fopen($file_name, 'w+');
+		fwrite($fl, $txt);
+		fclose($fl);
+		return (1);
+	}
+
 	function index() {
 		$data['title'] = 'Brapci : OAI-PMH';
 		$data['title_page'] = 'ADMIN - OAI';
@@ -33,13 +140,14 @@ class oai extends CI_controller {
 
 	function Harvest($id = 0) {
 		$end = 0;
-		
+
 		/* Max */
 		$sql = "select max(id_jnl) as max from brapci_journal ";
 		$rlt = db_query($sql);
 		$line = db_read($rlt);
-		$fim = $line['max'];		
-		if ($id > $max) { $end = 1; }
+		$fim = $line['max'];
+		if ($id > $max) { $end = 1;
+		}
 
 		/* Start */
 		if ($id == 0) { $id = 1;
@@ -144,7 +252,6 @@ class oai extends CI_controller {
 
 	}
 
-	
 	function ListIdentifiers($id = 0) {
 		$data['title'] = 'Brapci : OAI-PMH';
 		$data['title_page'] = 'ADMIN - OAI';
@@ -170,8 +277,8 @@ class oai extends CI_controller {
 		$link .= 'verb=ListIdentifiers';
 		$link .= '&metadataPrefix=oai_dc';
 		$data['content'] = $link;
-		
-		$this->load->view('oai/oai_content',$data);
+
+		$this -> load -> view('oai/oai_content', $data);
 
 		$meth1 = '1';
 
