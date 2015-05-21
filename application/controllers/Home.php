@@ -7,7 +7,7 @@ class home extends CI_Controller {
 	function __construct() {
 		global $db_public;
 		
-		$db_public = 'brapci_public.';
+		$db_public = 'brapci_publico.';
 		parent::__construct();
 		$this -> load -> library('form_validation');
 		$this -> load -> database();
@@ -37,6 +37,7 @@ class home extends CI_Controller {
 		$data = array('tela' => $tela);
 
 		$this -> load -> view("brapci/search_result",$data);
+
 		$this -> load -> view("header/foot");
 	}
 

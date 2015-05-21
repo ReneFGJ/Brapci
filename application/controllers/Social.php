@@ -82,8 +82,36 @@ class social extends CI_Controller {
 				$token = $provider -> access($_GET['code']);
 				$user = $provider -> get_user_info($token);
 				print_r($user);
-				exit;
 
+				/* Ativa sessão ID */
+
+				$ss_user = $user['name'];
+				$ss_email = trim($user['email']);
+				$ss_image = $user['image'];
+
+				$sql = "select * from users where us_email = '$ss_email' ";
+				$CI = &get_instance();
+				$query = $CI -> db -> query($sql);
+				
+				$query = $query -> result_array();
+				$data = date("ymd");
+
+				if (count($query) > 1) {
+					$sql = "update users set us_last = '$data' where us_email = '$ss_email' ";
+					$CI -> db -> query($sql);
+				} else {
+					$sql = "insert into users 
+						(
+							us_nome, us_email, us_cidade, us_pais, us_codigo, 
+							us_ativo, us_nivel, us_genero, us_verificado, 
+							us_cadastro, us_last
+						) values (
+							'$ss_nome','$ss_email','','',
+							1,0,1,
+							$data,$data
+						)";
+					$CI -> db -> query($sql);
+				}
 				if ($this -> uri -> segment(3) == 'google') {
 					//Your code stuff here
 				} elseif ($this -> uri -> segment(3) == 'facebook') {

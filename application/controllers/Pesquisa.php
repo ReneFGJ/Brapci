@@ -16,7 +16,7 @@ class Pesquisa extends CI_controller {
 		$this -> load -> helper('xml');
 		/* $this -> lang -> load("app", "portuguese"); */
 		$this -> load -> library('session');
-		$db_public = 'brapci_public.';
+		$db_public = 'brapci_publico.';
 	}
 
 	function index() {
