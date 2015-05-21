@@ -12,17 +12,18 @@ class archives extends CI_model
 			$idbs = 0;
 			while ($line = db_read($rlt))
 			{
-				$link = trim($line['bs_adress']);
+				$xlink = trim($line['bs_adress']);
 				$tipo = trim($line['bs_type']);
+				$link = '';
 				$linkf = '';
 				$ajax = '';
-				if (substr($link,0,5) == '_repo')
+				if (substr($xlink,0,5) == '_repo')
 					{
 						$link = '<a href="'.base_url(trim($line['bs_adress'])).'" target="_new">';
 						$linkf = '</a>';
 						$idbs = -1;
 					}				
-				if (substr($link,0,5) == 'http:')
+				if (substr($xlink,0,5) == 'http:')
 					{
 						$link = '<a href="'.trim($line['bs_adress']).'" target="_new">';
 						$linkf = '</a>';
@@ -32,6 +33,16 @@ class archives extends CI_model
 							$idbs = $line['id_bs'];
 							}
 					}
+				if (substr($xlink,0,6) == 'https:')
+					{
+						$link = '<a href="'.trim($line['bs_adress']).'" target="_new">';
+						$linkf = '</a>';
+						if (((trim($line['bs_status']) == '@') or (trim($line['bs_status']) == 'A')) and ($idbs == 0))
+							{
+							$ajax = '<div id="coletar" style="color: blue; cursor: pointer; width: 100px; border: 1px #A0A0A0 solid; text-align: center;">coletar</div>';
+							$idbs = $line['id_bs'];
+							}
+					}					
 				$sx .= '<tr>';
 				$sx .= '<td>';
 				$sx .= $link.trim($line['bs_adress']).$linkf;

@@ -92,7 +92,15 @@ class admin extends CI_controller {
 		$this -> load -> model('keywords');
 		$this -> load -> model('authors');
 		$this -> load -> model('archives');
-
+		
+		$data = $this -> articles -> le($id);
+		$data['archives'] = $this -> archives -> show_files($id);
+		
+		$idioma_1 = trim($data['ar_idioma_1']);
+		if (strlen($idioma_1) == 0) { $idioma_1 = 'pt_BR'; }		
+		$idioma_2 = trim($data['ar_idioma_2']);
+		if (strlen($idioma_2) == 0) { $idioma_2 = 'en'; }
+		
 		/* Save data */
 		switch($dd[8]) {
 			case 'ISSUE' :
@@ -109,19 +117,16 @@ class admin extends CI_controller {
 				break;
 
 			case 'ABSTRACT1' :
-				$this -> keywords -> save_KEYWORDS($id, $dd[11]);
+				$this -> keywords -> save_KEYWORDS($id, $dd[11],$idioma_1);
 				$this -> articles -> save_ABSTRACT($id, $dd[10], 1);
 				redirect(base_url('admin/article_view/' . $id . '/' . checkpost_link($id)));
 				break;
 			case 'ABSTRACT2' :
-				$this -> keywords -> save_KEYWORDS($id, $dd[11]);
+				$this -> keywords -> save_KEYWORDS($id, $dd[11],$idioma_2);
 				$this -> articles -> save_ABSTRACT($id, $dd[10], 2);
 				redirect(base_url('admin/article_view/' . $id . '/' . checkpost_link($id)));
 				break;
 		}
-
-		$data = $this -> articles -> le($id);
-		$data['archives'] = $this -> archives -> show_files($id);
 
 		$this -> load -> view('admin/article_view', $data);
 

@@ -1,7 +1,7 @@
 <?php
 class keywords extends CI_model
 	{
-	function save_KEYWORDS($id,$keys,$idioma='pt_BR')
+	function save_KEYWORDS($id,$keys,$idioma)
 		{
 			$id = strzero($id,10);
 			$keys = $this->trata_keywords($keys);
@@ -126,7 +126,7 @@ class keywords extends CI_model
 					where kw_article = '$id' and kw_idioma = '$idioma'
 					order by kw_ord
 			";
-			
+
 			$rlt = db_query($sql);
 			$keys = '';
 			while ($line = db_read($rlt))
