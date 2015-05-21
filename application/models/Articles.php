@@ -181,6 +181,7 @@ class articles extends CI_model {
 		$r = 0;
 		foreach ($query as $row) {
 			$r++;
+			$link = '<A HREF="'.base_url('admin/article_view/'.$row->id_ar.'/'.checkpost_link($row->id_ar)).'" target="_new'.$row->id_ar.'">';
 			//$title = trim($row['ar_titulo_1']);
 			$title = $row -> ar_titulo_1;
 			$journal = $row -> jnl_nome;
@@ -192,6 +193,7 @@ class articles extends CI_model {
 			$sx .= '<tr valign="top">';
 			$sx .= '<td width="30" align="right">' . $r . '.&nbsp;</td>';
 			$sx .= '<td>';
+			$sx .= $link;
 			$sx .= trim($title) . '. ';
 			$sx .= trim($journal);
 			if (strlen($vol)) { $sx .= 'v. ' . $vol;
@@ -202,7 +204,7 @@ class articles extends CI_model {
 			/* tipo */
 			if (strlen($tipo)) { $sx .= ' (' . $tipo . ')';
 			}
-
+			$sx .= '</A>';
 			$sx .= '</td>';
 			$sx .= '</tr>';
 

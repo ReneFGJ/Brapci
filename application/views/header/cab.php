@@ -22,7 +22,9 @@ body {
 	<div class="geral">
 		<div id="div1">
 			&nbsp;&nbsp;<a href="<?php echo base_url('pt_BR');?>"><img src="<?php echo base_url('img/ididoma_br.png');?>" border=0 title="Portugues" alt="Portugu�s"></A>
-			| <a href="_login_s.php">login</A>
+			| 	<a href="<?php echo base_url('social/session/facebook/');?>"><button class="btn btn-facebook"><i class="fa fa-facebook"></i> | Login com o Facebook</button></A>
+				|
+				<a href="<?php echo base_url('social/session/google/');?>"><button class="btn btn-google-plus"><i class="fa fa-google-plus"></i> | Login com o Google+</button></A>
 			<BR>
 			<BR>
 		</div>

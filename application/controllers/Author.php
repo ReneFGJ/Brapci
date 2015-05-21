@@ -45,7 +45,12 @@ class author extends CI_Controller {
 		$form = new form;
 		$form -> tabela = $this -> tabela;
 		$form -> see = true;
+		$form->row = base_url('/author/row');
+		$form->row_view = base_url('/author/view');
+		$form->row_edit = base_url('/author/edit');
+		$form->edit = True;
 		$form = $this -> authors -> row($form);
+		
 		
 		$tela['tela'] = row($form,$id);
 		$url = base_url('author');

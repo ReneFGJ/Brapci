@@ -74,7 +74,6 @@ function UpperCase($d) {
 	$d = troca($d, 'é', 'É');
 	$d = troca($d, 'ê', 'Ê');
 
-
 	$d = troca($d, 'ï', 'Ï');
 	$d = troca($d, 'ì', 'Ì');
 	$d = troca($d, 'í', 'Í');
@@ -91,7 +90,7 @@ function UpperCase($d) {
 	$d = troca($d, 'ú', 'Ú');
 	$d = troca($d, 'û', 'Û');
 
-	return $d;	
+	return $d;
 }
 
 function msg($x) {
@@ -387,12 +386,12 @@ function UpperCaseSQL($d) {
 	return $d;
 }
 
-function LowerCaseSQL($term)
-	{
-		$term = UpperCaseSql($term);
-		$term = Strtolower($term);
-		return($term);
-	}
+function LowerCaseSQL($term) {
+	$term = UpperCaseSql($term);
+	$term = Strtolower($term);
+	return ($term);
+}
+
 // ------------------------------------------------------------------------
 class form {
 	var $cp = array();
@@ -483,7 +482,7 @@ function npag($obj, $npage = 1, $tot = 10, $offset = 20) {
 
 	$sx .= '<li style="width: 50px; border: 0px solid #FFFFFF;"><nobr>';
 	$sx .= form_open();
-	$data = array('name' => 'dd2', 'id' => 'dd1', 'value' => 'clean');
+	$data = array('name' => 'dd2', 'id' => 'dd1', 'dd9' => 'clean');
 	$sx .= form_hidden($data);
 	$sx .= form_submit('acao', 'limpa filtro');
 	$sx .= form_close();
@@ -536,6 +535,8 @@ if (!function_exists('form_edit')) {
 
 		/* POST */
 		$post = $CI -> input -> post();
+		$dd = $post;
+
 		$acao = '';
 		$term = '';
 		if (isset($post)) {
@@ -580,6 +581,12 @@ if (!function_exists('form_edit')) {
 				$term = $CI -> session -> userdata['row_termo'];
 			} else {
 				$term = '';
+			}
+		}
+		if (isset($post['dd9'])) {
+			if ($post['dd9'] == 'clean') {
+				$term = '';
+				$CI -> session -> userdata['row_termo'] = '';
 			}
 		}
 
@@ -649,7 +656,7 @@ if (!function_exists('form_edit')) {
 
 				/* see */
 				if ($see == TRUE) {
-					$link = '<A HREF="' . $url_pre . '/' . $id . '/' . checkpost_link($id) . '">';
+					$link = '<A HREF="' . $obj -> row_view . '/' . $id . '/' . checkpost_link($id) . '">';
 					$linkf = '</A>';
 				} else {
 					$link = '';

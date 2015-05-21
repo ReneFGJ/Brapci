@@ -6,9 +6,11 @@ $this -> load -> view('header/analytics.google.php');
 <div id="cab_admin" class="cab_admin">
 	<div id="cab_title" class="cab_title"><?php echo $title_page;?></div>
 	<div id="cab_logo_1" class="cab_logo cab_admin_logo_01"></div>
-	<div id="cab_logo_2" class="cab_logo cab_admin_logo_02"></div>
+	<div id="cab_logo_2" class="cab_logo cab_admin_logo_02"></div>  
 </div>
 
+<A HREF="<?php echo base_url('/admin');?>" class="link_white">ADMIN</A> | <A HREF="<?php echo base_url('/admin/journal');?>" class="link_white">JOURNALS</A>
+<BR><BR>
 <script>
 	/* $("body").addClass("margin120"); -*/
 	var $offset = 0;

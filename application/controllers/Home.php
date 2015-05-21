@@ -37,7 +37,6 @@ class home extends CI_Controller {
 		$data = array('tela' => $tela);
 
 		$this -> load -> view("brapci/search_result",$data);
-
 		$this -> load -> view("header/foot");
 	}
 
