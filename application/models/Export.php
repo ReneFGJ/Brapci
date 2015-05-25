@@ -190,6 +190,8 @@ class export extends CI_model {
 							se_tipo <> 'E' and 
 							se_tipo <> 'H'
 							)";
+		//$sql .= " and ar_codigo = '0000000506' ";
+		
 		$sql .= " order by ar_codigo ";
 		$sql .= " limit " . ($ini + 1) . ", " . $max . " ";
 		$query = $this -> db -> query($sql);

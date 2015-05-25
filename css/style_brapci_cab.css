@@ -8,6 +8,12 @@
 	z-index: 100;
 }
 
+.form_submit_big
+	{
+	height: 50px;
+	width: 200px;	
+	}
+	
 .fullscreen
 	{
 		width: 98%;

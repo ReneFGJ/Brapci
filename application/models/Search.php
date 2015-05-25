@@ -3,6 +3,19 @@ class search extends CI_model {
 	
 	var $sessao = '';
 	var $js='';
+	
+	function __construct() {
+		global $db_public;
+		
+		$db_public = 'brapci_publico.';
+		parent::__construct();
+		$this -> load -> database();
+		$this -> load -> helper('form');
+		$this -> load -> helper('url');
+		$this -> load -> library('session');
+		$this -> lang -> load("app", "portuguese");
+	}
+		
 
 	function metodo_pontos($titulo, $resumo, $keyword, $rla) {
 
@@ -198,7 +211,14 @@ class search extends CI_model {
 					if ((strlen($wh) > 0) and ($bor == 0)) { $wh .= ' AND ';
 					}
 					$wh .= $pre;
-					$wh .= " (" . $field . " like '%" . $term . "%') ";
+					if (substr($term,0,1) == '-')
+						{
+							$wh .= " NOT (" . $field . " like '%" . substr($term,1,strlen($term)) . "%') ";
+						} else {
+							$wh .= " (" . $field . " like '%" . $term . "%') ";
+						}
+									
+					
 					$pre = '';
 					$bor = 0;
 				}
@@ -218,6 +238,7 @@ class search extends CI_model {
 				//$wh .= $term;
 			}
 		}
+		$wh = '('.$wh.')';
 		$wh = troca($wh, 'AND  AND', 'AND');
 		for ($r = 0; $r < $par; $r++) { $wh .= ')';
 		}
@@ -303,6 +324,12 @@ class search extends CI_model {
 		return ($total);
 	}
 
+	/* Trata os registro informados para busca
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
 	function tratar_term($t) {
 		/* Termo composto - polilexico */
 		$t = troca($t, "\\", '');
@@ -326,10 +353,18 @@ class search extends CI_model {
 		return ($tr);
 	}
 
+	/* REALIZA BUSCA NO SISTEMA
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
 	function result_article($term = '', $datai = '', $dataf = '') {
 		global $db_public,$dd,$SESSION;
 
 		$term = $this -> tratar_term($term);
+		print_r($term);
 
 		$total = $this -> result_total_articles($term, $datai, $dataf);
 
@@ -396,7 +431,7 @@ class search extends CI_model {
 
 		$sx = chr(13) . chr(10);
 		/* total */
-		$sx .= ', found ' . $total;
+		$sx .= ', '.$this->lang->line('form_found') .' <B>'. $total .'</B> '.$this->lang->line('form_records');
 
 		$sx .= '<div id="result_select">selection</div>';
 		$sx .= '<table width="100%" class="lt1">';
@@ -971,9 +1006,7 @@ class search extends CI_model {
 		for ($r=0;$r < 100;$r++)
 			{
 				$SESSION['srcid'.$r] = '1';					
-			}
-		
-		
+			}	
 		
 		$sx = '';
 		/* registra consulta */
@@ -1090,7 +1123,8 @@ class search extends CI_model {
 		$sx .= '<table border=1 class="lt1" width="100%">';
 		$sx .= '<TR valign="top">';
 		$sx .= '<TD>';
-		$sx .= msg('find') . '<B> ' . $dd[1] . '</B>';
+		$sx .= $this -> lang -> line('form_query') . '<B> ' . $dd[1] . '</B> ';
+		/* realiza busca */
 		$sx .= $this -> result_article($dd[1], $dd[20], $dd[21]);
 
 		$sx .= '<TD width="120">';
@@ -1109,7 +1143,7 @@ class search extends CI_model {
 		$sx .= '<table border=1 class="lt1" width="100%">';
 		$sx .= '<TR valign="top">';
 		$sx .= '<TD>';
-		$sx .= msg('find') . '<B> ' . $dd[2] . '</B>';
+		$sx .= $this -> lang -> line('form_found') . ' <B> ' . $dd[2] . '</B>';
 		$sx .= $this -> result_article_key($key_cod);
 		$sx .= '<TD width="120">';
 		if (strlen($this -> query) > 0) {

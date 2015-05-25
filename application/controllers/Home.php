@@ -15,8 +15,19 @@ class home extends CI_Controller {
 		$this -> load -> helper('form_sisdoc');
 		$this -> load -> helper('url');
 		$this -> load -> library('session');
-		/* $this -> lang -> load("app", "portuguese"); */
+		$this -> lang -> load("app", "portuguese");
 	}
+	
+	function help()
+		{
+		form_sisdoc_getpost();
+	
+		$this->session->userdata('search');
+		$this -> load -> view("header/cab");
+		$this -> load -> view("brapci/content");
+		$this -> load -> view("brapci/help");
+		$this -> load -> view("header/foot");			
+		}
 
 	function index() {
 		global $dd;
@@ -31,13 +42,14 @@ class home extends CI_Controller {
 		$this -> load -> view("brapci/search_form");
 
 		/* Busca */
-		$this -> load -> model('Search');
-		
+		$this -> load -> model('Search');		
 		$tela = $this -> Search -> busca_form();
 		$data = array('tela' => $tela);
 
+		/* Mostra resultado */
 		$this -> load -> view("brapci/search_result",$data);
-
+		
+		/* Mostra rodape */
 		$this -> load -> view("header/foot");
 	}
 

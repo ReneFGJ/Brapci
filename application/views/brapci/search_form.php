@@ -7,12 +7,11 @@ echo form_open();
 
 /* Label */
 echo form_label('Informe os termos ou expressão de busca');
+echo ' | <a href="'.base_url('/home/help').'" target="_new_help" title="Ajuda sobre a busca">?</A>';
 echo '<BR>';
 
 //* textarea */
-if (!(isset($dd1))) { $dd1 = ''; }
-$options = array('name'=>'dd1','id'=>'dd1','rows'=>'5','cols'=>'80','value'=>$dd1,'class'=>'fullscreen');
-echo form_textarea($options);
+echo '<textarea name="dd1" cols="80" rows="5" class="fullscreen" style="width: 100%">'.$this->input->post('dd1').'</textarea>';
 echo '<BR>';
 
 /* RadioBox */
@@ -22,11 +21,9 @@ $opts_value = $this->input->post('dd2');
 if (strlen($opts_value) == 0) { $opts_value = 0; } 
 for ($r=0;$r < count($opts);$r++)
 	{
-	$radio_is_checked =  $opts_value === $r;
-	
-	/* Default */
-	//if ((!isset($this->input->post('dd2'))) and ($r ==0)) { $radio_is_checked = TRUE; }
-	echo form_radio('dd2', $r, $radio_is_checked, 'id=female');
+	$checked = '';
+	if ($opts_value == $r) {$checked = 'checked'; }
+	echo '<input type="radio" name="dd2" '.$checked.' value="'.$r.'">';
 	echo form_label($opts[$r]).'&nbsp;&nbsp;';
 	}
 
