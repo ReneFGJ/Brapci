@@ -59,7 +59,7 @@ class admin extends CI_controller {
 		$data['title'] = 'Brapci : Admin';
 		$data['title_page'] = 'ADMIN';
 		$this -> load -> view("header/cab_admin", $data);
-		
+
 		/* Formulario */
 		$form = new form;
 		$form -> id = $id;
@@ -71,16 +71,22 @@ class admin extends CI_controller {
 		$data['tela'] = form_edit($form);
 		$data['title'] = 'Journals';
 		$form -> cp = $this -> editions -> updatex();
-		
-		$this -> load -> view('form/form', $data);		
+
+		$this -> load -> view('form/form', $data);
 	}
 
-	function article_view($id, $check) {
+	function article_view($id, $check, $status = '') {
 		global $dd, $acao;
 		form_sisdoc_getpost();
 
 		if (($id < 1) or ($check != checkpost_link($id))) {
 			redirect(base_url('admin/journal'));
+		}
+
+		/* Alterar Status */
+		if (strlen($status) > 0) {
+			$sql = "update brapci_article set ar_status = '$status' where id_ar = " . $id;
+			$this -> db -> query($sql);
 		}
 
 		$data['title'] = 'Brapci : Admin';
@@ -92,19 +98,37 @@ class admin extends CI_controller {
 		$this -> load -> model('keywords');
 		$this -> load -> model('authors');
 		$this -> load -> model('archives');
-		
+		$this -> load -> model('cited');
+		$this -> load -> model('tools/tools');
+
 		$data = $this -> articles -> le($id);
 		$data['archives'] = $this -> archives -> show_files($id);
-		
+		$data['citeds'] = $this -> cited -> show_cited($id);
+
+		/* Barra de status da indexação */
+		$data['progress_bar'] = $this -> tools -> progress_bar($data['ar_status']);
+
+		/* Botoes de acao */
+		$data['botao_acoes'] = $this -> tools -> actions_buttons($data['ar_status'], $id);
+
+		/* Links */
+		$data['link_issue'] = '<A HREF="' . base_url('admin/issue_view/' . $data['id_ed']) . '/' . checkpost_link($data['id_ed']) . '" class="lt3">';
+
 		$idioma_1 = trim($data['ar_idioma_1']);
-		if (strlen($idioma_1) == 0) { $idioma_1 = 'pt_BR'; }		
+		if (strlen($idioma_1) == 0) { $idioma_1 = 'pt_BR';
+		}
 		$idioma_2 = trim($data['ar_idioma_2']);
-		if (strlen($idioma_2) == 0) { $idioma_2 = 'en'; }
-		
+		if (strlen($idioma_2) == 0) { $idioma_2 = 'en';
+		}
+
 		/* Save data */
 		switch($dd[8]) {
+			case 'ARCHIVE':
+				$this->archives->save_LINK($id,$data['ar_journal_id'],$dd[9]);
+				redirect(base_url('admin/article_view/' . $id . '/' . checkpost_link($id)));
+				break;
 			case 'ISSUE' :
-				$this -> articles -> save_ISSUE($id, $dd[11], $dd[12], $dd[13], $dd[14]);
+				$this -> articles -> save_ISSUE($id, $dd[11], $dd[12], $dd[13], $dd[14], $dd[15]);
 				redirect(base_url('admin/article_view/' . $id . '/' . checkpost_link($id)));
 				break;
 			case 'TITLE' :
@@ -115,14 +139,13 @@ class admin extends CI_controller {
 				$this -> authors -> save_AUTHORS($id, $dd[10]);
 				redirect(base_url('admin/article_view/' . $id . '/' . checkpost_link($id)));
 				break;
-
 			case 'ABSTRACT1' :
-				$this -> keywords -> save_KEYWORDS($id, $dd[11],$idioma_1);
+				$this -> keywords -> save_KEYWORDS($id, $dd[11], $idioma_1);
 				$this -> articles -> save_ABSTRACT($id, $dd[10], 1);
 				redirect(base_url('admin/article_view/' . $id . '/' . checkpost_link($id)));
 				break;
 			case 'ABSTRACT2' :
-				$this -> keywords -> save_KEYWORDS($id, $dd[11],$idioma_2);
+				$this -> keywords -> save_KEYWORDS($id, $dd[11], $idioma_2);
 				$this -> articles -> save_ABSTRACT($id, $dd[10], 2);
 				redirect(base_url('admin/article_view/' . $id . '/' . checkpost_link($id)));
 				break;
@@ -130,6 +153,35 @@ class admin extends CI_controller {
 
 		$this -> load -> view('admin/article_view', $data);
 
+	}
+
+	function article_new($issue) {
+		$sql = "select * from brapci_edition where id_ed = " . $issue;
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array($rlt);
+
+		if (count($rlt) > 0) {
+			$line = $rlt[0];
+			$edition = $line['ed_codigo'];
+			$jid = $line['ed_journal_id'];
+			$ano = $line['ed_ano'];
+			$sql = "insert into brapci_article
+						(
+						ar_journal_id, ar_codigo, ar_titulo_1,
+						ar_idioma_1, ar_idioma_2, ar_edition,
+						ar_status, ar_tipo, ar_ano
+						) values (
+						'$jid', '', '#without title#',
+						'pt_BR','en','$edition',
+						'A','ARTIC','$ano')
+			 ";
+			$rlt = $this -> db -> query($sql);
+			
+			$this->load->model('articles');
+			$this -> articles -> updatex();
+			
+			redirect(base_url('admin/article_view/'.$id.'/'.checkpost_link($id)));
+		}
 	}
 
 	function issue_view($id = 0, $check) {
@@ -143,6 +195,10 @@ class admin extends CI_controller {
 
 		/* Editions */
 		$this -> load -> model('editions');
+
+		/* Atualiza o Status do ISSUE */
+		$this -> editions -> update_status($id);
+
 		$data = $this -> editions -> le($id);
 
 		$jid = $data['ed_journal_id'];
@@ -165,6 +221,16 @@ class admin extends CI_controller {
 		$tela .= $tela_issue;
 		$tela .= '<TD width="90%">';
 		$tela .= $tela_articles;
+		/* Botao novo */
+		$tela .= '<input type="button" style="margin: 20px;" onclick="article_new();" value="NOVO TRABALHO" class="botao3d back_blue back_blue_shadown">';
+		$tela .= '
+				<script>
+					function article_new()
+						{
+							window.location.assign("' . base_url('admin/article_new/' . $id . '/' . checkpost_link($id)) . '");
+						}
+				</script>
+		';
 		$tela .= '</td></tr>';
 		$tela .= '</table>';
 

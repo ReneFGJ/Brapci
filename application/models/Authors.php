@@ -33,7 +33,6 @@ class authors extends CI_model {
 					$autor = trim(troca($autor,',',''));
 					$autor_nbr = nbr_autor($autor,1);
 					$autor_asc = UpperCaseSql($autor_nbr);
-					echo $autor.'='.$autor_nbr.'='.$autor_asc.'<BR>';
 					$auts[$autor_nbr] = '';
 					if (strlen($autor_nbr) > 0)
 						{
@@ -57,8 +56,39 @@ class authors extends CI_model {
 				if (strlen($value) == '')
 					{
 						/* Novo autor */
+						$nome = nbr_autor($key,7);
+						$nome1 = nbr_autor($nome,1);
+						$nome2 = UpperCaseSql($nome1);
+						$nome3 = nbr_autor($nome,5);
+						$nome4 = nbr_autor($nome,7);
+						for ($r=0;$r < 20;$r++)
+							{
+								echo '<BR>'.$r.'-'.nbr_autor($nome,$r);
+							}
+						echo '<br>Novo autor:'.$key;
+						$sql = "insert into brapci_autor 
+									(
+									autor_codigo, autor_nome, autor_nome_asc,
+									autor_nome_abrev, autor_nome_citacao, autor_nasc,
+									autor_lattes, autor_alias, autor_fale,
+									autor_tipo, autor_genero
+									) value (
+									'','$nome1','$nome2',
+									'$nome3','$nome4','',
+									'','','',
+									'','')	";
+						$this->db->query($sql);
+						$this->updatex();
 					}
 			}
+			/* Recupera ID */
+			$ida = strzero($id,10);
+			$sql = "select * from brapci_article where ar_codigo = '$ida' ";
+			$rrr = $this->db->query($sql);
+			$rrr = $rrr->result_array($rrr);
+			$line = $rrr[0];
+			$journal_id = $line['ar_journal_id'];
+			echo $sql;
 			
 			/* salva na base */
 			$sql = "insert into brapci_article_author 
@@ -67,10 +97,34 @@ class authors extends CI_model {
 				ae_professor, ae_ss, ae_pos,
 				ae_contact, ae_mestrado, ae_doutorado,
 				ae_profissional, ae_bio, ae_telefone,
-				ae_endereco)
+				ae_endereco) value 
 			";
+			$pos = 1;
+			foreach ($aut_asc as $key => $value) {
+				$author = trim($aut_asc[$key]);
+				if (strlen($author) == 0) { echo 'OPS!'; exit;}
+				$sql .= "('$journal_id','$ida','$pos',
+				'$author','','',
+				'','','',
+				'','','',
+				'','','',
+				''
+				) ";
+				$pos++;
+			}
+			$rlt = $this->db->query($sql);
 			
 		}
+
+	function updatex()
+			{
+				$c = 'autor';
+				$c1 = 'id_'.$c;
+				$c2 = $c.'_codigo';
+				$c3 = 7;
+				$sql = "update brapci_autor set autor_codigo = lpad($c1,$c3,0), autor_alias = lpad($c1,$c3,0) where $c2='' ";
+				$rlt = $this->db->query($sql);
+			}
 
 	function row($obj) {
 		$obj -> fd = array('id_autor', 'autor_nome', 'autor_tipo', 'autor_nacionalidade', 'autor_codigo', 'autor_alias');

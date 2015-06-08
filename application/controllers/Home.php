@@ -6,7 +6,7 @@
 class home extends CI_Controller {
 	function __construct() {
 		global $db_public;
-		
+
 		$db_public = 'brapci_publico.';
 		parent::__construct();
 		$this -> load -> library('form_validation');
@@ -17,38 +17,44 @@ class home extends CI_Controller {
 		$this -> load -> library('session');
 		$this -> lang -> load("app", "portuguese");
 	}
-	
-	function help()
-		{
+
+	function help() {
 		form_sisdoc_getpost();
-	
-		$this->session->userdata('search');
+
+		$this -> session -> userdata('search');
 		$this -> load -> view("header/cab");
 		$this -> load -> view("brapci/content");
 		$this -> load -> view("brapci/help");
-		$this -> load -> view("header/foot");			
-		}
+		$this -> load -> view("header/foot");
+	}
+
+	function logout() {
+		$user = /* Salva session */
+		$data = array('user' => '', 'email' => '', 'image' => '');
+		$this -> session -> set_userdata($data);
+		redirect(base_url('home'));
+	}
 
 	function index() {
 		global $dd;
-		
+
 		form_sisdoc_getpost();
-	
-		$this->session->userdata('search');
-		
+
+		$this -> session -> userdata('search');
+
 		$this -> load -> view("header/cab");
 
 		$this -> load -> view("brapci/content");
 		$this -> load -> view("brapci/search_form");
 
 		/* Busca */
-		$this -> load -> model('Search');		
+		$this -> load -> model('Search');
 		$tela = $this -> Search -> busca_form();
 		$data = array('tela' => $tela);
 
 		/* Mostra resultado */
-		$this -> load -> view("brapci/search_result",$data);
-		
+		$this -> load -> view("brapci/search_result", $data);
+
 		/* Mostra rodape */
 		$this -> load -> view("header/foot");
 	}

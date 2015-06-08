@@ -143,30 +143,6 @@ h2 {
 		color: black;
 	}	
 	
-/*
- * 
-
-echo '<div id="authors">';
-echo $author;
-echo '</div>';
-echo '<div id="rs1">';
-echo '<div id="asb1">'.$ar_resumo_1.'</div>';
-echo '<div id="key1">'.$ar_keyw_1.'</div>';
-echo '</div>';
-echo '<BR>';
-echo '<div id="rs2">';
-echo '<div id="asb2">'.$ar_resumo_2.'</div>';
-echo '<div id="key2">'.$ar_keyw_2.'</div>';
-echo '</div>';
-
-
-echo '<BR>';
-echo '<div id="cited">[Cited by '.$at_citacoes.']</div>';
-
-echo '<BR>';
-echo '<div id="ref"><B>Referências</B><BR>'.$refs.'</div>';
- */
-
 @media screen {
 
 	@font-face {
@@ -388,6 +364,11 @@ echo '<div id="ref"><B>Referências</B><BR>'.$refs.'</div>';
 		text-decoration: none;
 	}
 	.lt3 a:hover {
+		font-family: verdana, tahoma, arial, sans-serif;
+		font-size: 18px;
+		margin: 2px;
+		color: #202020;
+		line-height: 120%;
 		text-decoration: underline;
 	}
 	.lt3 th {
@@ -641,4 +622,46 @@ echo '<div id="ref"><B>Referências</B><BR>'.$refs.'</div>';
 }
 .colaborador_imagem {
 	padding: 5px;
+}
+
+.botao3d {
+	font-family: Helvetica, Arial, sans-serif;
+	text-transform: uppercase;
+	font-weight: 700;
+	border: none;
+	padding: 10px;
+	cursor: pointer;
+	display: inline-block;
+	text-decoration: none;
+}
+.botao3d a, a:hover {
+	text-decoration: none;
+	transition: 0;
+}
+.back_green {
+	background: green;
+	color: #fff;
+}
+.back_green_shadown {
+	box-shadow: 0px 5px 0px #006000;
+}
+.back_red {
+	background: red;
+	color: #fff;
+}
+.back_red_shadown {
+	box-shadow: 0px 5px 0px #600000;
+}
+.back_blue {
+	background: blue;
+	color: #fff;
+}
+.back_blue_shadown {
+	box-shadow: 0px 5px 0px #000060;
+}
+.botao3d:active {
+	position: relative;
+	top: 5px;
+	box-shadow: none;
+	transition: 0;
 }

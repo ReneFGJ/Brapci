@@ -2,6 +2,10 @@
 $this -> load -> view("header/header");
 $this -> load -> view('header/analytics.google.php');
 $this -> load -> view('header/cab_ajax_loading');
+
+$user = $this->session->userdata('user');
+$email = $this->session->userdata('email');
+$nivel = $this->session->userdata('nivel');
 ?>
 <style>
 body {
@@ -21,12 +25,30 @@ body {
 	</div>
 	<div class="geral">
 		<div id="div1">
-			&nbsp;&nbsp;<a href="<?php echo base_url('pt_BR');?>"><img src="<?php echo base_url('img/ididoma_br.png');?>" border=0 title="Portugues" alt="Portugu�s"></A>
-			| 	<a href="<?php echo base_url('social/session/facebook/');?>"><button class="btn btn-facebook"><i class="fa fa-facebook"></i> | Login com o Facebook</button></A>
+			<?php
+			echo '&nbsp;&nbsp;<a href="'.base_url('pt_BR').'"><img src="'.base_url('img/ididoma_br.png').'" border=0 title="Portugues" alt="Portugues"></A> | ';
+			
+			/* se nao estiver logado */
+			if (strlen($user)==0)
+			{
+				echo '
+				<a href="'.base_url('social/session/facebook/').'"><button class="btn btn-facebook"><i class="fa fa-facebook"></i> | Login com o Facebook</button></A>
 				|
-				<a href="<?php echo base_url('social/session/google/');?>"><button class="btn btn-google-plus"><i class="fa fa-google-plus"></i> | Login com o Google+</button></A>
+				<a href="'.base_url('social/session/google/').'"><button class="btn btn-google-plus"><i class="fa fa-google-plus"></i> | Login com o Google+</button></A>
 			<BR>
-			<BR>
+			<BR>';
+			} else {
+				/* Mostra nome se logado */
+				echo $user. ' ('.$email.')';
+				switch ($nivel)
+					{
+					case '9': echo ' - Coordenador'; break;
+					default: echo ' - '.$nivel; break;
+					}
+				echo '<BR><A href="'.base_url('home/logout').'"><I>logout</I></A>';
+			}
+			
+			?>
 		</div>
 
 		<div class="topo">

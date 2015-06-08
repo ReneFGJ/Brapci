@@ -18,33 +18,90 @@ class oai extends CI_controller {
 		$db_public = 'brapci_publico.';
 	}
 
+	function coletar_cited($id = 0) {
+		$sql = "select * from brapci_article_suporte where id_bs = '$id'";
+		$rlt = db_query($sql);
+		if ($line = db_read($rlt)) {
+			$link = trim($line['bs_adress']);
+
+			/* Expept */
+			$sc = 'http://agora.emnuvens.com.br/ra/';
+			if (substr($link, 0, strlen($sc)) == $sc) { $link = troca($link, 'http:', 'https:');
+			}
+			$arti = trim($line['bs_article']);
+			$jour = trim($line['bs_journal_id']);
+			$stat = trim($line['bs_status']);
+		}
+
+		/* Arquivo não localizado */
+		if (strlen($link) == 0) {
+			echo 'Erro no ID';
+			return ('');
+		}
+		
+		/* Methods */
+
+		if (strlen($link) > 0) {
+
+			/* Try One */
+			/* If "/view/" in link */
+			if (strpos($link, '/view/')) {
+				$txt = load_page($link);
+				$txt = $txt['content'];
+				
+				/* Method 1 - articleCitations */
+				$sc = '<div id="articleCitations">';
+				if (strpos($txt,$sc) > 0)
+					{
+						$txtr = substr($txt,strpos($txt,$sc),strlen($txt));
+						$txtr = substr($txtr,0,strpos($txtr,'</div>'));
+						$txtr = strip_tags($txtr);
+						
+						$txtr = troca($txtr,'$','|');
+						$txtr = troca($txtr,chr(13),'$');
+						$txtr = troca($txtr,chr(10),'$');
+						$txtr = troca($txtr,chr(15),'');
+						$txtr = troca($txtr,chr(9),'');
+						$citeds = splitx('$',$txtr);
+						
+						for ($r=0;$r < count($citeds);$r++)
+							{
+								echo '<BR>'.$citeds[$r];
+							}
+					}
+			}
+		}		
+	}
+
 	function coletar_pdf($id = 0) {
 		$sql = "select * from brapci_article_suporte where id_bs = '$id'";
 		$rlt = db_query($sql);
 		if ($line = db_read($rlt)) {
 			$link = trim($line['bs_adress']);
+
+			/* Expept */
+			$sc = 'http://agora.emnuvens.com.br/ra/';
+			if (substr($link, 0, strlen($sc)) == $sc) { $link = troca($link, 'http:', 'https:');
+			}
 			$arti = trim($line['bs_article']);
 			$jour = trim($line['bs_journal_id']);
 			$stat = trim($line['bs_status']);
 		}
-		
+
 		/* Arquivo não localizado */
-		if (strlen($link) == 0)
-			{
-				echo 'Erro no ID';
-				return('');
-			}
-			
+		if (strlen($link) == 0) {
+			echo 'Erro no ID';
+			return ('');
+		}
+
 		/* Status já coletado */
-		if ($stat == 'B')
-			{
-				echo '<font color="red">Já coletado</font>';
-				return('');
-			}
+		if ($stat == 'B') {
+			echo '<font color="red">Já coletado</font>';
+			return ('');
+		}
 
 		/* Methods */
 
-	
 		if (strlen($link) > 0) {
 
 			/* Try One */
@@ -55,35 +112,47 @@ class oai extends CI_controller {
 
 				$comp = 'citation_pdf_url';
 				if (strpos($txt, $comp) > 0) {
+					/* Garda link original */
+					$link_original = $link;
+					/* Modifica parametros do link */
 					$link = substr($txt, strpos($txt, $comp), 120);
-					$link = substr($link, strpos($link, 'http:'), strlen($link));
+					$link = substr($link, strpos($link, 'http'), strlen($link));
 					$link = substr($link, 0, strpos($link, '"'));
 					if (strpos($link, 'download')) {
+
 					} else {
-						echo 'ops, error ' . $link;
-						return('');
+						/* Method 2 */
+						echo 'ops, error ' . $comp;
+						return ('');
 					}
 				} else {
 					echo '<font color="red">Invalid link</font>';
-					return('');
+					return ('');
 				}
 			} else {
 				echo 'Link inválido';
-				return('');
+				return ('');
 			}
 
 			/* Try End */
+			$download = 0;
 			if (strpos($link, 'download')) {
+				$download = 1;
+			}
+
+			/* Realizad o download */
+			if ($download == 1) {
+				/* Prepara o nome do arquivo */
 				$filename = '_repositorio';
-				$this->check_dir($filename);
+				$this -> check_dir($filename);
 				$filename .= '/' . date("Y");
-				$this->check_dir($filename);
+				$this -> check_dir($filename);
 				$filename .= '/' . date("m");
-				$this->check_dir($filename);
+				$this -> check_dir($filename);
 				$filename .= '/pdf_' . substr(md5(date("Ymdis")), 10, 10) . '_' . $arti . '.pdf';
-				
-				/* Conclui processo */				
-				$this->download_and_save($link,$filename);
+
+				/* Conclui processo */
+				$this -> download_and_save($link, $filename);
 				/* Novo registro do PDF */
 				$sql = "insert brapci_article_suporte 
 						(
@@ -91,30 +160,34 @@ class oai extends CI_controller {
 						bs_adress, bs_journal_id, bs_update
 						) values (
 						'B','$arti','PDF',
-						'$filename','$jour',".date("Ymd").')';
-				$this->db->query($sql);
-				
+						'$filename','$jour'," . date("Ymd") . ')';
+				$this -> db -> query($sql);
+
 				/* Atualiza registro anterior */
 				$sql = "update brapci_article_suporte set bs_status = 'B' where id_bs = '$id'";
-				$this->db->query($sql);
-				echo '<font color="green">Successful!</font>';
+				$this -> db -> query($sql);
+				echo '<font color="green">Successful!!!</font>';
+				echo '
+				<script>
+				location.reload();
+				</script>				
+				';
+				exit;
 			}
 
 		}
 	}
 
-	function check_dir($dir)
-		{
-			if (is_dir($dir))
-				{
-					return(1);
-				} else {
-					mkdir($dir);
-					$rlt = fopen($dir.'index.php','w+');
-					fwrite($rlt,'<TT>Acesso negado</tt>');
-					fclose($rlt);
-				}
+	function check_dir($dir) {
+		if (is_dir($dir)) {
+			return (1);
+		} else {
+			mkdir($dir);
+			$rlt = fopen($dir . 'index.php', 'w+');
+			fwrite($rlt, '<TT>Acesso negado</tt>');
+			fclose($rlt);
 		}
+	}
 
 	function download_and_save($link, $file_name) {
 		$txt = $txt = load_page($link);

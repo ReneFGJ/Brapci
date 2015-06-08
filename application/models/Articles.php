@@ -1,7 +1,7 @@
 <?php
 class articles extends CI_model {
 	
-	function save_ISSUE($id,$p1,$p2,$issue,$doi)
+	function save_ISSUE($id,$p1,$p2,$issue,$doi,$sec)
 		{
 			/* title 1 */
 			$p1 = trim($p1);
@@ -11,6 +11,7 @@ class articles extends CI_model {
 					ar_pg_inicial = '$p1',
 					ar_pg_final = '$p2',
 					ar_edition = '$issue',
+					ar_section = '$sec',
 					ar_doi = '$doi' 
 					where id_ar = ".$id;
 			$this->db->query($sql);	
@@ -51,11 +52,21 @@ class articles extends CI_model {
 			$this->db->query($sql);
 			return(1);		
 		}
+	function updatex()
+			{
+				$c = 'ar';
+				$c1 = 'id_'.$c;
+				$c2 = $c.'_codigo';
+				$c3 = 10;
+				$sql = "update brapci_article set $c2 = lpad($c1,$c3,0) where $c2='' ";
+				$rlt = $this->db->query($sql);
+			}		
 	function le($id) {
 		$id = strzero($id,10);
 		$sql = "select * from brapci_article
 						inner join brapci_journal on ar_journal_id = jnl_codigo
 						inner join brapci_edition on ar_edition = ed_codigo 
+						left join brapci_section on ar_section = se_codigo
 						where ar_codigo = '$id' ";
 					
 		$query = $this -> db -> query($sql);

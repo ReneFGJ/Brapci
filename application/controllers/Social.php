@@ -30,15 +30,15 @@ class social extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this -> load -> helper('form');
+		
+		$this -> load -> database();
 
 		$this -> load -> library('session');
 		$this -> load -> helper('url');
 	}//end __construct()
 
 	public function index() {
-		print_r($_SESSION);
-		echo '<HR>';
-		print_r($this);
+		redirect(base_url('index.php'));
 	}
 
 	public function session($provider) {
@@ -88,30 +88,45 @@ class social extends CI_Controller {
 				$ss_user = $user['name'];
 				$ss_email = trim($user['email']);
 				$ss_image = $user['image'];
-
-				$sql = "select * from users where us_email = '$ss_email' ";
-				$CI = &get_instance();
-				$query = $CI -> db -> query($sql);
+				$ss_nome = $user['name'];
+				$ss_link = $user['urls']['Facebook'];
+				$ss_nivel = 0;
 				
+				$sql = "select * from users where us_email = '$ss_email' ";
+				$query = $this -> db -> query($sql);				
 				$query = $query -> result_array();
-				$data = date("ymd");
+				$data = date("Ymd");
 
-				if (count($query) > 1) {
-					$sql = "update users set us_last = '$data' where us_email = '$ss_email' ";
-					$CI -> db -> query($sql);
+				if (count($query) > 0) {
+					/* Atualiza quantidade de acessos */
+					$line = $query[0];					
+					$ss_nivel = $line['us_nivel'];
+					
+					$sql = "update users set us_last = '$data',
+									us_acessos = (us_acessos + 1) 
+								where us_email = '$ss_email' ";
+					$this-> db -> query($sql);
 				} else {
 					$sql = "insert into users 
 						(
-							us_nome, us_email, us_cidade, us_pais, us_codigo, 
+							us_nome, us_email, us_cidade, 
+							us_pais, us_codigo, us_link,
 							us_ativo, us_nivel, us_genero, us_verificado, 
 							us_cadastro, us_last
 						) values (
-							'$ss_nome','$ss_email','','',
-							1,0,1,
+							'$ss_nome','$ss_email','',
+							'','','$ss_link',
+							1,0,'',1,
 							$data,$data
 						)";
 					$CI -> db -> query($sql);
 				}
+
+				
+				/* Salva session */
+				$data = array('user'=>$ss_user, 'email'=>$ss_email, 'image'=>$ss_image, 'nivel'=>$ss_nivel);
+				$this->session->set_userdata($data);
+				
 				if ($this -> uri -> segment(3) == 'google') {
 					//Your code stuff here
 				} elseif ($this -> uri -> segment(3) == 'facebook') {

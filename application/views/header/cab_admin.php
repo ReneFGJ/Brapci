@@ -2,9 +2,18 @@
 if (!isset($title_page)) { $title_page = 'Home'; }
 $this -> load -> view("header/header");
 $this -> load -> view('header/analytics.google.php');
+
+$user = $this->session->userdata('user');
+$email = $this->session->userdata('email');
+$nivel = $this->session->userdata('nivel');
+
+/* Segurança */
+if ($nivel < 5) { redirect(base_url('main')); }
+
 ?>
 <div id="cab_admin" class="cab_admin">
-	<div id="cab_title" class="cab_title"><?php echo $title_page;?></div>
+	<a href="<?php echo base_url('admin');?>"><div id="cab_title" class="cab_title"><?php echo $title_page;?></div></A>
+	<div id="cab_user"><?php echo $user.' ('.$email.')';?></div>
 	<div id="cab_logo_1" class="cab_logo cab_admin_logo_01"></div>
 	<div id="cab_logo_2" class="cab_logo cab_admin_logo_02"></div>  
 </div>

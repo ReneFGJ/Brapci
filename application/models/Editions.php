@@ -4,6 +4,25 @@ class editions extends CI_model
 	var $tabela = 'brapci_edition';
 	var $row = '';
 	
+	function update_status($id)
+		{
+			$ide = strzero($id,7);
+			$sql = "select ar_status from brapci_article where ar_edition = '$ide' and ar_status <> 'X'";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array($rlt);
+			
+			$sta = 'D';
+			for ($r=0;$r < count($rlt);$r++)
+				{
+					$line = $rlt[$r];
+					if ($line['ar_status'] == 'A') { $sta = 'A'; }
+					if (($line['ar_status'] == 'B') and ($sta != 'A'))  { $sta = 'B'; }
+					if (($line['ar_status'] == 'C') and (($sta != 'A') and ($sta != 'B')))  { $sta = 'C'; }
+				}
+			$sql = "update brapci_edition set ed_status = '$sta' where ed_codigo = '$ide' ";
+			$rlt = $this->db->query($sql);
+		}
+	
 	function cp()
 		{
 			global $jid;
@@ -67,7 +86,7 @@ class editions extends CI_model
 			$sql = "select * from brapci_article
 						left join brapci_section on se_codigo = ar_section
 						where ar_edition = '$issue'
-						order by se_ordem, se_descricao, ar_pg_inicial
+						order by se_ordem, se_descricao, CHARACTER_LENGTH(ar_pg_inicial), ar_pg_inicial
 						";
 			$rlt = db_query($sql);
 			
@@ -82,7 +101,10 @@ class editions extends CI_model
 						';
 			while ($line = db_read($rlt))
 				{
-					$link = '<A HREF="'.base_url('admin/article_view/'.$line['id_ar']).'/'.checkpost_link($line['id_ar']).'" target="_new_'.$line['id_ar'].'">';
+					$cor = ''; $xcor = '';
+					$sta = trim($line['ar_status']);
+					if ($sta == 'X') { $cor = '<font color="red"><S>'; $xcor = '</S></font>'; }
+					$link = '<A HREF="'.base_url('admin/article_view/'.$line['id_ar']).'/'.checkpost_link($line['id_ar']).'" >';
 					$sec = trim($line['se_descricao']);
 					if ($sec != $xsec)
 						{
@@ -95,22 +117,22 @@ class editions extends CI_model
 						}
 					$sx .= '<tr>';
 					$sx .= '<td align="center">';
-					$sx .= $art.'.';
+					$sx .= $cor.$art.'.'.$xcor;
 					$sx .= '</td>';
 					
 					$sx .= '<td class="lt2">';
 					$sx .= $link;
-					$sx .= trim($line['ar_titulo_1']);
+					$sx .= $cor.trim($line['ar_titulo_1']).$xcor;
 					$sx .= '</A>';
 					$sx .= '</td>';
 					
 					$sx .= '<td width="60" align="center">';
-					$pag = $line['ar_pg_inicial'];
+					$pag = $cor.$line['ar_pg_inicial'].$xcor;
 					$sx .= $pag;
 					$sx .= '</td>';
 					
 					$sx .= '<td width="60" align="center">';
-					$sta = $line['ar_status'];
+					$sta = $cor.$line['ar_status'].$xcor;
 					$sx .= $sta;
 					$sx .= '</td>';
 
@@ -167,13 +189,19 @@ class editions extends CI_model
 					switch($sta)
 						{
 						case 'A':
-							$sx .= '<font color="green">to review<font>';
+							$sx .= '<font color="green">to index<font>';
 							break;
 						case 'F':
 							$sx .= '<font color="orange">revised<font>';
-							break;	
+							break;
+						case 'D':
+							$sx .= '<font color="blue">finished<font>';
+							break;									
 						case 'C':
 							$sx .= '<font color="orange">revised<font>';
+							break;
+						case 'B':
+							$sx .= '<font color="orange">to review<font>';
 							break;
 						case '':
 							$sx .= '<font color="green">to review<font>';
