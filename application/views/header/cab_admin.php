@@ -8,7 +8,7 @@ $email = $this->session->userdata('email');
 $nivel = $this->session->userdata('nivel');
 
 /* Segurança */
-if ($nivel < 5) { redirect(base_url('main')); }
+if ($nivel < 5) { redirect(base_url('index.php/main')); }
 
 ?>
 <div id="cab_admin" class="cab_admin">

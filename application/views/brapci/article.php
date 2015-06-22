@@ -37,6 +37,8 @@ echo '<div id="asb2">' . $ar_resumo_2 . '</div>';
 echo '<div id="key2">' . $ar_keyw_2 . '</div>';
 echo '</div>';
 
+echo $metodologia;
+
 echo '</div>';
 
 echo '<BR>';
@@ -46,4 +48,9 @@ echo '<BR>';
 echo '<div id="ref"><B>Referências</B><BR>' . $cited . '</div>';
 
 echo '</div>';
+
+if ($user_nivel > 5)
+	{
+		echo '<A HREF="'.base_url("admin/article_view/".$id_ar."/".checkpost_link($id_ar)).'">editar</A>';
+	}
 ?>

@@ -26,6 +26,10 @@ class article extends CI_Controller {
 	function view($id='',$chk='') {
 		global $dd;
 		
+		$this->load->model("metodologia");
+		
+		$user_nivel = $this -> session -> userdata('nivel');
+				
 		form_sisdoc_getpost();
 	
 		$this->session->userdata('search');
@@ -35,6 +39,10 @@ class article extends CI_Controller {
 		$this -> load -> view("brapci/content");
 		$this->load->model("articles");
 		$data = $this->articles->le($id);
+		$data['user_nivel'] = $user_nivel;
+		
+		$metodologia = $this->metodologia->le($id);
+		$data['metodologia'] = $this->metodologia->mostra($metodologia);
 		
 		$this->load->view("brapci/article",$data);
 	}

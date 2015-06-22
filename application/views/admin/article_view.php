@@ -290,6 +290,7 @@ echo '<BR>';
 echo $archives;
 echo $this->archives->new_file($id_ar);
 
+echo $metodologia;
 
 echo '<BR>';
 echo '<div id="cited">[Cited by ' . $at_citacoes . ']</div>';
