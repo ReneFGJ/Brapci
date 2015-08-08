@@ -1,4 +1,9 @@
 <?php
+function base_public()
+	{
+		return('brapci_publico.');
+	}
+
 /**
  * CodeIgniter
  *

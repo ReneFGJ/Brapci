@@ -7,7 +7,7 @@ class journal extends CI_Controller {
 	function __construct() {
 		global $db_public;
 		
-		$db_public = 'brapci_publico.';
+		$db_public = base_public();
 		parent::__construct();
 		$this -> load -> library('form_validation');
 		$this -> load -> database();
