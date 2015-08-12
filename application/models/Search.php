@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 class search extends CI_model {
 	
 	var $sessao = '';
@@ -7,7 +7,7 @@ class search extends CI_model {
 	function __construct() {
 		global $db_public;
 		
-		$db_public = base_public();
+		$db_public = 'brapci_publico.';
 		parent::__construct();
 		$this -> load -> database();
 		$this -> load -> helper('form');
@@ -424,7 +424,7 @@ class search extends CI_model {
 					where " . $wh . "
 					";
 		$sql .= " order by ar_ano desc ";
-		$sql .= " limit 500 offset 0 ";
+		$sql .= " limit 100 offset 0 ";
 		$rlt = db_query($sql);
 		
 		$this -> query = $wh;

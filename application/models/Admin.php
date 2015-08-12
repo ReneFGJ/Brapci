@@ -78,8 +78,6 @@ class admin extends CI_controller {
 	function article_view($id, $check, $status = '') {
 		global $dd, $acao;
 		form_sisdoc_getpost();
-		
-		$this->load->model("metodologia");
 
 		if (($id < 1) or ($check != checkpost_link($id))) {
 			redirect(base_url('admin/journal'));
@@ -152,9 +150,6 @@ class admin extends CI_controller {
 				redirect(base_url('admin/article_view/' . $id . '/' . checkpost_link($id)));
 				break;
 		}
-
-		$metodologia = $this->metodologia->le($id,True);
-		$data['metodologia'] = $this->metodologia->mostra($metodologia);
 
 		$this -> load -> view('admin/article_view', $data);
 

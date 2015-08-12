@@ -15,7 +15,7 @@ class oai extends CI_controller {
 		$this -> load -> helper('xml');
 		/* $this -> lang -> load("app", "portuguese"); */
 		$this -> load -> library('session');
-		$db_public = base_public();
+		$db_public = 'brapci_publico.';
 	}
 
 	function coletar_cited($id = 0) {
@@ -131,6 +131,7 @@ class oai extends CI_controller {
 				}
 			} else {
 				echo 'Link inválido';
+				echo '==>'.$link;
 				return ('');
 			}
 

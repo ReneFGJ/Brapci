@@ -12,7 +12,7 @@ class metodologia extends CI_Model {
 				$sql = "insert into metodologia
 						(met_objetivo, met_fonte, met_article)
 						values
-						('','','$article') 
+						('','','$artigo') 
 						";
 				$rlt = $this -> db -> query($sql);
 				
