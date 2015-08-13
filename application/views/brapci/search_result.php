@@ -11,7 +11,7 @@ echo $tela;
 		var ok = ta.checked;
 		$.ajax({
 			type : "POST",
-			url : "article_mark.php",
+			url : "<?php echo base_url('index.php/publico/mark/');?>",
 			data : {
 				dd1 : ms,
 				dd2 : ok

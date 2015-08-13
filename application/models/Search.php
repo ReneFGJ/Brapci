@@ -424,7 +424,7 @@ class search extends CI_model {
 					where " . $wh . "
 					";
 		$sql .= " order by ar_ano desc ";
-		$sql .= " limit 100 offset 0 ";
+		$sql .= " limit 500 offset 0 ";
 		$rlt = db_query($sql);
 		
 		$this -> query = $wh;
@@ -643,12 +643,13 @@ class search extends CI_model {
 		$js .= 'function abstractshow(ms)
 					{ $(ms).toggle("slow"); }
 					
-					function mark(ms,ta)
+				function mark(ms,ta)
 					{
+						alert("Consulta");
 						var ok = ta.checked;
 						$.ajax({
   							type: "POST",
-  							url: "article_mark.php",
+  							url: "'.base_url('index.php/public/mark/').'",
   							data: { dd1: ms, dd2: ok }
 						}).done(function( data ) {
 							$("#basket").html(data);
