@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://agora.emnuvens.com.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-09-06T12:26:52Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:agora.periodicos.emnuvens.com.br:article/535">https://agora.emnuvens.com.br/ra/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:agora.periodicos.emnuvens.com.br:article/535</identifier>
+				<datestamp>2015-03-25T20:30:12Z</datestamp>
+				<setSpec>ra:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">Internships in higher education and law 11,788: a case study in the field of archival science</dc:title>
+	<dc:title xml:lang="pt-BR">Os estágios na educação superior e a lei n. 11.788: um estudo de caso na área da arquivologia</dc:title>
+	<dc:creator>Mariz, Anna Carla Almeida; Universidade Federal do Estado do Rio de Janeiro, Centro de Ciências Humanas, Departamento de Estudos e Processos Arquivísticos</dc:creator>
+	<dc:creator>Almeida, Regina Helena Sá</dc:creator>
+	<dc:subject xml:lang="en-US">Information Science; Archival Science</dc:subject>
+	<dc:subject xml:lang="en-US">Law 11,788; Trainee Archival Science of UNIRIO; UNIRIO</dc:subject>
+	<dc:subject xml:lang="en-US">Trainee in higher education</dc:subject>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação; Arquivologia; Biblioteconomia</dc:subject>
+	<dc:subject xml:lang="pt-BR">Lei n. 11.788; Estagiários de Arquivologia da UNIRIO; Arquivologia UNIRIO</dc:subject>
+	<dc:subject xml:lang="pt-BR">Formação Profissional</dc:subject>
+	<dc:description xml:lang="en-US">The research aims to analyze the current status of internships carried out by Archival Science undergraduate students from UNIRIO regarding the Trainee Law of 2008. The trainee is a practical activity that aims to provide students with the actual participation in the labor market, focusing on their area of training, enabling the improvement of their skills, qualifications and the exercise of citizenship, the consciousness of their rights and duties in the society they live, considering an increasingly competitive and demanding market. Initially it has been detected the rise of the earliest mention of this legal subject in Brazil: the trainee. Then, a brief Legal history until Law No. 11,788, of September 25, 2008 was traced. The new Trainee Law has in its core objective articles that define more clearly the responsibilities of the parties involved in this process, bringing benefits to higher education students. Through exploratory research, in the universe of Archival Science students from Universidade Federal do Estado do Rio de Janeiro – UNIRIO, some of the 22 articles of the Trainee Law have been used for the analysis and verification of the proposed compliance in these articles by the parties involved.</dc:description>
+	<dc:description xml:lang="pt-BR">A pesquisa tem como objetivo analisar o panorama atual dos estágios realizados pelos alunos de graduação em arquivologia na UNIRIO em relação à Lei de Estágios de 2008. O estágio é uma atividade prática que visa proporcionar ao aluno a participação real no mercado de trabalho, voltado para sua área de formação, possibilitando o aprimoramento da sua capacitação, qualificação e o exercício da cidadania, para a consciência de seus direitos e deveres na sociedade em que vive, em um mercado cada vez mais competitivo e exigente. Inicialmente, detectou-se o surgimento no Brasil da primeira menção legal desse sujeito: o estagiário. Em seguida, foi traçada uma breve trajetória legal até a lei nº 11.788, de 25 de setembro de 2008. A mais recente Lei de Estágios tem em seu bojo artigos objetivos que definem com mais clareza as competências das partes envolvidas nesse processo, trazendo benefícios ao estudante da educação superior. Por meio de pesquisa exploratória, no universo dos estudantes de arquivologia da Universidade Federal do Estado do Rio de Janeiro – UNIRIO, utilizou-se alguns dos 22 artigos da Lei de Estágios para a análise e verificação do cumprimento do proposto nesses artigos pelas partes envolvidas. </dc:description>
+	<dc:publisher xml:lang="pt-BR">ÁGORA ISSN 0103-3557</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2015-03-23</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>https://agora.emnuvens.com.br/ra/article/view/535</dc:identifier>
+	<dc:source xml:lang="pt-BR">ÁGORA ISSN 0103-3557; v. 25, n. 50 (2015); 102-135</dc:source>
+	<dc:source>0103-3557</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>https://agora.emnuvens.com.br/ra/article/view/535/pdf_80</dc:relation>
+	<dc:coverage xml:lang="en-US">Brazil</dc:coverage>
+	<dc:coverage xml:lang="en-US"></dc:coverage>
+	<dc:coverage xml:lang="en-US"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR">Brasil</dc:coverage>
+	<dc:coverage xml:lang="pt-BR">Modernismo</dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:rights xml:lang="pt-BR">Direitos autorais 2015 ÁGORA, ISSN 0103-3557, Florianópolis</dc:rights>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

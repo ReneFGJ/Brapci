@@ -267,7 +267,7 @@ class export extends CI_model {
 			/* KEYWORDS */
 			$sqla = "select * from brapci_article_keyword ";
 			$sqla .= " inner join brapci_keyword on kw_codigo = kw_keyword ";
-			$sqla .= " where kw_article = '" . $line['ar_codigo'] . "'";
+			$sqla .= " where kw_article = '" . $line['ar_codigo'] . "' and kw_idioma = 'pt_BR' ";
 			$sqla .= " order by kw_idioma,  kw_ord ";
 
 			$rlta = $this -> db -> query($sqla);

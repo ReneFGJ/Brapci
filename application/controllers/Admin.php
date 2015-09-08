@@ -300,7 +300,7 @@ class admin extends CI_controller {
 	}
 
 	function export($id = 0) {
-		$exp = 150;
+		$exp = 50;
 		$data['title'] = 'Brapci : Admin';
 		$data['title_page'] = 'ADMIN - EXPORTAÇÃO';
 		$this -> load -> view("header/cab_admin", $data);

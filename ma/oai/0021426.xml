@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://agora.emnuvens.com.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-09-06T12:26:07Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:agora.periodicos.emnuvens.com.br:article/536">https://agora.emnuvens.com.br/ra/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:agora.periodicos.emnuvens.com.br:article/536</identifier>
+				<datestamp>2015-03-25T20:30:12Z</datestamp>
+				<setSpec>ra:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">The scientific production of the UNAM - Managua represented on Web of Science (2004-september 2014)</dc:title>
+	<dc:title xml:lang="pt-BR">La producción científica de la UNAN-Managua representado en la Web of Science (2004-Septiembre 2014)</dc:title>
+	<dc:creator>Marenco, Erick Manuel Tardencilla; Universidad Nacional Autonoma de Nicarágua ( UNAN-Managua)</dc:creator>
+	<dc:subject xml:lang="en-US">Information Science</dc:subject>
+	<dc:subject xml:lang="en-US">Scientific Production; Bibliometrics; National Autonomous University of Nicaragua (UNAM)</dc:subject>
+	<dc:subject xml:lang="en-US">Information Science</dc:subject>
+	<dc:subject xml:lang="pt-BR">Arquivologia</dc:subject>
+	<dc:subject xml:lang="pt-BR">Producción Científica - Bibliometría; Universidad Nacional Autónoma de Nicaragua</dc:subject>
+	<dc:subject xml:lang="pt-BR">Producción científica de la UNAN-Managua</dc:subject>
+	<dc:description xml:lang="en-US">This work uses bibliometric indicators of activity and the impact of co-authorship to analyze the articles published in the National Autonomous University of Nicaragua (UNAN-Managua), represented in the Web of Science (WOS), in the period of 2004 to September 2014. A literature review discusses the indicators of science and scientific evaluation and production. Articles are located in three different bases within the WOS, which belong to Web of Science Home Collection, INSPEC and MEDLINE in fifteen thematic areas: Public Occupational and Environmental Health; Environmental Sciences; Geology; Nursing; Dentistry; Medicine; Veterinary; Pharmacy; Preclinical Sciences; Materials Science; Oceanography; Nuclear Engineering; Geophysics; Biomedical Engineering: and Biophysics. All production is made up of a sample of 67 articles, produced by the research units of the university. The production of the UNAM-Managua is mostly journal articles and a minority of conference papers, with an annual average growth rate of 10.2%. Most of them are recorded in English in journals of impact. A paper was highly cited, written in English and published with international collaboration of institutions from other countries. It is shown that the scientific production of the UNAM-Managua is aimed to develop international collaboration, and that co-authoring presents the most prevalent average of five authors per paper.</dc:description>
+	<dc:description xml:lang="pt-BR">Este trabajo se utiliza indicadores bibliométricos la actividad y el impacto de co-autoría, para analizar los artículos publicados de la Universidad Nacional Autónoma de Nicaragua (UNAN-Managua), representada en la Web Of Science (WOS), en el período 2004 a septiembre 2014. Una revisión bibliográfica aborda los indicadores de ciencia, evaluación y producción científica. Los artículos se encuentran ubicados en tres bases distintas dentro de la WOS, las cuales son Colección Principal de la Wef Of Science, MEDLINE e INSPEC en quince áreas temáticas: Salud Ocupacional Pública y Ambiental; Ciencias Ambientales; Geología; Enfermería; Odontología; Medicina; Veterinaria; Farmacia; Ciencias Preclínicas; Ciencia de los Materiales; Oceanografía; Ingeniería Nuclear; Geofísica; Ingeniería Biomédica y Biofísica. Toda la producción está compuesta por una muestra de 67 artículos, desplegados por las unidades de investigación de la universidad. La producción de la UNAN-Managua en su mayoría son artículos de revistas y una minoría es de documentos de conferencia, tiene una tasa de crecimiento anual promedio de 10.2%. La mayoría se registra en inglés en revistas de impacto. Un artículo fue altamente citado, escrito en inglés, y publicado con la colaboración internacional que la institución tiene con otros países. Se demuestra que la producción científica de la UNAN-Managua es tendiente a desarrollarse con la colaboración internacional y que la co-autoría en su mayoría predomina un promedio de cinco autores por trabajo.</dc:description>
+	<dc:publisher xml:lang="pt-BR">ÁGORA ISSN 0103-3557</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2015-03-23</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="pt-BR">Descriptiva</dc:type>
+	<dc:type xml:lang="en-US">Bibliometrics</dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>https://agora.emnuvens.com.br/ra/article/view/536</dc:identifier>
+	<dc:source xml:lang="pt-BR">ÁGORA ISSN 0103-3557; v. 25, n. 50 (2015); 191-220</dc:source>
+	<dc:source>0103-3557</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>https://agora.emnuvens.com.br/ra/article/view/536/pdf_83</dc:relation>
+	<dc:coverage xml:lang="en-US">Managua</dc:coverage>
+	<dc:coverage xml:lang="en-US"></dc:coverage>
+	<dc:coverage xml:lang="en-US"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR">Managua, Nicaragua</dc:coverage>
+	<dc:coverage xml:lang="pt-BR">2004 - 2014</dc:coverage>
+	<dc:coverage xml:lang="pt-BR">grado de instrucción</dc:coverage>
+	<dc:rights xml:lang="pt-BR">Direitos autorais 2015 ÁGORA, ISSN 0103-3557, Florianópolis</dc:rights>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

@@ -37,6 +37,10 @@ class home extends CI_Controller {
 
 	function index() {
 		global $dd;
+		/* Model */
+		$this -> load -> model('Search');
+		
+		$this -> Search -> session();
 
 		form_sisdoc_getpost();
 
@@ -48,9 +52,51 @@ class home extends CI_Controller {
 		$this -> load -> view("brapci/search_form");
 
 		/* Busca */
-		$this -> load -> model('Search');
 		$tela = $this -> Search -> busca_form();
 		$data = array('tela' => $tela);
+
+		/* Mostra resultado */
+		$this -> load -> view("brapci/search_result", $data);
+
+		/* Mostra rodape */
+		$this -> load -> view("header/foot");
+	}
+
+	function selections() {
+		global $dd;
+		/* Model */
+		$this -> load -> model('Search');
+
+		$this -> load -> view("header/cab");
+
+		$this -> load -> view("brapci/content");
+		$this -> load -> view("brapci/search_form");
+		
+		$data = array();
+		$data['tela'] = $this -> Search -> selections();
+
+		/* Mostra resultado */
+		$this -> load -> view("brapci/search_result", $data);
+
+		/* Mostra rodape */
+		$this -> load -> view("header/foot");
+	}
+
+	function selection($id) {
+		/* Model */
+		$this -> load -> model('Search');
+		$session = $this -> Search -> session();
+
+		$this -> load -> view("header/cab");
+
+		$this -> load -> view("brapci/content");
+		$this -> load -> view("brapci/search_form");
+		
+		
+		$data['tela'] = $this -> Search -> session_set($id);
+				
+		$data = array();
+		$data['tela'] = $this -> Search -> result_search_selected($session);
 
 		/* Mostra resultado */
 		$this -> load -> view("brapci/search_result", $data);

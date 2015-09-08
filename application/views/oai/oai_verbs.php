@@ -2,16 +2,18 @@
 	<tr>
 	<?php
 	echo '<B>OAI-PMH 2.0</B> | ';
-	echo '<A HREF="'.base_url('oai/Identify/'.$id).'">Identify</A>';
+	echo '<A HREF="'.base_url('index.php/oai/Identify/'.$id).'">Identify</A>';
 	echo ' | ';
-	echo '<A HREF="'.base_url('oai/ListRecords/'.$id).'">ListRecords</A>';
+	echo '<A HREF="'.base_url('index.php/oai/ListRecords/'.$id).'">ListRecords</A>';
 	echo ' | ';
-	echo '<A HREF="'.base_url('oai/ListSets/'.$id).'">ListSets</A>';
+	echo '<A HREF="'.base_url('index.php/oai/ListSets/'.$id).'">ListSets</A>';
 	echo ' | ';
-	echo '<A HREF="'.base_url('oai/ListMetadataFormats/'.$id).'">ListMetadataFormats</A>';
+	echo '<A HREF="'.base_url('index.php/oai/ListMetadataFormats/'.$id).'">ListMetadataFormats</A>';
 	echo ' | ';
-	echo '<A HREF="'.base_url('oai/ListIdentifiers/'.$id).'">ListIdentifiers</A>';
+	echo '<A HREF="'.base_url('index.php/oai/ListIdentifiers/'.$id).'">ListIdentifiers</A>';
 	echo ' | ';
-	echo '<A HREF="'.base_url('oai/Harvesting/'.$id).'">HarvestingRecords</A>';	
+	echo '<A HREF="'.base_url('index.php/oai/Harvesting/'.$id).'">HarvestingRecords</A>';	
+	echo ' | ';
+	echo '<A HREF="'.base_url('index.php/oai/ProcessRecords/'.$id).'">ProcessRecords</A>';	
 	?>
 </table>

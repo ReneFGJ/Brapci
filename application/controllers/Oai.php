@@ -12,7 +12,7 @@ class oai extends CI_controller {
 		$this -> load -> helper('form');
 		$this -> load -> helper('form_sisdoc');
 		$this -> load -> helper('url');
-		$this -> load -> helper('xml');
+		$this -> load -> helper('xml_dom');
 		/* $this -> lang -> load("app", "portuguese"); */
 		$this -> load -> library('session');
 		$db_public = 'brapci_publico.';
@@ -38,7 +38,7 @@ class oai extends CI_controller {
 			echo 'Erro no ID';
 			return ('');
 		}
-		
+
 		/* Methods */
 
 		if (strlen($link) > 0) {
@@ -48,29 +48,27 @@ class oai extends CI_controller {
 			if (strpos($link, '/view/')) {
 				$txt = load_page($link);
 				$txt = $txt['content'];
-				
+
 				/* Method 1 - articleCitations */
 				$sc = '<div id="articleCitations">';
-				if (strpos($txt,$sc) > 0)
-					{
-						$txtr = substr($txt,strpos($txt,$sc),strlen($txt));
-						$txtr = substr($txtr,0,strpos($txtr,'</div>'));
-						$txtr = strip_tags($txtr);
-						
-						$txtr = troca($txtr,'$','|');
-						$txtr = troca($txtr,chr(13),'$');
-						$txtr = troca($txtr,chr(10),'$');
-						$txtr = troca($txtr,chr(15),'');
-						$txtr = troca($txtr,chr(9),'');
-						$citeds = splitx('$',$txtr);
-						
-						for ($r=0;$r < count($citeds);$r++)
-							{
-								echo '<BR>'.$citeds[$r];
-							}
+				if (strpos($txt, $sc) > 0) {
+					$txtr = substr($txt, strpos($txt, $sc), strlen($txt));
+					$txtr = substr($txtr, 0, strpos($txtr, '</div>'));
+					$txtr = strip_tags($txtr);
+
+					$txtr = troca($txtr, '$', '|');
+					$txtr = troca($txtr, chr(13), '$');
+					$txtr = troca($txtr, chr(10), '$');
+					$txtr = troca($txtr, chr(15), '');
+					$txtr = troca($txtr, chr(9), '');
+					$citeds = splitx('$', $txtr);
+
+					for ($r = 0; $r < count($citeds); $r++) {
+						echo '<BR>' . $citeds[$r];
 					}
+				}
 			}
-		}		
+		}
 	}
 
 	function coletar_pdf($id = 0) {
@@ -131,7 +129,7 @@ class oai extends CI_controller {
 				}
 			} else {
 				echo 'Link inválido';
-				echo '==>'.$link;
+				echo '==>' . $link;
 				return ('');
 			}
 
@@ -173,7 +171,7 @@ class oai extends CI_controller {
 				location.reload();
 				</script>				
 				';
-				exit;
+				exit ;
 			}
 
 		}
@@ -229,7 +227,7 @@ class oai extends CI_controller {
 
 		/* Meta refresh */
 		if ($end == 0) {
-			$url = base_url('oai/Harvest/' . ($id + 1));
+			$url = base_url('index.php/oai/Harvest/' . ($id + 1));
 			$data['content'] = '<meta http-equiv="refresh" content="5;' . $url . '">(R)';
 			$this -> load -> view('oai/oai_content', $data);
 
@@ -271,10 +269,20 @@ class oai extends CI_controller {
 			$data['content'] = $this -> oai_pmh -> oai_resumo_to_harvesing($id);
 			$this -> load -> view('oai/oai_content.php', $data);
 
-			$data['content'] = '<BR><BR><A href="' . base_url('oai/Harvest') . '">Harvesting all journals</A>';
+			$data['content'] = '<BR><BR><A href="' . base_url('index.php/oai/Harvest') . '">Harvesting all journals</A>';
 			$this -> load -> view('oai/oai_content.php', $data);
 		}
 
+	}
+
+	function ProcessRecords($jid = 0) {
+		$this -> load -> model('oai_pmh');
+		$data['title'] = 'Brapci : OAI-PMH';
+		$data['id'] = $jid;
+		$data['title_page'] = 'ADMIN - OAI - Harvesting';
+		$this -> load -> view("header/cab_admin", $data);
+
+		$this -> oai_pmh -> process_oai($jid);
 	}
 
 	function Identify($id = 0) {

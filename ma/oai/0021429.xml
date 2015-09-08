@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://agora.emnuvens.com.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-09-06T12:26:21Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:agora.periodicos.emnuvens.com.br:article/538">https://agora.emnuvens.com.br/ra/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:agora.periodicos.emnuvens.com.br:article/538</identifier>
+				<datestamp>2015-03-25T20:30:12Z</datestamp>
+				<setSpec>ra:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">A conceptual relationship between archives and memory center´s</dc:title>
+	<dc:title xml:lang="pt-BR">A relação conceitual entre arquivos e centros de memória</dc:title>
+	<dc:creator>Araújo, Fernanda Monteiro; UNIRIO - Universidade Federal do Estado do Rio de Janeiro</dc:creator>
+	<dc:subject xml:lang="en-US">Archives</dc:subject>
+	<dc:subject xml:lang="en-US">Archives; Documentation Center; Memory; History</dc:subject>
+	<dc:subject xml:lang="en-US">Archives</dc:subject>
+	<dc:subject xml:lang="pt-BR">Arquivologia; Memória; Arquivos</dc:subject>
+	<dc:subject xml:lang="pt-BR">Arquivo; Centro de Documentação; Memória; História</dc:subject>
+	<dc:subject xml:lang="pt-BR">Arquivos</dc:subject>
+	<dc:description xml:lang="en-US">The article in question presents a reflective analysis about the social importance gained over the historical process known institutions titled archives and memory centers. The goal is to think about the relationship between both institutions trying to understand and explain this relationship from the core activities of each one and not the nature of the custody documents. However we argue that according to the concepts of information, memory and archives governing the activities and missions of the two institutions, this relationship is becoming closer. The ideas presented have as an object of analysis the Documentation Centre of Memory and Union CUT - CUT CEDOC within the research developed in the doctoral thesis entitled &quot; The Central Workers Union (CUT ) and its Archives: The importance of documentation in the process construction of memory (1983-2003) . &quot; By analyzing the CEDOC CUT from its denomination documentation center will try to see if it CEDOC CUT could also be recognized as archive.</dc:description>
+	<dc:description xml:lang="pt-BR">O artigo em questão apresenta uma análise reflexiva em torno da importância social adquirida ao longo do processo histórico de instituições reconhecidamente intituladas de arquivos e centros de memória. O objetivo é pensar a relação existente entre ambas as instituições tentando entender e explicar tal relação a partir das atividades-fim de cada uma e não da natureza dos documentos custodiados. No entanto defendemos que de acordo com os conceitos de informação, memória e arquivo que regem as atividades e as missões das duas instituições, essa relação é cada vez mais próxima. As reflexões apresentadas possuem como objeto de análise o Centro de Documentação e Memória Sindical da CUT – CEDOC CUT no âmbito das pesquisas desenvolvidas na tese de doutorado intitulada “A Central Única dos Trabalhadores (CUT) e seu Arquivo: A importância da documentação no processo de construção da memória (1983-2003)”. Ao analisar o CEDOC CUT a partir da sua denominação de centro de documentação tentaremos perceber se o mesmo CEDOC CUT poderia ser reconhecido também como um arquivo.</dc:description>
+	<dc:publisher xml:lang="pt-BR">ÁGORA ISSN 0103-3557</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2015-03-23</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>https://agora.emnuvens.com.br/ra/article/view/538</dc:identifier>
+	<dc:source xml:lang="pt-BR">ÁGORA ISSN 0103-3557; v. 25, n. 50 (2015); 5-18</dc:source>
+	<dc:source>0103-3557</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>https://agora.emnuvens.com.br/ra/article/view/538/pdf_82</dc:relation>
+	<dc:coverage xml:lang="en-US"></dc:coverage>
+	<dc:coverage xml:lang="en-US"></dc:coverage>
+	<dc:coverage xml:lang="en-US"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:rights xml:lang="pt-BR">Direitos autorais 2015 ÁGORA, ISSN 0103-3557, Florianópolis</dc:rights>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

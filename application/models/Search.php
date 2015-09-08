@@ -1,12 +1,13 @@
 <?php
 class search extends CI_model {
-	
+
 	var $sessao = '';
-	var $js='';
-	
+	var $js = '';
+	var $ssid = '';
+
 	function __construct() {
 		global $db_public;
-		
+
 		$db_public = 'brapci_publico.';
 		parent::__construct();
 		$this -> load -> database();
@@ -14,8 +15,9 @@ class search extends CI_model {
 		$this -> load -> helper('url');
 		$this -> load -> library('session');
 		$this -> lang -> load("app", "portuguese");
+		$this -> ssid = '1508130000';
+		$this -> sessao = '1508130000';
 	}
-		
 
 	function metodo_pontos($titulo, $resumo, $keyword, $rla) {
 
@@ -27,25 +29,25 @@ class search extends CI_model {
 
 		for ($r = 0; $r < count($rla); $r++) {
 			$ttt = trim($rla[$r]);
-			if (strpos(' '.$titulo, $ttt) > 0) { $pt1++; 
+			if (strpos(' ' . $titulo, $ttt) > 0) { $pt1++;
 			}
-			if (strpos(' '.$resumo, $ttt) > 0) { $pt2++;
+			if (strpos(' ' . $resumo, $ttt) > 0) { $pt2++;
 			}
-			if (strpos(' '.$keyword, $ttt) > 0) { $pt3++;
+			if (strpos(' ' . $keyword, $ttt) > 0) { $pt3++;
 			}
 
 		}
-		
+
 		$total = count($rla);
 		//echo "<BR>==><B>($pt1)</B>, <B>($pt2)</B> e ($pt3) = ($total)";
 		//echo $titulo;
-		
+
 		$pt1 = ($pt1 == count($rla));
 		$pt2 = ($pt2 == count($rla));
-		$pt3 = ($pt3 == count($rla));		
-		
+		$pt3 = ($pt3 == count($rla));
+
 		$pt = ($pt1 * 4) + ($pt2 * 1) + ($pt3 * 2);
-		if ($pt > 0) { $srt = ' <A HREF="about.php#pontos" target="_new"><img src="img/star_' . $pt . '.png"  alt="" border="0" align="absmiddle"></A>';
+		if ($pt > 0) { $srt = ' <A HREF="about.php#pontos" target="_new"><img src="' . base_url('img/star_' . $pt . '.png') . '" alt="" border="0" align="absmiddle"></A>';
 			$mst = true;
 		} else { $srt = '';
 			$mst = false;
@@ -88,6 +90,7 @@ class search extends CI_model {
 
 	function selections() {
 		global $db_public;
+		$sx = '';
 		$sql = "select * from
 						( select max(sel_data) as lastupdate, sel_sessao, count(*) as total  
 							from " . $db_public . "usuario_selecao
@@ -95,11 +98,12 @@ class search extends CI_model {
 						left join " . $db_public . "usuario_estrategia on e_session = sel_sessao
 						order by total desc 			
 			";
+		echo $sql;
 		$rlt = db_query($sql);
 		$sx .= '<table width="100%">';
-		$sx .= '<TR><TH>Descricao<TH>Sele��o<TH>Atualizacao';
+		$sx .= '<TR><TH>Descricao<TH>Selecao<TH>Atualizacao';
 		while ($line = db_read($rlt)) {
-			$link = '<A HREF="index_sel.php?dd10=' . $line['sel_sessao'] . '">';
+			$link = '<A HREF="' . base_url('index.php/home/selection/' . $line['sel_sessao']) . '">';
 			$sx .= '<TR>';
 			$sx .= '<TD class="tabela01">' . $line['e_descricao'];
 			$sx .= '<TD class="tabela01" align="center">' . $link . $line['sel_sessao'] . '</A>';
@@ -124,44 +128,20 @@ class search extends CI_model {
 
 	function mark($art, $vl) {
 		global $ssid, $db_public, $user;
-		if ($vl == 'true') { $vl = 1;
-		} else { $vl = 0;
-		}
-		$data = date("Ymd");
-		$hora = date("H:i");
-		$art = sonumero($art);
-		$sql = "select * from " . $db_public . "usuario_selecao 
-				where sel_sessao = '$ssid' and sel_work = '$art' ";
-		$rlt = db_query($sql);
-		if ($line = db_read($rlt)) {
-			$sql = "update " . $db_public . "usuario_selecao set sel_ativo = $vl where id_sel = " . round($line['id_sel']);
-			$rlt = db_query($sql);
-		} else {
-			$sql = "insert into " . $db_public . "usuario_selecao 
-						(sel_work, sel_sessao, sel_ativo,
-						 sel_data, sel_hora, sel_usuario )
-						 values
-						('$art','$ssid',1,
-						$data,'$hora','$user')
-					";
-			$rlt = db_query($sql);
-		}
+
 	}
 
 	function session_set($ss) {
-		$SESSION['ssid'] = $ss;
+		$ss = array('ssid' => $ss);
+		$this -> session -> set_userdata($ss);
+		return (1);
 	}
 
 	function session() {
-		global $SESSION;
-		$se = trim($SESSION['ssid']);
-		if (strlen($se) == 0) {
-			$se = trim($_SERVER['HTTP_COOKIE']);
-			$se = sonumero($se);
-			$se = substr($se, 0, 10);
-		}
-		$SESSION['ssid'] = $se;
-		return ($se);
+		$ss = $this -> session -> userdata('ssid');
+		$sa = array('ssid' => $ss);
+		$this -> session -> set_userdata($sa);
+		return ($ss);
 	}
 
 	function trata_termo_composto($term) {
@@ -211,14 +191,12 @@ class search extends CI_model {
 					if ((strlen($wh) > 0) and ($bor == 0)) { $wh .= ' AND ';
 					}
 					$wh .= $pre;
-					if (substr($term,0,1) == '-')
-						{
-							$wh .= " NOT (" . $field . " like '%" . substr($term,1,strlen($term)) . "%') ";
-						} else {
-							$wh .= " (" . $field . " like '%" . $term . "%') ";
-						}
-									
-					
+					if (substr($term, 0, 1) == '-') {
+						$wh .= " NOT (" . $field . " like '%" . substr($term, 1, strlen($term)) . "%') ";
+					} else {
+						$wh .= " (" . $field . " like '%" . $term . "%') ";
+					}
+
 					$pre = '';
 					$bor = 0;
 				}
@@ -238,7 +216,7 @@ class search extends CI_model {
 				//$wh .= $term;
 			}
 		}
-		$wh = '('.$wh.')';
+		$wh = '(' . $wh . ')';
 		$wh = troca($wh, 'AND  AND', 'AND');
 		for ($r = 0; $r < $par; $r++) { $wh .= ')';
 		}
@@ -248,14 +226,14 @@ class search extends CI_model {
 		$sqlw = '';
 		for ($r = 0; $r < count($tps); $r++) {
 			//$id = $SESSION[$tps[$r]];
-			$id = 1; 
-			if ( $id == 1) {
+			$id = 1;
+			if ($id == 1) {
 				if (strlen($sqlw) > 0) { $sqlw .= ' or ';
 				}
 				$sqlw .= " (jnl_tipo = '" . $tpf[$r] . "') ";
 			}
 		}
-		if (strlen($sqlw) > 0) { $wh .= ' AND (' . $sqlw.' ) ';
+		if (strlen($sqlw) > 0) { $wh .= ' AND (' . $sqlw . ' ) ';
 		}
 		return ($wh);
 	}
@@ -325,10 +303,10 @@ class search extends CI_model {
 	}
 
 	/* Trata os registro informados para busca
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
 	 */
 	function tratar_term($t) {
 		/* Termo composto - polilexico */
@@ -354,17 +332,16 @@ class search extends CI_model {
 	}
 
 	/* REALIZA BUSCA NO SISTEMA
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
+	 *
+	 *
+	 *
+	 *
+	 *
 	 */
 	function result_article($term = '', $datai = '', $dataf = '') {
-		global $db_public,$dd,$SESSION;
+		global $db_public, $dd, $SESSION;
 
 		$term = $this -> tratar_term($term);
-		print_r($term);
 
 		$total = $this -> result_total_articles($term, $datai, $dataf);
 
@@ -426,12 +403,12 @@ class search extends CI_model {
 		$sql .= " order by ar_ano desc ";
 		$sql .= " limit 500 offset 0 ";
 		$rlt = db_query($sql);
-		
+
 		$this -> query = $wh;
 
 		$sx = chr(13) . chr(10);
 		/* total */
-		$sx .= ', '.$this->lang->line('form_found') .' <B>'. $total .'</B> '.$this->lang->line('form_records');
+		$sx .= ', ' . $this -> lang -> line('form_found') . ' <B>' . $total . '</B> ' . $this -> lang -> line('form_records');
 
 		$sx .= '<div id="result_select">selection</div>';
 		$sx .= '<table width="100%" class="lt1">';
@@ -531,25 +508,26 @@ class search extends CI_model {
 
 	}
 
-	function result_article_selected($session) {
-		global $db_public, $db_base, $pag;
-		$pag = $_GET['pag'];
-
-		$offset = 100 * (round($pag));
-
+	function result_article_selected($session, $pag = 1) {
+		global $db_public;
+		$offset = 100 * (round($pag) - 1);
+		$total = 0;
 		//$total = $this->result_total_articles($term,$datai,$dataf);
 
 		//$term = utf8_decode($term);
 
-		$sessao = $this -> sessao;
-
 		$sql = "select * from " . $db_public . "usuario_selecao 
 					inner join " . $db_public . "artigos on ar_codigo = sel_work
+					left join brapci_journal on jnl_codigo = ar_journal_id
+					left join brapci_journal_tipo on jnl_tipo = jtp_codigo
+					left join brapci_section on ar_tipo = se_codigo
 					where sel_sessao = '$session' and sel_ativo = 1 
 					";
 
 		$sql .= " order by ar_ano desc ";
 		$sql .= " limit 300 offset $offset ";
+
+		$this -> query = " sel_sessao = '$session' and sel_ativo = 1 ";
 
 		$rlt = db_query($sql);
 
@@ -562,6 +540,7 @@ class search extends CI_model {
 		$id = 0;
 		$wh = '';
 		while ($line = db_read($rlt)) {
+
 			$sx .= $this -> show_article_mini($line);
 			if (strlen($wh) > 0) { $wh .= ' or ';
 			}
@@ -649,7 +628,7 @@ class search extends CI_model {
 						var ok = ta.checked;
 						$.ajax({
   							type: "POST",
-  							url: "'.base_url('index.php/public/mark/').'",
+  							url: "' . base_url('index.php/public/mark/') . '",
   							data: { dd1: ms, dd2: ok }
 						}).done(function( data ) {
 							$("#basket").html(data);
@@ -659,14 +638,14 @@ class search extends CI_model {
 		$js .= '</script>' . chr(13) . chr(10);
 		$this -> js = $js;
 
-		$link = '<A HREF="'.base_url('/article/view/' . $line['ar_codigo'] . '/' . checkpost_link($line['ar_codigo'])) . '"
+		$link = '<A HREF="' . base_url('index.php/article/view/' . $line['ar_codigo'] . '/' . checkpost_link($line['ar_codigo'])) . '"
 					 class="lt1"
 					 target="_new' . $line['ar_codigo'] . '"
 					 >';
 
 		$id++;
 		$cod = trim($line['ar_codigo']);
-		
+
 		$sx .= '<TR valign="top">';
 		$sx .= '<TD rowspan=1>';
 
@@ -690,7 +669,7 @@ class search extends CI_model {
 		$jscmd = 'onclick="abstractshow(\'#mt' . trim($cod) . '\');" ';
 
 		$sx .= '<BR>';
-		$sx .= '<img src="img/icone_abstract.png" height="16" style="cursor: pointer;" id="it' . $cod . '" ' . $jscmd . ' align="left">';
+		$sx .= '<img src="' . base_url('img/icone_abstract.png') . '" height="16" style="cursor: pointer;" id="it' . $cod . '" ' . $jscmd . ' align="left">';
 		/* enviar por e-mail */
 		if (isset($email)) { $sx .= $this -> send_to_email($cod, 16);
 		}
@@ -728,22 +707,20 @@ class search extends CI_model {
 		$sx .= '<div style="text-align: justify; ' . $hid . ' color: #A0A0A0; line-height:130%; margin: 8px; 8px; 8px; 8px;" id="mt' . $cod . '">';
 		$abst1 = trim($line['ar_resumo_1']);
 		$abst2 = trim($line['ar_resumo_2']);
-		
-		if (strlen($abst1) == 0)
-			{
-				$resumo = $abst2;
-			} else {
-				$resumo = $abst1;
-				if (strlen($abst2) > 0)
-					{
-						$resumo .= '<BR><BR>'.$abst2;
-					}
+
+		if (strlen($abst1) == 0) {
+			$resumo = $abst2;
+		} else {
+			$resumo = $abst1;
+			if (strlen($abst2) > 0) {
+				$resumo .= '<BR><BR>' . $abst2;
 			}
+		}
 		$sx .= $resumo;
 		$sx .= '<BR>';
 		$keys = trim($line['Idioma']);
 		$key = trim($line['ar_keyword_1']);
-		$key .= ' '.trim($line['ar_keyword_2']);
+		$key .= ' ' . trim($line['ar_keyword_2']);
 		$key = trim(troca($key, ' /', ','));
 		if ($keys == 'pt_BR') { $sx .= '<B>Palavras-chave</B>: ' . $key;
 		} else { $sx .= '<BR><B>Keywords</B>: ' . $key;
@@ -811,7 +788,7 @@ class search extends CI_model {
 	function result_journals() {
 		global $db_base, $db_public;
 		$wh = $this -> query;
-		
+
 		$sx = '';
 
 		if (strlen($wh) == 0) { $wh = '(1 = 1)';
@@ -839,7 +816,7 @@ class search extends CI_model {
 	function result_year() {
 		global $db_base, $db_public;
 		$wh = $this -> query;
-		
+
 		$sx = '';
 
 		if (strlen($wh) == 0) { $wh = '(1 = 1)';
@@ -902,6 +879,73 @@ class search extends CI_model {
 		return ($sx);
 	}
 
+	function result_author_network() {
+		global $db_base, $db_public;
+		$wh = $this -> query;
+
+		$sql = "select * from ".$db_public."artigos where ".$wh;
+		$rlt = db_query($sql);
+		$sx = '';
+		while ($line = db_read($rlt)) {
+			$sx .= '<BR>';
+		 	$sx .= trim($line['Author_Analytic']).';';
+		 	$key = troca(trim($line['Keywords']),'/',';');
+		 	//$sx .= $key;
+		}
+		return ($sx);
+	}
+	
+	function result_keyword_network() {
+		global $db_base, $db_public;
+		$wh = $this -> query;
+		$wh = troca($wh,'ar_codigo','kw_article');
+
+		$sql = "select * from brapci_article_keyword
+				inner join brapci_keyword on kw_keyword = kw_codigo and kw_idioma = 'pt_BR'
+				where ".$wh."
+				order by kw_article
+				";
+		$rlt = db_query($sql);
+		$sx = '';
+		$xart = '';
+		while ($line = db_read($rlt)) {
+			$art = $line['kw_article'];
+			if ($art != $xart)
+				{
+					$sx .= '<BR>';	
+					$xart = $art;	
+				}			
+		 	$sx .= trim($line['kw_word']).';';
+		 	//$sx .= $key;
+		}
+		$sx .= '<HR>TOTAL:'.$this->result_keyword_total();
+		return ($sx);
+	}	
+
+	function result_keyword_total() {
+		global $db_base, $db_public;
+		$wh = $this -> query;
+		$wh = troca($wh,'ar_codigo','kw_word');
+
+		$sql = "select count(*) as total, kw_word from brapci_article_keyword
+				inner join brapci_keyword on kw_keyword = kw_codigo and kw_idioma = 'pt_BR'
+				where ".$wh."
+				group by kw_word
+				";
+
+		$rlt = db_query($sql);
+		$sx = '';
+		$xart = '';
+		while ($line = db_read($rlt)) {
+			print_r($line);
+			exit;
+				$sx .= '<BR>';	
+			 	$sx .= trim($line['kw_word']).';';
+				$sx .= trim($line['total']).';';
+		 	//$sx .= $key;
+		}
+		return ($sx);
+	}
 	function result_keyword() {
 		global $db_base, $db_public;
 		$wh = $this -> query;
@@ -945,7 +989,7 @@ class search extends CI_model {
 		$wh = $this -> query;
 
 		$sx = '';
-		
+
 		if (strlen($wh) == 0) { $wh = '(1 = 1)';
 		}
 		$sql = "
@@ -1000,15 +1044,14 @@ class search extends CI_model {
 
 	function busca_form() {
 		global $dd, $SESSION;
-		
-		$SESSION=array();
+
+		$SESSION = array();
 		$SESSION['ssid'] = '';
 		$SESSION['srcid'] = '1';
-		for ($r=0;$r < 100;$r++)
-			{
-				$SESSION['srcid'.$r] = '1';					
-			}	
-		
+		for ($r = 0; $r < 100; $r++) {
+			$SESSION['srcid' . $r] = '1';
+		}
+
 		$sx = '';
 		/* registra consulta */
 
@@ -1033,7 +1076,8 @@ class search extends CI_model {
 
 		while ($line = db_read($rlt)) {
 			$fld = 'srcid' . trim($line['id_jtp']);
-			if (!isset($SESSION[$fld])) { $SESSION[$fld] = ''; }
+			if (!isset($SESSION[$fld])) { $SESSION[$fld] = '';
+			}
 			$vl = $SESSION[$fld];
 			$check = '';
 			if ((strlen($vl) == 0) or ($vl == '1')) { $check = 'checked';
@@ -1118,7 +1162,7 @@ class search extends CI_model {
 		return ($txt);
 	}
 
-	function result_search($post=array()) {
+	function result_search($post = array()) {
 		global $dd, $acao;
 		$sx = '';
 		$sx .= '<table border=1 class="lt1" width="100%">';
@@ -1182,7 +1226,7 @@ class search extends CI_model {
 
 	function result_search_selected() {
 		global $dd, $acao;
-		$sx .= '<table border=1 class="lt1" width="100%">';
+		$sx = '<table border=1 class="lt1" width="100%">';
 		$sx .= '<TR valign="top">';
 		$sx .= '<TD>';
 		$sx .= msg('find') . '<B> ' . $dd[2] . '</B>';
@@ -1195,6 +1239,10 @@ class search extends CI_model {
 		$sa .= $this -> result_keyword();
 		$sx .= $sa;
 		$sx .= '</table>';
+
+		$sx .= $this -> result_author_network();
+		$sx .= '<HR>';
+		$sx .= $this -> result_keyword_network();
 		return ($sx);
 	}
 

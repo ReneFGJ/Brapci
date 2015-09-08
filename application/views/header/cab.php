@@ -18,7 +18,7 @@ body {
 	<div class="menu_left">
 		<UL class="nav_menu">
 			<LI>
-				<a href="<?php echo base_url('home');?>">
+				<a href="<?php echo base_url('index.php/home');?>">
 					<img src="<?php echo base_url('/img/icone_menu.png');?>" border=0 height="20" title="main menu">
 			</LI>
 		</UL>
@@ -26,15 +26,15 @@ body {
 	<div class="geral">
 		<div id="div1">
 			<?php
-			echo '&nbsp;&nbsp;<a href="'.base_url('pt_BR').'"><img src="'.base_url('img/ididoma_br.png').'" border=0 title="Portugues" alt="Portugues"></A> | ';
+			echo '&nbsp;&nbsp;<a href="'.base_url('index.php/home/pt_BR').'"><img src="'.base_url('img/ididoma_br.png').'" border=0 title="Portugues" alt="Portugues"></A> | ';
 			
 			/* se nao estiver logado */
 			if (strlen($user)==0)
 			{
 				echo '
-				<a href="'.base_url('social/session/facebook/').'"><button class="btn btn-facebook"><i class="fa fa-facebook"></i> | Login com o Facebook</button></A>
+				<a href="'.base_url('index.php/social/session/facebook/').'"><button class="btn btn-facebook"><i class="fa fa-facebook"></i> | Login com o Facebook</button></A>
 				|
-				<a href="'.base_url('social/session/google/').'"><button class="btn btn-google-plus"><i class="fa fa-google-plus"></i> | Login com o Google+</button></A>
+				<a href="'.base_url('index.php/social/session/google/').'"><button class="btn btn-google-plus"><i class="fa fa-google-plus"></i> | Login com o Google+</button></A>
 			<BR>
 			<BR>';
 			} else {
@@ -45,7 +45,7 @@ body {
 					case '9': echo ' - Coordenador'; break;
 					default: echo ' - '.$nivel; break;
 					}
-				echo '<BR><A href="'.base_url('home/logout').'"><I>logout</I></A>';
+				echo '<BR><A href="'.base_url('index.php/home/logout').'"><I>logout</I></A>';
 			}
 			
 			?>
