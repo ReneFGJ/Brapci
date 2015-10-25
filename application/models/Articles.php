@@ -1,102 +1,210 @@
 <?php
 class articles extends CI_model {
 	
-	function save_ISSUE($id,$p1,$p2,$issue,$doi,$sec)
+	function insert_suporte($codigo,$link,$jid)
 		{
-			/* title 1 */
-			$p1 = trim($p1);
-			$p2 = trim($p2);
-						
-			$sql = "update brapci_article set
+			$sql = "select * from brapci_article_suporte where bs_adress = '$link' ";
+			$rlt = db_query($sql);
+			if ($line = db_read($rlt))
+				{
+					return(0);
+				} else {
+					$data = date("Ymd");
+					
+					$type = 'URL';
+					if (substr($link,0,3) == '10.') { $type = 'DOI'; }
+					
+					$sql = "insert into brapci_article_suporte 
+							(
+							bs_article, bs_type, bs_adress,
+							bs_status, bs_journal_id, bs_update
+							) values (
+							'$codigo','$type','$link',
+							'A','$jid',$data							
+							)					
+					";
+					$this->db->query($sql);
+					return(1);
+				}
+		}
+
+	function insert_new_article($article) {
+		$id = $article['idf'];
+		$xsql = "select * from brapci_article where ar_oai_id = '$id' ";
+		$rlt = db_query($xsql);
+
+		if ($line = db_read($rlt)) {
+			$cod = $line['ar_codigo'];
+			$section = $article['section'];
+			$edition = $article['issue_id'];
+			$sql = "update brapci_article set 
+					ar_edition= '$edition',
+					ar_section = '$section'
+					where id_ar = ".$line['id_ar'];
+			$rlt = $this->db->query($sql);
+			return($cod);
+		} else {
+			$section = $article['section'];
+			$edition = $article['issue_id'];
+			
+			$journal_id = $article['journal_id'];
+			$idioma = $article['titles'][0]['idioma'];
+			$titulo = troca($article['titles'][0]['title'],"'",'´');
+			$ar_resumo_1 = troca($article['abstract'][0]['content'],"'",'´');
+			
+			if (isset($article['titles'][1]['idioma']))
+				{
+					$idioma2 = $article['titles'][1]['idioma'];
+					$titulo2 = troca($article['titles'][1]['title'],"'",'´');
+					$ar_resumo_2 = troca($article['abstract'][1]['content'],"'",'´');
+				} else {
+					$idioma2 = '';
+					$titulo2 = '';
+					$ar_resumo_2 = '';
+				}
+
+			if ($idioma2 == 'pt-BR') {
+				$idioma3 = $idioma;
+				$titulo3 = $titulo;
+				$ar_resumo_3 = $ar_resumo_1;
+
+				$idioma = $idioma2;
+				$titulo = $titulo2;
+				$ar_resumo_1 = $ar_resumo_2;
+
+				$idioma2 = $idioma3;
+				$titulo2 = $titulo3;
+				$ar_resumo_2 = $ar_resumo_3;
+			}
+
+			$ano = $article['ano'];
+
+			$titulo_asc = UpperCaseSql($titulo);
+
+			$sql = "insert into brapci_article
+			
+			(ar_journal_id, ar_codigo, ar_titulo_1,
+			ar_titulo_1_asc, ar_titulo_2,
+			ar_idioma_1, ar_idioma_2,
+			ar_status, ar_resumo_1, ar_resumo_2,
+			
+			ar_edition, ar_section,
+			
+			ar_doi, ar_oai_id, ar_brapci_id,
+			ar_ano, ar_bdoi, at_citacoes
+			) values (
+			'$journal_id','','$titulo',
+			'$titulo_asc','$titulo2',
+			'$idioma','$idioma2',
+			'A', '$ar_resumo_1','$ar_resumo_2',
+			
+			'$edition','$section',
+			
+			'','$id','',
+			'$ano','',0)			
+			";
+			$this->db->query($sql);
+			$this->updatex();
+			
+			$rlt = db_query($xsql);
+			$line = db_read($rlt);
+			$cod = $line['ar_codigo'];
+			return($cod);							
+		}
+	}
+
+	function save_ISSUE($id, $p1, $p2, $issue, $doi, $sec) {
+		/* title 1 */
+		$p1 = trim($p1);
+		$p2 = trim($p2);
+
+		$sql = "update brapci_article set
 					ar_pg_inicial = '$p1',
 					ar_pg_final = '$p2',
 					ar_edition = '$issue',
 					ar_section = '$sec',
 					ar_doi = '$doi' 
-					where id_ar = ".$id;
-			$this->db->query($sql);	
-		}
-	function save_TITLE($id, $title_1,$title_2,$idioma_1,$idioma_2)
-		{
-			/* title 1 */
-			$title_1 = trim($title_1);
-			$title_1 = troca($title_1,chr(13),' ');
-			$title_1 = troca($title_1,chr(10),'');
-			$title_1 = troca($title_1,'  ',' ');
-			/* title 2 */
-			$title_2 = trim($title_2);
-			$title_2 = troca($title_2,chr(13),' ');
-			$title_2 = troca($title_2,chr(10),'');
-			$title_2 = troca($title_2,'  ',' ');
-			
-			$sql = "update brapci_article set
+					where id_ar = " . $id;
+		$this -> db -> query($sql);
+	}
+
+	function save_TITLE($id, $title_1, $title_2, $idioma_1, $idioma_2) {
+		/* title 1 */
+		$title_1 = trim($title_1);
+		$title_1 = troca($title_1, chr(13), ' ');
+		$title_1 = troca($title_1, chr(10), '');
+		$title_1 = troca($title_1, '  ', ' ');
+		/* title 2 */
+		$title_2 = trim($title_2);
+		$title_2 = troca($title_2, chr(13), ' ');
+		$title_2 = troca($title_2, chr(10), '');
+		$title_2 = troca($title_2, '  ', ' ');
+
+		$sql = "update brapci_article set
 					ar_titulo_1 = '$title_1',
 					ar_titulo_2 = '$title_2',
 					ar_idioma_1 = '$idioma_1',
 					ar_idioma_2 = '$idioma_2' 
-					where id_ar = ".$id;
-			$this->db->query($sql);
+					where id_ar = " . $id;
+		$this -> db -> query($sql);
+	}
+
+	function save_ABSTRACT($id, $abstract, $lc = 1) {
+		if ($lc == 2) { $fld = 'ar_resumo_2';
+		} else { $fld = 'ar_resumo_1';
 		}
-	function save_ABSTRACT($id,$abstract,$lc=1)
-		{
-			if ($lc == 2) { $fld = 'ar_resumo_2'; }
-			else { $fld = 'ar_resumo_1'; }
-			/* Abstract */
-			$abstract = trim($abstract);
-			$abstract = troca($abstract,chr(13),' ');
-			$abstract = troca($abstract,chr(10),'');
-			$abstract = troca($abstract,'  ',' ');
-			$sql = "update brapci_article set
+		/* Abstract */
+		$abstract = trim($abstract);
+		$abstract = troca($abstract, chr(13), ' ');
+		$abstract = troca($abstract, chr(10), '');
+		$abstract = troca($abstract, '  ', ' ');
+		$sql = "update brapci_article set
 					$fld = '$abstract'
-					where id_ar = ".$id;
-			$this->db->query($sql);
-			return(1);		
-		}
-	function updatex()
-			{
-				$c = 'ar';
-				$c1 = 'id_'.$c;
-				$c2 = $c.'_codigo';
-				$c3 = 10;
-				$sql = "update brapci_article set $c2 = lpad($c1,$c3,0) where $c2='' ";
-				$rlt = $this->db->query($sql);
-			}		
+					where id_ar = " . $id;
+		$this -> db -> query($sql);
+		return (1);
+	}
+
+	function updatex() {
+		$c = 'ar';
+		$c1 = 'id_' . $c;
+		$c2 = $c . '_codigo';
+		$c3 = 10;
+		$sql = "update brapci_article set $c2 = lpad($c1,$c3,0) where $c2='' ";
+		$rlt = $this -> db -> query($sql);
+	}
+
 	function le($id) {
-		$id = strzero($id,10);
+		$id = strzero($id, 10);
 		$sql = "select * from brapci_article
-						inner join brapci_journal on ar_journal_id = jnl_codigo
-						inner join brapci_edition on ar_edition = ed_codigo 
+						left join brapci_journal on ar_journal_id = jnl_codigo
+						left join brapci_edition on ar_edition = ed_codigo 
 						left join brapci_section on ar_section = se_codigo
 						where ar_codigo = '$id' ";
-					
 		$query = $this -> db -> query($sql);
 		$query = $query -> result();
 		$line = db_read($query);
-		
+
 		/* Kwywords */
-		$this->load->model('keywords');
-		
-		$line['ar_keyw_1'] = $this->keywords->retrieve_keywords($id,$line['ar_idioma_1']);
-		$line['ar_keyw_2'] = $this->keywords->retrieve_keywords($id,$line['ar_idioma_2']);
+		$this -> load -> model('keywords');
+
+		$line['ar_keyw_1'] = $this -> keywords -> retrieve_keywords($id, $line['ar_idioma_1']);
+		$line['ar_keyw_2'] = $this -> keywords -> retrieve_keywords($id, $line['ar_idioma_2']);
 		$line['author'] = $this -> author_article($id);
 		$line['authores_row'] = $this -> author_article_row($id);
 		$line['cited'] = $this -> cited($id);
-		$line['link_pdf'] = $this->arquivos($id);
-		
+		$line['link_pdf'] = $this -> arquivos($id);
+
 		/* Pages */
 		$p1 = $line['ar_pg_inicial'];
 		$p2 = $line['ar_pg_final'];
 		$line['pages'] = '';
-		if ($p1 > 0)
-			{
-				$line['pages'] = ', p.'.$p1;
-				if (strlen($p2) > 0)
-					{
-						$line['pages'] .= '-'.$p2;		
-					}
+		if ($p1 > 0) {
+			$line['pages'] = ', p.' . $p1;
+			if (strlen($p2) > 0) {
+				$line['pages'] .= '-' . $p2;
 			}
-		
-		 
+		}
 
 		if (strlen(trim($line['ar_doi'])) == 0) { $line['ar_doi'] = '<font color="red">empty</font>';
 		}
@@ -109,9 +217,10 @@ class articles extends CI_model {
 		$rlt = db_query($sql);
 		$line = db_read($rlt);
 		$link = trim($line['bs_adress']);
-		if (strlen($link) > 0) { $fl = base_url($link); }
-		else {$fl = ''; }
-		return($fl);
+		if (strlen($link) > 0) { $fl = base_url($link);
+		} else {$fl = '';
+		}
+		return ($fl);
 	}
 
 	function cited($id) {
@@ -134,7 +243,7 @@ class articles extends CI_model {
 	}
 
 	function author_article($id) {
-			$sql = "
+		$sql = "
 				SELECT * FROM `brapci_article_author` 
 				inner join brapci_autor on autor_codigo = ae_author
 				where ae_article = '$id'
@@ -158,8 +267,9 @@ class articles extends CI_model {
 		return ($sx);
 
 	}
+
 	function author_article_row($id) {
-			$sql = "
+		$sql = "
 				SELECT * FROM `brapci_article_author` 
 				inner join brapci_autor on autor_codigo = ae_author
 				where ae_article = '$id'
@@ -169,13 +279,12 @@ class articles extends CI_model {
 		$query = $query -> result_array();
 		$sx = '';
 		$id = 0;
-		for ($r=0;$r < count($query);$r++) {
-			$sx .= htmlspecialchars($query[$r]['autor_nome']).chr(13).chr(10);
+		for ($r = 0; $r < count($query); $r++) {
+			$sx .= htmlspecialchars($query[$r]['autor_nome']) . chr(13) . chr(10);
 		}
 		return ($sx);
 
 	}
-
 
 	function articles_author($codigo) {
 		$sql = "
@@ -192,7 +301,7 @@ class articles extends CI_model {
 		$r = 0;
 		foreach ($query as $row) {
 			$r++;
-			$link = '<A HREF="'.base_url('admin/article_view/'.$row->id_ar.'/'.checkpost_link($row->id_ar)).'" target="_new'.$row->id_ar.'">';
+			$link = '<A HREF="' . base_url('index.php/admin/article_view/' . $row -> id_ar . '/' . checkpost_link($row -> id_ar)) . '" target="_new' . $row -> id_ar . '">';
 			//$title = trim($row['ar_titulo_1']);
 			$title = $row -> ar_titulo_1;
 			$journal = $row -> jnl_nome;
@@ -218,10 +327,6 @@ class articles extends CI_model {
 			$sx .= '</A>';
 			$sx .= '</td>';
 			$sx .= '</tr>';
-
-			//$cited = $row['at_citacoes'];
-			//print_r($row);
-			//echo '<HR>';
 		}
 		$sx .= '</table>';
 		return ($sx);

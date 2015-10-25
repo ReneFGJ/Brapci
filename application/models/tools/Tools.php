@@ -47,7 +47,7 @@ class tools extends CI_Model {
 							rsp = confirm(\'Confirmar alteração do estatus para \' + stb);
 							if (rsp)
 								{
-									window.location.assign("' . base_url('admin/article_view/' . $id_ar . '/' . checkpost_link($id_ar)) . '/"+sta);
+									window.location.assign("' . base_url('index.php/admin/article_view/' . $id_ar . '/' . checkpost_link($id_ar)) . '/"+sta);
 								}
 						}
 					</script>

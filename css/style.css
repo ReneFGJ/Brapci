@@ -25,7 +25,14 @@
 		text-decoration: none;
 	}
 }
-
+.white
+	{
+		color: white;
+	}
+.white a	
+	{
+		color: white;
+	}
 .two-col {
 	-moz-column-count: 2;
 	-moz-column-gap: 20px;

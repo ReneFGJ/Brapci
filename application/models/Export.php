@@ -96,6 +96,9 @@ class export extends CI_model {
 
 	function zera_public() {
 		global $db_public;
+		$sql = "delete from " . $db_public . "artigos where 1=1 ";
+		$query = $this -> db -> query($sql);
+		
 		$sql = "TRUNCATE " . $db_public . "artigos ";
 		$query = $this -> db -> query($sql);
 	}

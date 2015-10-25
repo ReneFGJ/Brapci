@@ -1,3 +1,29 @@
+#nav_cab ul {
+	list-style: none;
+}
+#nav_cab ul li {
+	display: inline;
+}
+#nav_cab li {
+	display: inline;
+	list-style-type: none;
+	cursor: pointer;
+}
+
+.nav_menu
+	{
+		padding: 3px 8px;	
+		color: #ddd;
+	}
+.nav_menu a
+	{
+		color: #ddd;
+	}	
+.nav_menu:hover
+	{
+		background-color: #0d3141;
+		color: #fff;
+	}
 .versao {
 	background: url("/img/img_versao.png") no-repeat scroll left top;
 	position: fixed;
@@ -8,48 +34,46 @@
 	z-index: 100;
 }
 
-.form_submit_big
-	{
+.form_submit_big {
 	height: 50px;
-	width: 200px;	
-	}
-	
-.fullscreen
-	{
-		width: 98%;
-	}
-.s96
-	{
-		width: 96%;
-	}
-.ml5
-	{
-		margin-left: 5px;
-	}
-.pad5
-	{
-		padding: 5px 5px 5px 5px;
-	}
-.border01
-	{
-		border: 1px solid #333333;
-	}
-.cab_title
-	{
-		font-family: 'CICPG','RobotoThin', Tahoma, verdana, Helvetica;
-		font-size: 25px;
-		color: white;
-		position: fixed;
-		margin-top: 0px !important;		
-		top: 10px;
-	}
-#cab_user
-	{
-		color: #C0C0C0;
-		position: fixed;
-		top: 10px;
-		left: 420px;
-	}
+	width: 200px;
+}
+
+.fullscreen {
+	width: 98%;
+}
+.s96 {
+	width: 96%;
+}
+.ml5 {
+	margin-left: 5px;
+}
+.pad5 {
+	padding: 5px 5px 5px 5px;
+}
+.border01 {
+	border: 1px solid #333333;
+}
+.cab_title {
+	font-family: 'CICPG', 'RobotoThin', Tahoma, verdana, Helvetica;
+	font-size: 25px;
+	color: white;
+	position: fixed;
+	margin-top: 0px !important;
+	top: 10px;
+}
+#cab_user {
+	color: #C0C0C0;
+	position: fixed;
+	top: 10px;
+	left: 420px;
+}
+.white {
+	color: white;
+}
+.white a {
+	color: white;
+}
 .cab_admin {
 	top: 0;
 	min-height: 10px;
@@ -63,11 +87,10 @@
 	margin-top: 0px !important;
 }
 
-.bgblue
-	{
+.bgblue {
 	background-color: #2076A7;
-	color: white;	
-	}
+	color: white;
+}
 
 /* TOPO */
 div.cab_logo {

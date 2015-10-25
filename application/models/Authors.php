@@ -1,72 +1,113 @@
 <?php
 class authors extends CI_model {
 	var $tabela = 'brapci_autor';
-	
-	function save_AUTHORS($id, $au)
-		{
-			$au = troca($au,chr(13),';');
-			$au = troca($au,chr(10),'').';';
-			
-			$au = troca($au,'0','');
-			$au = troca($au,'1','');
-			$au = troca($au,'2','');
-			$au = troca($au,'3','');
-			$au = troca($au,'4','');
-			$au = troca($au,'5','');
-			$au = troca($au,'6','');
-			$au = troca($au,'7','');
-			$au = troca($au,'8','');
-			$au = troca($au,'9','');
-			
-			
-			$aut = splitx(';',$au);
-			$auts = array();
-			$aut_asc = array();
-			$hw = '';
-			for ($r=0;$r < count($aut);$r++)
-				{
-					$autor = $aut[$r];
-					if (strpos($autor,',') > 0)
-						{
-							$autor = substr($autor,strpos($autor,','),strlen($autor)).' '.substr($autor,0,strpos($autor,','));
-						}
-					$autor = trim(troca($autor,',',''));
-					$autor_nbr = nbr_autor($autor,1);
-					$autor_asc = UpperCaseSql($autor_nbr);
-					$auts[$autor_nbr] = '';
-					if (strlen($autor_nbr) > 0)
-						{
-						if (strlen($hw) > 0) { $hw .= ','; }
-						$hw .= "'$autor_nbr'";
-						$aut_asc[$autor_asc] = '';
-						}
-				}
-			/* Recupera nomes */
-			$sql = "select * from brapci_autor where autor_nome IN ($hw)";
-			$rlt = db_query($sql);
-			while ($line = db_read($rlt))
-				{
-					$aut1 = trim($line['autor_nome_asc']);
-					$aut_asc[$aut1] = $line['autor_alias'];
-				}
 
-			/* Valida recuperacao */
-			foreach ($aut_asc as $key => $value) {
-				echo '<BR>'.$key.'--'.$value;
-				if (strlen($value) == '')
-					{
-						/* Novo autor */
-						$nome = nbr_autor($key,7);
-						$nome1 = nbr_autor($nome,1);
-						$nome2 = UpperCaseSql($nome1);
-						$nome3 = nbr_autor($nome,5);
-						$nome4 = nbr_autor($nome,7);
-						for ($r=0;$r < 20;$r++)
-							{
-								echo '<BR>'.$r.'-'.nbr_autor($nome,$r);
-							}
-						echo '<br>Novo autor:'.$key;
-						$sql = "insert into brapci_autor 
+	function save_AUTHORS($id, $au) {
+
+		$au = troca($au, chr(13), ';');
+		$au = troca($au, chr(10), '') . ';';
+
+		$au = troca($au, '0', '');
+		$au = troca($au, '1', '');
+		$au = troca($au, '2', '');
+		$au = troca($au, '3', '');
+		$au = troca($au, '4', '');
+		$au = troca($au, '5', '');
+		$au = troca($au, '6', '');
+		$au = troca($au, '7', '');
+		$au = troca($au, '8', '');
+		$au = troca($au, '9', '');
+
+		$aut = splitx(';', $au);
+		$auts = array();
+		$aut_asc = array();
+		$autc = array();
+		$hw = '';
+		$idt = 0;
+		for ($r = 0; $r < count($aut); $r++) {
+			$autor = $aut[$r];
+			if (strpos($autor, ',') > 0) {
+				$autor = substr($autor, strpos($autor, ','), strlen($autor)) . ' ' . substr($autor, 0, strpos($autor, ','));
+			}
+			$autor = trim(troca($autor, ',', ''));
+			$autor_nbr = nbr_autor($autor, 1);
+			$autor_asc = UpperCaseSql($autor_nbr);
+			$auts[$r] = '';
+			if (strlen($autor_nbr) > 0) {
+				$auts[$idt] = $autor_nbr;
+				$aut_asc[$idt] = $autor_asc;
+				$autc[$idt] = '';
+				$idt++;
+			}
+		}
+
+		/* Recupera nomes */
+		for ($r = 0; $r < count($aut_asc); $r++) {
+			$autor = $aut_asc[$r];
+			$sql = "select * from brapci_autor where autor_nome = '$autor'";
+			$rrr = $this -> db -> query($sql);
+			$rrr = $rrr -> result_array();
+
+			if (count($rrr) > 0) {
+				$line = $rrr[0];
+				$cod = $line['autor_codigo'];
+				$autc[$r] = $cod;
+			} else {
+				/* Não existe */
+				$autc[$r] = $this -> inserir_novo_autor($autor);
+			}
+		}
+
+		/* Recupera ID */
+		$ida = strzero($id, 10);
+
+		$sql = "delete from brapci_article_author where ae_article = '$ida' ";
+		$rrr = $this -> db -> query($sql);
+
+		$sql = "select * from brapci_article where ar_codigo = '$ida' ";
+		$rrr = $this -> db -> query($sql);
+		$rrr = $rrr -> result_array($rrr);
+		$line = $rrr[0];
+		$journal_id = $line['ar_journal_id'];
+
+		/* salva na base */
+		$sql = "insert into brapci_article_author 
+				(ae_journal_id, ae_article, ae_position,
+				ae_author, ae_instituicao, ae_aluno, 
+				ae_professor, ae_ss, ae_pos,
+				ae_contact, ae_mestrado, ae_doutorado,
+				ae_profissional, ae_bio, ae_telefone,
+				ae_endereco) value 
+			";
+		$pos = 1;
+		for ($rx = 0; $rx < count($autc); $rx++) {
+			$pos = ($rx + 1);
+			if ($pos > 1) { $sql .= ', ';
+			}
+			$author = $autc[$rx];
+			$sql .= "('$journal_id','$ida','$pos',
+				'$author','','',
+				'','','',
+				'','','',
+				'','','',
+				''
+				) ";
+			$pos++;
+		}
+		$rlt = $this -> db -> query($sql);
+
+	}
+
+	function inserir_novo_autor($nome) {
+		/* Valida recuperacao */
+
+		$nome = nbr_autor($nome, 7);
+		$nome1 = nbr_autor($nome, 1);
+		$nome2 = UpperCaseSql($nome1);
+		$nome3 = nbr_autor($nome, 5);
+		$nome4 = nbr_autor($nome, 7);
+
+		$sql = "insert into brapci_autor 
 									(
 									autor_codigo, autor_nome, autor_nome_asc,
 									autor_nome_abrev, autor_nome_citacao, autor_nasc,
@@ -77,54 +118,24 @@ class authors extends CI_model {
 									'$nome3','$nome4','',
 									'','','',
 									'','')	";
-						$this->db->query($sql);
-						$this->updatex();
-					}
-			}
-			/* Recupera ID */
-			$ida = strzero($id,10);
-			$sql = "select * from brapci_article where ar_codigo = '$ida' ";
-			$rrr = $this->db->query($sql);
-			$rrr = $rrr->result_array($rrr);
-			$line = $rrr[0];
-			$journal_id = $line['ar_journal_id'];
-			echo $sql;
-			
-			/* salva na base */
-			$sql = "insert into brapci_article_author 
-				(ae_journal_id, ae_article, ae_position,
-				ae_author, ae_instituicao, ae_aluno, 
-				ae_professor, ae_ss, ae_pos,
-				ae_contact, ae_mestrado, ae_doutorado,
-				ae_profissional, ae_bio, ae_telefone,
-				ae_endereco) value 
-			";
-			$pos = 1;
-			foreach ($aut_asc as $key => $value) {
-				$author = trim($aut_asc[$key]);
-				if (strlen($author) == 0) { echo 'OPS!'; exit;}
-				$sql .= "('$journal_id','$ida','$pos',
-				'$author','','',
-				'','','',
-				'','','',
-				'','','',
-				''
-				) ";
-				$pos++;
-			}
-			$rlt = $this->db->query($sql);
-			
-		}
+		$this -> db -> query($sql);
+		$this -> updatex();
 
-	function updatex()
-			{
-				$c = 'autor';
-				$c1 = 'id_'.$c;
-				$c2 = $c.'_codigo';
-				$c3 = 7;
-				$sql = "update brapci_autor set autor_codigo = lpad($c1,$c3,0), autor_alias = lpad($c1,$c3,0) where $c2='' ";
-				$rlt = $this->db->query($sql);
-			}
+		$sql = "select * from brapci_autor where autor_nome_asc = '$nome2'";
+		$rrr = $this -> db -> query($sql);
+		$rrr = $rrr -> result_array();
+		$line = $rrr[0];
+		return($line['autor_codigo']);
+	}
+
+	function updatex() {
+		$c = 'autor';
+		$c1 = 'id_' . $c;
+		$c2 = $c . '_codigo';
+		$c3 = 7;
+		$sql = "update brapci_autor set autor_codigo = lpad($c1,$c3,0), autor_alias = lpad($c1,$c3,0) where $c2='' ";
+		$rlt = $this -> db -> query($sql);
+	}
 
 	function row($obj) {
 		$obj -> fd = array('id_autor', 'autor_nome', 'autor_tipo', 'autor_nacionalidade', 'autor_codigo', 'autor_alias');
@@ -165,10 +176,9 @@ class authors extends CI_model {
 			$row = $query -> result_array();
 			$row = $row[0];
 			$codigo = $alias;
-			$lattes = $row['autor_lattes'];	
+			$lattes = $row['autor_lattes'];
 		}
 
-		
 		$row['autor_nomes'] = $this -> remissivas($codigo);
 		$row['autor_foto'] = $this -> image($codigo);
 		$row['autor_instituicoes'] = $this -> instituicoes($codigo);

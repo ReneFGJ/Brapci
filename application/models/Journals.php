@@ -18,9 +18,16 @@ class journals extends CI_model {
 		array_push($cp, array('$S14', 'jnl_issn_impresso', 'ISSN', False, True));
 		array_push($cp, array('$S14', 'jnl_issn_eletronico', 'ISSN Eletrônico', False, True));
 		array_push($cp, array('$S100', 'jnl_url', 'URL da publicação', False, True));
-		array_push($cp, array('$S100', 'jnl_url_oai', 'Link do OAI-PMH', False, True));
+		
 		//array_push($cp, array('$O 1:Ativo&0:Inativo', 'jnl_oai_from', 'OAI Ativo', False, True));
 		array_push($cp, array('$S20', 'jnl_patch', 'Atalho', False, True));
+
+		array_push($cp, array('${', '', 'OAI', False, True));
+		array_push($cp, array('$S100', 'jnl_url_oai', 'Link do OAI-PMH', False, True));
+		array_push($cp, array('$S100', 'jnl_token', 'Token', False, True));
+		array_push($cp, array('$[1900-'.date("Y").']D', 'jnl_token_from', 'harvsting from', False, True));
+		
+		array_push($cp, array('$}', '', 'OAI', False, True));
 
 		/* Botao */
 		array_push($cp, array('$B8', '', 'Gravar >>>', False, True));

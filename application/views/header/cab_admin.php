@@ -18,7 +18,9 @@ $nivel = $this->session->userdata('nivel');
 	<div id="cab_logo_2" class="cab_logo cab_admin_logo_02"></div>  
 </div>
 
-<A HREF="<?php echo base_url('/admin');?>" class="link_white">ADMIN</A> | <A HREF="<?php echo base_url('/admin/journal');?>" class="link_white">JOURNALS</A>
+<A HREF="<?php echo base_url('index.php/admin');?>" class="link_white">ADMIN</A> | 
+<A HREF="<?php echo base_url('index.php/admin/journal');?>" class="link_white">JOURNALS</A> |
+<A HREF="<?php echo base_url('index.php/oai');?>" class="link_white">OAI</A> |
 <BR><BR>
 <script>
 	/* $("body").addClass("margin120"); -*/

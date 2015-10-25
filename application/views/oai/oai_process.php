@@ -3,6 +3,34 @@
 ?>
 <table>
 	<tr valign="top">
+		<td class="lt0">File</td>
+		<td><?php echo $file; ?>
+	</tr>
+	<tr valign="top">
+		<td class="lt0">Issue ID</td>
+		<td><?php
+			switch ($issue_id) {
+				case '0' :
+					echo '<font color="green">** Novo **</font>';
+					break;
+				case '9999999' :
+					echo '<font color="red">** ISSUE Bloqueado **</font>';
+					break;
+				default :
+					echo 'Open Edition '.$issue_id;
+					break;
+			}
+		?>
+	</tr>
+	<tr valign="top">
+		<td class="lt0">setSpec</td>
+		<td><?php echo $setSpec; ?> / <?php echo $idf; ?>
+	</tr>
+	<tr valign="top">
+		<td class="lt0">Section</td>
+		<td><?php echo $section; ?></td>
+	</tr>	
+	<tr valign="top">
 		<td class="lt0">Titles</td>
 		<td><?php
 		for ($r = 0; $r < count($titles); $r++) {
@@ -10,12 +38,16 @@
 		}
 		?>
 	</tr>
+	
+	
 
 	<tr valign="top">
 		<td class="lt0">Authors</td>
 		<td><?php
-		for ($r = 0; $r < count($authors); $r++) {
-			echo $authors[$r]['name'] . '<BR>';
+		if (isset($authors)) {
+			for ($r = 0; $r < count($authors); $r++) {
+				echo $authors[$r]['name'] . '<BR>';
+			}
 		}
 		?>
 	</tr>
@@ -26,8 +58,10 @@
 	<tr valign="top">
 		<td class="lt0">Abstract</td>
 		<td><?php
-		for ($r = 0; $r < count($abstract); $r++) {
-			echo $abstract[$r]['content'] . '<HR>';
+		if (isset($abstract)) {
+			for ($r = 0; $r < count($abstract); $r++) {
+				echo $abstract[$r]['content'] . '<HR>';
+			}
 		}
 		?>
 	</tr>
@@ -38,8 +72,10 @@
 	<tr valign="top">
 		<td class="lt0">Keywords</td>
 		<td><?php
-		for ($r = 0; $r < count($keywords); $r++) {
-			echo $keywords[$r]['term'] . ' ';
+		if (isset($keywords)) {
+			for ($r = 0; $r < count($keywords); $r++) {
+				echo $keywords[$r]['term'] . ' ';
+			}
 		}
 		?>
 	</tr>
@@ -68,3 +104,5 @@
 		?>
 	</tr>
 </table>
+
+<meta http-equiv="refresh" content="5">

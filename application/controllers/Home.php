@@ -47,9 +47,29 @@ class home extends CI_Controller {
 		$this -> session -> userdata('search');
 
 		$this -> load -> view("header/cab");
+		
+		/* data */
+		$data = array();
+		$data['dd1'] = $this->input->get("dd1");
+		$data['dd2'] = $this->input->get("dd2");
+		$data['dd3'] = $this->input->get("dd3");
+		$data['ano_min'] = 1972;
+		$data['ano_max'] = date("Y")+1;
+		$data['anoi'] = $data['ano_min'];
+		$data['anof'] = date("Y")+1;
+		
+		/* Já existe data */
+		if (strlen($data['dd3']))
+			{
+				$sa = sonumero($data['dd3']);
+				$data['anoi'] = substr($sa,0,4);
+				$data['anof'] = substr($sa,4,4);
+						
+			}
+		
 
 		$this -> load -> view("brapci/content");
-		$this -> load -> view("brapci/search_form");
+		$this -> load -> view("brapci/search_form",$data);
 
 		/* Busca */
 		$tela = $this -> Search -> busca_form();

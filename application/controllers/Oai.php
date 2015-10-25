@@ -281,9 +281,22 @@ class oai extends CI_controller {
 		$data['id'] = $jid;
 		$data['title_page'] = 'ADMIN - OAI - Harvesting';
 		$this -> load -> view("header/cab_admin", $data);
+		
+			/* List journals to harvesting */
+			$this -> load -> model('oai_pmh');
+			$data['content'] = $this -> oai_pmh -> oai_resumo($jid);
+			$this -> load -> view('oai/oai_content.php', $data);		
 
 		$this -> oai_pmh -> process_oai($jid);
 	}
+	
+	function setspec($jid,$tema='',$setspec='')
+		{
+			$this->load->model('oai_pmh');
+			$this->oai_pmh->save_setspec($setspec,$tema,$jid);
+			redirect(base_url('index.php/oai/ProcessRecords/'.$jid));
+			exit;
+		}
 
 	function Identify($id = 0) {
 		$data['title'] = 'Brapci : OAI-PMH';
@@ -309,7 +322,7 @@ class oai extends CI_controller {
 		$xml_rs = $xml_rt['content'];
 		$xml = simplexml_load_string($xml_rs);
 		//$xml = $xml->identify;
-
+		
 		foreach ($xml as $element) {
 			foreach ($element as $key => $val) {
 				$v1 = $key;
@@ -358,6 +371,13 @@ class oai extends CI_controller {
 		$link .= '?';
 		$link .= 'verb=ListIdentifiers';
 		$link .= '&metadataPrefix=oai_dc';
+		
+		if (strlen(trim($data['jnl_token_from']))> 0)
+		{
+			$dt = trim($data['jnl_token_from']);
+			if (strlen($dt) == 4) { $dt .= '-01-01'; }
+			$link .= '&from='.$dt;
+		}
 		$data['content'] = $link;
 
 		$this -> load -> view('oai/oai_content', $data);

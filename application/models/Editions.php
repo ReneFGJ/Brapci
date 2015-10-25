@@ -12,15 +12,21 @@ class editions extends CI_model
 			$rlt = $rlt->result_array($rlt);
 			
 			$sta = 'D';
+			$to = 0;
 			for ($r=0;$r < count($rlt);$r++)
 				{
 					$line = $rlt[$r];
 					if ($line['ar_status'] == 'A') { $sta = 'A'; }
 					if (($line['ar_status'] == 'B') and ($sta != 'A'))  { $sta = 'B'; }
 					if (($line['ar_status'] == 'C') and (($sta != 'A') and ($sta != 'B')))  { $sta = 'C'; }
+					$to++;
 				}
-			$sql = "update brapci_edition set ed_status = '$sta' where ed_codigo = '$ide' ";
-			$rlt = $this->db->query($sql);
+				
+			if ($to > 0)
+				{
+				$sql = "update brapci_edition set ed_status = '$sta' where ed_codigo = '$ide' ";
+				$rlt = $this->db->query($sql);
+				}
 		}
 	
 	function cp()
@@ -104,7 +110,7 @@ class editions extends CI_model
 					$cor = ''; $xcor = '';
 					$sta = trim($line['ar_status']);
 					if ($sta == 'X') { $cor = '<font color="red"><S>'; $xcor = '</S></font>'; }
-					$link = '<A HREF="'.base_url('admin/article_view/'.$line['id_ar']).'/'.checkpost_link($line['id_ar']).'" >';
+					$link = '<A HREF="'.base_url('index.php/admin/article_view/'.$line['id_ar']).'/'.checkpost_link($line['id_ar']).'" >';
 					$sec = trim($line['se_descricao']);
 					if ($sec != $xsec)
 						{
@@ -147,14 +153,13 @@ class editions extends CI_model
 			$journal = strzero($journal,7);
 			$sql = "select * from ".$this->tabela." 
 						where ed_journal_id = '$journal'
-						order by ed_ano desc, ed_vol 
+						order by ed_ano desc, ed_vol desc, ed_nr desc 
 			";
 			$sx = '<div id="issue_row">';
 			$sx .= '<Table class="tabela00" width="100%">';
 			$sx .= '<TR><th width="65%">editions</th>
 						<th width="35%">status</th></tr>';
-			$query = $this->db->query($sql);
-			$rlt = $query->result();
+			$rlt = db_query($sql);
 			
 			$issue = 0;
 			while ($line = db_read($rlt))

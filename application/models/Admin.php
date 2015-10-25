@@ -37,9 +37,9 @@ class admin extends CI_controller {
 		$form -> see = true;
 		$form -> edit = true;
 		$form = $this -> journals -> row($form);
-		$form -> row_edit = base_url('admin/journal_edit/');
-		$form -> row_view = base_url('admin/journal_view/');
-		$form -> row = base_url('admin/journal/');
+		$form -> row_edit = base_url('index.php/admin/journal_edit/');
+		$form -> row_view = base_url('index.php/admin/journal_view/');
+		$form -> row = base_url('index.php/admin/journal/');
 
 		$tela['tela'] = row($form, $id);
 		$url = base_url('author');
@@ -63,7 +63,7 @@ class admin extends CI_controller {
 		/* Formulario */
 		$form = new form;
 		$form -> id = $id;
-		$form -> row = base_url('admin/issue_view');
+		$form -> row = base_url('index.php/admin/issue_view');
 		$form -> cp = $this -> editions -> cp();
 		$form -> tabela = $this -> tabela_editions;
 
@@ -77,10 +77,9 @@ class admin extends CI_controller {
 
 	function article_view($id, $check, $status = '') {
 		global $dd, $acao;
-		form_sisdoc_getpost();
 
 		if (($id < 1) or ($check != checkpost_link($id))) {
-			redirect(base_url('admin/journal'));
+			redirect(base_url('index.php/admin/journal'));
 		}
 
 		/* Alterar Status */
@@ -112,7 +111,7 @@ class admin extends CI_controller {
 		$data['botao_acoes'] = $this -> tools -> actions_buttons($data['ar_status'], $id);
 
 		/* Links */
-		$data['link_issue'] = '<A HREF="' . base_url('admin/issue_view/' . $data['id_ed']) . '/' . checkpost_link($data['id_ed']) . '" class="lt3">';
+		$data['link_issue'] = '<A HREF="' . base_url('index.php/admin/issue_view/' . $data['id_ed']) . '/' . checkpost_link($data['id_ed']) . '" class="lt3">';
 
 		$idioma_1 = trim($data['ar_idioma_1']);
 		if (strlen($idioma_1) == 0) { $idioma_1 = 'pt_BR';
@@ -125,29 +124,29 @@ class admin extends CI_controller {
 		switch($dd[8]) {
 			case 'ARCHIVE':
 				$this->archives->save_LINK($id,$data['ar_journal_id'],$dd[9]);
-				redirect(base_url('admin/article_view/' . $id . '/' . checkpost_link($id)));
+				redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
 				break;
 			case 'ISSUE' :
 				$this -> articles -> save_ISSUE($id, $dd[11], $dd[12], $dd[13], $dd[14], $dd[15]);
-				redirect(base_url('admin/article_view/' . $id . '/' . checkpost_link($id)));
+				redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
 				break;
 			case 'TITLE' :
 				$this -> articles -> save_TITLE($id, $dd[10], $dd[11], $dd[12], $dd[13]);
-				redirect(base_url('admin/article_view/' . $id . '/' . checkpost_link($id)));
+				redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
 				break;
 			case 'AUTHOR' :
 				$this -> authors -> save_AUTHORS($id, $dd[10]);
-				redirect(base_url('admin/article_view/' . $id . '/' . checkpost_link($id)));
+				redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
 				break;
 			case 'ABSTRACT1' :
 				$this -> keywords -> save_KEYWORDS($id, $dd[11], $idioma_1);
 				$this -> articles -> save_ABSTRACT($id, $dd[10], 1);
-				redirect(base_url('admin/article_view/' . $id . '/' . checkpost_link($id)));
+				redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
 				break;
 			case 'ABSTRACT2' :
 				$this -> keywords -> save_KEYWORDS($id, $dd[11], $idioma_2);
 				$this -> articles -> save_ABSTRACT($id, $dd[10], 2);
-				redirect(base_url('admin/article_view/' . $id . '/' . checkpost_link($id)));
+				redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
 				break;
 		}
 
@@ -180,13 +179,13 @@ class admin extends CI_controller {
 			$this->load->model('articles');
 			$this -> articles -> updatex();
 			
-			redirect(base_url('admin/issue_view/'.$issue.'/'.checkpost_link($issue)));
+			redirect(base_url('index.php/admin/issue_view/'.$issue.'/'.checkpost_link($issue)));
 		}
 	}
 
 	function issue_view($id = 0, $check) {
 		if (($id < 1) or ($check != checkpost_link($id))) {
-			redirect(base_url('admin/journal'));
+			redirect(base_url('index.php/admin/journal'));
 		}
 
 		$data['title'] = 'Brapci : Admin';
@@ -210,7 +209,7 @@ class admin extends CI_controller {
 
 		/* Editions */
 		$this -> load -> model('editions');
-		$this -> editions -> row = base_url('admin/issue_view/');
+		$this -> editions -> row = base_url('index.php/admin/issue_view/');
 		$tela_issue = $this -> editions -> editions_row($jid, $id);
 
 		$tela_articles = $this -> editions -> issue_view($id);
@@ -227,7 +226,7 @@ class admin extends CI_controller {
 				<script>
 					function article_new()
 						{
-							window.location.assign("' . base_url('admin/article_new/' . $id . '/' . checkpost_link($id)) . '");
+							window.location.assign("' . base_url('index.php/admin/article_new/' . $id . '/' . checkpost_link($id)) . '");
 						}
 				</script>
 		';
@@ -242,7 +241,7 @@ class admin extends CI_controller {
 
 	function journal_view($id = 0, $check) {
 		if (($id < 1) or ($check != checkpost_link($id))) {
-			redirect(base_url('admin/journal'));
+			redirect(base_url('index.php/admin/journal'));
 		}
 
 		$data['title'] = 'Brapci : Admin';
@@ -256,7 +255,7 @@ class admin extends CI_controller {
 
 		/* Editions */
 		$this -> load -> model('editions');
-		$this -> editions -> row = base_url('admin/issue_view/');
+		$this -> editions -> row = base_url('index.php/admin/issue_view/');
 
 		$data['tela'] = $this -> editions -> editions_row($id);
 		$data['title'] = 'Editions';
@@ -267,7 +266,7 @@ class admin extends CI_controller {
 
 	function journal_edit($id = 0, $check) {
 		if (($id < 1) or ($check != checkpost_link($id))) {
-			redirect(base_url('admin/journal'));
+			redirect(base_url('index.php/admin/journal'));
 		}
 
 		$data['title'] = 'Brapci : Admin';
@@ -282,7 +281,7 @@ class admin extends CI_controller {
 		/* Formulario */
 		$form = new form;
 		$form -> id = $id;
-		$form -> row = base_url('admin/journal');
+		$form -> row = base_url('index.php/admin/journal');
 		$form -> cp = $this -> journals -> cp();
 		$form -> tabela = $this -> tabela_journals;
 
@@ -293,45 +292,5 @@ class admin extends CI_controller {
 		$this -> load -> view('form/form', $data);
 
 	}
-
-	function export($id = 0) {
-		$exp = 150;
-		$data['title'] = 'Brapci : Admin';
-		$data['title_page'] = 'ADMIN - EXPORTAÇÃO';
-		$this -> load -> view("header/cab_admin", $data);
-		$this -> load -> model('export');
-
-		/* Gerar arquivo */
-		if ($id == 'file') {
-			$this -> export -> exporta_texto();
-			$data['tela'] = '<center><h1><font color="green">Finalizado com sucesso!</font></h1></center>';
-			$this -> load -> view('form/form', $data);
-			return (0);
-		}
-
-		/* Mostrar */
-		$data['tela'] = '';
-		if ($id == 0) {
-			$data['tela'] .= '<BR>Zerando base';
-			$this -> export -> zera_public();
-		}
-
-		$total = $this -> export -> export_public($id, $exp);
-
-		if ($total > 0) {
-			$sending = '<center><img src="' . base_url('img/sending.gif') . '"></center>';
-			$data['tela'] .= $sending;
-
-			$data['tela'] .= '<BR>Exportando ' . $total . ' registros, já foram enviados ' . round($id) . ' registros';
-			$this -> load -> view('form/form', $data);
-
-			$url = base_url() . 'admin/export/' . ($id + $exp);
-			echo ' <meta http-equiv="refresh" content="3;' . $url . '">';
-		} else {
-			$url = base_url() . 'admin/export/file';
-			echo ' <meta http-equiv="refresh" content="3;' . $url . '">';
-		}
-	}
-
 }
 ?>

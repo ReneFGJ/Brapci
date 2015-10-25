@@ -91,6 +91,37 @@ class oai_pmh extends CI_model {
 
 	}
 
+	/** Altera Status **/
+	function altera_status_chache($id, $sta) {
+		$sql = "update oai_cache set cache_status = '$sta' where id_cache = $id ";
+		$this -> db -> query($sql);
+		return (1);
+	}
+
+	/* SetSepc */
+	function save_setspec($set, $tema, $jid) {
+		$jid = strzero($jid, 7);
+		$sql = "select * from oai_listsets where ls_setspec = '$set' and ls_journal = '$jid' ";
+		$rlt = db_query($sql);
+		if ($line = db_read($rlt)) {
+			$sql = "update oai_listsets set ls_equal = '$tema' where id_ls = ".round($line['id_ls']);
+			$this->db->query($sql);
+			return ('');
+		} else {
+			$data = date("Ymd");
+			$sql = "insert into oai_listsets (
+							ls_setspec, ls_setname, ls_setdescription,
+							ls_journal, ls_status, ls_data,
+							ls_equal, ls_tipo, ls_equal_ed
+							) values (
+							'$set','$set','',
+							'$jid','A','$data',
+							'$tema','S','')";
+			$rlt = $this -> db -> query($sql);
+		}
+		return ('');
+	}
+
 	/** PROCESS */
 	function process_oai($jid = 0) {
 		$wh = ' 1 = 1 ';
@@ -104,28 +135,237 @@ class oai_pmh extends CI_model {
 					";
 		$rlt = db_query($sql);
 		if ($line = db_read($rlt)) {
+			$idc = $line['id_cache'];
 			$file_id = strzero($line['id_cache'], 7);
 			$file_id = 'ma/oai/' . $file_id . '.xml';
 			if (file_exists($file_id)) {
 				$xml = load_file_local($file_id);
 				/* Le XML */
 				$article = $this -> process_le_xml($xml, $file_id);
+
+				/*********************** registro deleted *******************/
+				if ($article['status'] == 'deleted') {
+					$this -> altera_status_chache($idc, 'X');
+					echo '<meta http-equiv="refresh" content="5">';
+					return ('');
+				}
+
+				$article['file'] = $file_id;
 				/* Processa dados */
-				$this->load->view("oai/oai_process",$article);
-				
+
 				/* Recupera Issue */
-				$issue = $this->recupera_issue($article);
-				
+				$article['issue_id'] = strzero($this -> recupera_issue($article, $jid), 7);
+
+				/* Recupera ano */
+				$source = $article['sources'][0]['source'];
+				$article['ano'] = $this -> recupera_ano($source);
+
+				/* Recupera Journals ID */
+				$article['journal_id'] = strzero($jid, 7);
+
+				/* Titulo principal */
+				$titulo = UpperCaseSql($article['titles'][0]['title']);
+				$titulo = utf8_decode(substr($titulo, 0, 44));
+
+				/* Valida se existe article cadastrado */
+				$sql = "select * from brapci_article where ar_edition = '" . $article['issue_id'] . "' 
+						and 
+						(ar_titulo_1 like '$titulo%' or ar_titulo_2 like '$titulo%')
+				";
+				$article['section'] = '';
+				$rlt = db_query($sql);
+				if ($line = db_read($rlt)) {
+					/* Existe */
+					$this -> altera_status_chache($idc, 'C');
+					$this -> load -> view("oai/oai_process", $article);
+				} else {
+					if ($article['issue_id'] != '0000000') {
+
+						/* Bloqueado */
+						if ($article['issue_id'] == '9999999') {
+							$this -> altera_status_chache($idc, 'F');
+						} else {
+							/* processa e grava dados */
+							$ids = $this -> recupera_section($article['setSpec'], $article['journal_id']);
+							$article['section'] = $ids;
+
+							if (strlen($ids) == 0) {
+								$data = array();
+								$data['setspec'] = $article['setSpec'];
+
+								$data['links'] = $article['links'];
+
+								$sql = "select * from brapci_section order by se_descricao ";
+								$rlt = db_query($sql);
+								$sx = '<table width="100%" class="tabela01"><tr valign="top"><td>';
+								$id = 0;
+								while ($line = db_read($rlt)) {
+									if ($id > 10) { $sx .= '</td><td>';
+										$id = 0;
+									}
+									$sx .= '<a href="' . base_url('index.php/oai/setspec/' . $jid . '/' . $line['se_codigo'] . '/' . $article['setSpec']) . '">' . $line['se_descricao'] . '</a><br>';
+									$id++;
+								}
+								$sx .= '</table>';
+								$data['opcoes'] = $sx;
+								$this -> load -> view('oai/oai_setname', $data);
+								return (0);
+							}
+
+							$this -> load -> model('articles');
+							$article['codigo'] = $this -> articles -> insert_new_article($article);
+
+							/* Arquivos */
+							for ($r = 0; $r < count($article['links']); $r++) {
+								$link = $article['links'][0]['link'];
+								$this -> articles -> insert_suporte($article['codigo'], $link, $article['journal_id']);
+							}
+
+							/* Autores */
+							$this -> load -> model('authors');
+							$authors = '';
+							for ($r = 0; $r < count($article['authors']); $r++) {
+								$au = $article['authors'][$r]['name'];
+								if (strpos($au, ';') > 0) { $au = substr($au, 0, strpos($au, ';'));
+								}
+								$authors .= trim($au) . chr(13) . chr(10);
+							}
+							$this -> authors -> save_AUTHORS($article['codigo'], $authors);
+
+							/* Salva Keywords */
+							$this -> load -> model('keywords');
+							$authors = '';
+							$keys = array();
+							if (isset($article['keywords'])) {
+								for ($r = 0; $r < count($article['keywords']); $r++) {
+									$ido = $article['keywords'][$r]['idioma'];
+									if ($ido == 'pt-BR') { $ido = 'pt_BR';
+									}
+									if ($ido == 'en-US') { $ido = 'en';
+									}
+									$au = $article['keywords'][$r]['term'];
+									if (isset($keys[$ido])) {
+										$keys[$ido] .= $au . ';';
+									} else {
+										$keys[$ido] = $au . ';';
+									}
+								}
+							}
+							foreach ($keys as $key => $value) {
+								$this -> keywords -> save_KEYWORDS($article['codigo'], $value, $key);
+							}
+							$this -> altera_status_chache($idc, 'B');
+							/**************** FIM DO PROCESSAMENTO ***************************************/
+						}
+					} else {
+						$jid = $article['journal_id'];
+					}
+					//exit;
+				}
+
+				$this -> load -> view("oai/oai_process", $article);
+
 			} else {
+				$this -> altera_status_chache($idc, '@');
 				echo 'ERROR';
 			}
 		}
 	}
-	
-	function recupera_issue($issue)
-		{
-			
+
+	function recupera_ano($s) {
+		$s = trim(sonumero($s));
+		$ano = '';
+		for ($r = 1970; $r < (date("Y") + 1); $r++) {
+			if (strpos($s, trim($r)) > 0) {
+				if (strlen($ano) == 0) { $ano = $r; }
+			}
 		}
+		return ($ano);
+	}
+
+	function recupera_nr($s) {
+		$nr = '';
+		if (strpos($s, 'n.')) { $nr = substr($s, strpos($s, 'n.'), strlen($s));
+		}
+		if (strpos($s, 'No ')) { $nr = substr($s, strpos($s, 'No ')+3, strlen($s));
+		}
+		if (strlen($nr) > 0) {
+			if (strpos($nr, ',') > 0) { $nr = substr($nr, 0, strpos($nr, ','));
+			}
+			$nr = troca($nr, 'n. ', '');
+			$nr = troca($nr, ' ', 'x');
+			if (strpos($nr, 'x') > 0) { $nr = substr($nr, 0, strpos($nr, 'x'));
+			}
+			$nr = troca($nr, 'n.', '');
+			$nr = trim($nr);
+		}
+		return ($nr);
+	}
+
+	function recupera_vol($s) {
+		$vl = '';
+		if (strpos($s, 'v.')) { $vl = substr($s, strpos($s, 'v.'), strlen($s));
+		}
+		if (strpos($s, 'Vol ')) { $vl = substr($s, strpos($s, 'Vol ')+4, strlen($s));
+		}		
+
+		if (strlen($vl) > 0) {
+			if (strpos($vl, ',') > 0) { $vl = substr($vl, 0, strpos($vl, ','));
+			}
+			$vl = troca($vl, 'v. ', '');
+			if (strpos($vl, ' ') > 0) { $vl = substr($vl, 0, strpos($vl, ' '));
+			}
+			$vl = troca($vl, 'v.', '');
+			$vl = trim($vl);
+		}
+		return ($vl);
+	}
+
+	function recupera_section($sec, $jid) {
+		$sql = "select * from oai_listsets where ls_setspec = '$sec' and ls_journal = '$jid'";
+		echo '<BR>'.$sql;
+		$rlt = db_query($sql);
+		if ($line = db_read($rlt)) {
+			$rsec = trim($line['ls_equal']);
+		} else {
+			$data = array();
+			return ('');
+			$rsec = '';
+		}
+		return ($rsec);
+	}
+
+	function recupera_issue($rcn, $jid) {
+		$issue = $rcn['sources'];
+		for ($r = 0; $r < count($issue); $r++) {
+			$si = $issue[$r]['source'];
+			$ano = $this -> recupera_ano($si);
+			$nr = $this -> recupera_nr($si);
+			$vol = $this -> recupera_vol($si);
+			/* Trata issue */
+			$jid = strzero($jid, 7);
+
+			$sql = "select * from brapci_edition where 
+									ed_vol = '$vol'
+									and ed_nr = '$nr'
+									and ed_ano = '$ano' 
+									and ed_journal_id = '$jid' ";
+			echo $sql;
+			$rlt = db_query($sql);
+			if ($line = db_read($rlt)) {
+				$eds = $line['ed_status'];
+				if ($eds == 'A') {
+					return ($line['id_ed']);
+				} else {
+					return ('9999999');
+				}
+			} else {
+				return (0);
+			}
+		}
+
+	}
+
 	function process_le_xml($xml_rs, $file) {
 		$dom = new DOMDocument;
 		$dom = new DOMDocument;
@@ -133,6 +373,41 @@ class oai_pmh extends CI_model {
 
 		/* Array */
 		$doc = array();
+
+		/* Header */
+		$headers = $dom -> getElementsByTagName('header');
+		$status = '';
+		foreach ($headers as $header) {
+			//$setSpec = $header -> nodeValue;
+			if (isset($header -> attributes -> getNamedItem('status') -> value)) {
+				$status = $header -> attributes -> getNamedItem('status') -> value;
+			}
+		}
+
+		/* Registro deletado, nao processar */
+		if ($status == 'deleted') {
+			$doc['status'] = 'deleted';
+			return ($doc);
+		} else {
+			$doc['status'] = 'active';
+		}
+
+		/* setSpec */
+		$headers = $dom -> getElementsByTagName('setSpec');
+		foreach ($headers as $header) {
+			$setSpec = $header -> nodeValue;
+		}
+		$doc['setSpec'] = $setSpec;
+
+		/* setSpec */
+		$idf = '';
+		$headers = $dom -> getElementsByTagName('identifier');
+		foreach ($headers as $header) {
+			if (strlen($idf) == 0) {
+				$idf = $header -> nodeValue;
+			}
+		}
+		$doc['idf'] = $idf;
 
 		$nodes = $dom -> getElementsByTagName('metadata');
 
@@ -144,7 +419,13 @@ class oai_pmh extends CI_model {
 			$id = 0;
 			foreach ($titles as $title) {
 				$value = $title -> nodeValue;
+				$value = troca($value, "'", "´");
 				$lang = $title -> attributes -> getNamedItem('lang') -> value;
+				if ($lang == 'pt-BR') { $lang = 'pt_BR';
+				}
+				if ($lang == 'en-US') { $lang = 'en';
+				}
+
 				$dt = array();
 				$dt['title'] = $value;
 				$dt['idioma'] = $lang;
@@ -155,7 +436,7 @@ class oai_pmh extends CI_model {
 			$titles = $node -> getElementsByTagName("creator");
 			$id = 0;
 			foreach ($titles as $title) {
-				$value = $title -> nodeValue;
+				$value = troca($title -> nodeValue, "'", '´');
 				$dt = array();
 				$dt['name'] = $value;
 				$doc['authors'][$id] = $dt;
@@ -167,6 +448,10 @@ class oai_pmh extends CI_model {
 			foreach ($titles as $title) {
 				$value = $title -> nodeValue;
 				$lang = $title -> attributes -> getNamedItem('lang') -> value;
+				if ($lang == 'pt-BR') { $lang = 'pt_BR';
+				}
+				if ($lang == 'en-US') { $lang = 'en';
+				}
 				$dt = array();
 				$dt['term'] = $value;
 				$dt['idioma'] = $lang;
@@ -179,15 +464,13 @@ class oai_pmh extends CI_model {
 			foreach ($titles as $title) {
 				$value = $title -> nodeValue;
 				$lang = $title -> attributes -> getNamedItem('lang') -> value;
+				if ($lang == 'pt-BR') { $lang = 'pt_BR';
+				}
+				if ($lang == 'en-US') { $lang = 'en';
+				}
 				$dt = array();
-				$value = troca($value,'&nbsp;','xxx');
-				$value = troca($value,chr(10),'x');
-				$value = troca($value,chr(13),'x');
-				$value = troca($value,chr(15),'x');
-				$value = troca($value,chr(12),'x');
-				$value = troca($value,chr(42),'x');
-								
-				$value = troca($value,'  ',' ');
+
+				$value = troca($value, '  ', ' ');
 				$dt['content'] = $value;
 				$dt['idioma'] = $lang;
 				$doc['abstract'][$id] = $dt;
@@ -305,21 +588,27 @@ class oai_pmh extends CI_model {
 				case 'A' :
 					$t[2] = $t[2] + $line['total'];
 					break;
+				default:
+					$t[3] = $t[3] + $line['total'];
+					break;
 			}
 		}
-		$sx = '<table width="500" align="center">';
+		$sx = '<table width="600" align="center">';
 		$sx .= '<TR align="center" class="lt1" style="background-color: #E0E0E0; ">';
 		$sx .= '<td rowspan=2 width="30%" class="lt4">OAI-PMH';
 		$sx .= '<TD>para coletar</td>';
-		$sx .= '<TD>para processar</td>';
-		$sx .= '<TD>coletado</td>';
+		$sx .= '<TD>coletado</td>';		
+		$sx .= '<TD>processado</td>';
+		$sx .= '<TD>total</td>';
 		$sx .= '<TR align="center" class="lt4">';
-		$sx .= '<TD width="23%">';
+		$sx .= '<TD width="15%">';
 		$sx .= $t[0];
-		$sx .= '<TD width="23%">';
+		$sx .= '<TD width="15%">';
 		$sx .= $t[2];
-		$sx .= '<TD width="23%">';
-		$sx .= $t[1];
+		$sx .= '<TD width="15%">';
+		$sx .= ($t[1] + $t[3]);
+		$sx .= '<TD width="15%">';
+		$sx .= ($t[0] + $t[1] + $t[2] + $t[3]);
 		$sx .= '</table>';
 		return ($sx);
 	}

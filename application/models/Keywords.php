@@ -59,7 +59,7 @@ class keywords extends CI_model
 			foreach ($akeys as $key => $value) {
 				if ($value == 0)
 					{
-						echo 'Not found '.$key.' = '.$keys[$pos].'<BR>';
+						echo 'Not found '.$key.' = '.$keys[$pos].' ('.$idioma.')<BR>';
 						$keyr = $this->incorpore_keyword($keys[$pos],$idioma);
 						$akeys[$key] = $keyr;
 					}

@@ -700,7 +700,8 @@ class search extends CI_model {
 		$sx .= $v;
 
 		$tipo = $line['jnl_tipo'];
-		$sx .= ' (' . $this -> tipo_publicacao($tipo) . ')';
+		$sect = $line['ar_tipo'];
+		$sx .= ' (' . $this -> tipo_publicacao($tipo).'-' .$sect. ')';
 
 		/* DIV */
 		$hid = 'display: none;';
@@ -761,7 +762,7 @@ class search extends CI_model {
 				$sx = 'Dissertacao';
 				break;
 			case 'J' :
-				$sx = 'Artigo';
+				$sx = 'Revista';
 				break;
 			case 'L' :
 				$sx = 'Livro';
@@ -770,10 +771,10 @@ class search extends CI_model {
 				$sx = 'Tese de Doutorado';
 				break;
 			case 'U' :
-				$sx = 'Disserta��o de Mestrado';
+				$sx = 'Dissertaçao de Mestrado';
 				break;
 			case 'D' :
-				$sx = 'Livro did�tico';
+				$sx = 'Livro diático';
 				break;
 			case 'E' :
 				$sx = 'Anais de eventos';
@@ -784,6 +785,17 @@ class search extends CI_model {
 		}
 		return ($sx);
 	}
+	function tipo_secoes() {
+		$sql = "select * from brapci_section ";
+		$data = array();
+		$rlt = db_query($sql);
+		while ($line = db_read($rlt))
+			{
+				$sec = trim($line['se_codigo']);
+				$data[$sec] = trim($line['se_descricao']);
+			}
+		return($data);
+	}	
 
 	function result_journals() {
 		global $db_base, $db_public;
