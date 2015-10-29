@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://agora.emnuvens.com.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-10-29T19:23:39Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:agora.periodicos.emnuvens.com.br:article/548">https://agora.emnuvens.com.br/ra/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:agora.periodicos.emnuvens.com.br:article/548</identifier>
+				<datestamp>2015-10-21T00:36:37Z</datestamp>
+				<setSpec>ra:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">TDIC as a mediator in the process of Teaching and Learning Archival</dc:title>
+	<dc:title xml:lang="pt-BR">TDIC como mediadora do processo de Ensino-Aprendizagem da Arquivologia</dc:title>
+	<dc:creator>Fagundes Fontana, Fabiana</dc:creator>
+	<dc:creator>Zanki Cordenonsi, André</dc:creator>
+	<dc:subject xml:lang="en-US">Archival; Information Science; education</dc:subject>
+	<dc:subject xml:lang="en-US">Technology; Teaching and learning; Archival.</dc:subject>
+	<dc:subject xml:lang="en-US">Digital technologies in education</dc:subject>
+	<dc:subject xml:lang="pt-BR">Arquivologia; Ciência da Informação; Educação</dc:subject>
+	<dc:subject xml:lang="pt-BR">Tecnologia; Ensino-Aprendizagem; Arquivologia.</dc:subject>
+	<dc:subject xml:lang="pt-BR">Tecnologias digitais na educação</dc:subject>
+	<dc:description xml:lang="en-US">Search It is with this research study some educational software available on the web and check how fit and can facilitate the learning and teaching of archival science, through its applicability in the subjects currently offered in the course of archival science UFSM. For the need of renovation of methodological strategies of teaching and learning of archival science course at the UFSM, is sought through technological mediation facilitate this process, making it fun and compatible with the current information society. Thus, five educational software and by analyzing the same check their relevance and pertinence to aid the teaching-learning of archival science will be selected, listing how and in which courses may be used.</dc:description>
+	<dc:description xml:lang="pt-BR">Busca-se com esta pesquisa estudar alguns softwares educacionais disponíveis na web e verificar de que forma se adequam e podem facilitar no ensino-aprendizagem da ciência arquivística, através de sua aplicabilidade nas disciplinas ofertadas atualmente no curso de arquivologia da UFSM. Visando a necessidade de renovação de estratégias metodológicas de ensino-aprendizagem do curso de arquivologia da UFSM, busca-se através da mediação tecnológica facilitar este processo, tornando-o lúdico e compatível com a atual sociedade da informação. Sendo assim, serão selecionados cinco softwares educacionais e através da análise dos mesmos verificar sua relevância e pertinência no auxílio do ensino-aprendizagem da arquivologia, elencando de que forma e em quais disciplinas podem ser utilizados.</dc:description>
+	<dc:publisher xml:lang="pt-BR">ÁGORA ISSN 0103-3557</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2015-10-20</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="pt-BR">Descritiva e abordagem quali-quantitativa.</dc:type>
+	<dc:type xml:lang="en-US">Descriptive and qualitative and quantitative approach.</dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>https://agora.emnuvens.com.br/ra/article/view/548</dc:identifier>
+	<dc:source xml:lang="pt-BR">ÁGORA ISSN 0103-3557; v. 25, n. 51 (2015); 101-131</dc:source>
+	<dc:source>0103-3557</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>https://agora.emnuvens.com.br/ra/article/view/548/pdf</dc:relation>
+	<dc:relation>https://agora.emnuvens.com.br/ra/article/downloadSuppFile/548/45</dc:relation>
+	<dc:relation>https://agora.emnuvens.com.br/ra/article/downloadSuppFile/548/46</dc:relation>
+	<dc:relation>https://agora.emnuvens.com.br/ra/article/downloadSuppFile/548/47</dc:relation>
+	<dc:coverage xml:lang="en-US">Brazil</dc:coverage>
+	<dc:coverage xml:lang="en-US">2014</dc:coverage>
+	<dc:coverage xml:lang="en-US">Technological fluency level of teachers</dc:coverage>
+	<dc:coverage xml:lang="pt-BR">Brasil</dc:coverage>
+	<dc:coverage xml:lang="pt-BR">2014</dc:coverage>
+	<dc:coverage xml:lang="pt-BR">Nível de fluência tecnológica dos docentes</dc:coverage>
+	<dc:rights xml:lang="pt-BR">Direitos autorais 2015 ÁGORA ISSN 0103-3557</dc:rights>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

@@ -206,14 +206,6 @@ header.sticky {
 	text-decoration: none;
 	border: 1px solid #000000;
 }
-.link {
-	text-decoration: none;
-	color: #555590;
-}
-.link:hover {
-	text-decoration: underline;
-	color: #000050;
-}
 
 /* Article */
 #article_data {

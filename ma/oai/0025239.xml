@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://agora.emnuvens.com.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-10-29T19:23:53Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:agora.periodicos.emnuvens.com.br:article/554">https://agora.emnuvens.com.br/ra/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:agora.periodicos.emnuvens.com.br:article/554</identifier>
+				<datestamp>2015-10-21T00:36:37Z</datestamp>
+				<setSpec>ra:REL</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">Quality of magazines and Sociais Humanities: un debate and real necessary</dc:title>
+	<dc:title xml:lang="es-ES">La calidad de las revistas de Ciencias Sociales y Humanidades: un debate actual y necesario</dc:title>
+	<dc:creator>Plana i Franch, Mireia</dc:creator>
+	<dc:creator>Silva, Claudio Nei Nascimento da</dc:creator>
+	<dc:subject xml:lang="en-US">Information Science; Archive</dc:subject>
+	<dc:subject xml:lang="en-US">Quality; Social Sciences and Humanities</dc:subject>
+	<dc:subject xml:lang="en-US">Quality; Social Sciences and Humanities</dc:subject>
+	<dc:subject xml:lang="es-ES">Ciências da Informação; Comunicação Científica</dc:subject>
+	<dc:subject xml:lang="es-ES">Calidad; Ciencias Sociales y Humanidades</dc:subject>
+	<dc:subject xml:lang="es-ES">Publicacao Periódica</dc:subject>
+	<dc:description xml:lang="en-US">The article deals with the main issues discussed at a conference on the quality of the social sciences and humanities’ journals. It places the event in the context of the debate on science communication at present, especially the challenges of scientific journals.</dc:description>
+	<dc:description xml:lang="es-ES">Aborda los principales temas discutidos en una conferencia sobre la calidad de las revistas de ciencias sociales y humanidades. Sitúa el evento en el contexto del debate sobre la comunicación de la ciencia en la actualidad, en especial a los desafíos de las revistas científicas.</dc:description>
+	<dc:publisher xml:lang="pt-BR">ÁGORA ISSN 0103-3557</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:contributor xml:lang="es-ES"></dc:contributor>
+	<dc:date>2015-10-20</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:type xml:lang="es-ES"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>https://agora.emnuvens.com.br/ra/article/view/554</dc:identifier>
+	<dc:source xml:lang="pt-BR">ÁGORA ISSN 0103-3557; v. 25, n. 51 (2015); 255-260</dc:source>
+	<dc:source>0103-3557</dc:source>
+	<dc:language>spa</dc:language>
+	<dc:relation>https://agora.emnuvens.com.br/ra/article/view/554/pdf</dc:relation>
+	<dc:coverage xml:lang="en-US">Espanha</dc:coverage>
+	<dc:coverage xml:lang="en-US"></dc:coverage>
+	<dc:coverage xml:lang="en-US"></dc:coverage>
+	<dc:coverage xml:lang="es-ES"></dc:coverage>
+	<dc:coverage xml:lang="es-ES"></dc:coverage>
+	<dc:coverage xml:lang="es-ES"></dc:coverage>
+	<dc:rights xml:lang="pt-BR">Direitos autorais 2015 ÁGORA ISSN 0103-3557</dc:rights>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

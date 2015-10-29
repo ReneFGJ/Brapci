@@ -101,7 +101,7 @@ class archives extends CI_model {
 				$("#"+$div).html("coletando..."); 
 				$.ajax({
   					method: "POST",
-  					url: "' . base_url('oai/coletar_pdf'). '/" + $id,
+  					url: "' . base_url('index.php/oai/coletar_pdf'). '/" + $id,
   					data: { name: "OAI", location: "PDF" }
 					})
   					.done(function( data ) {

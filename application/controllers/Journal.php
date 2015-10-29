@@ -9,13 +9,14 @@ class journal extends CI_Controller {
 		
 		$db_public = 'brapci_publico.';
 		parent::__construct();
+		$this -> lang -> load("app", "portuguese");
 		$this -> load -> library('form_validation');
 		$this -> load -> database();
 		$this -> load -> helper('form');
 		$this -> load -> helper('form_sisdoc');
 		$this -> load -> helper('url');
 		$this -> load -> library('session');
-		/* $this -> lang -> load("app", "portuguese"); */
+		
 	}
 	function index() {
 		global $dd;
@@ -39,28 +40,31 @@ class journal extends CI_Controller {
 	}
 	
 	function issue($id=0) {
-		global $dd;
-		
+		/* Models */
+		$this->load->model('journals');
+		$this->load->model('editions');
+
+	
+		global $dd;	
 		form_sisdoc_getpost();
+		
 		$this -> load -> view("header/cab");
 		$this -> load -> view("brapci/content");
 		
 		$this->load->model('editions');
 		$data = $this->editions->le($id);
+		
 		$journal = $data['jnl_codigo'];
 		
-		$this->session->userdata('search');
-				
-		
-		/* */
-		$this->load->model('journals');
+		$this->session->userdata('search');		
 		
 		$data = array();
-		$data = $this->journals->le($journal);
+		$data = $this->journals->le($journal);	
 		
+		/* Le trabalhos */
+		$data['issue_view'] = $this->editions->issue_view($id,0);
 		
-		/* */
-				
+		/* */				
 		$data['edicoes'] = $this->editions->editions($journal); 
 		
 		/* VIEW */

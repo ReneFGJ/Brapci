@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://agora.emnuvens.com.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-10-29T19:24:09Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:agora.periodicos.emnuvens.com.br:article/552">https://agora.emnuvens.com.br/ra/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:agora.periodicos.emnuvens.com.br:article/552</identifier>
+				<datestamp>2015-10-21T14:52:09Z</datestamp>
+				<setSpec>ra:TCC</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">A visit to the portal of transparency of João Pessoa prefecture - PB, under the law of access to information and concepts of acessecibilidade and usability.</dc:title>
+	<dc:title xml:lang="pt-BR">Uma visita ao portal de transparência da prefeitura de João Pessoa – PB: à luz da lei de acesso à informação e dos conceitos de acessibilidade e usabilidade</dc:title>
+	<dc:creator>Oliveira, Geissikelly Marques</dc:creator>
+	<dc:creator>Freire, Isa Maria</dc:creator>
+	<dc:subject xml:lang="en-US">Archival</dc:subject>
+	<dc:subject xml:lang="en-US">Transparency Portal; Access to Information Act; accessibility; usability Joao Pessoa; Paraíba – Brazil</dc:subject>
+	<dc:subject xml:lang="en-US">Access to information</dc:subject>
+	<dc:subject xml:lang="pt-BR">Arquivologia</dc:subject>
+	<dc:subject xml:lang="pt-BR">Portal de Transparência; Lei de Acesso a Informação; Acessibilidade; Usabilidade</dc:subject>
+	<dc:subject xml:lang="pt-BR">Acesso a Informação</dc:subject>
+	<dc:description xml:lang="en-US">In the present study, the authors conducted exploratory research on the Municipality Transparency Portal of João Pessoa - PB, with the theoretical basis the Access to Information Act and the criteria for accessibility and usability. The work brings to light the theoretical concepts of accessibility and usability, as well as the criteria established by Law No. 12,159 / 2011 on the provision of public information, their actions and projects and the requirements that transparency portals should consider when building your virtual interfaces on the Internet. It was found that the quality attributed to the Portal of the City of João Pessoa in the survey of the Institute for Socioeconomic Studies - INESC - which measured the quality of the country's transparency portal is relevant, as its usability lives up to the positioning in the search quality because its interface shows concern for understanding of the information, and meet virtually all requirements of the law in question, falling short only on the issue of accessibility for people with disabilities.</dc:description>
+	<dc:description xml:lang="pt-BR">No presente trabalho relatamos uma pesquisa exploratória realizada sobre o Portal de Transparência da Prefeitura Municipal de João Pessoa – PB, tendo como fundamentação teórica a Lei de Acesso à Informação e os critérios de acessibilidade e usabilidade. O trabalho traz à luz os conceitos teóricos de acessibilidade e usabilidade, bem como os critérios estabelecidos pela Lei nº 12.159/2011 sobre a disponibilização da informação pública, suas ações e projetos e os requisitos que os portais de transparência devem considerar ao construírem suas interfaces virtuais na internet. Constatou-se que a qualidade atribuída ao Portal da Prefeitura Municipal de João Pessoa pela pesquisa do Instituto de Estudos Socioeconômicos – INESC – o qual mensurou a qualidade dos portais de transparência do país é pertinente, visto que sua usabilidade faz jus ao posicionamento na pesquisa de qualidade, pois sua interface mostra preocupação com a compreensão da informação disponibilizada, além de atender a praticamente todas as exigências da lei em questão, deixando a desejar apenas na questão da acessibilidade a pessoas portadoras de necessidades especiais.</dc:description>
+	<dc:publisher xml:lang="pt-BR">ÁGORA ISSN 0103-3557</dc:publisher>
+	<dc:contributor xml:lang="en-US"></dc:contributor>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2015-10-20</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="pt-BR">Pesquisa Exploraratoria</dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>https://agora.emnuvens.com.br/ra/article/view/552</dc:identifier>
+	<dc:source xml:lang="pt-BR">ÁGORA ISSN 0103-3557; v. 25, n. 51 (2015); 321-353</dc:source>
+	<dc:source>0103-3557</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>https://agora.emnuvens.com.br/ra/article/view/552/pdf</dc:relation>
+	<dc:coverage xml:lang="en-US">Paraíba; Brazil.</dc:coverage>
+	<dc:coverage xml:lang="en-US"></dc:coverage>
+	<dc:coverage xml:lang="en-US"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR">João Pessoa; Paraíba - Brasil</dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:rights xml:lang="pt-BR">Direitos autorais 2015 ÁGORA ISSN 0103-3557</dc:rights>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

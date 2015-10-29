@@ -15,19 +15,48 @@ $nivel = $this -> session -> userdata('nivel');
 </style>
 
 <div class="cab_admin" style="z-index: 999;">
-	<table width="98%" border=1>
+	<table width="98%" border=0 align="center">
 		<tr valign="top">
 			<td class="lt1" >
-				<ul id="nav_cab">
-					<li class="nav_menu"><a href="<?php echo base_url("index.php/home");?>">home</a></li>
-					<li class="nav_menu"><a href="<?php echo base_url("index.php/social/login");?>">sign in</a></li>
-					<li class="nav_menu"><a href="<?php echo base_url("index.php/about");?>">sobre a brapci</a></li> 
-				</ul>
-			</td>
-			<td align="right" width="300" rowspan=4 >
-				<img src="<?php echo base_url('img/logo_cab.png');?>">
+			<ul id="nav_cab">
+				<li class="nav_menu">
+					<a href="<?php echo base_url("index.php/home"); ?>">home</a>
+				</li>
+				<li class="nav_menu">
+				<?php if (strlen($user) > 0) {
+					echo '<a href="'.base_url("index.php/social/logout").'"><font color="#9090ff">logout<font></a>';
+				} else {
+					echo '<a href="'.base_url("index.php/social/login").'">login</a>';
+				}
+				
+				/* Admin */
+				if ($nivel == 9)
+					{	
+						echo '</li>'.cr();
+						echo '<li class="nav_menu">';
+						echo '<a href="'.base_url("index.php/admin").'">admin</a>';						
+					}
+				?>					
+				</li>
+				<li class="nav_menu">
+					<a href="<?php echo base_url("index.php/brapci/about"); ?>">sobre a brapci</a>
+				</li>
+			</ul></td>
+			<td align="right" width="300" rowspan=4 ><img src="<?php echo base_url('img/logo_cab.png'); ?>"></td>
+		</tr>
+		<tr>
+			<td>
+				<a href="https://twitter.com/BrapciCI"> <img src="<?php echo base_url('img/icone_twitter.png'); ?>" width="32" border=0 target="twitter"></A>
+				<a href="https://www.facebook.com/brapci.ci" target="facebook"> <img src="<?php echo base_url('img/icone_face.png'); ?>" width="32" border=0 ></A>
 			</td>
 		</tr>
+		<?php if (strlen($user) > 0) { ?>
+		<tr>
+			<td>
+				<font class="lt1"><font color="#ffffff"><?php echo $user; ?>(<?php echo $email;?>)</font></font>
+			</td>
+		</tr>
+		<? } ?>
 	</table>
 	<!-- Logo -->
 	<!-- login -->
@@ -49,12 +78,7 @@ $nivel = $this -> session -> userdata('nivel');
 
 			/* se nao estiver logado */
 			if (strlen($user) == 0) {
-				echo '
-				<a href="' . base_url('index.php/social/session/facebook/') . '"><button class="btn btn-facebook"><i class="fa fa-facebook"></i> | Login com o Facebook</button></A>
-				|
-				<a href="' . base_url('index.php/social/session/google/') . '"><button class="btn btn-google-plus"><i class="fa fa-google-plus"></i> | Login com o Google+</button></A>
-			<BR>
-			<BR>';
+				echo '';
 			} else {
 				/* Mostra nome se logado */
 				echo $user . ' (' . $email . ')';
@@ -71,10 +95,6 @@ $nivel = $this -> session -> userdata('nivel');
 			?>
 		</div>
 
-		<div class="topo">
-			<a href="https://twitter.com/BrapciCI"> <img src="<?php echo base_url('img/icone_twitter.png'); ?>" width="32" border=0 target="twitter"></A>
-			<a href="https://www.facebook.com/brapci.ci" target="facebook"> <img src="<?php echo base_url('img/icone_face.png'); ?>" width="32" border=0 ></A>
-		</div>
 	</div>
 </div>
 <center>

@@ -86,6 +86,7 @@ class journals extends CI_model {
 					left join brapci_journal_tipo on jnl_tipo = jtp_codigo 
 					left join ajax_cidade on cidade_codigo = jnl_cidade
 					left join brapci_periodicidade on jnl_periodicidade = peri_codigo
+					where (jnl_status = 'A' or jnl_status = 'B')
 					order by jtp_descricao, jnl_nome
 			 ";
 			$rlt = $this->db->query($sql);
@@ -93,6 +94,14 @@ class journals extends CI_model {
 			$xtp = '';
 			
 			$sx = '<table width="100%" class="tabela00">';
+			$sh = '<tr> <th></th>
+						<th>'.msg('title').'</th>
+						<th>'.msg('city').'</th>
+						<th>'.msg('periodicity').'</th>
+						<th>'.msg('ISSN').'*</th>
+						<th>'.msg('eISSN').'**</th>
+						</tr>';
+						
 			while ($line = db_read($rlt))
 				{
 					$tp = $line['jtp_descricao'];
@@ -101,8 +110,9 @@ class journals extends CI_model {
 						{
 							$sx .= '<TR><TD colspan=3 class="lt4">'.$tp;
 							$xtp = $tp;
+							$sx .= $sh;
 						}
-					$link = base_url('journal/view/'.$line['id_jnl']);
+					$link = base_url('index.php/journal/view/'.$line['id_jnl']);
 					$link = '<A HREF="'.$link.'" class="link">';
 					$sx .= '<TR>';
 					$sx .= '<TD width="20">&nbsp;</td>';
@@ -115,9 +125,11 @@ class journals extends CI_model {
 					$sx .= '<TD class="tabela01">';
 					$sx .= $link.trim($line['peri_nome']).'</a>';
 
-					$sx .= '<TD class="tabela01" align="center" width="5%">';
+					$sx .= '<TD class="tabela01" align="center" width="80">';
 					$sx .= trim($line['jnl_issn_impresso']);
-				}
+					$sx .= '<TD class="tabela01" align="center" width="80">';
+					$sx .= trim($line['jnl_issn_eletronico']);
+									}
 			$sx .= '</table>';
 			return($sx);
 		}

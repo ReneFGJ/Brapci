@@ -218,7 +218,7 @@ class oai extends CI_controller {
 		$rlt = db_query($sql);
 		$line = db_read($rlt);
 		$fim = $line['max'];
-		if ($id > $max) { $end = 1;
+		if ($id > $fim) { $end = 1;
 		}
 
 		/* Start */

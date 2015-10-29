@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://agora.emnuvens.com.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-10-29T19:23:43Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:agora.periodicos.emnuvens.com.br:article/579">https://agora.emnuvens.com.br/ra/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:agora.periodicos.emnuvens.com.br:article/579</identifier>
+				<datestamp>2015-10-21T23:30:52Z</datestamp>
+				<setSpec>ra:APRES</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="pt-BR">Apresentação, v. 25, n. 51, 2015</dc:title>
+	<dc:creator>Blattmann, Ursula</dc:creator>
+	<dc:creator>Fachin, Juliana</dc:creator>
+	<dc:subject xml:lang="pt-BR">Ciência da Informação; Arquivologia; Biblioteconomia</dc:subject>
+	<dc:subject xml:lang="pt-BR">Trabalho de Conclusão de Curso; Artigos científicos; Arquivologia</dc:subject>
+	<dc:subject xml:lang="pt-BR">Apresentação da Revista Ágora ISSN 0103-3557</dc:subject>
+	<dc:description xml:lang="pt-BR"> Vive-se na arquivologia de Santa Catarina momentos de encontros com alegria e emoções. Na comemoração dos 30 anos de publicação da ÁGORA acontecem paralelamente o I Encontro dos Profissionais de Arquivo do Estado de Santa Catarina (no dia do Arquivista). Eis uma nova história que começa com a fundação da “Associação dos Arquivistas do Estado de Santa Catarina”.  A edição do volume 25, número 51, de 2015, constituída de entrevista, palestra e discurso, além de 12 textos sendo 8 artigos e quatro trabalhos oriundos da pesquisa realizada na conclusão de curso, um relato e resenha. A entrevista O arquivo histórico municipal de Florianópolis: 21 anos de Carlos Eduardo dos Reis com Hailor Fernandes; o Discurso: formatura do curso de Arquivologia da Universidade Federal de Santa Catarina de Eva Cristina Leite da Silva, a palestra História e Arquivologia: interdisciplinaridade a partir da prática de Cézar Karpinski. Os artigos Perfil e competências dos profissionais de informação e suas necessidades de formação: cenário nos PALOP de Fernanda Maria Melo Alves e Adriana Rosecler Alcará, O Arquivista como gestor de recursos informacionais: uma reflexão acerca dos novos modelos de gestão de Jorge Santa Anna, TDIC como mediadora do processo de Ensino-Aprendizagem da Arquivologia de Fabiana Fagundes Fontana e André Zanki Cordenonsi, A informação orgânica enquanto um objeto interdisciplinar: as relações entre a Arquvística e a Ciência da Informação no âmbito da representação em arquivos de Thiago Henrique Bragato Barros e Wanessa Rodrigues Martins, A divulgação do patrimônio documental dos arquivos universitários das IFES da região Sul do Brasil em Websites de Eliseu Santos Lima e Daniel Flores, A Paleografia no Arquivo Distrital de Évora, Portugal: relato de experiência de Israel Ribeiro Gomes, Luciana Ferreira Costa e Paulina Margarida Rodrigues Araújo, Aplicabilidade da Lei de Acesso à Informação na gestão pública:uma discussão teórica acerca dos desafios e perspectivas para a arquivística moderna de Jorge Santa Anna e Deiverson Pereira, Aplicação da arquivometria no Arquivo Central da Universidade Federal de Santa Catarina de Ezmir Dippe Elias, Ana Paula Alves Soares e Adilson Luiz Pinto. Os textos de Trabalhos de Conclusão de Curso: Relevância dos documentos pessoais de Franklin Joaquim Cascaes para a cultura Catarinense de Ana Claudia Perpétuo de Oliveira da Silva e Ana Paula Gomes, Cartão de visita dos arquivos: análise dos guias de Arquivos Catarinenses de Leolibia Luana Linden e Luciane Paula Vital, Uma visita ao portal de transparência da prefeitura de João Pessoa – PB, à luz da lei de acesso à informação e dos conceitos de acessecibilidade e usabilidade de Geissikelly Marques Oliveira e Isa Maria Freire, O acesso à informação como fonte de conhecimento e transparência Pública a luz da lei 12.527/2011: o caso da Justiça Federal da cidade do Rio Grande de Gislaine Pinto Kramer e Valéria Raquel Bertotti. O relato sobre: La calidad de las revistas de Ciencias Sociales y Humanidades: un debate actual y necessário de Mireia Plana i Franch, Claudio Nei Nascimento da Silva. E a resenha: Estudos sobre os campos da Ciência da Informação de Nelma Camêlo Araujo. Agradecemos a colaboração de todos os envolvidos nessa edição: autores, avaliadores, revisores, colaboradores, equipe do Arquivo Público de Santa Catarina.  Desejamos sucesso aos profissionais arquivistas! Boas leituras e aguardamos um texto para a próxima edição! Florianópolis, 20 de outubro de 2015. Ursula Blattmann e Juliana Fachin Editoras da Revista Ágora  </dc:description>
+	<dc:publisher xml:lang="pt-BR">ÁGORA ISSN 0103-3557</dc:publisher>
+	<dc:contributor xml:lang="pt-BR"></dc:contributor>
+	<dc:date>2015-10-20</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>https://agora.emnuvens.com.br/ra/article/view/579</dc:identifier>
+	<dc:source xml:lang="pt-BR">ÁGORA ISSN 0103-3557; v. 25, n. 51 (2015); 03-04</dc:source>
+	<dc:source>0103-3557</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>https://agora.emnuvens.com.br/ra/article/view/579/pdf</dc:relation>
+	<dc:coverage xml:lang="pt-BR">Brasil</dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:rights xml:lang="pt-BR">Direitos autorais 2015 ÁGORA ISSN 0103-3557</dc:rights>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

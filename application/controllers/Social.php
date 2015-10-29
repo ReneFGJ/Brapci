@@ -27,18 +27,77 @@ class social extends CI_Controller {
 	var $linkedin_key_secret = '06fd1eff-0c5b-4d95-bb7b-681deb588919';
 	var $linkedin_redirect = 'http://www.brapci.inf.br/oauth_linkedin.php';
 
-	public function __construct() {
-		parent::__construct();
-		$this -> load -> helper('form');
-		
-		$this -> load -> database();
+	function __construct() {
+		global $db_public;
 
-		$this -> load -> library('session');
+		$db_public = 'brapci_publico.';
+		parent::__construct();
+		$this -> lang -> load("app", "portuguese");
+		$this -> load -> library('form_validation');
+		$this -> load -> library('oauth2');
+		$this -> load -> database();
+		$this -> load -> helper('form');
+		$this -> load -> helper('form_sisdoc');
 		$this -> load -> helper('url');
-	}//end __construct()
+		$this -> load -> library('session');
+	}
 
 	public function index() {
 		redirect(base_url('index.php'));
+	}
+
+	function logout() {
+		/* Salva session */
+		$data = array('user' => '', 'email' => '', 'image' => '', 'nivel' => '');
+		$this -> session -> set_userdata($data);
+		redirect(base_url('index.php/home'));
+	}
+
+	function login_local() {
+		$dd1 = $this -> input -> post('dd1');
+		$dd2 = $this -> input -> post('dd2');
+
+		$dd1 = troca($dd1, "'", '´');
+
+		$sql = "select * from users where us_email = '$dd1' ";
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		if (count($rlt) > 0) {
+			$dd2 = md5($dd2 . 'Brapci');
+			$line = $rlt[0];
+			$dd3 = $line['us_password'];
+			if ($dd2 == $dd3) {
+				echo "OK";
+				/* Salva session */
+				$ss_user = $line['us_nome'];
+				$ss_email = $line['us_email'];
+				$ss_image = $line['us_image'];
+				$ss_nivel = $line['us_nivel'];
+				$data = array('user' => $ss_user, 'email' => $ss_email, 'image' => $ss_image, 'nivel' => $ss_nivel);
+				$this -> session -> set_userdata($data);
+				redirect(base_url('index.php/home'));
+			} else {
+				redirect(base_url('index.php/social/login/').'?erro=ERRO DE LOGIN');
+			}
+		} else {
+			redirect(base_url('index.php/social/login/') . '?err=ERRO DE LOGIN');
+		}
+	}
+
+	function login() {
+		$this -> load -> view('header/header');
+		$data = array();
+		$data['login_versao'] = 'v0.15.45';
+		$data['versao'] = '';
+		$data['link_debug'] = '';
+		$data['login_name'] = msg('login_name');
+		$data['lg_name'] = '';
+		$data['login_password'] = msg('your_passoword');
+		$data['login_entrar'] = msg('login_enter') . ' >>';
+		$erro = $this->input->get('erro');
+		$data['login_error'] = $erro;
+		$data['modo'] = 'Modo: <b>homologação</b>';
+		$this -> load -> view('login/login', $data);
 	}
 
 	public function session($provider) {
@@ -71,11 +130,10 @@ class social extends CI_Controller {
 			$app_secret = $this -> config -> item('foursquare_appsecret');
 			$provider = $this -> oauth2 -> provider($provider, array('id' => $app_id, 'secret' => $app_secret, ));
 		}
-
 		if (!$this -> input -> get('code')) {
 			// By sending no options it'll come back here
 			$provider -> authorize();
-			redirect('social?error');
+			redirect('social?erro=ERRO DE LOGIN');
 		} else {
 			// Howzit?
 			try {
@@ -91,21 +149,21 @@ class social extends CI_Controller {
 				$ss_nome = $user['name'];
 				$ss_link = $user['urls']['Facebook'];
 				$ss_nivel = 0;
-				
+
 				$sql = "select * from users where us_email = '$ss_email' ";
-				$query = $this -> db -> query($sql);				
+				$query = $this -> db -> query($sql);
 				$query = $query -> result_array();
 				$data = date("Ymd");
 
 				if (count($query) > 0) {
 					/* Atualiza quantidade de acessos */
-					$line = $query[0];					
+					$line = $query[0];
 					$ss_nivel = $line['us_nivel'];
-					
+
 					$sql = "update users set us_last = '$data',
 									us_acessos = (us_acessos + 1) 
 								where us_email = '$ss_email' ";
-					$this-> db -> query($sql);
+					$this -> db -> query($sql);
 				} else {
 					$sql = "insert into users 
 						(
@@ -122,11 +180,10 @@ class social extends CI_Controller {
 					$CI -> db -> query($sql);
 				}
 
-				
 				/* Salva session */
-				$data = array('user'=>$ss_user, 'email'=>$ss_email, 'image'=>$ss_image, 'nivel'=>$ss_nivel);
-				$this->session->set_userdata($data);
-				
+				$data = array('user' => $ss_user, 'email' => $ss_email, 'image' => $ss_image, 'nivel' => $ss_nivel);
+				$this -> session -> set_userdata($data);
+
 				if ($this -> uri -> segment(3) == 'google') {
 					//Your code stuff here
 				} elseif ($this -> uri -> segment(3) == 'facebook') {

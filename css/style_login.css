@@ -1,0 +1,117 @@
+@media screen {
+	/* some CSS here */
+	#login_logos_img {
+		background-size: 260px 125px;
+		width: 260px;
+		height: 125px;
+	}
+}
+@media screen and (max-width: 640px) {
+	/* some CSS here */
+	#login_logos_img {
+		background-size: 130px 63px;
+		width: 130px;
+		height: 63px;
+		border: 1px solid #FFFFFF;
+	}
+}
+#contato h1
+	{
+		color: #fff;
+	}
+#contato h2
+	{
+		color: #fff;
+	}	
+#contato h3
+	{
+		color: #ccc;
+	}	
+#contato
+	{
+		color: #ccc;
+		padding: 10px;
+		width: 80%;
+	}
+#modo {
+	position: fixed;
+	bottom: 10px;
+	right: 20px;
+}
+#login_versao {
+	position: fixed;
+	bottom: 10px;
+	left: 10px;
+	width: 200px;
+	height: 20px;
+	border: 0px solid #ffffff;
+	color: #FFFFFF;
+}
+#login_cab {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+}
+#login_logos {
+	position: relative;
+	width: 50%;
+	background-color: #1c4060;
+	height: 100%;
+	float: left;
+}
+#login_logos_img {
+	background-image: url("../img/logo_cip.png");
+	border: 0px solid #FFFFFF;
+	float: left;
+	margin-left: 20px;
+	margin-top: 50px;
+}
+#login_form {
+	position: relative;
+	width: 40%;
+	background-color: #FFFFFF;
+	height: 100%;
+	float: left;
+	padding: 20px 20px 20px 20px;
+}
+.formulario-entrada {
+	padding: 8px 2px 8px 20px;
+	font-family: 'CICPG', arial, sans-serif;
+	font-size: 14px;
+	width: 230px;
+}
+.estilo-botao {
+	background-color: #1c4060;
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+	border-radius: 1px;
+	border: 1px solid #8A0419;
+	display: inline-block;
+	color: #ffffff;
+	font-family: Arial;
+	font-size: 15px;
+	font-weight: normal;
+	padding: 6px 36px;
+	text-decoration: none;
+	margin-top: 15px;
+}
+.estilo-botao:hover {
+	background-color: #8A0419;
+	cursor: pointer;
+}
+.estilo-botao:active {
+	position: relative;
+	top: 1px;
+}
+.white {color #ffffff;
+}
+
+#login_erro {
+	color: #FF3030;
+	padding: 10px;
+	text-align: center;
+	border: 1px solid #FF3030;
+	width: 200px;
+}

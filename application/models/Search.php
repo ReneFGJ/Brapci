@@ -47,7 +47,7 @@ class search extends CI_model {
 		$pt3 = ($pt3 == count($rla));
 
 		$pt = ($pt1 * 4) + ($pt2 * 1) + ($pt3 * 2);
-		if ($pt > 0) { $srt = ' <A HREF="about.php#pontos" target="_new"><img src="' . base_url('img/star_' . $pt . '.png') . '" alt="" border="0" align="absmiddle"></A>';
+		if ($pt > 0) { $srt = ' <A HREF="'.base_url('index.php/about.php#pontos').'" target="_new"><img src="' . base_url('img/star_' . $pt . '.png') . '" alt="" border="0" align="absmiddle"></A>';
 			$mst = true;
 		} else { $srt = '';
 			$mst = false;

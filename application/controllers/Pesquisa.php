@@ -62,7 +62,7 @@ class Pesquisa extends CI_controller {
 		$form = $this -> pesquisas -> row($form);
 
 		$tela['tela'] = row($form, $id);
-		$url = base_url('pesquisas');
+		$url = base_url('index.php/pesquisas');
 		$tela['tela'] .= form_botton_new($url, 'Novo registro');
 
 		$tela['title'] = 'Documentos';
@@ -81,7 +81,7 @@ class Pesquisa extends CI_controller {
 			$this -> load -> model('pesquisa/pesquisas');
 			$row = $this -> pesquisas -> le($id);
 		}
-		$url = base_url('Pesquisa');
+		$url = base_url('index.php/pesquisa');
 		$tela = array();
 		$tela['tela'] = '';
 		$tela['tela'] .= form_botton_new($url, 'Novo registro');

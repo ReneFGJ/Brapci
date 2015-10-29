@@ -193,7 +193,7 @@ class authors extends CI_model {
 		$session_id = $this -> session -> userdata('nw_user');
 		$sx = '';
 		if (strlen($session_id) > 0) {
-			$sx = '<A HREF="' . base_url('author/edit/' . $codigo) . '" class="lt1 link">editar</A>';
+			$sx = '<A HREF="' . base_url('index.php/author/edit/' . $codigo) . '" class="lt1 link">editar</A>';
 		}
 		return ($sx);
 	}

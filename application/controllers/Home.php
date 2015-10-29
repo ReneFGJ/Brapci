@@ -9,13 +9,13 @@ class home extends CI_Controller {
 
 		$db_public = 'brapci_publico.';
 		parent::__construct();
+		$this -> lang -> load("app", "portuguese");			
 		$this -> load -> library('form_validation');
 		$this -> load -> database();
 		$this -> load -> helper('form');
 		$this -> load -> helper('form_sisdoc');
 		$this -> load -> helper('url');
 		$this -> load -> library('session');
-		$this -> lang -> load("app", "portuguese");
 	}
 
 	function help() {
@@ -32,7 +32,7 @@ class home extends CI_Controller {
 		$user = /* Salva session */
 		$data = array('user' => '', 'email' => '', 'image' => '');
 		$this -> session -> set_userdata($data);
-		redirect(base_url('home'));
+		redirect(base_url('index.php/home'));
 	}
 
 	function index() {

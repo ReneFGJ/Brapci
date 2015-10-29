@@ -42,7 +42,7 @@ class admin extends CI_controller {
 		$form -> row = base_url('index.php/admin/journal/');
 
 		$tela['tela'] = row($form, $id);
-		$url = base_url('author');
+		$url = base_url('index.php/author');
 		$tela['tela'] .= form_botton_new($url, 'Novo registro');
 
 		$tela['title'] = 'Documentos';

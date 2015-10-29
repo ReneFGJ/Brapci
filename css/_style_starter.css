@@ -1,0 +1,41 @@
+/* CORES - COLORS */
+.orange {
+	color: #0000FF;
+}
+.orange a {
+	color: #00FF00;
+}
+
+/***********************************************************************************************************/
+/* Borders                                                                                                 */
+/***********************************************************************************************************/
+.border1
+	{
+		border:1px solid #333;
+	}
+.borderb1
+	{
+		border-bottom:1px solid #c0c0c0;
+	}
+
+/* texto */
+p {
+	font-size: 14px;
+	color: #3333ff;
+	line-height: 150%;
+	margin-bottom: 10px;
+}
+
+/* Links */
+.link {
+	color: #000080;
+	text-decoration: none;
+}
+.link a {
+	color: #000000;
+	text-decoration: none;
+}
+.link:hover {
+	color: #000000;
+	text-decoration: underline;
+}

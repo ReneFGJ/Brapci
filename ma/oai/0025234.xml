@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://agora.emnuvens.com.br/lib/pkp/xml/oai2.xsl" ?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2015-10-29T19:23:30Z</responseDate>
+	<request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:agora.periodicos.emnuvens.com.br:article/557">https://agora.emnuvens.com.br/ra/oai</request>
+	<GetRecord>
+		<record>
+			<header>
+				<identifier>oai:agora.periodicos.emnuvens.com.br:article/557</identifier>
+				<datestamp>2015-10-21T00:36:37Z</datestamp>
+				<setSpec>ra:ART</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title xml:lang="en-US">The Paleografia Archive in the District of Évora, Portugal: experience report</dc:title>
+	<dc:title xml:lang="pt-BR">A Paleografia no Arquivo Distrital de Évora, Portugal: relato de experiência</dc:title>
+	<dc:creator>Gomes, Israel Ribeiro</dc:creator>
+	<dc:creator>Costa, Luciana Ferreira</dc:creator>
+	<dc:creator>Araújo, Paulina Margarida Rodrigues</dc:creator>
+	<dc:subject xml:lang="en-US">Archival; paleography</dc:subject>
+	<dc:subject xml:lang="en-US">Paleography; District Archive of Évora - Portugal; University of Évora</dc:subject>
+	<dc:subject xml:lang="en-US">Paleography</dc:subject>
+	<dc:subject xml:lang="pt-BR">Arquivologia; Paleografia</dc:subject>
+	<dc:subject xml:lang="pt-BR">Paleografia; Arquivo Distrital de Évora - Portugal; Universidade de Évora</dc:subject>
+	<dc:subject xml:lang="pt-BR">Paleografia</dc:subject>
+	<dc:description xml:lang="en-US">This report presents the experience with Paleografia through volunteering in the District Archive of Évora (ADEVR) in Portugal, held during participation in the International Academic Mobility Program of Universidade Federal Fluminense (UFF). It presents reflections on Paleografia. Describes the environment in which it was held volunteering in the case, the ADEVR (creation, mission, document types, sectors, among others), which enabled the paleographic reading of the documents of one of the funds custody: the bottom archival Ecclesiastical Chamber of Évora . Discusses the difficulties encountered during practice with Paleography, however, even having contact with the theory through the course Paleography and Diplomatic Modern taught at the University of Évora (EU). Finally, we emphasize the importance of studying Paleografia as fundamental knowledge in academic training Archival students, who must be empowered to act on written documentation management both in existing as obsolete characters.</dc:description>
+	<dc:description xml:lang="pt-BR">O presente relato apresenta a experiência com a Paleografia por meio de atuação voluntária no Arquivo Distrital de Évora (ADEVR) em Portugal, realizada durante participação no Programa de Mobilidade Acadêmica Internacional da Universidade Federal Fluminense (UFF). Para tanto, apresenta reflexões sobre a Paleografia. Descreve o ambiente em que foi realizado o voluntariado, no caso, o ADEVR (criação, missão, tipologias documentais, setores, dentre outros), que possibilitou a leitura paleográfica dos documentos de um dos fundos que custodia: o fundo arquivístico Câmara Eclesiástica de Évora. Discorre sobre as dificuldades encontradas durante a prática com a Paleografia, contudo, mesmo tendo contato com a teoria por meio da unidade curricular Paleografia e Diplomática Moderna lecionada na Universidade de Évora (UE). Por fim, ressalta a importância do estudo da Paleografia como conhecimento fundamental na formação acadêmica de estudantes de Arquivologia, os quais devem ser capacitados a atuarem na gestão da documentação escrita tanto em caracteres vigentes quanto obsoletos.</dc:description>
+	<dc:publisher xml:lang="pt-BR">ÁGORA ISSN 0103-3557</dc:publisher>
+	<dc:contributor xml:lang="en-US">Federal Fluminense University</dc:contributor>
+	<dc:contributor xml:lang="en-US">University of Évora.</dc:contributor>
+	<dc:contributor xml:lang="pt-BR">Universidade Federal Fluminense</dc:contributor>
+	<dc:contributor xml:lang="pt-BR">Universidade de Évora</dc:contributor>
+	<dc:date>2015-10-20</dc:date>
+	<dc:type>info:eu-repo/semantics/article</dc:type>
+	<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="pt-BR"></dc:type>
+	<dc:type xml:lang="en-US"></dc:type>
+	<dc:format>application/pdf</dc:format>
+	<dc:identifier>https://agora.emnuvens.com.br/ra/article/view/557</dc:identifier>
+	<dc:source xml:lang="pt-BR">ÁGORA ISSN 0103-3557; v. 25, n. 51 (2015); 183-208</dc:source>
+	<dc:source>0103-3557</dc:source>
+	<dc:language>por</dc:language>
+	<dc:relation>https://agora.emnuvens.com.br/ra/article/view/557/pdf</dc:relation>
+	<dc:coverage xml:lang="en-US">Evora; Portugal</dc:coverage>
+	<dc:coverage xml:lang="en-US"></dc:coverage>
+	<dc:coverage xml:lang="en-US"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR">Évora; Portugal</dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:coverage xml:lang="pt-BR"></dc:coverage>
+	<dc:rights xml:lang="pt-BR">Direitos autorais 2015 ÁGORA ISSN 0103-3557</dc:rights>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</GetRecord>
+</OAI-PMH>

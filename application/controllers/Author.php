@@ -53,7 +53,7 @@ class author extends CI_Controller {
 		
 		
 		$tela['tela'] = row($form,$id);
-		$url = base_url('author');
+		$url = base_url('index.php/author');
 		$tela['tela'] .= form_botton_new($url, 'Novo registro');
 
 		$tela['title'] = 'Documentos';

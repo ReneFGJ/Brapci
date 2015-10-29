@@ -3,15 +3,19 @@
 <meta name="google-site-verification" content="VZpzNVBfl5kOEtr9Upjmed96smfsO9p4N79DZT38toA" />
 <meta name="description" content="">
 <link rel="shortcut icon" href="<?echo base_url('favicon.png');?>" />
+<link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/_style_starter.css');?>">
 <link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style.css');?>">
 <link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_form.css');?>">
 <link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_menu.css');?>">
 <link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_roboto.css');?>">
 <link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_issue.css');?>">
 <link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_brapci_cab.css');?>">
-<link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/social-buttons.css');?>">
 <link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_tools.css');?>">
-<script type="text/javascript" src="<?echo base_url('js/jquery.js');?>"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<!--- Java Script -->
+<script type="text/javascript" src="<?echo base_url('js/jquery.js');?>"></script>
+<script type="text/javascript" src="<?echo base_url('js/js_copytoclipboard.js');?>"></script>
+
 <title><?php echo $title;?></title>
 </head>

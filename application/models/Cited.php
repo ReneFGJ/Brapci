@@ -54,7 +54,7 @@ class cited extends CI_Model
 				$("#coletar_cited").html("coletando..."); 
 				$.ajax({
   					method: "POST",
-  					url: "'.base_url('oai/coletar_cited/'.$idbs).'",
+  					url: "'.base_url('index.php/oai/coletar_cited/'.$idbs).'",
   					data: { name: "OAI", location: "PDF" }
 					})
   					.done(function( data ) {
