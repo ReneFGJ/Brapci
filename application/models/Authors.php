@@ -26,6 +26,7 @@ class authors extends CI_model {
 		$idt = 0;
 		for ($r = 0; $r < count($aut); $r++) {
 			$autor = $aut[$r];
+			$autor = troca($autor,"´",'');
 			if (strpos($autor, ',') > 0) {
 				$autor = substr($autor, strpos($autor, ','), strlen($autor)) . ' ' . substr($autor, 0, strpos($autor, ','));
 			}
@@ -97,6 +98,30 @@ class authors extends CI_model {
 		$rlt = $this -> db -> query($sql);
 
 	}
+
+	function check_remissive()
+		{
+			$sql = "select * from ".$this->tabela."
+						inner join brapci_article_author on autor_codigo = ae_author 
+						where autor_codigo <> autor_alias 
+						limit 10
+						";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			$sx = '<table width="100%" class="lt1">';
+			for ($r=0;$r < count($rlt);$r++)
+				{
+					$line = $rlt[$r];
+					$use = $line['autor_alias'];
+					$remissiva = $line['autor_codigo'];
+					$sql = "update brapci_article_author set ae_author = '$use' where ae_author = '$remissiva' ";
+					$rrr = $this->db->query($sql);				
+					$sx .= '<tr>';
+					$sx .= '<td>'.$line['autor_nome'].'</td>';
+				}
+			$sx .= '</table>';
+			return($sx);			
+		}
 
 	function inserir_novo_autor($nome) {
 		/* Valida recuperacao */

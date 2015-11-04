@@ -196,11 +196,28 @@ class oai extends CI_controller {
 		fclose($fl);
 		return (1);
 	}
+	
+	function security() {
+		$user = $this -> session -> userdata('user');
+		$email = $this -> session -> userdata('email');
+		$nivel = $this -> session -> userdata('nivel');
+		if (round($nivel) < 1) {
+			redirect(base_url('index.php/social/login'));
+		}
+	}
 
-	function index() {
+	function cab() {
+		$data = array();
 		$data['title'] = 'Brapci : OAI-PMH';
 		$data['title_page'] = 'ADMIN - OAI';
 		$this -> load -> view("header/cab_admin", $data);
+		$this -> load -> view("admin/menu", $data);
+		$this -> security();
+	}
+
+
+	function index() {
+		$this->cab();
 		$img = 'lg_oai.jpg';
 
 		$this -> load -> model('oai_pmh');
@@ -238,10 +255,9 @@ class oai extends CI_controller {
 
 	function Harvesting($id = 0) {
 		$this -> load -> model('oai_pmh');
-		$data['title'] = 'Brapci : OAI-PMH';
+		$this->cab();
+		$data = array();
 		$data['id'] = $id;
-		$data['title_page'] = 'ADMIN - OAI - Harvesting';
-		$this -> load -> view("header/cab_admin", $data);
 
 		if ($id > 0) {
 			/* Coleta */
@@ -279,8 +295,7 @@ class oai extends CI_controller {
 		$this -> load -> model('oai_pmh');
 		$data['title'] = 'Brapci : OAI-PMH';
 		$data['id'] = $jid;
-		$data['title_page'] = 'ADMIN - OAI - Harvesting';
-		$this -> load -> view("header/cab_admin", $data);
+		$this->cab();
 		
 			/* List journals to harvesting */
 			$this -> load -> model('oai_pmh');
@@ -299,9 +314,7 @@ class oai extends CI_controller {
 		}
 
 	function Identify($id = 0) {
-		$data['title'] = 'Brapci : OAI-PMH';
-		$data['title_page'] = 'ADMIN - OAI';
-		$this -> load -> view("header/cab_admin", $data);
+		$this->cab();
 
 		$this -> load -> model('journals');
 		$data = $this -> journals -> le($id);
@@ -348,12 +361,10 @@ class oai extends CI_controller {
 	}
 
 	function ListIdentifiers($id = 0) {
-		$data['title'] = 'Brapci : OAI-PMH';
-		$data['title_page'] = 'ADMIN - OAI';
+
+		$this->cab();
+		$data = array();
 		$data['id'] = $id;
-
-		$this -> load -> view("header/cab_admin", $data);
-
 		$this -> load -> view('oai/oai_verbs', $data);
 
 		$this -> load -> model('journals');

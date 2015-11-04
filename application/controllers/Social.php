@@ -77,7 +77,7 @@ class social extends CI_Controller {
 				$this -> session -> set_userdata($data);
 				redirect(base_url('index.php/home'));
 			} else {
-				redirect(base_url('index.php/social/login/').'?erro=ERRO DE LOGIN');
+				redirect(base_url('index.php/social/login/') . '?erro=ERRO DE LOGIN');
 			}
 		} else {
 			redirect(base_url('index.php/social/login/') . '?err=ERRO DE LOGIN');
@@ -94,7 +94,7 @@ class social extends CI_Controller {
 		$data['lg_name'] = '';
 		$data['login_password'] = msg('your_passoword');
 		$data['login_entrar'] = msg('login_enter') . ' >>';
-		$erro = $this->input->get('erro');
+		$erro = $this -> input -> get('erro');
 		$data['login_error'] = $erro;
 		$data['modo'] = 'Modo: <b>homologação</b>';
 		$this -> load -> view('login/login', $data);
@@ -177,7 +177,15 @@ class social extends CI_Controller {
 							1,0,'',1,
 							$data,$data
 						)";
+					$CI = &get_instance();
 					$CI -> db -> query($sql);
+
+					$c = 'us';
+					$c1 = 'id_' . $c;
+					$c2 = $c . '_codigo';
+					$c3 = 7;
+					$sql = "update users set us_codigo = lpad($c1,$c3,0) where $c2='' ";
+					$rlt = $this -> db -> query($sql);
 				}
 
 				/* Salva session */

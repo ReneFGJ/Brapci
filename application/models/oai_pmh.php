@@ -1,5 +1,6 @@
 <?php
 class oai_pmh extends CI_model {
+	var $issue;
 	function repository_list() {
 		$sql = "select * from brapci_journal 
 						where jnl_status <> 'X'
@@ -155,6 +156,7 @@ class oai_pmh extends CI_model {
 
 				/* Recupera Issue */
 				$article['issue_id'] = strzero($this -> recupera_issue($article, $jid), 7);
+				$article['issue_ver'] = $this->issue;
 
 				/* Recupera ano */
 				$source = $article['sources'][0]['source'];
@@ -164,8 +166,10 @@ class oai_pmh extends CI_model {
 				$article['journal_id'] = strzero($jid, 7);
 
 				/* Titulo principal */
-				$titulo = UpperCaseSql($article['titles'][0]['title']);
+				$titulo = utf8_decode($article['titles'][0]['title']);
 				$titulo = utf8_decode(substr($titulo, 0, 44));
+				$titulo = UpperCaseSql($titulo);
+				
 
 				/* Valida se existe article cadastrado */
 				$sql = "select * from brapci_article where ar_edition = '" . $article['issue_id'] . "' 
@@ -273,11 +277,11 @@ class oai_pmh extends CI_model {
 	}
 
 	function recupera_ano($s) {
-		$s = trim(sonumero($s));
+		//$s = trim(sonumero($s));
 		$ano = '';
-		for ($r = 1970; $r < (date("Y") + 1); $r++) {
+		for ($r = (date("Y") + 1);$r > 1940; $r--) {
 			if (strpos($s, trim($r)) > 0) {
-				if (strlen($ano) == 0) { $ano = $r; }
+				if (strlen($ano) == 0) { return($r); }
 			}
 		}
 		return ($ano);
@@ -323,7 +327,6 @@ class oai_pmh extends CI_model {
 
 	function recupera_section($sec, $jid) {
 		$sql = "select * from oai_listsets where ls_setspec = '$sec' and ls_journal = '$jid'";
-		echo '<BR>'.$sql;
 		$rlt = db_query($sql);
 		if ($line = db_read($rlt)) {
 			$rsec = trim($line['ls_equal']);
@@ -350,8 +353,10 @@ class oai_pmh extends CI_model {
 									and ed_nr = '$nr'
 									and ed_ano = '$ano' 
 									and ed_journal_id = '$jid' ";
-			echo $sql;
 			$rlt = db_query($sql);
+			$sx = "v. $vol, n. $nr, $ano";
+			$this->issue = $sx;
+			
 			if ($line = db_read($rlt)) {
 				$eds = $line['ed_status'];
 				if ($eds == 'A') {

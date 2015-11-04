@@ -8,17 +8,32 @@ class journals extends CI_model {
 		return ($obj);
 	}
 	
+	
+	function updatex() {
+		$c = 'jnl';
+		$c1 = 'id_' . $c;
+		$c2 = $c . '_codigo';
+		$c3 = 7;
+		$sql = "update brapci_journal set $c2 = lpad($c1,$c3,0) where $c2='' ";
+		$rlt = $this -> db -> query($sql);
+	}	
 
 	/* Dados CP*/
 	function cp() {
 		$cp = array();
-		array_push($cp, array('$H', 'id_jnl', '', True, True));
+		array_push($cp, array('$H', 'id_jnl', '', False, True));
 		array_push($cp, array('$S100', 'jnl_nome', 'Nome de citação', False, True));
 		array_push($cp, array('$S40', 'jnl_nome_abrev', 'Nome abreviado', False, True));
 		array_push($cp, array('$S14', 'jnl_issn_impresso', 'ISSN', False, True));
 		array_push($cp, array('$S14', 'jnl_issn_eletronico', 'ISSN Eletrônico', False, True));
 		array_push($cp, array('$S100', 'jnl_url', 'URL da publicação', False, True));
 		
+		$sqltp = 'select * from brapci_journal_tipo where jtp_ativo = 1 order by jtp_ordem';
+		array_push($cp, array('$Q jtp_codigo:jtp_descricao:'.$sqltp, 'jnl_tipo', 'Tipo da publicação', True, True));
+		
+		$sqltp = 'select * from ajax_cidade where cidade_ativo = 1 order by cidade_nome';
+		array_push($cp, array('$Q cidade_codigo:cidade_nome:'.$sqltp, 'jnl_cidade', 'Cidade', True, True));
+
 		//array_push($cp, array('$O 1:Ativo&0:Inativo', 'jnl_oai_from', 'OAI Ativo', False, True));
 		array_push($cp, array('$S20', 'jnl_patch', 'Atalho', False, True));
 
@@ -28,6 +43,11 @@ class journals extends CI_model {
 		array_push($cp, array('$[1900-'.date("Y").']D', 'jnl_token_from', 'harvsting from', False, True));
 		
 		array_push($cp, array('$}', '', 'OAI', False, True));
+		
+		
+		array_push($cp, array('${', '', 'Indexadores', False, True));
+		array_push($cp, array('$O 0:Não&1:Sim', 'jnl_scielo', 'Indexado no Scielo', False, True));
+		array_push($cp, array('$}', '', 'Indexadores', False, True));
 
 		/* Botao */
 		array_push($cp, array('$B8', '', 'Gravar >>>', False, True));

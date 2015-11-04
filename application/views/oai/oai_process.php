@@ -12,6 +12,8 @@
 			switch ($issue_id) {
 				case '0' :
 					echo '<font color="green">** Novo **</font>';
+					echo '<br>';
+					echo $issue_ver;
 					break;
 				case '9999999' :
 					echo '<font color="red">** ISSUE Bloqueado **</font>';

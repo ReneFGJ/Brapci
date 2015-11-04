@@ -23,6 +23,8 @@ $lang['status_article_B'] = '1º revisão';
 $lang['status_article_C'] = '2º revisão';
 $lang['status_article_D'] = 'revisado';
 
+$lang['issue_new'] = 'novo fascículo';
+
 /* Login */
 $lang['login_enter'] = 'Entar';
 $lang['login_social'] = 'Logue com uma conta existente (recomendado)';

@@ -130,7 +130,13 @@ class editions extends CI_model {
 				$sx .= '</td>';
 
 				$sx .= '<td width="60" align="center" class="borderb1">';
-				$pag = $cor . $line['ar_pg_inicial'] . $xcor;
+				$pag = $cor . $line['ar_pg_inicial'];
+				if ($line['ar_pg_final'] >0)
+					{
+						$pag .= ' - '.$line['ar_pg_final'];
+					}	
+				$pag .= $xcor;
+				
 				$sx .= $pag;
 				$sx .= '</td>';
 

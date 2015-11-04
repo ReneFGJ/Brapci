@@ -56,6 +56,20 @@ class search extends CI_model {
 		$smetodo = 'Metodo 1';
 		return ($srt);
 	}
+	
+	function export_xml()
+		{
+		global $db_public;
+		$sx = '';
+		$sql = "select * from
+						( select max(sel_data) as lastupdate, sel_sessao, count(*) as total  
+							from " . $db_public . "usuario_selecao
+						  	group by sel_sessao) as tabela
+						left join " . $db_public . "usuario_estrategia on e_session = sel_sessao
+						order by total desc 			
+			";
+		$rlt = db_query($sql);			
+		}
 
 	function result_cited() {
 		/* m_works */
@@ -98,17 +112,16 @@ class search extends CI_model {
 						left join " . $db_public . "usuario_estrategia on e_session = sel_sessao
 						order by total desc 			
 			";
-		echo $sql;
 		$rlt = db_query($sql);
 		$sx .= '<table width="100%">';
 		$sx .= '<TR><TH>Descricao<TH>Selecao<TH>Atualizacao';
 		while ($line = db_read($rlt)) {
 			$link = '<A HREF="' . base_url('index.php/home/selection/' . $line['sel_sessao']) . '">';
 			$sx .= '<TR>';
-			$sx .= '<TD class="tabela01">' . $line['e_descricao'];
-			$sx .= '<TD class="tabela01" align="center">' . $link . $line['sel_sessao'] . '</A>';
-			$sx .= '<TD class="tabela01" align="center">' . $line['total'];
-			$sx .= '<TD class="tabela01" align="center">' . stodbr($line['lastupdate']);
+			$sx .= '<td class="tabela01">' . $line['e_descricao'];
+			$sx .= '<td class="tabela01" align="center">' . $link . $line['sel_sessao'] . '</A>';
+			$sx .= '<td class="tabela01" align="center">' . $line['total'];
+			$sx .= '<td class="tabela01" align="center">' . stodbr($line['lastupdate']);
 		}
 		$sx .= '</table>';
 		return ($sx);
@@ -555,7 +568,59 @@ class search extends CI_model {
 		return ($sx);
 
 	}
+	function result_article_selected_xls($session, $pag = 1) {
+		global $db_public;
+		$offset = 99999;
+		$total = 0;
 
+		$sql = "select * from " . $db_public . "usuario_selecao 
+					inner join " . $db_public . "artigos on ar_codigo = sel_work
+					left join brapci_journal on jnl_codigo = ar_journal_id
+					left join brapci_journal_tipo on jnl_tipo = jtp_codigo
+					left join brapci_section on ar_tipo = se_codigo
+					where sel_sessao = '$session' and sel_ativo = 1 
+					";
+
+		$sql .= " order by ar_ano desc ";
+		$this -> query = " sel_sessao = '$session' and sel_ativo = 1 ";
+		$rlt = db_query($sql);
+
+		$sx = '<table width="100%" class="lt1" border=1>';
+		$sx .= '<tr>
+					<th>Authors</th>
+					<th>Title</th>
+					<th>Year</th>
+					<th>Source title</th>
+					<th>ISSN</th>
+					<th>Volume</th>
+					<th>Issue</th>
+					<th>Art. No.</th>
+					<th>Page start</th>
+					<th>Page end</th>
+					<th>Page count</th>
+					<th>Cited by</th>
+					<th>DOI</th>
+					<th>Link</th>
+					<th>Document Type</th>
+					<th>Source</th>
+					<th>EID</th>
+					<th>Abstract</th>
+					<th>Keywords</th>
+					<th>Language of Original Document</th>
+				</tr>';
+		$id = 0;
+		$wh = '';
+		while ($line = db_read($rlt)) {
+
+			$sx .= $this -> export_xls($line);
+			if (strlen($wh) > 0) { $wh .= ' or ';
+			}
+			$wh .= " ar_codigo = '" . trim($line['ar_codigo']) . "' ";
+		}
+		$sx .= '</table>';
+		return ($sx);
+	}
+	
 	function result_cited_selected($session) {
 		global $db_public, $db_base, $pag;
 		$pag = $_GET['pag'];
@@ -592,7 +657,7 @@ class search extends CI_model {
 			//if (strlen($wh) > 0) { $wh .= ' or '; }
 			//$wh .= " ar_codigo = '".trim($line['ar_codigo'])."' ";
 		}
-		$sx .= '<tr><TD>' . $id . ' total';
+		$sx .= '<tr><td>' . $id . ' total';
 		$sx .= '</table>';
 
 		return ($sx);
@@ -647,7 +712,7 @@ class search extends CI_model {
 		$cod = trim($line['ar_codigo']);
 
 		$sx .= '<TR valign="top">';
-		$sx .= '<TD rowspan=1>';
+		$sx .= '<td rowspan=1>';
 
 		/* Marcacao */
 		$selected = round($line['sel_ativo']);
@@ -658,7 +723,7 @@ class search extends CI_model {
 		$fm = '<input type="checkbox" name="ddq" ' . $jscmd . ' ' . $selected . '>';
 		$sx .= $fm;
 
-		$sx .= '<TD colspan=1>';
+		$sx .= '<td colspan=1>';
 		$sx .= $id . '. ';
 		$sx .= $link;
 		$sx .= (trim(UpperCase($line['Article_Title'])));
@@ -674,7 +739,7 @@ class search extends CI_model {
 		if (isset($email)) { $sx .= $this -> send_to_email($cod, 16);
 		}
 
-		//$sx .= '<TD colspan=3 class="lt0">';
+		//$sx .= '<td colspan=3 class="lt0">';
 		$sx .= (trim($line['Author_Analytic']));
 
 		/* Volume numero */
@@ -751,6 +816,120 @@ class search extends CI_model {
 		return ($sx);
 	}
 
+
+	/* Exportação de dados para o XLS */
+	function export_xls($line) {
+		global $id, $email, $dd;
+		$sx = '';
+
+		$id++;
+		$cod = trim($line['ar_codigo']);
+
+		$sx .= '<tr valign="top">';
+		
+		/* Authors */
+		$sx .= '<td>';
+		$sx .= (trim($line['Author_Analytic']));
+		$sx .= '</td>';
+
+		/* Title */
+		$sx .= '<td>';
+		$sx .= (trim($line['Article_Title']));
+		$sx .= '</td>';
+
+		/* Year */
+		$sx .= '<td>';
+		$sx .= trim($line['ar_ano']);
+		$sx .= '</td>';
+		
+		/* Journal */
+		$sx .= '<td>';
+		$sx .= trim($line['Journal_Title']);
+		$sx .= '</td>';
+
+		/* ISSN */
+		$sx .= '<td>';
+		$sx .= '"'.trim($line['ISSN']).'"';
+		$sx .= '</td>';
+
+		/* Volume numero */
+		$sx .= '<td>';
+		$sx .= trim(troca($line['Volume_ID'],'v.',''));
+		$sx .= '</td>';
+		
+		$sx .= '<td>';
+		$sx .= trim(troca($line['Issue_ID'],'n.',''));
+		$sx .= '</td>';
+		
+		/* Pages */		
+		$sx .= '<td>';
+		$p = $line['Pages'];
+		$p = trim(troca($p,'p.',''));
+		if (strpos($p,'-'))
+			{
+				$p1 = substr($p,0,strpos($p,'-'));
+				$p2 = substr($p,strpos($p,'-')+1,10);
+			} else {
+				$p1 = $p;
+				$p2 = $p;
+			}
+			
+		$sx .= '<td>'.$p1.'</td>';
+		$sx .= '<td>'.$p2.'</td>';
+		
+		/* Page count */
+		$sx .= '<td>'.($p2-$p1+1).'</td>';
+		
+		/* Cited By */
+		$sx .= '<td></td>';
+		
+		/* DOI */
+		$sx .= '<td>'.$line['ar_doi'].'</td>';
+
+		/* LINK */
+		$link = base_url('indexp.php/article/view/'.$line['ar_codigo']);
+		$sx .= '<td>'.$link.'</td>';
+
+		/* Publication Type */
+		$sx .= '<td>';
+		$sect = $line['ar_tipo'];
+		$sx .= $sect;
+		//$sx .= ' (' . $this -> tipo_publicacao($tipo).'-' .$sect. ')';
+		$sx .= '</td>';	
+		
+		/* Source */
+		$tipo = $line['jnl_tipo'];
+		switch ($tipo)
+			{
+			case 'J': $tipo = 'Journal'; break;
+			}
+		$sx .= '<td>'.$tipo.'</td>';
+
+		/* EID */
+		$sx .= '<td>'.$line['ar_codigo'].'</td>';
+
+		/* Abstract */
+		$abst1 = trim($line['ar_resumo_1']);
+		$sx .= '<td>';		
+		$sx .= $abst1;
+		$sx .= '</td>';
+		
+		/* Key Words */
+		$sx .= '<td>';
+		$key = trim($line['ar_keyword_1']);
+		$key = trim(troca($key, ' /', ';'));
+		$sx .= $key;
+		$sx .= '</td>';
+		
+		/* Language */
+		$sx .= '<td>'.$line['Idioma'].'</td>';
+		
+		$sx .= '</tr>';
+		$sx .= cr();
+		
+		return ($sx);
+	}
+
 	function tipo_publicacao($tp) {
 		$tipo = trim($tp);
 		$sx = '';
@@ -816,9 +995,9 @@ class search extends CI_model {
 
 		while ($line = db_read($rlt)) {
 			$sx .= '<TR>';
-			$sx .= '<TD>';
+			$sx .= '<td>';
 			$sx .= trim($line['jnl_nome_abrev']);
-			$sx .= '<TD align="center">';
+			$sx .= '<td align="center">';
 			$sx .= trim($line['total']);
 		}
 		$sx .= '</table>';
@@ -845,9 +1024,9 @@ class search extends CI_model {
 
 		while ($line = db_read($rlt)) {
 			$sx .= '<TR>';
-			$sx .= '<TD align="center">';
+			$sx .= '<td align="center">';
 			$sx .= trim($line['ar_ano']);
-			$sx .= '<TD align="center">';
+			$sx .= '<td align="center">';
 			$sx .= trim($line['total']);
 		}
 		$sx .= '</table>';
@@ -882,9 +1061,9 @@ class search extends CI_model {
 
 		while ($line = db_read($rlt)) {
 			$sx .= '<TR>';
-			$sx .= '<TD align="left">';
+			$sx .= '<td align="left">';
 			$sx .= trim($line['autor_nome']);
-			$sx .= '<TD align="center">';
+			$sx .= '<td align="center">';
 			$sx .= trim($line['total']);
 		}
 		$sx .= '</table>';
@@ -986,9 +1165,9 @@ class search extends CI_model {
 		$sx .= '<TR><Th>' . msg("keyword") . '<Th>' . msg('quant.');
 		while ($line = db_read($rlt)) {
 			$sx .= '<TR>';
-			$sx .= '<TD align="left">';
+			$sx .= '<td align="left">';
 			$sx .= trim($line['kw_word']);
-			$sx .= '<TD align="center">';
+			$sx .= '<td align="center">';
 			$sx .= trim($line['total']);
 		}
 		$sx .= '</table>';
@@ -1071,7 +1250,7 @@ class search extends CI_model {
 			//$this -> registra_consulta($dd[2]);
 		}
 
-		$sx .= '<TR><TD colspan=2 >';
+		$sx .= '<TR><td colspan=2 >';
 		if (strlen($dd[1]) > 0) {
 			$sr = $this -> result_search($dd);
 			$sx .= $this -> realce($sr, $dd[2]);
@@ -1179,12 +1358,12 @@ class search extends CI_model {
 		$sx = '';
 		$sx .= '<table border=1 class="lt1" width="100%">';
 		$sx .= '<TR valign="top">';
-		$sx .= '<TD>';
+		$sx .= '<td>';
 		$sx .= $this -> lang -> line('form_query') . '<B> ' . $dd[1] . '</B> ';
 		/* realiza busca */
 		$sx .= $this -> result_article($dd[1], $dd[20], $dd[21]);
 
-		$sx .= '<TD width="120">';
+		$sx .= '<td width="120">';
 		$sa = $this -> result_journals();
 		$sa .= $this -> result_year();
 		$sa .= $this -> result_author();
@@ -1199,10 +1378,10 @@ class search extends CI_model {
 		$sx = '';
 		$sx .= '<table border=1 class="lt1" width="100%">';
 		$sx .= '<TR valign="top">';
-		$sx .= '<TD>';
+		$sx .= '<td>';
 		$sx .= $this -> lang -> line('form_found') . ' <B> ' . $dd[2] . '</B>';
 		$sx .= $this -> result_article_key($key_cod);
-		$sx .= '<TD width="120">';
+		$sx .= '<td width="120">';
 		if (strlen($this -> query) > 0) {
 
 			$sa = $this -> result_journals();
@@ -1220,10 +1399,10 @@ class search extends CI_model {
 		$sx = '';
 		$sx .= '<table border=1 class="lt1" width="100%">';
 		$sx .= '<TR valign="top">';
-		$sx .= '<TD>';
+		$sx .= '<td>';
 		$sx .= msg('find') . '<B> ' . $dd[2] . '</B>';
 		$sx .= $this -> result_article_auth($key_cod);
-		$sx .= '<TD width="120">';
+		$sx .= '<td width="120">';
 		if (strlen($this -> query) > 0) {
 
 			$sa = $this -> result_journals();
@@ -1240,11 +1419,11 @@ class search extends CI_model {
 		global $dd, $acao;
 		$sx = '<table border=1 class="lt1" width="100%">';
 		$sx .= '<TR valign="top">';
-		$sx .= '<TD>';
+		$sx .= '<td>';
 		$sx .= msg('find') . '<B> ' . $dd[2] . '</B>';
 		$sx .= $this -> result_article_selected($this -> session());
 
-		$sx .= '<TD width="120">';
+		$sx .= '<td width="120">';
 		$sa = $this -> result_journals();
 		$sa .= $this -> result_year();
 		$sa .= $this -> result_author();
@@ -1258,5 +1437,10 @@ class search extends CI_model {
 		return ($sx);
 	}
 
+
+	function result_search_selected_xls() {
+		$sx = $this -> result_article_selected_xls($this -> session());
+		return ($sx);
+	}
 }
 ?>

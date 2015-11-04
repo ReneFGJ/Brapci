@@ -11,7 +11,7 @@ class keywords extends CI_model
 				{
 					if (strlen($keys[$r]) > 0)
 						{
-							$name = substr(UpperCaseSQL($keys[$r]),0,100);
+							$name = substr($keys[$r],0,100);
 							if (!isset($akeys[$name]))
 								{
 									
@@ -95,13 +95,13 @@ class keywords extends CI_model
 		}
 	function incorpore_keyword($term,$idioma)
 		{
-			$sql = "select * from brapci_keyword where kw_word_asc = '".UpperCaseSql($term)."' and kw_idioma = '$idioma' ";
+			$sql = "select * from brapci_keyword where kw_word_asc = '".($term)."' and kw_idioma = '$idioma' ";
 			$query = $this->db->query($sql);
 			
 			$query = $query->result_array();
 			if (count($query)==0)
 				{
-					$term_asc = UpperCaseSql($term);
+					$term_asc = ($term);
 					$sql = "insert into brapci_keyword (kw_word, kw_word_asc, kw_codigo, kw_use, kw_idioma, kw_tipo, kw_hidden)
 					values
 					('$term','$term_asc','','','$idioma','N',0)
@@ -111,7 +111,7 @@ class keywords extends CI_model
 					/* Update X */
 					$this->updatex();
 					
-					$sql = "select * from brapci_keyword where kw_word_asc = '".UpperCaseSql($term)."' and kw_idioma = '$idioma' ";
+					$sql = "select * from brapci_keyword where kw_word_asc = '".($term)."' and kw_idioma = '$idioma' ";
 					$query = $this->db->query($sql);
 					$query = $query->result_array();					
 				}

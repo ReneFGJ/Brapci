@@ -1,35 +1,19 @@
 <?php
 
-class admin extends CI_controller {
+class admins extends CI_model {
 	var $tabela_journals = 'brapci_journal';
 	var $tabela_editions = 'brapci_edition';
-	function __construct() {
-		global $db_public;
 
-		parent::__construct();
-		$this -> load -> library('form_validation');
-		$this -> load -> database();
-		$this -> load -> helper('form');
-		$this -> load -> helper('form_sisdoc');
-		$this -> load -> helper('url');
-		$this -> load -> helper('xml');
-		/* $this -> lang -> load("app", "portuguese"); */
-		$this -> load -> library('session');
-		$db_public = 'brapci_publico.';
-	}
 
 	function index() {
 		$data['title'] = 'Brapci : Admin';
 		$data['title_page'] = 'ADMIN';
-		$this -> load -> view("header/cab_admin", $data);
-		$this -> load -> view("admin/menu", $data);
+		$this -> cab();
 	}
 
 	function journal($id = 0) {
-		$data['title'] = 'Brapci : Admin';
-		$data['title_page'] = 'ADMIN';
-		$this -> load -> view("header/cab_admin", $data);
 
+		$this -> cab();
 		$this -> load -> model('journals');
 
 		$form = new form;
@@ -56,10 +40,7 @@ class admin extends CI_controller {
 		form_sisdoc_getpost();
 		$this -> load -> model('editions');
 
-		$data['title'] = 'Brapci : Admin';
-		$data['title_page'] = 'ADMIN';
-		$this -> load -> view("header/cab_admin", $data);
-
+		$this -> cab();
 		/* Formulario */
 		$form = new form;
 		$form -> id = $id;
@@ -88,9 +69,7 @@ class admin extends CI_controller {
 			$this -> db -> query($sql);
 		}
 
-		$data['title'] = 'Brapci : Admin';
-		$data['title_page'] = 'ADMIN';
-		$this -> load -> view("header/cab_admin", $data);
+		$this -> cab();
 
 		/* Article */
 		$this -> load -> model('articles');
@@ -122,8 +101,8 @@ class admin extends CI_controller {
 
 		/* Save data */
 		switch($dd[8]) {
-			case 'ARCHIVE':
-				$this->archives->save_LINK($id,$data['ar_journal_id'],$dd[9]);
+			case 'ARCHIVE' :
+				$this -> archives -> save_LINK($id, $data['ar_journal_id'], $dd[9]);
 				redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
 				break;
 			case 'ISSUE' :
@@ -175,11 +154,11 @@ class admin extends CI_controller {
 						'A','ARTIC','$ano')
 			 ";
 			$rlt = $this -> db -> query($sql);
-			
-			$this->load->model('articles');
+
+			$this -> load -> model('articles');
 			$this -> articles -> updatex();
-			
-			redirect(base_url('index.php/admin/issue_view/'.$issue.'/'.checkpost_link($issue)));
+
+			redirect(base_url('index.php/admin/issue_view/' . $issue . '/' . checkpost_link($issue)));
 		}
 	}
 
@@ -188,9 +167,7 @@ class admin extends CI_controller {
 			redirect(base_url('index.php/admin/journal'));
 		}
 
-		$data['title'] = 'Brapci : Admin';
-		$data['title_page'] = 'ADMIN';
-		$this -> load -> view("header/cab_admin", $data);
+		$this -> cab();
 
 		/* Editions */
 		$this -> load -> model('editions');
@@ -244,9 +221,7 @@ class admin extends CI_controller {
 			redirect(base_url('index.php/admin/journal'));
 		}
 
-		$data['title'] = 'Brapci : Admin';
-		$data['title_page'] = 'ADMIN';
-		$this -> load -> view("header/cab_admin", $data);
+		$this -> cab();
 
 		$this -> load -> model('journals');
 		$data = $this -> journals -> le($id);
@@ -269,9 +244,7 @@ class admin extends CI_controller {
 			redirect(base_url('index.php/admin/journal'));
 		}
 
-		$data['title'] = 'Brapci : Admin';
-		$data['title_page'] = 'ADMIN';
-		$this -> load -> view("header/cab_admin", $data);
+		$this -> cab();
 
 		$this -> load -> model('journals');
 		$data = $this -> journals -> le($id);
@@ -292,5 +265,6 @@ class admin extends CI_controller {
 		$this -> load -> view('form/form', $data);
 
 	}
+
 }
 ?>

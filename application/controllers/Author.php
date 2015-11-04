@@ -45,9 +45,9 @@ class author extends CI_Controller {
 		$form = new form;
 		$form -> tabela = $this -> tabela;
 		$form -> see = true;
-		$form->row = base_url('/author/row');
-		$form->row_view = base_url('/author/view');
-		$form->row_edit = base_url('/author/edit');
+		$form->row = base_url('index.php/author/row');
+		$form->row_view = base_url('index.php/author/view');
+		$form->row_edit = base_url('index.php/author/edit');
 		$form->edit = True;
 		$form = $this -> authors -> row($form);
 		
@@ -73,17 +73,24 @@ class author extends CI_Controller {
 			$data = $this -> authors -> le($id);
 			$data['acao_editar'] = '';
 			$this -> load -> view("brapci/author_resume", $data);
-
-			/* Form */
+			
+			/* Formulario */
 			$form = new form;
 			$form -> id = $id;
+			$form -> tabela = $this -> tabela;;
+			$form -> row = base_url('index.php/author/edit/'.$id.'/'.checkpost_link($id));
 			$form -> cp = $this -> authors -> cp();
-			$form -> tabela = $this -> tabela;
-
+	
 			/* form */
-			$tela['tela'] = form_edit($form);
-			$tela['title'] = 'Bibliotecas';
-			$this -> load -> view('form/form', $tela);
+			$data['content'] = $form -> editar($form -> cp, $form -> tabela);
+			$data['title'] = msg('Authors');
+			$this -> load -> view('content', $data);			
+	
+			if ($form -> saved > 0) {
+				$url = base_url('index.php/author/row');
+				redirect($url);
+			}			
+
 		}
 
 	}

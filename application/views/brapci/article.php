@@ -37,7 +37,7 @@ echo '<div id="asb2">' . $ar_resumo_2 . '</div>';
 echo '<div id="key2">' . $ar_keyw_2 . '</div>';
 echo '</div>';
 
-echo $metodologia;
+//echo $metodologia;
 
 echo '</div>';
 

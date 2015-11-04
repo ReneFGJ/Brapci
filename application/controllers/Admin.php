@@ -1,49 +1,60 @@
 <?php
 
-class admin extends CI_controller {
+class admin extends CI_Controller {
 	var $tabela_journals = 'brapci_journal';
 	var $tabela_editions = 'brapci_edition';
 	function __construct() {
 		global $db_public;
 
 		parent::__construct();
+		$this -> lang -> load("app", "portuguese");
 		$this -> load -> library('form_validation');
 		$this -> load -> database();
 		$this -> load -> helper('form');
 		$this -> load -> helper('form_sisdoc');
 		$this -> load -> helper('url');
 		$this -> load -> helper('xml');
-		/* $this -> lang -> load("app", "portuguese"); */
 		$this -> load -> library('session');
 		$db_public = 'brapci_publico.';
 	}
 
-	function index() {
+	function security() {
+		$user = $this -> session -> userdata('user');
+		$email = $this -> session -> userdata('email');
+		$nivel = $this -> session -> userdata('nivel');
+		if (round($nivel) < 1) {
+			redirect(base_url('index.php/social/login'));
+		}
+	}
+
+	function cab() {
+		$data = array();
 		$data['title'] = 'Brapci : Admin';
 		$data['title_page'] = 'ADMIN';
 		$this -> load -> view("header/cab_admin", $data);
-		$this -> load -> view("admin/menu", $data);
+		$this -> security();
+	}
+
+	function index() {
+		$this -> cab();
 	}
 
 	function journal($id = 0) {
-		$data['title'] = 'Brapci : Admin';
-		$data['title_page'] = 'ADMIN';
-		$this -> load -> view("header/cab_admin", $data);
-
+		$this -> cab();
 		$this -> load -> model('journals');
 
 		$form = new form;
 		$form -> tabela = $this -> tabela_journals;
+		$form = $this -> journals -> row($form);
+		$form -> novo = true;
 		$form -> see = true;
 		$form -> edit = true;
-		$form = $this -> journals -> row($form);
 		$form -> row_edit = base_url('index.php/admin/journal_edit/');
 		$form -> row_view = base_url('index.php/admin/journal_view/');
 		$form -> row = base_url('index.php/admin/journal/');
 
 		$tela['tela'] = row($form, $id);
-		$url = base_url('index.php/author');
-		$tela['tela'] .= form_botton_new($url, 'Novo registro');
+		$url = base_url('index.php/admin/journal');
 
 		$tela['title'] = 'Documentos';
 
@@ -56,9 +67,7 @@ class admin extends CI_controller {
 		form_sisdoc_getpost();
 		$this -> load -> model('editions');
 
-		$data['title'] = 'Brapci : Admin';
-		$data['title_page'] = 'ADMIN';
-		$this -> load -> view("header/cab_admin", $data);
+		$this -> cab();
 
 		/* Formulario */
 		$form = new form;
@@ -66,25 +75,42 @@ class admin extends CI_controller {
 		$form -> tabela = 'brapci_edition';
 		$form -> row = base_url('index.php/admin/issue_view');
 		$cp = $this -> editions -> cp();
-		
+
 		/* form */
-		$data['tela'] = $form->editar($cp,$form->tabela);
+		$data['tela'] = $form -> editar($cp, $form -> tabela);
 		$data['title'] = 'Journals';
 		$form -> cp = $this -> editions -> updatex();
-		
-		if ($form->saved > 0)
-			{
-				redirect(base_url('index.php/admin/journal_view/'.$jid));
+
+		if ($form -> saved > 0) {
+			if ($id > 0) {
+				$url = base_url('index.php/admin/issue_view/' . $id . '/' . checkpost_link($id));
+			} else {
+				$url = base_url('index.php/admin/journal_view/' . $jid.'/'.checkpost_link($id));
 			}
+			redirect($url);
+		}
 
 		$this -> load -> view('form/form', $data);
+	}
+
+	function scielo_harvesting($id = 0, $chk = '') {
+		$this -> load -> model('articles');
+
+		$this -> cab();
+		$data = $this -> articles -> le($id);
+
+		$doi = trim($data['ar_doi']);
+		$doi = troca($doi, '10.1590/', '');
+		$scielo = 'http://www.scielo.br/scieloOrg/php/articleXML.php?pid=' . $doi;
+		$scielo = 'http://www.scielo.br/scielo.php?script=sci_arttext&pid=S' . $doi . '&lng=en&nrm=iso&tlng=pt';
+		echo $scielo;
 	}
 
 	function article_view($id, $check, $status = '') {
 		global $dd, $acao;
 		form_sisdoc_getpost();
-		
-		$this->load->model("metodologia");
+
+		$this -> load -> model("metodologia");
 
 		if (($id < 1) or ($check != checkpost_link($id))) {
 			redirect(base_url('index.php/admin/journal'));
@@ -130,8 +156,8 @@ class admin extends CI_controller {
 
 		/* Save data */
 		switch($dd[8]) {
-			case 'ARCHIVE':
-				$this->archives->save_LINK($id,$data['ar_journal_id'],$dd[9]);
+			case 'ARCHIVE' :
+				$this -> archives -> save_LINK($id, $data['ar_journal_id'], $dd[9]);
 				redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
 				break;
 			case 'ISSUE' :
@@ -158,8 +184,8 @@ class admin extends CI_controller {
 				break;
 		}
 
-		$metodologia = $this->metodologia->le($id,True);
-		$data['metodologia'] = $this->metodologia->mostra($metodologia);
+		$metodologia = $this -> metodologia -> le($id, True);
+		$data['metodologia'] = $this -> metodologia -> mostra($metodologia);
 
 		$this -> load -> view('admin/article_view', $data);
 
@@ -186,11 +212,11 @@ class admin extends CI_controller {
 						'A','ARTIC','$ano')
 			 ";
 			$rlt = $this -> db -> query($sql);
-			
-			$this->load->model('articles');
+
+			$this -> load -> model('articles');
 			$this -> articles -> updatex();
-			
-			redirect(base_url('index.php/admin/issue_view/'.$issue.'/'.checkpost_link($issue)));
+
+			redirect(base_url('index.php/admin/issue_view/' . $issue . '/' . checkpost_link($issue)));
 		}
 	}
 
@@ -230,12 +256,12 @@ class admin extends CI_controller {
 		$tela .= '<TD width="10%">';
 		$tela .= $tela_issue;
 		$tela .= '<TD width="90%">';
-		
-		$href = '<A HREF="'.base_url('index.php/admin/issue_edit/'.$id.'/'.$jid).'">';
-		$tela .= ' '.$href.'EDIT</a> ';
+
+		$href = '<A HREF="' . base_url('index.php/admin/issue_edit/' . $id . '/' . $jid) . '">';
+		$tela .= ' ' . $href . 'EDIT</a> ';
 		$tela .= ' | ';
-		$href = '<A HREF="'.base_url('index.php/admin/issue_edit/0/'.$jid).'">';
-		$tela .= ' '.$href.' NEW</a> ';
+		$href = '<A HREF="' . base_url('index.php/admin/issue_edit/0/' . $jid) . '">';
+		$tela .= ' ' . $href . ' NEW</a> ';
 		$tela .= $tela_articles;
 		/* Botao novo */
 		$tela .= '<input type="button" style="margin: 20px;" onclick="article_new();" value="NOVO TRABALHO" class="botao3d back_blue back_blue_shadown">';
@@ -274,7 +300,9 @@ class admin extends CI_controller {
 		$this -> load -> model('editions');
 		$this -> editions -> row = base_url('index.php/admin/issue_view/');
 
-		$data['tela'] = $this -> editions -> editions_row($id);
+		$link_new = '<a href="' . base_url('index.php/admin/issue_edit/0/' . $id) . '" class="lt1 link">' . msg('issue_new') . '</a>';
+
+		$data['tela'] = $link_new . $this -> editions -> editions_row($id);
 		$data['title'] = 'Editions';
 
 		$this -> load -> view('form/form', $data);
@@ -282,18 +310,16 @@ class admin extends CI_controller {
 	}
 
 	function journal_edit($id = 0, $check) {
-		if (($id < 1) or ($check != checkpost_link($id))) {
-			redirect(base_url('index.php/admin/journal'));
-		}
 
-		$data['title'] = 'Brapci : Admin';
-		$data['title_page'] = 'ADMIN';
-		$this -> load -> view("header/cab_admin", $data);
+		$this -> cab();
 
 		$this -> load -> model('journals');
-		$data = $this -> journals -> le($id);
-
-		$this -> load -> view('brapci/journal', $data);
+		if ($id > 0) {
+			$data = $this -> journals -> le($id);
+			$this -> load -> view('brapci/journal', $data);
+		} else {
+			$data = array();
+		}
 
 		/* Formulario */
 		$form = new form;
@@ -303,20 +329,20 @@ class admin extends CI_controller {
 		$form -> tabela = $this -> tabela_journals;
 
 		/* form */
-		$data['tela'] = $form->editar($cp,$form->tabela);
+		$data['tela'] = $form -> editar($cp, $form -> tabela);
 		$data['title'] = 'Journals';
-		
-		if ($form->saved > 0)
-			{
-				redirect(base_url('index.php/admin/journal'));
-			}
+
+		if ($form -> saved > 0) {
+			$this -> journals -> updatex();
+			redirect(base_url('index.php/admin/journal'));
+		}
 
 		$this -> load -> view('form/form', $data);
 
 	}
 
-	function export($id = 0) {
-		$exp = 50;
+	function export($id = '') {
+		$exp = 150;
 		$data['title'] = 'Brapci : Admin';
 		$data['title_page'] = 'ADMIN - EXPORTAÇÃO';
 		$this -> load -> view("header/cab_admin", $data);
@@ -324,8 +350,9 @@ class admin extends CI_controller {
 
 		/* Gerar arquivo */
 		if ($id == 'file') {
-			$this -> export -> exporta_texto();
-			$data['tela'] = '<center><h1><font color="green">Finalizado com sucesso!</font></h1></center>';
+			echo '==>' . $id;
+			//$this -> export -> exporta_texto();
+			$data['tela'] = '<center><h1><font color="green">Finalizado com sucesso (text)!</font></h1></center>';
 			$this -> load -> view('form/form', $data);
 			return (0);
 		}
@@ -346,12 +373,43 @@ class admin extends CI_controller {
 			$data['tela'] .= '<BR>Exportando ' . $total . ' registros, já foram enviados ' . round($id) . ' registros';
 			$this -> load -> view('form/form', $data);
 
-			$url = base_url() . 'admin/export/' . ($id + $exp);
+			$url = base_url('index.php/admin/export/' . ($id + $exp));
 			echo ' <meta http-equiv="refresh" content="3;' . $url . '">';
 		} else {
-			$url = base_url() . 'admin/export/file';
+			$url = base_url('index.php/admin/export/file');
 			echo ' <meta http-equiv="refresh" content="3;' . $url . '">';
 		}
+	}
+
+	function doi_find_abstract($id = '') {
+		/* Model */
+		$this -> load -> model("doi");
+		$this -> cab();
+		$data = array();
+		$data['content'] = $this -> doi -> find_doi_in_abstract($id);
+		$this -> load -> view('content', $data);
+	}
+	
+	function author_use($id = '') {
+		/* Model */
+		$this -> load -> model("authors");
+		$this -> cab();
+		$data = array();
+		$data['content'] = $this->authors->check_remissive();
+		$this -> load -> view('content', $data);
+
+	}	
+
+	function tools() {
+		$this -> cab();
+		$menu = array();
+		array_push($menu, array(msg('Autoindex'), msg('find DOI in Abstract'), 'ITE', '/admin/doi_find_abstract'));
+		array_push($menu, array(msg('Public Module'), msg('Export to public module'), 'ITE', '/admin/export'));
+		array_push($menu, array(msg('Autoridade'), msg('Check remissive in use'), 'ITE', '/admin/author_use'));
+		$data = array();
+		$data['menu'] = $menu;
+		$data['title_menu'] = msg('tools');
+		$this -> load -> view('header/main_menu', $data);
 	}
 
 }

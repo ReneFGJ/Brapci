@@ -15,11 +15,17 @@ echo '<div id="bdoi">BDOI: ' . $ar_bdoi . '<BR>DOI: ' . $ar_doi . '</div>
 <div style="float: clean; width: 100%;">&nbsp;</div>
 <div style="float: clean;">&nbsp;</div>
 <HR>
-<div id="section" class="lt4">' . $se_descricao . '</div>
+<div id="section" class="lt4">' . $se_descricao . '</div>';
 
-<div id="issue_id" style="display: none;">';
+/* Formulário */
+if ($jnl_scielo==1)
+	{
+		$link = '<a href="'.base_url('index.php/admin/scielo_harvesting/'.$id_ar.'/'.checkpost_link($id_ar)).'" class="link" title="Scielo Harvesting">';
+		echo $link;
+		echo '<img src="'.base_url('img/logo/logo_scielo.png').'" height="32" border=0></a>';
+	}
+echo '<div id="issue_id" style="display: none;">';
 /* FORMULARIO */
-
 $sql = "select * from brapci_edition where ed_journal_id = '" . $jnl_codigo . "' order by ed_ano desc, ed_vol desc, ed_nr";
 $rlt = db_query($sql);
 $dt = array();
@@ -290,7 +296,7 @@ echo '<BR>';
 echo $archives;
 echo $this->archives->new_file($id_ar);
 
-echo $metodologia;
+//echo $metodologia;
 
 echo '<BR>';
 echo '<div id="cited">[Cited by ' . $at_citacoes . ']</div>';

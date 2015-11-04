@@ -1,6 +1,10 @@
 <?php
 class cited extends CI_Model
 	{
+		function inport_cited_text($s)
+			{
+				
+			}
 		function show_cited($id = 0)
 		{
 			$id = strzero($id,10);

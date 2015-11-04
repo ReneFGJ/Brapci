@@ -124,6 +124,19 @@ class home extends CI_Controller {
 		/* Mostra rodape */
 		$this -> load -> view("header/foot");
 	}
+	
+	function selection_xls($id) {
+		/* Model */
+		$this -> load -> model('Search');
+		$session = $this -> Search -> session();
+		
+		$data['tela'] = $this -> Search -> session_set($id);
+				
+		$data = array();
+		$data['content'] = $this -> Search -> result_search_selected_xls($session);
+		$data['filename'] = 'xls_selection_'.date("YmdHis").'.xls';
+		$this -> load -> view("content_xls", $data);
+	}	
 
 }
 ?>
