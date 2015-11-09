@@ -93,6 +93,10 @@ class journal extends CI_Controller {
 		/* */
 		$this->load->model('editions');		
 		$data['edicoes'] = $this->editions->editions($journal); 
+			if (!isset($data['issue_view']))
+				{
+					$data['issue_view'] = '';
+				}
 		
 		/* VIEW */
 		$this -> load -> view("brapci/journal_editions",$data);

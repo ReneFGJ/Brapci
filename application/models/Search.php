@@ -1233,7 +1233,7 @@ class search extends CI_model {
 		$rlt = db_query($sql);
 	}
 
-	function busca_form() {
+	function busca_form($data=array()) {
 		global $dd, $SESSION;
 
 		$SESSION = array();
@@ -1243,6 +1243,14 @@ class search extends CI_model {
 			$SESSION['srcid' . $r] = '1';
 		}
 
+		if (isset($data['anoi']))
+			{
+				$data1 = $data['anoi'];
+				$data2 = $data['anof'];
+			} else {
+				$data1 = 1970;
+				$data2 = (date("Y")+1);
+			}
 		$sx = '';
 		/* registra consulta */
 
@@ -1252,7 +1260,7 @@ class search extends CI_model {
 
 		$sx .= '<TR><td colspan=2 >';
 		if (strlen($dd[1]) > 0) {
-			$sr = $this -> result_search($dd);
+			$sr = $this -> result_search($dd,$data1,$data2);
 			$sx .= $this -> realce($sr, $dd[2]);
 		}
 		return ($sx);
@@ -1353,7 +1361,7 @@ class search extends CI_model {
 		return ($txt);
 	}
 
-	function result_search($post = array()) {
+	function result_search($post = array(),$data1,$data2) {
 		global $dd, $acao;
 		$sx = '';
 		$sx .= '<table border=1 class="lt1" width="100%">';
@@ -1361,7 +1369,7 @@ class search extends CI_model {
 		$sx .= '<td>';
 		$sx .= $this -> lang -> line('form_query') . '<B> ' . $dd[1] . '</B> ';
 		/* realiza busca */
-		$sx .= $this -> result_article($dd[1], $dd[20], $dd[21]);
+		$sx .= $this -> result_article($dd[1], $data1, $data2);
 
 		$sx .= '<td width="120">';
 		$sa = $this -> result_journals();

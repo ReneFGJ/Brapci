@@ -82,7 +82,7 @@ class editions extends CI_model {
 		return ( array());
 	}
 
-	function issue_view($issue = 0, $ed = 1) {
+	function issue_view($issue = 0, $ed = 1, $admin=0) {
 		$issue = strzero($issue, 7);
 		$sql = "select * from brapci_article
 						left join brapci_section on se_codigo = ar_section
@@ -108,7 +108,13 @@ class editions extends CI_model {
 				$xcor = '</S></font>';
 			}
 			if ((($sta == 'X') and ($ed == 1)) or ($sta != 'X')) {
-				$link = '<A HREF="' . base_url('index.php/admin/article_view/' . $line['id_ar']) . '/' . checkpost_link($line['id_ar']) . '" >';
+				if ($admin == 1)
+					{
+						$link = '<A HREF="' . base_url('index.php/admin/article_view/' . $line['id_ar']) . '/' . checkpost_link($line['id_ar']) . '" >';
+					} else {
+						$link = '<A HREF="' . base_url('index.php/article/view/' . $line['ar_codigo']) . '/' . checkpost_link($line['ar_codigo']) . '" >';
+					}
+				
 				$sec = trim($line['se_descricao']);
 				if ($sec != $xsec) {
 					$xsec = $sec;
@@ -129,19 +135,18 @@ class editions extends CI_model {
 				$sx .= '</A>';
 				$sx .= '</td>';
 
-				$sx .= '<td width="60" align="center" class="borderb1">';
+				$sx .= '<td width="60" align="center" class="borderb1"><nobr>';
 				$pag = $cor . $line['ar_pg_inicial'];
-				if ($line['ar_pg_final'] >0)
-					{
-						$pag .= ' - '.$line['ar_pg_final'];
-					}	
+				if ($line['ar_pg_final'] > 0) {
+					$pag .= ' - ' . $line['ar_pg_final'];
+				}
 				$pag .= $xcor;
-				
+
 				$sx .= $pag;
-				$sx .= '</td>';
+				$sx .= '</nobr></td>';
 
 				$sx .= '<td width="120" align="center" class="borderb1">';
-				$sta = $cor . msg('status_article_'.$line['ar_status']) . $xcor;
+				$sta = $cor . msg('status_article_' . $line['ar_status']) . $xcor;
 				$sx .= $sta;
 				$sx .= '</td>';
 
@@ -226,20 +231,20 @@ class editions extends CI_model {
 		return ($sx);
 	}
 
-	function editions($journal = '') {
+	function editions($journal = '', $tipo = 'VIEW') {
 		$journal = strzero($journal, 7);
 		$sql = "select * from " . $this -> tabela . " 
 						where ed_journal_id = '$journal'
 						order by ed_ano desc, ed_vol 
 			";
-		$sx = '<Table class="tabela00 lt2">';
+		$sx = '<Table class="tabela00 lt1">';
 		$query = $this -> db -> query($sql);
 		$rlt = $query -> result();
 
 		$xano = '';
 		$issue = 0;
 		while ($line = db_read($rlt)) {
-			$link = '<A HREF="' . base_url('index.php/journal/issue/' . $line['id_ed']) . '" class="link">';
+			$link = '<A HREF="' . base_url('index.php/journal/issue/' . $line['id_ed']) . '" class="link lt0">';
 			$issue++;
 			$ano = $line['ed_ano'];
 			if ($xano != $ano) {

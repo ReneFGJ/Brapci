@@ -39,6 +39,10 @@ if ($nivel < 5) { redirect(base_url('index.php/home')); }
 					echo '<li class="nav_menu">';
 					echo '<a href="' . base_url("index.php/author/row") . '">'.msg('autoridades').'</a>';
 					echo '</li>' . cr();
+					
+					echo '<li class="nav_menu">';
+					echo '<a href="' . base_url("index.php/vocabulario/row") . '">'.msg('vocabulario').'</a>';
+					echo '</li>' . cr();					
 
 					echo '<li class="nav_menu">';
 					echo '<a href="' . base_url("index.php/admin/oai") . '">'.msg('OAI').'</a>';

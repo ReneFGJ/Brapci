@@ -67,7 +67,6 @@ class social extends CI_Controller {
 			$line = $rlt[0];
 			$dd3 = $line['us_password'];
 			if ($dd2 == $dd3) {
-				echo "OK";
 				/* Salva session */
 				$ss_user = $line['us_nome'];
 				$ss_email = $line['us_email'];

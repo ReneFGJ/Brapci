@@ -8,11 +8,14 @@ $link = '<A HREF="' . $jnl_url . '" target=_new_' . $jnl_codigo . '">' . $link .
 ISSN: <?php echo $jnl_issn_impresso . ', eISSN: ' . $jnl_issn_eletronico; ?>
 
 <!-- Sobre os fasciculos -->
-<table width="100%">
+<table width="100%" border=1>
 <tr align="center" class="bgblue">
 <td align="center" colspan=2 ><?php echo "$nr EDIÇÕES | $na TRABALHOS | desde $desde | $anos anos"; ?></td>
 </tr>
-<tr valign="top"><td width="150">
+</table>
+
+<table width="100%" border=0>
+<tr valign="top"><td width="300">
 <div style="float: right"><?php echo $logo; ?></div>
 <?php echo $edicoes; ?>
 </td><td><?php echo $issue_view; ?>

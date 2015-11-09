@@ -48,6 +48,12 @@ class home extends CI_Controller {
 
 		$this -> load -> view("header/cab");
 		
+		/* Dados do Get */
+		$ano_ini = round(substr($this->input->get("dd3"),0,4));
+		$ano_fim = round(substr($this->input->get("dd3"),5,4));
+		if ($ano_ini < 1900) { $ano_ini = 1972; }
+		if ($ano_fim < $ano_ini) { $ano_fim = (date("Y")+1); }
+		
 		/* data */
 		$data = array();
 		$data['dd1'] = $this->input->get("dd1");
@@ -55,24 +61,14 @@ class home extends CI_Controller {
 		$data['dd3'] = $this->input->get("dd3");
 		$data['ano_min'] = 1972;
 		$data['ano_max'] = date("Y")+1;
-		$data['anoi'] = $data['ano_min'];
-		$data['anof'] = date("Y")+1;
+		$data['anoi'] = $ano_ini;
+		$data['anof'] = $ano_fim;
 		
-		/* Já existe data */
-		if (strlen($data['dd3']))
-			{
-				$sa = sonumero($data['dd3']);
-				$data['anoi'] = substr($sa,0,4);
-				$data['anof'] = substr($sa,4,4);
-						
-			}
-		
-
 		$this -> load -> view("brapci/content");
 		$this -> load -> view("brapci/search_form",$data);
 
 		/* Busca */
-		$tela = $this -> Search -> busca_form();
+		$tela = $this -> Search -> busca_form($data);
 		$data = array('tela' => $tela);
 
 		/* Mostra resultado */
@@ -90,7 +86,7 @@ class home extends CI_Controller {
 		$this -> load -> view("header/cab");
 
 		$this -> load -> view("brapci/content");
-		$this -> load -> view("brapci/search_form");
+		//$this -> load -> view("brapci/search_form");
 		
 		$data = array();
 		$data['tela'] = $this -> Search -> selections();
@@ -110,8 +106,7 @@ class home extends CI_Controller {
 		$this -> load -> view("header/cab");
 
 		$this -> load -> view("brapci/content");
-		$this -> load -> view("brapci/search_form");
-		
+		//$this -> load -> view("brapci/search_form");	
 		
 		$data['tela'] = $this -> Search -> session_set($id);
 				
@@ -120,6 +115,24 @@ class home extends CI_Controller {
 
 		/* Mostra resultado */
 		$this -> load -> view("brapci/search_result", $data);
+
+		/* Mostra rodape */
+		$this -> load -> view("header/foot");
+	}
+	
+	function cited() {
+		/* Model */
+		$this -> load -> model('Search');
+		$session = $this -> Search -> session();
+
+		$this -> load -> view("header/cab");
+
+		$this -> load -> view("brapci/content");
+		//$this -> load -> view("brapci/search_form");	
+		
+		$data['content'] = '<h1>Em construção, aguarde!</h1>';
+		/* Mostra resultado */
+		$this -> load -> view("content", $data);
 
 		/* Mostra rodape */
 		$this -> load -> view("header/foot");

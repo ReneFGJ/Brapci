@@ -85,7 +85,7 @@ class admin extends CI_Controller {
 			if ($id > 0) {
 				$url = base_url('index.php/admin/issue_view/' . $id . '/' . checkpost_link($id));
 			} else {
-				$url = base_url('index.php/admin/journal_view/' . $jid.'/'.checkpost_link($id));
+				$url = base_url('index.php/admin/journal_view/' . $jid . '/' . checkpost_link($id));
 			}
 			redirect($url);
 		}
@@ -389,23 +389,32 @@ class admin extends CI_Controller {
 		$data['content'] = $this -> doi -> find_doi_in_abstract($id);
 		$this -> load -> view('content', $data);
 	}
-	
+
 	function author_use($id = '') {
 		/* Model */
 		$this -> load -> model("authors");
 		$this -> cab();
 		$data = array();
-		$data['content'] = $this->authors->check_remissive();
+		$data['content'] = $this -> authors -> check_remissive();
 		$this -> load -> view('content', $data);
+	}
 
-	}	
+	function terms_use($id = '') {
+		/* Model */
+		$this -> load -> model("terms");
+		$this -> cab();
+		$data = array();
+		$data['content'] = $this -> terms -> check_remissive();
+		$this -> load -> view('content', $data);
+	}
 
 	function tools() {
 		$this -> cab();
 		$menu = array();
 		array_push($menu, array(msg('Autoindex'), msg('find DOI in Abstract'), 'ITE', '/admin/doi_find_abstract'));
 		array_push($menu, array(msg('Public Module'), msg('Export to public module'), 'ITE', '/admin/export'));
-		array_push($menu, array(msg('Autoridade'), msg('Check remissive in use'), 'ITE', '/admin/author_use'));
+		array_push($menu, array(msg('Autoridade'), msg('Check remissive authors n use'), 'ITE', '/admin/author_use'));
+		array_push($menu, array(msg('Autoridade'), msg('Check remissive terms in use'), 'ITE', '/admin/terms_use'));
 		$data = array();
 		$data['menu'] = $menu;
 		$data['title_menu'] = msg('tools');
