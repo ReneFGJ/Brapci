@@ -18,7 +18,7 @@ class terms extends CI_model {
 					$line = $rlt[$r];
 					$id_ak = $line['id_ak'];
 					$sql = "delete from brapci_article_keyword where id_ak = $id_ak";
-					$rrr = $this->db->query($sql);
+					//$rrr = $this->db->query($sql);
 				}
 			$sx .= 'Removed '.$id.' Itens<br>';
 			/*   */
@@ -40,7 +40,7 @@ class terms extends CI_model {
 					$line = $rlt[$r];
 					$use = $line['kw_use'];
 					$remissiva = $line['kw_use'];
-					$sql = "update brapci_article_author set ae_author = '$use' where ae_author = '$remissiva' ";
+					$sql = "update brapci_article_keyword set ae_author = '$use' where ae_author = '$remissiva' ";
 					//$rrr = $this->db->query($sql);	
 					echo $sql.'<br>';			
 					$sx .= '<tr>';

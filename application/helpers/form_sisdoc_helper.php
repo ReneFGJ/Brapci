@@ -127,7 +127,7 @@ function enviaremail($para, $assunto, $texto, $de) {
 
 		return ('ok');
 	} else {
-		return ('ProprietÃ¡rio do e-mail nÃ£o configurado (veja mensagem_own)');
+		return ('Proprietário do e-mail não configurado (veja mensagem_own)');
 	}
 }
 
@@ -169,26 +169,24 @@ function mst($txt) {
 	$txt = troca($txt, chr(13), '<br/>');
 	return ($txt);
 }
-function format_fone($tel)
-	{
-		if (strlen($tel) > 9)
-			{
-				if (strlen($tel) > 10)
-					{
-						$tel = '('.substr($tel,0,2).') '.substr($tel,2,5).'-'.substr($tel,7,4);
-					} else {
-						$tel = '('.substr($tel,0,2).') '.substr($tel,2,4).'-'.substr($tel,6,4);
-					}
-			} else {
-				if (strlen($tel) > 8)
-					{
-						$tel = substr($tel,0,5).'-'.substr($tel,5,4);
-					} else {
-						$tel = substr($tel,0,4).'-'.substr($tel,4,4);
-					}
-			}
-		return($tel);
+
+function format_fone($tel) {
+	if (strlen($tel) > 9) {
+		if (strlen($tel) > 10) {
+			$tel = '(' . substr($tel, 0, 2) . ') ' . substr($tel, 2, 5) . '-' . substr($tel, 7, 4);
+		} else {
+			$tel = '(' . substr($tel, 0, 2) . ') ' . substr($tel, 2, 4) . '-' . substr($tel, 6, 4);
+		}
+	} else {
+		if (strlen($tel) > 8) {
+			$tel = substr($tel, 0, 5) . '-' . substr($tel, 5, 4);
+		} else {
+			$tel = substr($tel, 0, 4) . '-' . substr($tel, 4, 4);
+		}
 	}
+	return ($tel);
+}
+
 function sonumero($it) {
 	$rlt = '';
 	for ($ki = 0; $ki < strlen($it); $ki++) {
@@ -208,7 +206,7 @@ function load_page($url) {
 	CURLOPT_AUTOREFERER => true, // set referer on redirect
 	CURLOPT_CONNECTTIMEOUT => 120, // timeout on connect
 	CURLOPT_TIMEOUT => 120, // timeout on response
-	CURLOPT_MAXREDIRS => 10,        // stop after 10 redirects
+	CURLOPT_MAXREDIRS => 10,         // stop after 10 redirects
 	);
 
 	$ch = curl_init($url);
@@ -255,72 +253,70 @@ function strzero($ddx, $ttz) {
 function UpperCase($d) {
 	$d = strtoupper($d);
 
-	$d = troca($d, 'Ã¡', 'Ã');
-	$d = troca($d, 'Ã ', 'Ã€');
-	$d = troca($d, 'Ã£', 'Ãƒ');
-	$d = troca($d, 'Ã¢', 'Ã‚');
-	$d = troca($d, 'Ã¤', 'Ã„');
+	$d = troca($d, 'á', 'Á');
+	$d = troca($d, 'à', 'À');
+	$d = troca($d, 'ã', 'Ã');
+	$d = troca($d, 'â', 'Â');
+	$d = troca($d, 'ä', 'Ä');
 
-	$d = troca($d, 'Ã©', 'Ã‰');
-	$d = troca($d, 'Ã¨', 'Ãˆ');
-	$d = troca($d, 'Ãª', 'ÃŠ');
-	$d = troca($d, 'Ã«', 'Ã‹');
+	$d = troca($d, 'é', 'É');
+	$d = troca($d, 'è', 'È');
+	$d = troca($d, 'ê', 'Ê');
+	$d = troca($d, 'ë', 'Ë');
 
-	$d = troca($d, 'Ã­', 'Ã');
-	$d = troca($d, 'Ã¬', 'ÃŒ');
-	$d = troca($d, 'Ã®', 'ÃŽ');
-	$d = troca($d, 'Ã¯', 'Ã');
+	$d = troca($d, 'í', 'Í');
+	$d = troca($d, 'ì', 'Ì');
+	$d = troca($d, 'î', 'Î');
+	$d = troca($d, 'ï', 'Ï');
 
-	$d = troca($d, 'Â•Ã³', 'Ã“');
-	$d = troca($d, 'Â–Ã²', 'Ã’');
-	$d = troca($d, 'Â’Ãµ', 'Ã•');
-	$d = troca($d, 'Â“Ã¶', 'Ã–');
-	$d = troca($d, 'Â”Ã´', 'Ã”');
+	$d = troca($d, '•ó', 'Ó');
+	$d = troca($d, '–ò', 'Ò');
+	$d = troca($d, '’õ', 'Õ');
+	$d = troca($d, '“ö', 'Ö');
+	$d = troca($d, '”ô', 'Ô');
 
-	$d = troca($d, 'Ãº', 'Ãš');
-	$d = troca($d, 'Ã¹Â™', 'Ã™');
-	$d = troca($d, 'Ã»', 'Ã›');
-	$d = troca($d, 'Ã¼', 'Ãœ');
+	$d = troca($d, 'ú', 'Ú');
+	$d = troca($d, 'ù™', 'Ù');
+	$d = troca($d, 'û', 'Û');
+	$d = troca($d, 'ü', 'Ü');
 
 	return $d;
 }
 
 /* Gerador de CPF */
-function mod($dividendo,$divisor)
-{
-   return round($dividendo - (floor($dividendo/$divisor)*$divisor));
+function mod($dividendo, $divisor) {
+	return round($dividendo - (floor($dividendo / $divisor) * $divisor));
 }
 
-function GerarCPF()
-{
-   $n1 = '1';
-   $n2 = '1';
-   $n3 = '1';
-   $n4 = '1';
-   $n5 = rand(0,9);
-   $n6 = rand(0,9);
-   $n7 = rand(0,9);
-   $n8 = rand(0,9);
-   $n9 = rand(0,9);
-   $d1 = $n9*2+$n8*3+$n7*4+$n6*5+$n5*6+$n4*7+$n3*8+$n2*9+$n1*10;
-   $d1 = 11 - ( mod($d1,11) );
+function GerarCPF() {
+	$n1 = '1';
+	$n2 = '1';
+	$n3 = '1';
+	$n4 = '1';
+	$n5 = rand(0, 9);
+	$n6 = rand(0, 9);
+	$n7 = rand(0, 9);
+	$n8 = rand(0, 9);
+	$n9 = rand(0, 9);
+	$d1 = $n9 * 2 + $n8 * 3 + $n7 * 4 + $n6 * 5 + $n5 * 6 + $n4 * 7 + $n3 * 8 + $n2 * 9 + $n1 * 10;
+	$d1 = 11 - ( mod($d1, 11));
 
-   if ( $d1 >= 10 )
-   { 
-      $d1 = 0 ;
-   }
+	if ($d1 >= 10) {
+		$d1 = 0;
+	}
 
-   $d2 = $d1*2+$n9*3+$n8*4+$n7*5+$n6*6+$n5*7+$n4*8+$n3*9+$n2*10+$n1*11;
-   $d2 = 11 - ( mod($d2,11) );
+	$d2 = $d1 * 2 + $n9 * 3 + $n8 * 4 + $n7 * 5 + $n6 * 6 + $n5 * 7 + $n4 * 8 + $n3 * 9 + $n2 * 10 + $n1 * 11;
+	$d2 = 11 - ( mod($d2, 11));
 
-   if ($d2>=10) { $d2 = 0 ;}
+	if ($d2 >= 10) { $d2 = 0;
+	}
 
-   return($n1.$n2.$n3.$n4.$n5.$n6.$n7.$n8.$n9.$d1.$d2);
+	return ($n1 . $n2 . $n3 . $n4 . $n5 . $n6 . $n7 . $n8 . $n9 . $d1 . $d2);
 }
 
 function validaCPF($cpf = null) {
 	/* @author http://www.geradorcpf.com/script-validar-cpf-php.htm */
-	// Verifica se um nÃºmero foi informado
+	// Verifica se um número foi informado
 	if (empty($cpf)) {
 		return false;
 	}
@@ -329,16 +325,16 @@ function validaCPF($cpf = null) {
 	$cpf = sonumero($cpf);
 	$cpf = str_pad($cpf, 11, '0', STR_PAD_LEFT);
 
-	// Verifica se o numero de digitos informados Ã© igual a 11
+	// Verifica se o numero de digitos informados é igual a 11
 	if (strlen($cpf) != 11) {
 		return false;
 	}
-	// Verifica se nenhuma das sequÃªncias invalidas abaixo
+	// Verifica se nenhuma das sequências invalidas abaixo
 	// foi digitada. Caso afirmativo, retorna falso
 	else if ($cpf == '00000000000' || $cpf == '11111111111' || $cpf == '22222222222' || $cpf == '33333333333' || $cpf == '44444444444' || $cpf == '55555555555' || $cpf == '66666666666' || $cpf == '77777777777' || $cpf == '88888888888' || $cpf == '99999999999') {
 		return false;
 		// Calcula os digitos verificadores para verificar se o
-		// CPF Ã© vÃ¡lido
+		// CPF é válido
 	} else {
 
 		for ($t = 9; $t < 11; $t++) {
@@ -487,7 +483,7 @@ function form_sisdoc_getpost() {
 	$vars = array_merge($get, $post);
 
 	if (!isset($vars['acao'])) { $acao = '';
-	} else { $acao = troca($vars['acao'], "'", 'Ã‚Â´');
+	} else { $acao = troca($vars['acao'], "'", 'Â´');
 	}
 
 	for ($k = 0; $k < 100; $k++) {
@@ -537,7 +533,7 @@ function nbr_autor($xa, $tp) {
 	/////////////////////////////
 	$xp1 = "";
 	$xp2 = "";
-	$er1 = array("JUNIOR", "JÃšÂšNIOR", "JÃšNIOR", "NETTO", "NETO", "SOBRINHO", "FILHO", "JR.");
+	$er1 = array("JUNIOR", "JÚšNIOR", "JÚNIOR", "NETTO", "NETO", "SOBRINHO", "FILHO", "JR.");
 	///////////////////////////// SEPARA NOMES
 	{
 		$xop = 0;
@@ -675,64 +671,64 @@ function load_file_local($file) {
 /* Funcao */
 function UpperCaseSQL($d) {
 	$d = strtoupper($d);
-	$d = troca($d, 'Ã‡', 'C');
-	$d = troca($d, 'Ã§', 'C');
-	$d = troca($d, 'Ã‘', 'N');
-	$d = troca($d, 'Ã±', 'N');
+	$d = troca($d, 'Ç', 'C');
+	$d = troca($d, 'ç', 'C');
+	$d = troca($d, 'Ñ', 'N');
+	$d = troca($d, 'ñ', 'N');
 
-	$d = troca($d, 'Ã', 'A');
-	$d = troca($d, 'Ã€', 'A');
-	$d = troca($d, 'Ã‚', 'A');
-	$d = troca($d, 'Ã„', 'A');
-	$d = troca($d, 'Ã‚', 'A');
+	$d = troca($d, 'Á', 'A');
+	$d = troca($d, 'À', 'A');
+	$d = troca($d, 'Â', 'A');
+	$d = troca($d, 'Ä', 'A');
+	$d = troca($d, 'Â', 'A');
 
-	$d = troca($d, 'Ã¡', 'A');
-	$d = troca($d, 'Ã ', 'A');
-	$d = troca($d, 'Ã£', 'A');
-	$d = troca($d, 'Ã¢', 'A');
-	$d = troca($d, 'Ã¤', 'A');
+	$d = troca($d, 'á', 'A');
+	$d = troca($d, 'à', 'A');
+	$d = troca($d, 'ã', 'A');
+	$d = troca($d, 'â', 'A');
+	$d = troca($d, 'ä', 'A');
 
-	$d = troca($d, 'Ã‰', 'E');
-	$d = troca($d, 'Ãˆ', 'E');
-	$d = troca($d, 'ÃŠ', 'E');
-	$d = troca($d, 'Ã‹', 'E');
+	$d = troca($d, 'É', 'E');
+	$d = troca($d, 'È', 'E');
+	$d = troca($d, 'Ê', 'E');
+	$d = troca($d, 'Ë', 'E');
 
-	$d = troca($d, 'Ã©', 'E');
-	$d = troca($d, 'Ã¨', 'E');
-	$d = troca($d, 'Ãª', 'E');
-	$d = troca($d, 'Ã«', 'E');
+	$d = troca($d, 'é', 'E');
+	$d = troca($d, 'è', 'E');
+	$d = troca($d, 'ê', 'E');
+	$d = troca($d, 'ë', 'E');
 
-	$d = troca($d, 'Ã', 'I');
-	$d = troca($d, 'ÃŒ', 'I');
-	$d = troca($d, 'ÃŽÂ‰', 'I');
-	$d = troca($d, 'Ã', 'I');
+	$d = troca($d, 'Í', 'I');
+	$d = troca($d, 'Ì', 'I');
+	$d = troca($d, 'Î‰', 'I');
+	$d = troca($d, 'Ï', 'I');
 
-	$d = troca($d, 'Ã­', 'I');
-	$d = troca($d, 'Ã¬', 'I');
-	$d = troca($d, 'Ã®', 'I');
-	$d = troca($d, 'Ã¯', 'I');
+	$d = troca($d, 'í', 'I');
+	$d = troca($d, 'ì', 'I');
+	$d = troca($d, 'î', 'I');
+	$d = troca($d, 'ï', 'I');
 
-	$d = troca($d, 'Ã“', 'O');
-	$d = troca($d, 'Ã’', 'O');
-	$d = troca($d, 'Ã•', 'O');
-	$d = troca($d, 'Ã–', 'O');
-	$d = troca($d, 'Ã”', 'O');
+	$d = troca($d, 'Ó', 'O');
+	$d = troca($d, 'Ò', 'O');
+	$d = troca($d, 'Õ', 'O');
+	$d = troca($d, 'Ö', 'O');
+	$d = troca($d, 'Ô', 'O');
 
-	$d = troca($d, 'Â•Ã³', 'O');
-	$d = troca($d, 'Â–Ã²', 'O');
-	$d = troca($d, 'Â’Ãµ', 'O');
-	$d = troca($d, 'Â“Ã¶', 'O');
-	$d = troca($d, 'Â”Ã´', 'O');
+	$d = troca($d, '•ó', 'O');
+	$d = troca($d, '–ò', 'O');
+	$d = troca($d, '’õ', 'O');
+	$d = troca($d, '“ö', 'O');
+	$d = troca($d, '”ô', 'O');
 
-	$d = troca($d, 'Ãš', 'U');
-	$d = troca($d, 'Ã™', 'U');
-	$d = troca($d, 'Ã›', 'U');
-	$d = troca($d, 'Ãœ', 'U');
+	$d = troca($d, 'Ú', 'U');
+	$d = troca($d, 'Ù', 'U');
+	$d = troca($d, 'Û', 'U');
+	$d = troca($d, 'Ü', 'U');
 
-	$d = troca($d, 'Ãº', 'U');
-	$d = troca($d, 'Ã¹Â™', 'U');
-	$d = troca($d, 'Ã»', 'U');
-	$d = troca($d, 'Ã¼', 'U');
+	$d = troca($d, 'ú', 'U');
+	$d = troca($d, 'ù™', 'U');
+	$d = troca($d, 'û', 'U');
+	$d = troca($d, 'ü', 'U');
 
 	return $d;
 }
@@ -740,35 +736,35 @@ function UpperCaseSQL($d) {
 function LowerCase($term) {
 	$d = Strtolower($term);
 
-	$d = troca($d, 'Ã‡', 'Ã§');
-	$d = troca($d, 'Ã‘', 'Ã±');
+	$d = troca($d, 'Ç', 'ç');
+	$d = troca($d, 'Ñ', 'ñ');
 
-	$d = troca($d, 'Ã', 'Ã¡');
-	$d = troca($d, 'Ã€', 'Ã ');
-	$d = troca($d, 'Ã‚', 'Ã¢');
-	$d = troca($d, 'Ã„', 'Ã¤');
-	$d = troca($d, 'Ã‚', 'Ã¢');
+	$d = troca($d, 'Á', 'á');
+	$d = troca($d, 'À', 'à');
+	$d = troca($d, 'Â', 'â');
+	$d = troca($d, 'Ä', 'ä');
+	$d = troca($d, 'Â', 'â');
 
-	$d = troca($d, 'Ã‰', 'Ã©');
-	$d = troca($d, 'Ãˆ', 'Ã¨');
-	$d = troca($d, 'ÃŠ', 'Ãª');
-	$d = troca($d, 'Ã‹', 'Ã«');
+	$d = troca($d, 'É', 'é');
+	$d = troca($d, 'È', 'è');
+	$d = troca($d, 'Ê', 'ê');
+	$d = troca($d, 'Ë', 'ë');
 
-	$d = troca($d, 'Ã', 'Ã­');
-	$d = troca($d, 'ÃŒ', 'Ã¬');
-	$d = troca($d, 'ÃŽÂ‰', 'Ã®');
-	$d = troca($d, 'Ã', 'Ã¯');
+	$d = troca($d, 'Í', 'í');
+	$d = troca($d, 'Ì', 'ì');
+	$d = troca($d, 'Î‰', 'î');
+	$d = troca($d, 'Ï', 'ï');
 
-	$d = troca($d, 'Ã“', 'Ã³');
-	$d = troca($d, 'Ã’', 'Ã²');
-	$d = troca($d, 'Ã•', 'Ãµ');
-	$d = troca($d, 'Ã–', 'Ã¶');
-	$d = troca($d, 'Ã”', 'Ã´');
+	$d = troca($d, 'Ó', 'ó');
+	$d = troca($d, 'Ò', 'ò');
+	$d = troca($d, 'Õ', 'õ');
+	$d = troca($d, 'Ö', 'ö');
+	$d = troca($d, 'Ô', 'ô');
 
-	$d = troca($d, 'Ãš', 'Ãº');
-	$d = troca($d, 'Ã™', 'Ã¹');
-	$d = troca($d, 'Ã›', 'Ã»');
-	$d = troca($d, 'Ãœ', 'Ã¼');
+	$d = troca($d, 'Ú', 'ú');
+	$d = troca($d, 'Ù', 'ù');
+	$d = troca($d, 'Û', 'û');
+	$d = troca($d, 'Ü', 'ü');
 
 	return ($d);
 }
@@ -820,7 +816,7 @@ class form {
 		if ($bt == 0) { array_push($cp, array('$B8', '', msg('submit'), False, False));
 		}
 
-		/* Monta forumÃ¡rio */
+		/* Monta forumário */
 		$ed -> cp = $cp;
 		$result = form_edit($ed);
 
@@ -883,6 +879,11 @@ class form {
 function npag($obj, $npage = 1, $tot = 10, $offset = 20) {
 	$page = uri_string();
 	$pagm = $tot;
+	
+	/* Campos para busca */
+	$fd = $obj->lb;
+	
+	
 
 	/* algoritimo */
 	$page = substr($page, 0, strpos($page, '/'));
@@ -898,15 +899,10 @@ function npag($obj, $npage = 1, $tot = 10, $offset = 20) {
 		$pagi = 1;
 	}
 
-	$sx = '
-<ul id="npag" class="npag">
-	';
+	$sx = '<ul id="npag" class="npag">';
 	if ($pagi > 1) {
 		$linka = '<A HREF="' . $link . '/' . ($pagi - 1) . '">';
-		$sx .= $linka . '
-	<li>
-		<<
-	</li></A> ';
+		$sx .= $linka . '<li><<</li></A> ';
 	}
 
 	/* PAGINACAO */
@@ -914,59 +910,61 @@ function npag($obj, $npage = 1, $tot = 10, $offset = 20) {
 	}
 	for ($r = $pagi; $r < ($pagf + 1); $r++) {
 		$linka = '<A HREF="' . $link . '/' . $r . '">';
-		$sx .= $linka . '
-	<li>
-		' . $r . '
-	</li></a>' . chr(10) . chr(13);
+		$sx .= $linka . '<li>' . $r . '</li></a>' . chr(10) . chr(13);
 	}
 	/* */
 	if ($pagf < $pagm) {
 		$linka = '<A HREF="' . $link . '/' . $r . '">';
-		$sx .= $linka . '
-	<li>
-		>>
-	</li></A>';
+		$sx .= $linka . '<li>>></li></A>';
 	}
 	/* */
-	$sx .= '
-	<li style="width: 100px; border: 0px solid #FFFFFF; background-color: #ffffff;">
-		';
+	$sx .= '<li style="width: 100px; border: 0px solid #FFFFFF; background-color: #ffffff;">';
 	$sx .= 'Page:';
 	$linka = $link . '/';
-	$sx .= '
-		<select onChange="location=\'' . $linka . '\'+this.options[this.selectedIndex].value;">
-			';
+	$sx .= '<select onChange="location=\'' . $linka . '\'+this.options[this.selectedIndex].value;">';
 	for ($r = 1; $r <= $pagm; $r++) {
 		$chk = '';
 		if ($r == $npage) { $chk = "selected";
 		}
 		$sx .= '<option value="' . $r . '" ' . $chk . '>' . $r . '</option>';
 	}
-	$sx .= '
-		</select>
-		';
-	$sx .= '
-	</li>
-	';
+	$sx .= '</select>';
+	$sx .= '</li>';
 
 	/* Busca */
-	$sx .= '
-	<li style="width: 50px; border: 0px solid #FFFFFF; background-color: #ffffff;">
-		<nobr>
-			';
+	$sx .= '<li style="width: 50px; border: 0px solid #FFFFFF; background-color: #ffffff;"><nobr>';
 	$sx .= 'Filtro:';
-	$sx .= '
-	</li>
-	';
-	$sx .= '
-	<li style="width: 220px; border: 0px solid #FFFFFF; background-color: #ffffff;">
-		<nobr>
-			';
+	$sx .= '</li>';
+	$sx .= '<li style="width: 220px; border: 0px solid #FFFFFF; background-color: #ffffff;"><nobr>';
 
-	$vlr = '';
+	if (isset($_POST['dd1']))
+		{
+			$vlr = $_POST['dd1'];
+		} else {
+			$vlr = '';
+		}
 	$sx .= form_open();
 	$data = array('name' => 'dd1', 'id' => 'dd1', 'value' => $vlr, 'maxlength' => '100', 'size' => '100', 'style' => 'width:150px', );
 	$sx .= form_input($data);
+	
+	
+		if (isset($_POST['dd5']))
+		{
+			$dd5 = sonumero($_POST['dd5']); 
+		} else {
+			$dd5 = 1;
+		}
+		
+	$sx .= 'em: <select name="dd5" id="dd5">'.cr();
+	for ($rt=1;$rt < count($fd);$rt++)
+		{
+		$sel = '';
+		if ($rt == $dd5)
+			{ $sel = "selected"; }
+		$sx .= '<option value="'.$rt.'" '.$sel.'>'.msg($fd[$rt]).'</option>'.cr();
+		}
+	$sx .= '</select>'.cr();
+	
 	$sx .= form_hidden('dd2', 'search');
 
 	$sx .= form_submit('acao', 'busca');
@@ -1018,10 +1016,16 @@ if (!function_exists('form_edit')) {
 	 */
 
 	function row($obj, $pag = 1) {
+		$field_search = 1;
 		$start = round($pag);
 		$offset = $obj -> offset;
 		$start = $pag * $offset;
 		$CI = &get_instance();
+		
+		/* Dados do objeto */
+		$fd = $obj -> fd;
+		$mk = $obj -> mk;
+		$lb = $obj -> lb;
 
 		/* POST */
 		$post = $CI -> input -> post();
@@ -1034,6 +1038,8 @@ if (!function_exists('form_edit')) {
 		}
 		if ($acao == 'limpa filtro') {
 			$CI -> session -> userdata['row_termo'] = '';
+			$CI -> session -> userdata['row_field'] = '';
+			$CI -> session -> userdata['row_page'] = '';
 		}
 		$acao = '';
 		$term = '';
@@ -1042,12 +1048,16 @@ if (!function_exists('form_edit')) {
 			}
 			if (isset($post['dd1'])) { $term = $post['dd1'];
 			}
-			$term = troca($term, "'", "Â´");
+			$term = troca($term, "'", "´");
 		}
+		if (isset($post['dd5']))
+			{
+				$field_search = round($post['dd5']);
+			}
+		if ($field_search < 1) { $field_search = 1; }
+		if ($field_search >= count($fd)) { $field_search = count($fd)-1; }
 
-		$fd = $obj -> fd;
-		$mk = $obj -> mk;
-		$lb = $obj -> lb;
+
 		/* parametros */
 		$edit = $obj -> edit;
 		$see = $obj -> see;
@@ -1066,10 +1076,7 @@ if (!function_exists('form_edit')) {
 		if ($obj -> edit == True) {
 			$sh .= '<th>action</th>';
 		}
-		$sh .= '
-	</tr>
-</thead>
-';
+		$sh .= '</tr></thead>';
 
 		/* Recupera dados */
 		$tabela = $obj -> tabela;
@@ -1078,28 +1085,43 @@ if (!function_exists('form_edit')) {
 
 		/* */
 		if (strlen($acao) == 0) {
-			if (isset($CI -> session -> userdata['row_termo'])) {
-				$term = $CI -> session -> userdata['row_termo'];
+			if (isset($_SESSION['row_termo'])) {
+				$term = $_SESSION['row_termo'];
+				$field_search = round($_SESSION['row_field']);
 			} else {
 				$term = '';
 			}
 		}
-		if (isset($post['dd9'])) {
-			if ($post['dd9'] == 'clean') {
+		if (isset($_POST['dd9'])) {
+			if ($_POST['dd9'] == 'clean') {
 				$term = '';
 				$CI -> session -> userdata['row_termo'] = '';
+				$CI -> session -> userdata['row_field'] = '';
+				$CI -> session -> userdata['row_pag'] = '';
 			}
 		}
 
 		/* Where */
 		if (strlen($term) > 0) {
-			$newdata = array('row_termo' => $term);
+			if (isset($_POST['dd5']))
+				{
+					$field_search = $_POST['dd5'];
+				} else {
+					$field_search = round($_SESSION['row_field']);
+					if ($field_search <= 1) { $field_search = 1; }
+				}
+			$newdata = array('row_termo' => $term, 'row_field' => $field_search, 'row_page'=>'1');
 			$CI -> session -> set_userdata($newdata);
 
 			$term = troca($term, ' ', ';');
 			$term = splitx(';', $term);
 
-			$wh = ' (' . $fd[1] . " like '%" . $term[0] . "%') ";
+			$wh = '';
+			for ($rt=0;$rt < count($term);$rt++)
+				{
+					if (strlen($wh) > 0) { $wh .= ' and '; }
+					$wh .= ' (' . $fd[$field_search] . " like '%" . $term[$rt] . "%') ";
+				}
 			$wh = ' where ' . $wh;
 		} else {
 			$wh = '';
@@ -1173,25 +1195,15 @@ if (!function_exists('form_edit')) {
 				$idr = trim($row[$fd[0]]);
 				$data .= chr(15) . '<td ' . $mskm . '><A HREF="' . $obj -> row_edit . '/' . $idr . '/' . checkpost_link($idr) . '"><img src="' . base_url('/img/icon/icone_editar.png') . '" border=0 height="16"></td>';
 			}
-			$data .= '
-</tr>
-' . chr(13) . chr(10);
+			$data .= '</tr>' . chr(13) . chr(10);
 		}
 
 		/* Tela completa */
-		$tela = '
-<table width="100%" id="row">
-	';
+		$tela = '<table width="100%" id="row">';
 		$tela .= $sh;
 		$tela .= $data;
-		$tela .= '
-	<tr>
-		<th colspan=10 align="left">Total ' . $total . ' de registros' . '</th>
-	</tr>
-	';
-		$tela .= '
-</table>
-';
+		$tela .= '<tr><th colspan=10 align="left">Total ' . $total . ' de registros' . '</th></tr>';
+		$tela .= '</table>';
 
 		$total_page = (int)($total / $offset) + 1;
 
@@ -1568,7 +1580,7 @@ if (!function_exists('form_edit')) {
 				$n1 = substr($ntype, 0, strpos($ntype, '-'));
 				$n2 = sonumero(substr($ntype, strpos($ntype, '-'), strlen($ntype)));
 				$n3 = substr($ntype, strlen($ntype) - 1, 1);
-				$options = array('' => '::select an option::');
+				$options = array('' => msg('::select an option::'));
 
 				if ($n3 != 'D') {
 					/* Crescente */
@@ -1661,8 +1673,7 @@ if (!function_exists('form_edit')) {
 				$dados = array('name' => $dn, 'id' => $dn, 'value' => '1', 'class' => 'onoffswitch-checkbox');
 				if ($readonly == false) { $dados['readonly'] = 'readonly';
 				}
-				$tela .= '<td align="right">' . form_checkbox($dados, 'accept', $vlr);
-				;
+				$tela .= '<td align="right">' . form_checkbox($dados, 'accept', $vlr); ;
 
 				/* label */
 				if (strlen($label) > 0) {
@@ -1688,7 +1699,7 @@ if (!function_exists('form_edit')) {
 
 			/* Select Box - Mes */
 			case 'MES' :
-				$options = array('' => '::select an option::');
+				$options = array('' => msg('::select an option::'));
 
 				/* recupera dados */
 				for ($r = (date("Y") + 4); $r > 1990; $r--) {
@@ -1728,7 +1739,7 @@ if (!function_exists('form_edit')) {
 				$ntype = troca($ntype, '&', ';') . ';';
 				$param = splitx(';', $ntype);
 
-				$options = array('' => '::select an option::');
+				$options = array('' => msg('::select an option::'));
 				for ($r = 0; $r < count($param); $r++) {
 					if (count(trim($param[$r])) > 0) {
 						$nterm = splitx(':', $param[$r] . ':');
@@ -1758,7 +1769,7 @@ if (!function_exists('form_edit')) {
 				$ntype = trim(substr($type, 2, strlen($type)));
 				$ntype = troca($ntype, ':', ';') . ';';
 				$param = splitx(';', $ntype);
-				$options = array('' => '::select an option::');
+				$options = array('' => msg('::select an option::'));
 
 				/* recupera dados */
 				$sql = "select * from (" . $param[2] . ") as tabela order by " . $param[1];
@@ -1793,7 +1804,7 @@ if (!function_exists('form_edit')) {
 				$ntype = troca($ntype, '&', ';') . ';';
 				$param = splitx(';', $ntype);
 				$form = '<table width="100%" border=0>';
-							
+
 				for ($r = 0; $r < count($param); $r++) {
 					if (count(trim($param[$r])) > 0) {
 						$nterm = splitx(':', $param[$r] . ':');
@@ -1801,15 +1812,16 @@ if (!function_exists('form_edit')) {
 						$valor = $nterm[1];
 						$options[$key] = $valor;
 						$checked = false;
-						if ($key == $vlr) { $checked = true; }
-						$dados = array('name' => $dn, 'id' => $dn, 'value'=>$key, 'class' => 'form_select', 'checked' => $checked);
-						$form .= '<tr valign="top"><td>'.form_radio($dados).'</td>';
-						$form .= '<td class="form_radio">'.$valor.'</td>';
+						if ($key == $vlr) { $checked = true;
+						}
+						$dados = array('name' => $dn, 'id' => $dn, 'value' => $key, 'class' => 'form_select', 'checked' => $checked);
+						$form .= '<tr valign="top"><td>' . form_radio($dados) . '</td>';
+						$form .= '<td class="form_radio">' . $valor . '</td>';
 						$form .= '</tr>';
 					}
 				}
 				$form .= '</table>';
-				
+
 				/* recupera dados */
 				$tela .= $tr;
 

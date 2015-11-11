@@ -607,13 +607,13 @@ class oai_pmh extends CI_model {
 		$sx .= '<TD>total</td>';
 		$sx .= '<TR align="center" class="lt4">';
 		$sx .= '<TD width="15%">';
-		$sx .= $t[0];
+		$sx .= number_format($t[0],0,',','.');
 		$sx .= '<TD width="15%">';
-		$sx .= $t[2];
+		$sx .= number_format($t[2],0,',','.');
 		$sx .= '<TD width="15%">';
-		$sx .= ($t[1] + $t[3]);
+		$sx .= number_format(($t[1] + $t[3]),0,',','.');
 		$sx .= '<TD width="15%">';
-		$sx .= ($t[0] + $t[1] + $t[2] + $t[3]);
+		$sx .= number_format(($t[0] + $t[1] + $t[2] + $t[3]),0,',','.');
 		$sx .= '</table>';
 		return ($sx);
 	}

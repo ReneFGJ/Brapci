@@ -1,6 +1,66 @@
 <?php
 class keywords extends CI_model
 	{
+	function cp()
+		{
+			$cp = array();
+			array_push($cp,array('$H8','id_kw','',False,True));
+			array_push($cp,array('$S100','kw_word',msg('termo'),True,True));
+			array_push($cp,array('$S8','kw_codigo',msg('codigo'),False,False));
+			array_push($cp,array('$S8','kw_use',msg('remissiva'),True,True));
+			$sql = "ido_codigo:ido_descricao:select * from ajax_idioma";
+			array_push($cp,array('$Q '.$sql,'kw_idioma',msg('idioma'),True,True));
+			$sql = "kwt_codigo:kwt_descricao:select * from ajax_keyword_tipo";
+			array_push($cp,array('$Q '.$sql,'kw_tipo',msg('tipo'),True,True));
+			array_push($cp,array('$O 0:NÃO&1:SIM','kw_hidden',msg('oculto'),False,True));	
+			return($cp);		
+		}
+	function check_keywords_language()
+		{
+			$sql = "select count(*) as total, kw_idioma from brapci_keyword where 
+							kw_idioma <> 'es' and
+							 kw_idioma <> 'en' and 
+							 kw_idioma <> 'pt_BR' and 
+							 kw_idioma <> 'fr' 
+					group by kw_idioma";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			$total = 0;
+			$sx = '';
+			for ($r=0;$r < count($rlt);$r++)
+				{
+				$line = $rlt[$r];
+				$total = $total + $line['total'];
+				$sx .= 'Idioma: '.$line['kw_idioma'].' não localizado<br>';
+				}
+			$sx .= 'Total de '.$total.' idiomas para serem ajustados ajustados ';
+			
+			/* Vazio */
+			$sql = "update brapci_keyword set kw_idioma = 'pt_BR' where kw_idioma = '' ";
+			$rlt = $this->db->query($sql);
+			
+			/* es-ES */
+			$sql = "update brapci_keyword set kw_idioma = 'es' where kw_idioma = 'es-ES' ";
+			$rlt = $this->db->query($sql);
+			
+			/* pt-BR */
+			$sql = "update brapci_keyword set kw_idioma = 'pt_BR' where kw_idioma = 'pt-BR' ";
+			$rlt = $this->db->query($sql);
+
+			/* us */
+			$sql = "update brapci_keyword set kw_idioma = 'en' where kw_idioma = 'us' ";
+			$rlt = $this->db->query($sql);
+			
+			/* fr-CA */
+			$sql = "update brapci_keyword set kw_idioma = 'fr' where kw_idioma = 'fr-CA' ";
+			$rlt = $this->db->query($sql);
+			
+			/* o */
+			$sql = "update brapci_keyword set kw_idioma = 'pt_BR' where kw_idioma = 'o' ";
+			$rlt = $this->db->query($sql);						
+						
+			return($sx);
+		}
 	function save_KEYWORDS($id,$keys,$idioma)
 		{
 			$id = strzero($id,10);

@@ -211,7 +211,6 @@ class oai extends CI_controller {
 		$data['title'] = 'Brapci : OAI-PMH';
 		$data['title_page'] = 'ADMIN - OAI';
 		$this -> load -> view("header/cab_admin", $data);
-		$this -> load -> view("admin/menu", $data);
 		$this -> security();
 	}
 

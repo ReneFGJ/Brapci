@@ -36,7 +36,19 @@ class admin extends CI_Controller {
 	}
 
 	function index() {
+		$this->load->model('articles');
+		$this->load->model('oai_pmh');
+				
 		$this -> cab();
+		$tela = $this->articles->resumo();
+		$data['content'] = $tela;
+		$this->load->view('content',$data);
+		
+		$tela = $this->oai_pmh->oai_resumo();
+		$data['content'] = $tela;
+		$this->load->view('content',$data);
+		
+		
 	}
 
 	function journal($id = 0) {
@@ -249,7 +261,7 @@ class admin extends CI_Controller {
 		$this -> editions -> row = base_url('index.php/admin/issue_view/');
 		$tela_issue = $this -> editions -> editions_row($jid, $id);
 
-		$tela_articles = $this -> editions -> issue_view($id);
+		$tela_articles = $this -> editions -> issue_view($id,1,1);
 
 		$tela = '<table width="100%" border=1 class="tabela00">';
 		$tela .= '<TR valign="top">';
@@ -408,6 +420,15 @@ class admin extends CI_Controller {
 		$this -> load -> view('content', $data);
 	}
 
+	function terms_language($id = '') {
+		/* Model */
+		$this -> load -> model("keywords");
+		$this -> cab();
+		$data = array();
+		$data['content'] = $this -> keywords -> check_keywords_language();
+		$this -> load -> view('content', $data);
+	}
+
 	function tools() {
 		$this -> cab();
 		$menu = array();
@@ -415,6 +436,8 @@ class admin extends CI_Controller {
 		array_push($menu, array(msg('Public Module'), msg('Export to public module'), 'ITE', '/admin/export'));
 		array_push($menu, array(msg('Autoridade'), msg('Check remissive authors n use'), 'ITE', '/admin/author_use'));
 		array_push($menu, array(msg('Autoridade'), msg('Check remissive terms in use'), 'ITE', '/admin/terms_use'));
+		array_push($menu, array(msg('Autoridade'), msg('Check language of terms'), 'ITE', '/admin/terms_language'));
+		array_push($menu, array(msg('OAI'), msg('Harvesting all publications'), 'ITE', '/oai/harvest'));
 		$data = array();
 		$data['menu'] = $menu;
 		$data['title_menu'] = msg('tools');

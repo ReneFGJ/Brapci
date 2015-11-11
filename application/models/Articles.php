@@ -1,6 +1,54 @@
 <?php
 class articles extends CI_model {
 	
+	function resumo()
+		{
+			$sql = "SELECT count(*) as total, ar_status FROM `brapci_article` group by ar_status";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			$sx = '';
+			$rs = array(0,0,0,0,0,0,0,0,0);
+			for ($r=0;$r < count($rlt);$r++)
+				{
+					$line = $rlt[$r];
+					$tp = $line['ar_status'];
+					$total = $line['total'];
+					switch ($tp)
+						{
+						case 'A':
+							$rs[0] = $rs[0] + $total;
+							break;
+						case 'B':
+							$rs[1] = $rs[1] + $total;
+							break;
+						case 'C':
+							$rs[2] = $rs[2] + $total;
+							break;
+						case 'D':
+							$rs[3] = $rs[3] + $total;
+							break;
+						case 'F':
+							$rs[3] = $rs[3] + $total;
+							break;
+						case 'X':
+							$rs[5] = $rs[5] + $total;
+							break;
+						default:
+							$rs[0] = $rs[0] + $total;
+							break;							
+						}
+				}
+			$sx .= '<table width="400">
+					<tr><th>situação</th><th>quant.</th></tr>
+					<tr><td>Em indexação</td><td align="right">'.number_format($rs[0],0,',','.').'</td></tr>
+					<tr><td>Em 1º Revisão</td><td align="right">'.number_format($rs[1],0,',','.').'</td></tr>
+					<tr><td>Em 2º Revisão</td><td align="right">'.number_format($rs[2],0,',','.').'</td></tr>
+					<tr><td>Indexados</td><td align="right">'.number_format($rs[3],0,',','.').'</td></tr>
+					<tr><th>Total</th><td align="right"><b>'.number_format(($rs[0]+$rs[1]+$rs[2]+$rs[3]+$rs[4]),0,',','.').'</b></td></tr>
+					</table>';
+			return($sx);
+		}
+	
 	function insert_suporte($codigo,$link,$jid)
 		{
 			$sql = "select * from brapci_article_suporte where bs_adress = '$link' ";
@@ -117,6 +165,13 @@ class articles extends CI_model {
 		/* title 1 */
 		$p1 = trim($p1);
 		$p2 = trim($p2);
+		
+		/* Regras */
+		if ((strpos($p1,'-') > 0) and (strlen($p2) == 0))
+			{
+				$p2 = trim(substr($p1,strpos($p1,'-')+1,10));
+				$p1 = trim(substr($p1,0,strpos($p1,'-')));
+			}
 
 		$sql = "update brapci_article set
 					ar_pg_inicial = '$p1',

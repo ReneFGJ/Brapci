@@ -4,6 +4,8 @@
  */
 
 class vocabulario extends CI_Controller {
+	
+	var $tabela = "brapci_keyword";
 
 	function __construct() {
 		date_default_timezone_set('GMT');
@@ -59,31 +61,28 @@ class vocabulario extends CI_Controller {
 	}
 
 	function edit($id = 0) {
-		$data['title'] = 'Brapci : Admin - Authors';
-		$data['title_page'] = 'ADMIN - Author';
+		$data['title'] = 'Brapci : Admin - Vocabulário';
+		$data['title_page'] = 'ADMIN - Keywords';
 		$this -> load -> view("header/cab_admin", $data);
 
 		if ($id > 0) {
 
-			$this -> load -> model('authors');
-			$data = $this -> authors -> le($id);
-			$data['acao_editar'] = '';
-			$this -> load -> view("brapci/author_resume", $data);
+			$this -> load -> model('keywords');
 			
 			/* Formulario */
 			$form = new form;
 			$form -> id = $id;
 			$form -> tabela = $this -> tabela;;
-			$form -> row = base_url('index.php/author/edit/'.$id.'/'.checkpost_link($id));
-			$form -> cp = $this -> authors -> cp();
+			$form -> row = base_url('index.php/vocabulario/edit/'.$id.'/'.checkpost_link($id));
+			$form -> cp = $this -> keywords -> cp();
 	
 			/* form */
 			$data['content'] = $form -> editar($form -> cp, $form -> tabela);
-			$data['title'] = msg('Authors');
+			$data['title'] = msg('keywords');
 			$this -> load -> view('content', $data);			
 	
 			if ($form -> saved > 0) {
-				$url = base_url('index.php/author/row');
+				$url = base_url('index.php/vocabulario/row');
 				redirect($url);
 			}			
 

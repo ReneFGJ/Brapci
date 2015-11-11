@@ -45,7 +45,7 @@ if ($nivel < 5) { redirect(base_url('index.php/home')); }
 					echo '</li>' . cr();					
 
 					echo '<li class="nav_menu">';
-					echo '<a href="' . base_url("index.php/admin/oai") . '">'.msg('OAI').'</a>';
+					echo '<a href="' . base_url("index.php/oai") . '">'.msg('OAI').'</a>';
 					echo '</li>' . cr();		
 
 					echo '<li class="nav_menu">';
