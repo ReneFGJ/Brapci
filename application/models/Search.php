@@ -177,6 +177,11 @@ class search extends CI_model {
 		return ($sa);
 	}
 
+	/* TRATAMENTO DAS PALAVRAS DE BUSCA
+	 * 
+	 * 
+	 * 
+	 */
 	function where($term = '', $field = '') {
 		global $dd;
 		$term = $this -> trata_termo_composto($term);

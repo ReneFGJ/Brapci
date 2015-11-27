@@ -45,6 +45,19 @@ class authors extends CI_model {
 		/* Recupera nomes */
 		for ($r = 0; $r < count($aut_asc); $r++) {
 			$autor = $aut_asc[$r];
+			$code = trim(mb_detect_encoding($autor));
+			if (1==2)
+			{
+			if (($code == 'UTF-8') or ($code == ''))
+				{
+					$autor = utf8_decode($autor);
+					$code = trim(mb_detect_encoding($autor));
+					if (($code == 'UTF-8') or ($code == ''))
+						{
+							$autor = utf8_decode($autor);
+						}
+				}
+			}
 			$sql = "select * from brapci_autor where autor_nome = '$autor'";
 			$rrr = $this -> db -> query($sql);
 			$rrr = $rrr -> result_array();
