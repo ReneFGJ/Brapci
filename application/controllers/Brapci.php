@@ -30,6 +30,10 @@ class brapci extends CI_Controller {
 		$data['journals_list'] = $this->journals->show_publish();
 		$this->load->view('brapci/brapci_sobre_pt',$data);
 		
+		$this->load->view('about/versao',$data);
+		$this->load->view('about/versao_v0_15_48',$data);
+		
+		
 		/* Mostra rodape */
 		$this -> load -> view("header/foot");
 	}

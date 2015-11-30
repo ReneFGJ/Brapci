@@ -49,16 +49,16 @@ class home extends CI_Controller {
 		$this -> load -> view("header/cab");
 		
 		/* Dados do Get */
-		$ano_ini = round(substr($this->input->get("dd3"),0,4));
-		$ano_fim = round(substr($this->input->get("dd3"),5,4));
+		$ano_ini = round(substr(get("dd3"),0,4));
+		$ano_fim = round(substr(get("dd3"),5,4));
 		if ($ano_ini < 1900) { $ano_ini = 1972; }
 		if ($ano_fim < $ano_ini) { $ano_fim = (date("Y")+1); }
 		
 		/* data */
 		$data = array();
-		$data['dd1'] = $this->input->get("dd1");
-		$data['dd2'] = $this->input->get("dd2");
-		$data['dd3'] = $this->input->get("dd3");
+		$data['dd1'] = get("dd1");
+		$data['dd2'] = get("dd2");
+		$data['dd3'] = get("dd3");
 		$data['ano_min'] = 1972;
 		$data['ano_max'] = date("Y")+1;
 		$data['anoi'] = $ano_ini;
@@ -111,6 +111,14 @@ class home extends CI_Controller {
 		$data['tela'] = $this -> Search -> session_set($id);
 				
 		$data = array();
+		/* Usuario logado */
+		if (isset($_SESSION['email']))
+			{
+				
+				$data['tela'] = $this -> Search -> result_search_selected($session);		
+			}
+		
+		
 		$data['tela'] = $this -> Search -> result_search_selected($session);
 
 		/* Mostra resultado */

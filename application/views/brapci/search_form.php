@@ -3,6 +3,7 @@ if (!isset($dd1)) { $dd1 = ''; }
 if (!isset($dd3)) { $dd3 = ''; }
 if (!isset($dd4)) { $dd4 = ''; }
 if (!isset($dd5)) { $dd5 = ''; }
+
 ?>
 <!--- CSS Complement -->
 <link rel="stylesheet" href="<?php echo base_url('css/style_brapci_search_form.css'); ?>">

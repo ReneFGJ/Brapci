@@ -17,7 +17,7 @@
 						fjs.parentNode.insertBefore(js, fjs);
 					}(document, 'script', 'facebook-jssdk'));
 			</script><div class="fb-like-box" data-href="https://www.facebook.com/brapci.ci" data-width="100%" data-height="240"  data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div></TD>
-			<TD></TD>
+			<TD class="lt0" align="right">Session: <?php echo $_SESSION['bp_session'];?></TD>
 		</TR>
 	</table>
 </div>

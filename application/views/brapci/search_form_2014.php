@@ -11,13 +11,13 @@ echo ' | <a href="'.base_url('/home/help').'" target="_new_help" title="Ajuda so
 echo '<BR>';
 
 //* textarea */
-echo '<textarea name="dd1" cols="80" rows="5" class="fullscreen" style="width: 100%">'.$this->input->post('dd1').'</textarea>';
+echo '<textarea name="dd1" cols="80" rows="5" class="fullscreen" style="width: 100%">'.get('dd1').'</textarea>';
 echo '<BR>';
 
 /* RadioBox */
 $opts = array('em todos os campos','nas palavras-chave','no resumo','por autores');
 
-$opts_value = $this->input->post('dd2');
+$opts_value = get('dd2');
 if (strlen($opts_value) == 0) { $opts_value = 0; } 
 for ($r=0;$r < count($opts);$r++)
 	{
