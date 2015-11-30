@@ -16,6 +16,7 @@ class oai extends CI_controller {
 		/* $this -> lang -> load("app", "portuguese"); */
 		$this -> load -> library('session');
 		$db_public = 'brapci_publico.';
+		date_default_timezone_set('America/Sao_Paulo');
 	}
 
 	function coletar_cited($id = 0) {

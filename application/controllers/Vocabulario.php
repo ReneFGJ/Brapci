@@ -17,6 +17,7 @@ class vocabulario extends CI_Controller {
 		$this -> load -> helper('url');
 		/* $this -> lang -> load("app", "portuguese"); */
 		$this -> load -> library('session');
+		date_default_timezone_set('America/Sao_Paulo');
 	}
 
 	/*

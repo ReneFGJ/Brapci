@@ -16,6 +16,7 @@ class admin extends CI_Controller {
 		$this -> load -> helper('xml');
 		$this -> load -> library('session');
 		$db_public = 'brapci_publico.';
+		date_default_timezone_set('America/Sao_Paulo');
 	}
 
 	function security() {

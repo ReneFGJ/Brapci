@@ -16,6 +16,8 @@ class home extends CI_Controller {
 		$this -> load -> helper('form_sisdoc');
 		$this -> load -> helper('url');
 		$this -> load -> library('session');
+		
+		date_default_timezone_set('America/Sao_Paulo');
 	}
 
 	function help() {
@@ -78,6 +80,20 @@ class home extends CI_Controller {
 		$this -> load -> view("header/foot");
 	}
 
+	/* Tutorial */
+	function tutorial($id = 0)
+		{
+		$id = 1;
+		$this -> load -> view("header/cab");
+		$this -> load -> view("brapci/content");
+		
+		$this -> load -> view("tutorial/tutorial");
+		$this -> load -> view("tutorial/tutorial_".strzero($id,3));	
+		
+		/* Mostra rodape */
+		$this -> load -> view("header/foot");
+		}
+
 	function selections() {
 		global $dd;
 		/* Model */
@@ -87,7 +103,7 @@ class home extends CI_Controller {
 
 		$this -> load -> view("brapci/content");
 		//$this -> load -> view("brapci/search_form");
-		
+			
 		$data = array();
 		$data['tela'] = $this -> Search -> selections();
 
@@ -107,6 +123,10 @@ class home extends CI_Controller {
 
 		$this -> load -> view("brapci/content");
 		//$this -> load -> view("brapci/search_form");	
+		
+		/* Export Selected */
+		$data['session'] = $id;
+		$this -> load -> view("brapci/session_cab",$data);		
 		
 		$data['tela'] = $this -> Search -> session_set($id);
 				

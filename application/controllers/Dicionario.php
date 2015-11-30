@@ -13,6 +13,7 @@ class dicionario extends CI_Controller {
 		$this -> load -> helper('url');
 		$this -> load -> library('session');
 		$this -> lang -> load("app", "portuguese");
+		date_default_timezone_set('America/Sao_Paulo');
 	}
 
 	function index() {
