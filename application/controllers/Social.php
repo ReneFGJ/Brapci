@@ -138,7 +138,6 @@ class social extends CI_Controller {
 			try {
 				$token = $provider -> access($_GET['code']);
 				$user = $provider -> get_user_info($token);
-				print_r($user);
 
 				/* Ativa sessão ID */
 

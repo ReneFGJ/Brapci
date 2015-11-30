@@ -1,6 +1,3 @@
-<?php
-//print_r($this);
-?>
 <table>
 	<tr valign="top">
 		<td class="lt0">File</td>

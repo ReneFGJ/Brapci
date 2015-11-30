@@ -6,7 +6,7 @@ class security_set extends CI_model {
 	}
 	function security()
 		{
-			print_r($this->session);
+			
 		}
 
 }

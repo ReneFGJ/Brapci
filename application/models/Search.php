@@ -1164,8 +1164,6 @@ class search extends CI_model {
 		$sx = '';
 		$xart = '';
 		while ($line = db_read($rlt)) {
-			print_r($line);
-			exit ;
 			$sx .= '<BR>';
 			$sx .= trim($line['kw_word']) . ';';
 			$sx .= trim($line['total']) . ';';
