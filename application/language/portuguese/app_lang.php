@@ -41,7 +41,13 @@ $lang['status_article_D'] = 'revisado';
 
 $lang['issue_new'] = 'novo fascículo';
 
+/* SESSIOn */
+$lang['save_session'] = 'Salvar busca >>>';
+
 /* Login */
+$lang['login_enter'] = 'Entar';
+$lang['login_name'] = 'Informe seu login';
+$lang['login_password'] = 'Informe sua senha';
 $lang['login_enter'] = 'Entar';
 $lang['login_social'] = 'Logue com uma conta existente (recomendado)';
 ?>

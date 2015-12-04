@@ -11,6 +11,8 @@
 <link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_issue.css');?>">
 <link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_brapci_cab.css');?>">
 <link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_tools.css');?>">
+<link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/form_sisdoc.css');?>">
+
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
 <!--- Java Script -->

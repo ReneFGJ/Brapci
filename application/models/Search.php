@@ -1,17 +1,17 @@
 <?php
-// This file is part of the Brapci Software. 
-// 
+// This file is part of the Brapci Software.
+//
 // Copyright 2015, UFPR. All rights reserved. You can redistribute it and/or modify
 // Brapci under the terms of the Brapci License as published by UFPR, which
-// restricts commercial use of the Software. 
-// 
+// restricts commercial use of the Software.
+//
 // Brapci is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-// PARTICULAR PURPOSE. See the ProEthos License for more details. 
-// 
+// PARTICULAR PURPOSE. See the ProEthos License for more details.
+//
 // You should have received a copy of the Brapci License along with the Brapci
 // Software. If not, see
-// https://github.com/ReneFGJ/Brapci/tree/master//LICENSE.txt 
+// https://github.com/ReneFGJ/Brapci/tree/master//LICENSE.txt
 /* @author: Rene Faustino Gabriel Junior <renefgj@gmail.com>
  * @date: 2015-12-01
  */
@@ -26,12 +26,13 @@ class search extends CI_model {
 
 		$db_public = 'brapci_publico.';
 		parent::__construct();
+		$this -> lang -> load("app", "portuguese");
 		$this -> load -> database();
 		$this -> load -> helper('form');
 		$this -> load -> helper('url');
 		$this -> load -> library('session');
-		$this -> lang -> load("app", "portuguese");
 		
+
 		/* Sessao */
 		if (!isset($_SESSION['bp_session']) or (strlen($_SESSION['bp_session']) != 10)) {
 			$session = $_SERVER['REMOTE_ADDR'];
@@ -44,15 +45,46 @@ class search extends CI_model {
 			$session = $_SESSION['bp_session'];
 		}
 		$this -> ssid = $session;
-		$this -> sessao = $session;	
-		
-		$db_public = 'brapci_publico.';	
+		$this -> sessao = $session;
+
+		$db_public = 'brapci_publico.';
+	}
+
+	function save_session() {
+		$loged = 0;
+		if (isset($_SESSION['user'])) {
+			$user = $_SESSION['user'];
+			if (strlen($user) > 0) {
+				$loged = 1;
+				$this->saving_session();
+				return('');
+			}
+		}
+		if ($loged == 0) {
+			/* User not loged */
+			$this -> load -> view('errors/search_save_error', null);
+			$this -> load -> view('login/login_simple', null);
+		}
+
 	}
 	
-	function selected()
+	function saving_session()
 		{
+			$cp = array();
+			array_push($cp,array('$H8','','',False,False));
+			array_push($cp,array('$S80','',msg('session_name'),True,True));
+			array_push($cp,array('$B8','',msg('save_session'),False,True));
+			echo '<br><br><br>';
+			$form = new form;
+			$tela = $form->editar($cp,'');
+			$data['content'] = $tela;
+			$this->load->view('content',$data);
+			
+		}
+
+	function selected() {
 		global $db_public;
-		
+
 		$session = $_SESSION['bp_session'];
 		$sql = "select count(*) as total from " . $db_public . "usuario_selecao 
 					where sel_sessao = '$session' 
@@ -62,10 +94,17 @@ class search extends CI_model {
 		$rlt = $rlt -> result_array();
 		$line = $rlt[0];
 		$total = $line['total'];
-
+		/* comando para fechar o HREF se pertinente */
+		$link_off = '';
+		if ($total > 0) {
+			echo '<A href="' . base_url('index.php/home/selection/' . $session . '/' . checkpost_link($session)) . '" class="link_menu">';
+			/* ativa o fechar a tag */
+			$link_off = '</a>';
+		}
 		echo '<img src="' . base_url('img/icone_my_library.png') . '" height="20">';
-		echo ' '.$total.' '.msg('Selected');
-		}	
+		echo ' ' . $total . ' ' . msg('Selected');
+		echo $link_off;
+	}
 
 	function metodo_pontos($titulo, $resumo, $keyword, $rla) {
 

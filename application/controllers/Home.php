@@ -106,6 +106,46 @@ class home extends CI_Controller {
 		/* Mostra rodape */
 		$this -> load -> view("header/foot");
 		}
+		
+	function selection_save($id) {
+		global $dd;
+		/* Model */
+		$this -> load -> model('Search');
+
+		$this -> load -> view("header/cab");
+
+		$this -> load -> view("brapci/content");
+		//$this -> load -> view("brapci/search_form");
+			
+		$data = array();
+		$data['tela'] = $this -> Search -> save_session();
+
+		/* Mostra resultado */
+		$this -> load -> view("brapci/search_result", $data);
+
+		/* Mostra rodape */
+		$this -> load -> view("header/foot");
+	}
+	
+	function selection_send_email($id) {
+		global $dd;
+		/* Model */
+		$this -> load -> model('Search');
+
+		$this -> load -> view("header/cab");
+
+		$this -> load -> view("brapci/content");
+		//$this -> load -> view("brapci/search_form");
+			
+		$data = array();
+		$data['tela'] = $this -> Search -> save_session();
+
+		/* Mostra resultado */
+		$this -> load -> view("brapci/search_result", $data);
+
+		/* Mostra rodape */
+		$this -> load -> view("header/foot");
+	}			
 
 	function selections() {
 		global $dd;

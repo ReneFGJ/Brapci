@@ -102,6 +102,11 @@ class social extends CI_Controller {
 
 	function login() {
 		$this -> load -> view('header/header');
+		$this->login_parameters();
+	}
+	
+	function login_parameters()
+		{
 		$data = array();
 		$data['login_versao'] = 'v0.15.45';
 		$data['versao'] = '';
