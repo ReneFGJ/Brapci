@@ -1,21 +1,21 @@
 <?php
-// This file is part of the Brapci Software. 
-// 
+// This file is part of the Brapci Software.
+//
 // Copyright 2015, UFPR. All rights reserved. You can redistribute it and/or modify
 // Brapci under the terms of the Brapci License as published by UFPR, which
-// restricts commercial use of the Software. 
-// 
+// restricts commercial use of the Software.
+//
 // Brapci is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-// PARTICULAR PURPOSE. See the ProEthos License for more details. 
-// 
+// PARTICULAR PURPOSE. See the ProEthos License for more details.
+//
 // You should have received a copy of the Brapci License along with the Brapci
 // Software. If not, see
-// https://github.com/ReneFGJ/Brapci/tree/master//LICENSE.txt 
+// https://github.com/ReneFGJ/Brapci/tree/master//LICENSE.txt
 /* @author: Rene Faustino Gabriel Junior <renefgj@gmail.com>
  * @date: 2015-12-01
  */
- 
+
 class oai_pmh extends CI_model {
 	var $issue;
 	function repository_list() {
@@ -122,8 +122,8 @@ class oai_pmh extends CI_model {
 		$sql = "select * from oai_listsets where ls_setspec = '$set' and ls_journal = '$jid' ";
 		$rlt = db_query($sql);
 		if ($line = db_read($rlt)) {
-			$sql = "update oai_listsets set ls_equal = '$tema' where id_ls = ".round($line['id_ls']);
-			$this->db->query($sql);
+			$sql = "update oai_listsets set ls_equal = '$tema' where id_ls = " . round($line['id_ls']);
+			$this -> db -> query($sql);
 			return ('');
 		} else {
 			$data = date("Ymd");
@@ -173,7 +173,7 @@ class oai_pmh extends CI_model {
 
 				/* Recupera Issue */
 				$article['issue_id'] = strzero($this -> recupera_issue($article, $jid), 7);
-				$article['issue_ver'] = $this->issue;
+				$article['issue_ver'] = $this -> issue;
 
 				/* Recupera ano */
 				$source = $article['sources'][0]['source'];
@@ -186,7 +186,6 @@ class oai_pmh extends CI_model {
 				$titulo = utf8_decode($article['titles'][0]['title']);
 				$titulo = utf8_decode(substr($titulo, 0, 44));
 				$titulo = UpperCaseSql($titulo);
-				
 
 				/* Valida se existe article cadastrado */
 				$sql = "select * from brapci_article where ar_edition = '" . $article['issue_id'] . "' 
@@ -296,9 +295,11 @@ class oai_pmh extends CI_model {
 	function recupera_ano($s) {
 		//$s = trim(sonumero($s));
 		$ano = '';
-		for ($r = (date("Y") + 1);$r > 1940; $r--) {
+		for ($r = (date("Y") + 1); $r > 1940; $r--) {
 			if (strpos($s, trim($r)) > 0) {
-				if (strlen($ano) == 0) { return($r); }
+				if (strlen($ano) == 0) {
+					return ($r);
+				}
 			}
 		}
 		return ($ano);
@@ -308,7 +309,7 @@ class oai_pmh extends CI_model {
 		$nr = '';
 		if (strpos($s, 'n.')) { $nr = substr($s, strpos($s, 'n.'), strlen($s));
 		}
-		if (strpos($s, 'No ')) { $nr = substr($s, strpos($s, 'No ')+3, strlen($s));
+		if (strpos($s, 'No ')) { $nr = substr($s, strpos($s, 'No ') + 3, strlen($s));
 		}
 		if (strlen($nr) > 0) {
 			if (strpos($nr, ',') > 0) { $nr = substr($nr, 0, strpos($nr, ','));
@@ -327,8 +328,8 @@ class oai_pmh extends CI_model {
 		$vl = '';
 		if (strpos($s, 'v.')) { $vl = substr($s, strpos($s, 'v.'), strlen($s));
 		}
-		if (strpos($s, 'Vol ')) { $vl = substr($s, strpos($s, 'Vol ')+4, strlen($s));
-		}		
+		if (strpos($s, 'Vol ')) { $vl = substr($s, strpos($s, 'Vol ') + 4, strlen($s));
+		}
 
 		if (strlen($vl) > 0) {
 			if (strpos($vl, ',') > 0) { $vl = substr($vl, 0, strpos($vl, ','));
@@ -372,8 +373,8 @@ class oai_pmh extends CI_model {
 									and ed_journal_id = '$jid' ";
 			$rlt = db_query($sql);
 			$sx = "v. $vol, n. $nr, $ano";
-			$this->issue = $sx;
-			
+			$this -> issue = $sx;
+
 			if ($line = db_read($rlt)) {
 				$eds = $line['ed_status'];
 				if ($eds == 'A') {
@@ -610,7 +611,7 @@ class oai_pmh extends CI_model {
 				case 'A' :
 					$t[2] = $t[2] + $line['total'];
 					break;
-				default:
+				default :
 					$t[3] = $t[3] + $line['total'];
 					break;
 			}
@@ -619,20 +620,96 @@ class oai_pmh extends CI_model {
 		$sx .= '<TR align="center" class="lt1" style="background-color: #E0E0E0; ">';
 		$sx .= '<td rowspan=2 width="30%" class="lt4">OAI-PMH';
 		$sx .= '<TD>para coletar</td>';
-		$sx .= '<TD>coletado</td>';		
+		$sx .= '<TD>coletado</td>';
 		$sx .= '<TD>processado</td>';
 		$sx .= '<TD>total</td>';
 		$sx .= '<TR align="center" class="lt4">';
 		$sx .= '<TD width="15%">';
-		$sx .= number_format($t[0],0,',','.');
+		$sx .= number_format($t[0], 0, ',', '.');
 		$sx .= '<TD width="15%">';
-		$sx .= number_format($t[2],0,',','.');
+		$sx .= number_format($t[2], 0, ',', '.');
 		$sx .= '<TD width="15%">';
-		$sx .= number_format(($t[1] + $t[3]),0,',','.');
+		$sx .= number_format(($t[1] + $t[3]), 0, ',', '.');
 		$sx .= '<TD width="15%">';
-		$sx .= number_format(($t[0] + $t[1] + $t[2] + $t[3]),0,',','.');
+		$sx .= number_format(($t[0] + $t[1] + $t[2] + $t[3]), 0, ',', '.');
 		$sx .= '</table>';
 		return ($sx);
+	}
+
+	function doublePDFlink() {
+		$sql = "select * from (
+						SELECT bs_adress, count(*) as total, max(id_bs) as id 
+							FROM `brapci_article_suporte` 
+						WHERE bs_type = 'URL' 
+						 	and bs_adress like 'http%'
+						 	and (bs_status ='A' or bs_status = '@')
+						 	and bs_adress <> ''
+						 group by bs_adress
+					) as tabela
+				where total > 1
+				";
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		if (count($rlt) > 0) {
+			for ($r = 0; $r < count($rlt); $r++) {
+				$line = $rlt[$r];
+				$adress = $line['bs_adress'];
+				$id = $line['id'];
+				$sql = "update brapci_article_suporte 
+						set bs_status = 'D' 
+					WHERE bs_adress = '$adress' 
+							and id_bs <> $id ";
+				$xrlt = $this -> db -> query($sql);
+			}
+		} else {
+			return (0);
+		}
+	}
+
+	function totalPDFharvesting() {
+		$sql = "select count(*) as total from (
+						SELECT `bs_article` as art, count(*) as total FROM `brapci_article_suporte` WHERE bs_type = 'URL' group by bs_article
+						   )
+						   as tebela
+						 inner join brapci_article_suporte on art = bs_article
+						 where total = 1 and bs_adress like 'http%'
+						 and bs_status ='A' or bs_status = '@'
+						 and art <> '' 
+					limit 1";
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		if (count($rlt) > 0) {
+			return ($rlt[0]['total']);
+		} else {
+			return (0);
+		}
+
+	}
+
+	function nextPDFharvesting() {
+		$sql = "select * from (
+							SELECT `bs_article` as art, count(*) as total 
+							FROM `brapci_article_suporte` 
+							WHERE bs_type = 'URL' group by bs_article
+						   )
+						   as tebela
+						 inner join brapci_article_suporte on art = bs_article
+						 where total = 1 and bs_adress like 'http%'
+						 and bs_status ='A' or bs_status = '@'
+						 and art <> '' 
+					order by art desc
+					limit 1";
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		if (count($rlt) > 0) {
+			$id = $rlt[0]['id_bs'];
+			$sql = "update brapci_article_suporte set bs_status = 'T' where id_bs = " . $id;
+			$this -> db -> query($sql);
+			return ($rlt[0]);
+		} else {
+			return (0);
+		}
+
 	}
 
 }

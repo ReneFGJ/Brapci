@@ -1,17 +1,17 @@
 <?php
-// This file is part of the Brapci Software. 
-// 
+// This file is part of the Brapci Software.
+//
 // Copyright 2015, UFPR. All rights reserved. You can redistribute it and/or modify
 // Brapci under the terms of the Brapci License as published by UFPR, which
-// restricts commercial use of the Software. 
-// 
+// restricts commercial use of the Software.
+//
 // Brapci is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-// PARTICULAR PURPOSE. See the ProEthos License for more details. 
-// 
+// PARTICULAR PURPOSE. See the ProEthos License for more details.
+//
 // You should have received a copy of the Brapci License along with the Brapci
 // Software. If not, see
-// https://github.com/ReneFGJ/Brapci/tree/master//LICENSE.txt 
+// https://github.com/ReneFGJ/Brapci/tree/master//LICENSE.txt
 /* @author: Rene Faustino Gabriel Junior <renefgj@gmail.com>
  * @date: 2015-12-01
  */
@@ -52,19 +52,18 @@ class admin extends CI_Controller {
 	}
 
 	function index() {
-		$this->load->model('articles');
-		$this->load->model('oai_pmh');
-				
+		$this -> load -> model('articles');
+		$this -> load -> model('oai_pmh');
+
 		$this -> cab();
-		$tela = $this->articles->resumo();
+		$tela = $this -> articles -> resumo();
 		$data['content'] = $tela;
-		$this->load->view('content',$data);
-		
-		$tela = $this->oai_pmh->oai_resumo();
+		$this -> load -> view('content', $data);
+
+		$tela = $this -> oai_pmh -> oai_resumo();
 		$data['content'] = $tela;
-		$this->load->view('content',$data);
-		
-		
+		$this -> load -> view('content', $data);
+
 	}
 
 	function journal($id = 0) {
@@ -277,7 +276,7 @@ class admin extends CI_Controller {
 		$this -> editions -> row = base_url('index.php/admin/issue_view/');
 		$tela_issue = $this -> editions -> editions_row($jid, $id);
 
-		$tela_articles = $this -> editions -> issue_view($id,1,1);
+		$tela_articles = $this -> editions -> issue_view($id, 1, 1);
 
 		$tela = '<table width="100%" border=1 class="tabela00">';
 		$tela .= '<TR valign="top">';
@@ -445,6 +444,56 @@ class admin extends CI_Controller {
 		$this -> load -> view('content', $data);
 	}
 
+	function harvesting_pdf($pag = 0) {
+		$this -> load -> model('Oai_pmh');
+		$this -> cab();
+
+		if ($pag == 0) {
+			$this -> Oai_pmh -> doublePDFlink();
+		}
+		$js = '<script>' . cr();
+		$sx = '<table width="100%" border=1>';
+		for ($rx = 1; $rx <= 1; $rx++) {
+			$reg = $this -> Oai_pmh -> nextPDFharvesting();
+			$id = $reg['id_bs'];
+			$url = $reg['bs_adress'];
+			$sx .= '<tr>';
+			$sx .= '<td>' . $url . '</td>' . cr();
+			$sx .= '<td width="400">' . cr();
+			$divm = 'id' . $rx;
+			$sx .= '<div id="' . $divm . '" style="width:400px; height: 30px; border:1px solid #333;" class="lt1"></div>';
+			$sx .= '</td>' . cr();
+			$sx .= '</tr>';
+
+			$js .= '
+				$("#' . $divm . '").html("coletando..."); 
+				$.ajax({
+  					method: "POST",
+  					url: "' . base_url('index.php/oai/coletar_pdf/' . $id . '/' . ($pag + 1)) . '",
+  					data: { name: "OAI", location: "PDF" }
+					})
+  					.done(function( data ) {
+    						$("#' . $divm . '").html(data);
+  					});
+			' . cr();
+
+		}
+		$js .= '</script>' . cr();
+		$sx .= '</table>';
+		$sx .= $js;
+
+		if (count($reg) > 0) {
+			$sx .= '<br>Total para coleta: ' . $this -> Oai_pmh -> totalPDFharvesting();
+			$sx .= '<br>ID:' . $reg['id_bs'];
+			$sx .= '<meta http-equiv=refresh content="10;URL='.base_url('index.php/admin/harvesting_pdf/'.($pag+1)).'">';
+		} else {
+			$sx .= 'Nada para coletar';
+		}
+		$data['content'] = $sx;
+		$this -> load -> view('content', $data);
+
+	}
+
 	function tools() {
 		$this -> cab();
 		$menu = array();
@@ -453,6 +502,7 @@ class admin extends CI_Controller {
 		array_push($menu, array(msg('Autoridade'), msg('Check remissive authors n use'), 'ITE', '/admin/author_use'));
 		array_push($menu, array(msg('Autoridade'), msg('Check remissive terms in use'), 'ITE', '/admin/terms_use'));
 		array_push($menu, array(msg('Autoridade'), msg('Check language of terms'), 'ITE', '/admin/terms_language'));
+		array_push($menu, array(msg('PDF'), msg('Harvesting PDF'), 'ITE', '/admin/harvesting_pdf'));
 		array_push($menu, array(msg('OAI'), msg('Harvesting all publications'), 'ITE', '/oai/harvest'));
 		$data = array();
 		$data['menu'] = $menu;
