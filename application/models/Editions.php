@@ -195,7 +195,7 @@ class editions extends CI_model {
 
 			$issue++;
 			$sx .= '<TR>';
-			$sx .= '<TD class="tabela01">';
+			$sx .= '<TD class="tabela01" >';
 
 			$sx .= $link;
 
@@ -253,7 +253,7 @@ class editions extends CI_model {
 						where ed_journal_id = '$journal'
 						order by ed_ano desc, ed_vol 
 			";
-		$sx = '<Table class="tabela00 lt1">';
+		$sx = '<Table class="tabela00 lt1" width="400">';
 		$query = $this -> db -> query($sql);
 		$rlt = $query -> result();
 
@@ -265,10 +265,10 @@ class editions extends CI_model {
 			$ano = $line['ed_ano'];
 			if ($xano != $ano) {
 				$sx .= '<TR>';
-				$sx .= '<TD>' . $ano;
+				$sx .= '<TD width="50" align="center">' . $ano;
 				$xano = $ano;
 			}
-			$sx .= '<TD class="tabela01" width="110" align="left">';
+			$sx .= '<TD class="tabela01" width="100" align="center">';
 			$sx .= $link;
 			$sx .= 'v.' . $line['ed_vol'];
 			$sx .= ', n.' . $line['ed_nr'];

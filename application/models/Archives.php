@@ -88,11 +88,16 @@ class archives extends CI_model {
 			if (substr($xlink, 0, 4) == 'http') {
 				$link = '<a href="' . trim($line['bs_adress']) . '" target="_new">';
 				$linkf = '</a>';
-				if ((trim($line['bs_status']) == '@') or (trim($line['bs_status']) == 'A')) {
+				if ((trim($line['bs_status']) == '@') or (trim($line['bs_status']) == 'A') or (trim($line['bs_status']) == 'D')) {
 					$onclick = ' onclick="coletar('.$line['id_bs'].',\'coletar'.$line['id_bs'].'\');" ';
 					$ajax = '<div id="coletar'.$line['id_bs'].'" style="color: blue; cursor: pointer; width: 100px; border: 1px #A0A0A0 solid; text-align: center;" '.$onclick.'>coletar</div>';
 					$idbs = $line['id_bs'];
 				}
+				if ((trim($line['bs_status']) == 'T')) {
+					$onclick = ' onclick="converter('.$line['id_bs'].',\'converter'.$line['id_bs'].'\');" ';
+					$ajax = '<div id="converter'.$line['id_bs'].'" style="color: blue; cursor: pointer; width: 100px; border: 1px #A0A0A0 solid; text-align: center;" '.$onclick.'>converter</div>';
+					$idbs = $line['id_bs'];
+				}				
 			}
 
 			$sx .= '<tr>';
@@ -124,6 +129,17 @@ class archives extends CI_model {
     						$("#"+$div).html(data);
   					});
 			};
+			function converter($id,$div) {
+				$("#"+$div).html("converter..."); 
+				$.ajax({
+  					method: "POST",
+  					url: "' . base_url('index.php/oai/converter'). '/" + $id,
+  					data: { name: "OAI", location: "PDF" }
+					})
+  					.done(function( data ) {
+    						$("#"+$div).html(data);
+  					});
+			};			
 			</script>
 			';
 		}

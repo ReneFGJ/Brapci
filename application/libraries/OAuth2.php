@@ -1,5 +1,5 @@
 <?php
-
+echo '===========================';
 include('Exception.php');
 include('Token.php');
 include('Provider.php');
@@ -33,3 +33,4 @@ class OAuth2 {
 	}
 
 }
+?>

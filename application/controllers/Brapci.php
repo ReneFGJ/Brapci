@@ -55,5 +55,19 @@ class brapci extends CI_Controller {
 		/* Mostra rodape */
 		$this -> load -> view("header/foot");
 	}
+	
+	function colection() {
+		/* Models */
+		$this->load->model('journals');
+		
+		$this -> load -> view('header/cab');
+		$this -> load -> view("brapci/content");
+		
+		$data = array();
+		
+		
+		/* Mostra rodape */
+		$this -> load -> view("header/foot");
+	}	
 
 }

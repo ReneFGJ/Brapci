@@ -314,10 +314,15 @@ class oai_pmh extends CI_model {
 		if (strlen($nr) > 0) {
 			if (strpos($nr, ',') > 0) { $nr = substr($nr, 0, strpos($nr, ','));
 			}
+			if (strpos($nr, '-') > 0) { $nr = substr($nr, 0, strpos($nr, '-'));
+			}			
+			if (strpos($nr, '(') > 0) { $nr = substr($nr, 0, strpos($nr, '('));
+			}			
 			$nr = troca($nr, 'n. ', '');
 			$nr = troca($nr, ' ', 'x');
 			if (strpos($nr, 'x') > 0) { $nr = substr($nr, 0, strpos($nr, 'x'));
 			}
+			$nr = troca($nr, 'x', '');
 			$nr = troca($nr, 'n.', '');
 			$nr = trim($nr);
 		}
@@ -372,6 +377,7 @@ class oai_pmh extends CI_model {
 									and ed_ano = '$ano' 
 									and ed_journal_id = '$jid' ";
 			$rlt = db_query($sql);
+			//echo '<HR>'.$sql.'<hr>';
 			$sx = "v. $vol, n. $nr, $ano";
 			$this -> issue = $sx;
 
@@ -392,6 +398,19 @@ class oai_pmh extends CI_model {
 	function process_le_xml($xml_rs, $file) {
 		$dom = new DOMDocument;
 		$dom = new DOMDocument;
+		
+		/* Arquivo vazio */
+		$fr = fopen($file,'r');
+		$st = fread($fr,512);
+		fclose($fr);
+		
+		echo $file;
+		if (strlen($st)==0)
+		{
+			exit;
+			$doc['status'] = 'deleted';
+			return ($doc);
+		}
 		$dom -> load($file);
 
 		/* Array */
@@ -409,6 +428,7 @@ class oai_pmh extends CI_model {
 
 		/* Registro deletado, nao processar */
 		if ($status == 'deleted') {
+			echo '<br>'.$status;
 			$doc['status'] = 'deleted';
 			return ($doc);
 		} else {
@@ -417,6 +437,15 @@ class oai_pmh extends CI_model {
 
 		/* setSpec */
 		$headers = $dom -> getElementsByTagName('setSpec');
+		$size = ($headers->length);
+		/* Header inválido */
+		if ($size < 1)
+			{
+				$doc['status'] = 'deleted';
+				return ($doc);
+				exit;
+			}
+		
 		foreach ($headers as $header) {
 			$setSpec = $header -> nodeValue;
 		}
@@ -579,11 +608,28 @@ class oai_pmh extends CI_model {
 						order by jnl_nome ";
 		$rlt = db_query($sql);
 		$t = array(0, 0, 0, 0);
-		$sx = '';
+		$sx = '<h1>Record to harvesting</h1>';
 		while ($line = db_read($rlt)) {
 			$link = '<A HREF="' . base_url('index.php/oai/Harvesting/' . $line['cache_journal']) . '">';
-			$sx .= '<BR>' . $link . $line['jnl_nome'] . '</A>';
-			$sx .= ' (' . $line['total'] . ')';
+			$sx .= '' . $link . $line['jnl_nome'] . '</A>';
+			$sx .= ' (' . $line['total'] . ')<BR>';
+		}
+		return ($sx);
+	}
+
+	function oai_resumo_to_progress() {
+		$sql = "select count(*) as total, cache_journal, jnl_nome from oai_cache 
+					inner join brapci_journal on jnl_codigo = cache_journal
+						where cache_status = 'A'
+						group by cache_journal, jnl_nome
+						order by jnl_nome ";
+		$rlt = db_query($sql);
+		$t = array(0, 0, 0, 0);
+		$sx = '<br><br><h1>Record to process</h1>';
+		while ($line = db_read($rlt)) {
+			$link = '<A HREF="' . base_url('index.php/oai/Harvesting/' . $line['cache_journal']) . '">';
+			$sx .= '' . $link . $line['jnl_nome'] . '</A>';
+			$sx .= ' (' . $line['total'] . ')<BR>';
 		}
 		return ($sx);
 	}
@@ -636,6 +682,8 @@ class oai_pmh extends CI_model {
 		return ($sx);
 	}
 
+
+
 	function doublePDFlink() {
 		$sql = "select * from (
 						SELECT bs_adress, count(*) as total, max(id_bs) as id 
@@ -665,6 +713,42 @@ class oai_pmh extends CI_model {
 			return (0);
 		}
 	}
+	
+	function fileExistPDFlink($pag=0)
+		{
+			$sz = 30;
+			$OFFSET = ($pag * 100);
+			$data = date("Ymd");
+			$sql = "select * from brapci_article_suporte 
+					WHERE bs_update <> '$data'
+					and bs_type = 'PDF'
+					order by id_bs 
+					LIMIT 100 OFFSET $OFFSET
+					
+					";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			$sx = '';
+			for ($r=0;$r < count($rlt);$r++)
+				{
+					$line = $rlt[$r];
+					$sx .= '<br>';
+					$sx .= ($r+$pag * 100).'. ';
+					$file = $line['bs_adress']; 
+					$sx .= $file;
+					if (file_exists($file))
+					{
+						$sx .= ' <b><font color="green">OK</font></b>'.cr();
+					} else {
+						$sx .= ' <b><font color="red">file not found</font></b>'.cr();
+					}
+				}
+				 if (count($rlt) > 0)
+				 	{
+				 		$sx .= '<META http-equiv="refresh" content="5;URL='.base_url('index.php/admin/fileexist_pdf/'.($pag+1)).'">';
+				 	}
+			return($sx);
+		}
 
 	function totalPDFharvesting() {
 		$sql = "select count(*) as total from (
@@ -711,6 +795,25 @@ class oai_pmh extends CI_model {
 		}
 
 	}
+	
+	function nextPDFconvert() {
+		$data = date("Ymd");
+		$sql = "select * from brapci_article_suporte where bs_status = 'T'
+					and bs_update <> $data
+					limit 1";
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		if (count($rlt) > 0) {
+			$id = $rlt[0]['id_bs'];
+			$sql = "update brapci_article_suporte set bs_status = 'U', bs_update = $data 
+						where id_bs = " . $id;
+			$this -> db -> query($sql);
+			return ($rlt[0]);
+		} else {
+			return (0);
+		}
+
+	}	
 
 }
 ?>

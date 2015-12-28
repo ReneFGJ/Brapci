@@ -444,6 +444,16 @@ class admin extends CI_Controller {
 		$this -> load -> view('content', $data);
 	}
 
+	function fileexist_pdf($pag = 0) {
+		$this -> load -> model('Oai_pmh');
+		$this -> cab();
+
+		$sx = $this -> Oai_pmh -> fileExistPDFlink($pag);
+
+		$data['content'] = $sx;
+		$this -> load -> view('content', $data);
+
+	}
 	function harvesting_pdf($pag = 0) {
 		$this -> load -> model('Oai_pmh');
 		$this -> cab();
@@ -455,7 +465,12 @@ class admin extends CI_Controller {
 		$sx = '<table width="100%" border=1>';
 		for ($rx = 1; $rx <= 1; $rx++) {
 			$reg = $this -> Oai_pmh -> nextPDFharvesting();
-			$id = $reg['id_bs'];
+			$id = round($reg['id_bs']);
+			if ($id == 0)
+				{
+					echo 'FIM';
+					exit;
+				}
 			$url = $reg['bs_adress'];
 			$sx .= '<tr>';
 			$sx .= '<td>' . $url . '</td>' . cr();
@@ -485,9 +500,60 @@ class admin extends CI_Controller {
 		if (count($reg) > 0) {
 			$sx .= '<br>Total para coleta: ' . $this -> Oai_pmh -> totalPDFharvesting();
 			$sx .= '<br>ID:' . $reg['id_bs'];
-			$sx .= '<meta http-equiv=refresh content="10;URL='.base_url('index.php/admin/harvesting_pdf/'.($pag+1)).'">';
+			$sx .= '<meta http-equiv=refresh content="5;URL='.base_url('index.php/admin/harvesting_pdf/'.($pag+1)).'">';
 		} else {
 			$sx .= 'Nada para coletar';
+		}
+		$data['content'] = $sx;
+		$this -> load -> view('content', $data);
+
+	}
+
+	function harvesting_pdf_convert($pag = 0) {
+		$this -> load -> model('Oai_pmh');
+		$this -> cab();
+
+		$js = '<script>' . cr();
+		$sx = '<table width="100%" border=1>';
+		for ($rx = 1; $rx <= 1; $rx++) {
+			$reg = $this -> Oai_pmh -> nextPDFconvert();
+			$id = round($reg['id_bs']);
+			if ($id == 0)
+				{
+					echo 'FIM';
+					exit;
+				}
+			$url = $reg['bs_adress'];
+			$sx .= '<tr>';
+			$sx .= '<td>' . $url . '</td>' . cr();
+			$sx .= '<td width="400">' . cr();
+			$divm = 'id' . $rx;
+			$sx .= '<div id="' . $divm . '" style="width:400px; height: 30px; border:1px solid #333;" class="lt1"></div>';
+			$sx .= '</td>' . cr();
+			$sx .= '</tr>';
+
+			$js .= '
+				$("#' . $divm . '").html("convertendo..."); 
+				$.ajax({
+  					method: "POST",
+  					url: "' . base_url('index.php/oai/converter/' . $id . '/' . ($pag + 1)) . '",
+  					data: { name: "OAI", location: "PDF" }
+					})
+  					.done(function( data ) {
+    						$("#' . $divm . '").html(data);
+  					});
+			' . cr();
+
+		}
+		$js .= '</script>' . cr();
+		$sx .= '</table>';
+		$sx .= $js;
+
+		if (count($reg) > 0) {
+			$sx .= '<br>ID:' . $reg['id_bs'];
+			$sx .= '<meta http-equiv=refresh content="5;URL='.base_url('index.php/admin/harvesting_pdf_convert/'.($pag+1)).'">';
+		} else {
+			$sx .= 'Nada para converter';
 		}
 		$data['content'] = $sx;
 		$this -> load -> view('content', $data);
@@ -503,7 +569,10 @@ class admin extends CI_Controller {
 		array_push($menu, array(msg('Autoridade'), msg('Check remissive terms in use'), 'ITE', '/admin/terms_use'));
 		array_push($menu, array(msg('Autoridade'), msg('Check language of terms'), 'ITE', '/admin/terms_language'));
 		array_push($menu, array(msg('PDF'), msg('Harvesting PDF'), 'ITE', '/admin/harvesting_pdf'));
+		array_push($menu, array(msg('PDF'), msg('Convert PDF'), 'ITE', '/admin/harvesting_pdf_convert'));
+		array_push($menu, array(msg('PDF'), msg('File Exist'), 'ITE', '/admin/fileexist_pdf'));
 		array_push($menu, array(msg('OAI'), msg('Harvesting all publications'), 'ITE', '/oai/harvest'));
+		array_push($menu, array(msg('OAI'), msg('Resume all harvesting'), 'ITE', '/oai/harvesting'));
 		$data = array();
 		$data['menu'] = $menu;
 		$data['title_menu'] = msg('tools');

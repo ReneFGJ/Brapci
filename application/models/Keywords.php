@@ -93,7 +93,8 @@ class keywords extends CI_model
 									
 									$akeys[$name] = 0;
 									if (strlen($nkeys) > 0) { $nkeys .= ', '; }
-									$nkeys .= "'".$keys[$r]."' ";
+									$xkeys = troca($keys[$r],"'","´");
+									$nkeys .= "'".$xkeys."' ";
 								}
 						}
 				}
@@ -171,6 +172,7 @@ class keywords extends CI_model
 		}
 	function incorpore_keyword($term,$idioma)
 		{
+			$term = troca($term,"'","´");
 			$sql = "select * from brapci_keyword where kw_word_asc = '".($term)."' and kw_idioma = '$idioma' ";
 			$query = $this->db->query($sql);
 			

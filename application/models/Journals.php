@@ -17,6 +17,11 @@
  */
 class journals extends CI_model {
 	
+	function coletions($cl = 0)
+		{
+			
+		}
+	
 	function row($obj) {
 		$obj -> fd = array('id_jnl', 'jnl_nome', 'jnl_tipo', 'jnl_issn_impresso');
 		$obj -> lb = array('ID', 'Nome do autor', 'Tipo', 'ISSN');
