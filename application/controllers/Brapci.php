@@ -45,7 +45,7 @@ class brapci extends CI_Controller {
 		$this -> load -> view("brapci/content");
 		
 		$data = array();
-		$data['journals_list'] = $this->journals->show_publish();
+		$data['journals_list'] = $this->journals->show_publish('j');
 		$this->load->view('brapci/brapci_sobre_pt',$data);
 		
 		$this->load->view('about/versao',$data);
@@ -56,6 +56,41 @@ class brapci extends CI_Controller {
 		$this -> load -> view("header/foot");
 	}
 	
+	function indicators()
+		{
+		/* Models */
+		$this->load->model('journals');
+		$this->load->model('indicadores');
+		
+		
+		$this -> load -> view('header/cab');
+		$this -> load -> view("brapci/content");
+		
+		$data = array();
+		$sx = $this->indicadores->indicador_producao_ano();
+		$data['content'] = $sx;
+		$this->load->view('content',$data);
+		
+		$sx = $this->indicadores->indicador_producao_journals_ano();
+		$data['content'] = $sx;
+		$this->load->view('content',$data);
+		
+		
+		/* Mostra rodape */
+		$this -> load -> view("header/foot");	
+		}
+	function indicator_authors()
+		{
+		/* Models */
+		$this->load->model('journals');
+		$this->load->model('indicadores');
+		
+		$this -> load -> view('header/cab');
+		$this -> load -> view("brapci/content");
+		
+		/* Mostra rodape */
+		$this -> load -> view("header/foot");	
+		}
 	function colection() {
 		/* Models */
 		$this->load->model('journals');

@@ -23,8 +23,8 @@ class journals extends CI_model {
 		}
 	
 	function row($obj) {
-		$obj -> fd = array('id_jnl', 'jnl_nome', 'jnl_tipo', 'jnl_issn_impresso');
-		$obj -> lb = array('ID', 'Nome do autor', 'Tipo', 'ISSN');
+		$obj -> fd = array('id_jnl', 'jnl_nome', 'jnl_tipo', 'jnl_status','jnl_issn_impresso');
+		$obj -> lb = array('ID', 'Nome do autor', 'Tipo', 'Situação', 'ISSN');
 		$obj -> mk = array('', 'L', 'C', 'C');
 		return ($obj);
 	}
@@ -69,6 +69,11 @@ class journals extends CI_model {
 		array_push($cp, array('${', '', 'Indexadores', False, True));
 		array_push($cp, array('$O 0:Não&1:Sim', 'jnl_scielo', 'Indexado no Scielo', False, True));
 		array_push($cp, array('$}', '', 'Indexadores', False, True));
+		
+		array_push($cp, array('$O A:Vigente&B:Encerrado&X:Cancelado', 'jnl_status', 'Situação', True, True));		
+
+
+		array_push($cp, array('$Q peri_codigo:peri_nome:select * from brapci_periodicidade order by peri_nome', 'jnl_periodicidade', 'Periodicidade', True, True));
 
 		/* Botao */
 		array_push($cp, array('$B8', '', 'Gravar >>>', False, True));
@@ -123,11 +128,18 @@ class journals extends CI_model {
 	
 	function show_publish($tipo='')
 		{
+			if (strlen($tipo) > 0)
+				{
+					$wh = " and jnl_tipo = '$tipo' ";
+				} else {
+					$wh = '';
+				}
 			$sql = "select * from brapci_journal
 					left join brapci_journal_tipo on jnl_tipo = jtp_codigo 
 					left join ajax_cidade on cidade_codigo = jnl_cidade
 					left join brapci_periodicidade on jnl_periodicidade = peri_codigo
 					where (jnl_status = 'A' or jnl_status = 'B')
+					$wh
 					order by jtp_descricao, jnl_nome
 			 ";
 			$rlt = $this->db->query($sql);
@@ -136,15 +148,18 @@ class journals extends CI_model {
 			
 			$sx = '<table width="100%" class="tabela00">';
 			$sh = '<tr> <th></th>
+						<th>'.msg('pos').'</th>
 						<th>'.msg('title').'</th>
 						<th>'.msg('city').'</th>
 						<th>'.msg('periodicity').'</th>
 						<th>'.msg('ISSN').'*</th>
 						<th>'.msg('eISSN').'**</th>
 						</tr>';
-						
+			
+			$id = 0;			
 			while ($line = db_read($rlt))
 				{
+					$id++;
 					$tp = $line['jtp_descricao'];
 					
 					if ($tp <> $xtp)
@@ -157,6 +172,7 @@ class journals extends CI_model {
 					$link = '<A HREF="'.$link.'" class="link">';
 					$sx .= '<TR>';
 					$sx .= '<TD width="20">&nbsp;</td>';
+					$sx .= '<TD width="20" align="center">'.$id.'.</td>';
 					$sx .= '<TD class="tabela01">';
 					$sx .= $link.trim($line['jnl_nome']).'</a>';
 					

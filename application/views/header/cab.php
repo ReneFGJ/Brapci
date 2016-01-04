@@ -10,94 +10,76 @@ $nivel = $this -> session -> userdata('nivel');
 <style>
 	body {
 		background-color: #2076A7;
-		margin: 100px 0px 0px 0px;
+		margin: 120px 0px 0px 0px;
 	}
+	
+.navbar-nav > li > a:hover {
+   color: #fff;
+   background-color: #1c4060;
+}
+.nav > li > a {
+   color: #2076a7; 
+}
+
+.dropdown-menu {
+    background-image: none;
+    background-color: #2076A7;
+    color: #e8e8e8; 
+}
+
+.dropdown-menu > li > a:hover {
+   color: #fff;
+   background-color: #1c4060;
+}
 </style>
-
-<div class="cab_admin" style="z-index: 999;">
-	<table width="98%" border=0 align="center">
-		<tr valign="top">
-			<td class="lt1" >
-			<ul id="nav_cab">
-				<li class="nav_menu">
-					<a href="<?php echo base_url("index.php/home"); ?>">home</a>
-				</li>
-				<li class="nav_menu">
-				<?php if (strlen($user) > 0) {
-					echo '<a href="'.base_url("index.php/social/logout").'"><font color="#9090ff">logout<font></a>';
-				} else {
-					echo '<a href="'.base_url("index.php/social/login").'">login</a>';
-				}
-				
-				/* Admin */
-				if ($nivel == 9)
-					{	
-						echo '</li>'.cr();
-						echo '<li class="nav_menu">';
-						echo '<a href="'.base_url("index.php/admin").'">admin</a>';						
-					}
-				?>					
-				</li>
-				<li class="nav_menu">
-					<a href="<?php echo base_url("index.php/brapci/about"); ?>">sobre a brapci</a>
-				</li>
-			</ul></td>
-			<td align="right" width="300" rowspan=4 ><img src="<?php echo base_url('img/logo_cab.png'); ?>"></td>
-		</tr>
-		<tr>
-			<td>
-				<a href="https://twitter.com/BrapciCI"> <img src="<?php echo base_url('img/icone_twitter.png'); ?>" width="32" border=0 target="twitter"></A>
-				<a href="https://www.facebook.com/brapci.ci" target="facebook"> <img src="<?php echo base_url('img/icone_face.png'); ?>" width="32" border=0 ></A>
-			</td>
-		</tr>
-		<?php if (strlen($user) > 0) { ?>
-		<tr>
-			<td>
-				<font class="lt1"><font color="#ffffff"><?php echo $user; ?>(<?php echo $email;?>)</font></font>
-			</td>
-		</tr>
-		<? } ?>
-	</table>
-	<!-- Logo -->
-	<!-- login -->
-	<!-- Menu -->
-	<!-- Basket -->
-	<!-- Export -->
-	<!-- Send e-mail-->
-</div>
-
-<!-- Cabecalho -->
-<div class="cab_adminx" style="z-index: 999;">
-	<div class="menu_left">
-
+<body>
+	<div class="cab_admin" style="height: 120px; z-index: 2;" >
+		<nav class="navbar navbar-fixed-top" style="background-color: #1c4060; border: 0px;">
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<div class="navbar-header">
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<ul class="nav navbar-nav">
+						<li>
+							<div class="container-fluid">
+								<div class="navbar-header">
+									<a class="navbar-brand" href="<?php echo base_url('index.php'); ?>"> <img alt="Brand" src="<?php echo base_url('img/logo.png'); ?>"> </a>
+								</div>
+							</div>
+						</li>						
+						<li>
+							<a href="<?php echo base_url('index.php'); ?>">Home <span class="sr-only">(current)</span></a>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sobre a Brapci <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="<?php echo base_url("index.php/brapci/about");?>">Histórico</a>
+								</li>
+								<li>
+									<a href="<?php echo base_url("index.php/brapci/indicators");?>">Indicadores</a>
+								</li>
+								<li role="separator" class="divider"></li>
+								<li>
+									<a href="<?php echo base_url("index.php/brapci/indicator_authors");?>">Autores Rank</a>
+								</li>
+								<li role="separator" class="divider"></li>
+								<li>
+									<a href="#">One more separated link</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="<?php echo base_url('index.php/social/login'); ?>">
+							<button type="submit" class="btn btn-primary">
+								Sign in
+							</button> </a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
 	</div>
-	<div class="geral">
-		<div id="div1">
-			<?php
-			//echo '&nbsp;&nbsp;<a href="' . base_url('index.php/home/pt_BR') . '"><img src="' . base_url('img/ididoma_br.png') . '" border=0 title="Portugues" alt="Portugues"></A> | ';
-
-			/* se nao estiver logado */
-			if (strlen($user) == 0) {
-				echo '';
-			} else {
-				/* Mostra nome se logado */
-				echo $user . ' (' . $email . ')';
-				switch ($nivel) {
-					case '9' :
-						echo ' - Coordenador';
-						break;
-					default :
-						echo ' - ' . $nivel;
-						break;
-				}
-				echo '<BR><A href="' . base_url('index.php/home/logout') . '"><I>logout</I></A>';
-			}
-			?>
-		</div>
-
-	</div>
-</div>
-<center>
-	<div class="versao"></div>
-	<BR>
-	<BR>
+	<center>
+		<div class="versao"></div>
+		<BR>
+		<BR>

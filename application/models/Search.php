@@ -1554,6 +1554,46 @@ class search extends CI_model {
 		$sx = $this -> result_article_selected_xls($this -> session());
 		return ($sx);
 	}
+	
+	function busca_author($data,$pag=1)
+		{
+			$term = $this -> tratar_term($data['dd1']);
+			$term = troca($term,' ',';');
+			$term = splitx(';',$term);
+			$wh = '';
+			for ($r=0;$r < count($term);$r++)
+				{
+					$t = $term[$r];
+					$fld = 'autor.autor_nome';
+					if (strlen($wh) > 0) { $wh .= ' AND '; }
+					$wh .= "($fld LIKE '%$t%') ";
+				}
+			$sql = "SELECT * 
+					FROM brapci_autor AS autor
+					WHERE $wh 
+					AND autor_codigo = autor_alias
+					ORDER BY $fld ";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			
+			$sx = '<table width="100%" class="tabela00 lt2">';
+			for ($r=0;$r < count($rlt);$r++)
+				{
+					$line = $rlt[$r];
+					$sx .= '<tr>';
+					$sx .= '<td>';
+					$sx .= $line['autor_nome'];
+
+				
+					/* USE */					
+					$sx .= '</td>';
+
+					$sx .= '</tr>';
+				}
+			$sx .= '</table>';
+			return($sx);
+			
+		}
 
 }
 ?>

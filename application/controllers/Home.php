@@ -65,7 +65,7 @@ class home extends CI_Controller {
 		
 		/* Dados do Get */
 		$ano_ini = round(substr(get("dd3"),0,4));
-		$ano_fim = round(substr(get("dd3"),5,4));
+		$ano_fim = round(substr(get("dd4"),0,4));
 		if ($ano_ini < 1900) { $ano_ini = 1972; }
 		if ($ano_fim < $ano_ini) { $ano_fim = (date("Y")+1); }
 		
@@ -74,6 +74,7 @@ class home extends CI_Controller {
 		$data['dd1'] = get("dd1");
 		$data['dd2'] = get("dd2");
 		$data['dd3'] = get("dd3");
+		$data['dd4'] = get("dd4");
 		$data['ano_min'] = 1972;
 		$data['ano_max'] = date("Y")+1;
 		$data['anoi'] = $ano_ini;
@@ -83,8 +84,24 @@ class home extends CI_Controller {
 		$this -> load -> view("brapci/search_form",$data);
 
 		/* Busca */
-		$tela = $this -> Search -> busca_form($data);
-		$data = array('tela' => $tela);
+		/* Tipos de Busca */
+		$tipo = get('dd2');
+		switch ($tipo)
+			{
+				case '0':
+					$tela = $this -> Search -> busca_form($data);
+					$data = array('tela' => $tela);
+					break;
+				case '2':
+					$tela = $this -> Search -> busca_author($data);
+					$data = array('tela' => $tela);
+					break;					
+				default:
+					$tela = 'Em implantação';
+					$data = array('tela' => $tela);
+					break;
+					
+		}
 
 		/* Mostra resultado */
 		$this -> load -> view("brapci/search_result", $data);

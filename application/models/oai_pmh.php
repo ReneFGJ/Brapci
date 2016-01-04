@@ -304,7 +304,9 @@ class oai_pmh extends CI_model {
 		}
 		return ($ano);
 	}
-
+	/******************************************************************************
+	 * RECUPERA NUMERO ************************************************************
+	 ******************************************************************************/
 	function recupera_nr($s) {
 		$nr = '';
 		if (strpos($s, 'n.')) { $nr = substr($s, strpos($s, 'n.'), strlen($s));
@@ -328,13 +330,17 @@ class oai_pmh extends CI_model {
 		}
 		return ($nr);
 	}
-
+	/******************************************************************************
+	 * RECUPERA VOLUME ************************************************************
+	 ******************************************************************************/
 	function recupera_vol($s) {
 		$vl = '';
 		if (strpos($s, 'v.')) { $vl = substr($s, strpos($s, 'v.'), strlen($s));
 		}
 		if (strpos($s, 'Vol ')) { $vl = substr($s, strpos($s, 'Vol ') + 4, strlen($s));
 		}
+		if (strpos($s, 'Vol. ')) { $vl = substr($s, strpos($s, 'Vol. ') + 5, strlen($s));
+		}		
 
 		if (strlen($vl) > 0) {
 			if (strpos($vl, ',') > 0) { $vl = substr($vl, 0, strpos($vl, ','));

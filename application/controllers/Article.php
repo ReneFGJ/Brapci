@@ -59,6 +59,7 @@ class article extends CI_Controller {
 		$data['metodologia'] = $this->metodologia->mostra($metodologia);
 		
 		$this->load->view("brapci/article",$data);
+		$this->load->view("header/foot",$data);
 	}
 }
 ?>

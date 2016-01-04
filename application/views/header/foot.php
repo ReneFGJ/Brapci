@@ -5,6 +5,9 @@ if (isset($_SESSION['bp_session']))
 } else {
 	$ssid = '';
 }
+
+/* Page count */
+$pc = page_count();
 ?>
 </div>
 <BR>

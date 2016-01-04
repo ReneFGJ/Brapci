@@ -102,14 +102,16 @@ class social extends CI_Controller {
 	}
 
 	function login() {
-		$this -> load -> view('header/header');
+		$this -> load -> view('header/cab');
+		$this -> load -> view("brapci/content");
 		$this->login_parameters();
+		$this -> load -> view("header/foot");
 	}
 	
 	function login_parameters()
 		{
 		$data = array();
-		$data['login_versao'] = 'v0.15.45';
+		$data['login_versao'] = 'v0.16.01';
 		$data['versao'] = '';
 		$data['link_debug'] = '';
 		$data['login_name'] = msg('login_name');

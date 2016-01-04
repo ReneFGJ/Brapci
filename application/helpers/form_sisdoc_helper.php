@@ -1,21 +1,4 @@
 <?php
-// This file is part of the Brapci Software. 
-// 
-// Copyright 2015, UFPR. All rights reserved. You can redistribute it and/or modify
-// Brapci under the terms of the Brapci License as published by UFPR, which
-// restricts commercial use of the Software. 
-// 
-// Brapci is distributed in the hope that it will be useful, but WITHOUT ANY
-// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-// PARTICULAR PURPOSE. See the ProEthos License for more details. 
-// 
-// You should have received a copy of the Brapci License along with the Brapci
-// Software. If not, see
-// https://github.com/ReneFGJ/Brapci/tree/master//LICENSE.txt 
-/* @author: Rene Faustino Gabriel Junior <renefgj@gmail.com>
- * @date: 2015-12-01
- */
- 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -26,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @category	Helpers
  * @author		Rene F. Gabriel Junior <renefgj@gmail.com>
  * @link		http://www.sisdoc.com.br/CodIgniter
- * @version		v0.15.48
+ * @version		v0.16.01
  */
 $dd = array();
 
@@ -64,6 +47,88 @@ function normalizarNome($nome) {
 	$nomeCompleto = implode(self::NN_ESPACO, $partesNome);
 	return addslashes($nomeCompleto);
 }
+/**
+ * CodeIgniter
+ * sisDOC Labs
+ *
+ * @package	PageCount
+ * @author	Rene F. Gabriel Junior <renefgj@gmail.com>
+ * @copyright Copyright (c) 2006 - 2015, sisDOC
+ * @version 0.16.01
+ */
+	function page_count()
+		{
+			if (isset($_SERVER['PATH_INFO']) and (strlen($_SERVER['PATH_INFO']) > 0))
+			{
+				$info = $_SERVER['PATH_INFO'].'/';
+			} else {
+				echo '<hr>';
+				$info = $_SERVER['PHP_SELF'].'/';
+				$scrp = $_SERVER['SCRIPT_FILENAME'];
+				$info = troca($info,$scrp,'');				
+			}
+			echo '-->'.$info;
+			/* limpa */
+			if (substr($info,0,1)=='/')
+				{
+					$info = substr($info,1,strlen($info));
+				}
+			$path = '';
+			for ($r=0;$r < 2;$r++)
+				{
+					$pos = strpos($info,'/');
+					if ($pos > 0)
+						{
+							$path .= substr($info,0,$pos).'/';
+							$info = substr($info,$pos+1,strlen($info));
+						}
+				}
+				echo '-->'.$path;
+			/* Info */
+			$pos = strpos($info,'/');
+			if ($pos > 0)
+				{
+					$info = substr($info,0,$pos);
+				} else {
+					$info = '';
+				}
+			$sx = $path.'--'.$info;
+			if ($info == 'index.php') { $info = ''; }
+			
+			/* resgata pagina */
+			$CI = &get_instance();
+			$sql = "select * from _webcount_page where wcp_page = '$path' ";
+			$rlt = $CI->db->query($sql);
+			$rlt = $rlt->result_array();
+			if (count($rlt) == 0)
+				{
+					$sqlx = "insert into _webcount_page
+							( wcp_page ) values ('$path')
+					";
+					$rlt2 = $CI->db->query($sqlx);
+					
+					$rlt = $CI->db->query($sql);
+					$rlt = $rlt->result_array();
+				} else {
+					
+				}
+			if (count($rlt) > 0)
+				{
+					$page = $rlt[0]['id_wcp'];
+				} else {
+					$page = 1;
+				}
+			$ip = ip();
+			/* Incremente */
+			$sql = "insert into _webcount
+					( wc_ip, wc_page, wc_param )
+					value
+					( '$ip','$page','$info')
+			";
+			$rlt3 = $CI->db->query($sql);
+			$sx = '';	
+			return($sx);		
+		}	
 
 /**
  * CodeIgniter
@@ -121,10 +186,16 @@ function meses_short() {
 }
 
 function enviaremail($para, $assunto, $texto, $de) {
+	if (!is_array($para))
+	{
+		$para = array($para);
+	}
 	$CI = &get_instance();
-
+	
+	$config = Array('protocol' => 'smtp', 'smtp_host' => 'smtps.pucpr.br', 'smtp_port' => 25, 'smtp_user' => '', 'smtp_pass' => '', 'mailtype' => 'html', 'charset' => 'iso-8859-1', 'wordwrap' => TRUE);
+	$CI -> load -> library('email', $config);
 	$CI -> email -> subject($assunto);
-	$CI -> email -> message($texto);
+	$CI -> email -> message($texto);	
 
 	/* de */
 	$sql = "select * from mensagem_own where id_m = " . round($de);
@@ -134,17 +205,15 @@ function enviaremail($para, $assunto, $texto, $de) {
 		$line = $rlt[0];
 		$e_mail = trim($line['m_email']);
 		$e_nome = trim($line['m_descricao']);
-
+		
 		$CI -> email -> from($e_mail, $e_nome);
 		$CI -> email -> to($para[0]);
 		$CI -> email -> subject($assunto);
 		$CI -> email -> message($texto);
 
-		if (is_array($para)) {
-			array_push($para, trim($line['m_email']));
-		} else {
-			$para = array($para, trim($line['m_email']));
-		}
+		array_push($para, trim($line['m_email']));
+		//array_push($para, 'renefgj@gmail.com');
+		
 		/* e-mail com copias */
 		$bcc = array();
 		for ($r = 1; $r < count($para); $r++) {
@@ -170,10 +239,10 @@ function enviaremail($para, $assunto, $texto, $de) {
 		echo $sx;
 
 		$CI -> email -> send();
-
 		return ('ok');
 	} else {
-		return ('Proprietário do e-mail não configurado (veja mensagem_own)');
+		echo ('Proprietário do e-mail não configurado (veja mensagem_own)');
+		exit;
 	}
 }
 
@@ -252,7 +321,7 @@ function load_page($url) {
 	CURLOPT_AUTOREFERER => true, // set referer on redirect
 	CURLOPT_CONNECTTIMEOUT => 120, // timeout on connect
 	CURLOPT_TIMEOUT => 120, // timeout on response
-	CURLOPT_MAXREDIRS => 10, // stop after 10 redirects
+	CURLOPT_MAXREDIRS => 10,   // stop after 10 redirects
 	);
 
 	$ch = curl_init($url);
@@ -824,6 +893,7 @@ class form {
 	var $row_edit = '';
 	var $row = '';
 	var $offset = 30;
+	var $order = '';
 
 	function editar($cp, $tabela) {
 		$ed = new form;
@@ -1158,7 +1228,13 @@ if (!function_exists('form_edit')) {
 		}
 
 		$sql = "select $fld from " . $tabela . ' ' . $wh;
-		$sql .= " order by " . $fd[1];
+		if (strlen($obj ->order) > 0)
+			{
+				$sql .= " order by " . $obj ->order;
+			} else {
+				$sql .= " order by " . $fd[1];		
+			}
+		
 		$sql .= " limit " . $start_c . " , " . $offset;
 		$query = $CI -> db -> query($sql);
 		$data = '';
@@ -1269,6 +1345,12 @@ if (!function_exists('form_edit')) {
 				}
 				/* Excessoes */
 				if (isset($vlr)) {
+					/* Array */
+					if (is_array($vlr))
+						{
+							$vlr = serialize($vlr);
+						}
+					
 					/* verefica se o campo na gravavel */
 					if (strlen($cp[$r][1]) > 0) {
 						if ($sv > 0) { $sql .= ', ';
@@ -1315,6 +1397,10 @@ if (!function_exists('form_edit')) {
 						$sq2 .= ', ';
 					}
 					$sq1 .= $cp[$r][1];
+					if (is_array($vlr))
+						{
+							$vlr = implode(';', $vlr);
+						}
 					$sq2 .= "'" . $vlr . "'";
 					$sv++;
 				}
@@ -1432,7 +1518,12 @@ if (!function_exists('form_edit')) {
 			$requer = $cp[$r][3];
 			if ($requer == true) {
 				$vlr = $CI -> input -> post('dd' . $r);
-				if (strlen($vlr) == 0) { $saved = 0;
+				if (is_array($vlr)) {
+					if (count($vlr)==0) { $saved = 0; }
+				} else {
+					if (strlen($vlr) == 0) { $saved = 0;
+					}
+
 				}
 			}
 		}
@@ -1524,12 +1615,11 @@ if (!function_exists('form_edit')) {
 	}
 
 	/* Formulario */
-	function form_field($cp, $vlr) {
+	function form_field($cp, $vlr, $name='', $table=0) {
 		global $dd, $ddi;
 		/* Zera tela */
 		$tela = '';
 
-		$table = 1;
 		if (!(isset($dd))) { $dd = array();
 			$ddi = 0;
 		}
@@ -1543,6 +1633,8 @@ if (!function_exists('form_edit')) {
 		$tt = substr($type, 1, 1);
 
 		/* exessoes */
+		if (substr($type, 0, 3) == '$QR') { $tt = 'QR';
+		}				
 		if (substr($type, 0, 4) == '$MES') { $tt = 'MES';
 		}
 		if (substr($type, 0, 3) == '$SW') { $tt = 'SW';
@@ -1553,12 +1645,20 @@ if (!function_exists('form_edit')) {
 		}
 		if (substr($type, 0, 3) == '$AA') { $tt = 'AA';
 		}
+		if (substr($type, 0, 3) == '$CM') { $tt = 'CM';
+		}
 
 		/* form */
 		$max = 100;
 		$size = 100;
 		$dados = array();
-		$dn = 'dd' . $ddi;
+		
+		if (strlen($name)==0)
+			{
+				$dn = 'dd' . $ddi;
+			} else {
+				$dn = $name;
+			}
 
 		if ($table == 1) {
 			$td = '<td>';
@@ -1596,7 +1696,14 @@ if (!function_exists('form_edit')) {
 				$n1 = substr($ntype, 0, strpos($ntype, '-'));
 				$n2 = sonumero(substr($ntype, strpos($ntype, '-'), strlen($ntype)));
 				$n3 = substr($ntype, strlen($ntype) - 1, 1);
-				$options = array('' => msg('::select an option::'));
+				/* Sem option */
+				if (strpos($ntype,'U') > 0)
+					{
+						
+					} else {
+						$options = array('' => msg('::select an option::'));		
+					}
+				
 
 				if ($n3 != 'D') {
 					/* Crescente */
@@ -1621,7 +1728,7 @@ if (!function_exists('form_edit')) {
 				}
 				if ($required == 1) { $tela .= ' <font color="red">*</font> ';
 				}
-				$tela .= '<TD>';
+				$tela .= $td;
 				$tela .= form_dropdown($dados, $options, $vlr);
 				break;
 
@@ -1694,7 +1801,7 @@ if (!function_exists('form_edit')) {
 				$tela .= $tdn . $trn;
 				break;
 			case 'C' :
-				/* TR da tabela */
+			/* TR da tabela */
 				$tela .= $tr;
 
 				$dados = array('name' => $dn, 'id' => $dn, 'value' => '1', 'class' => 'onoffswitch-checkbox');
@@ -1708,8 +1815,47 @@ if (!function_exists('form_edit')) {
 				}
 				if ($required == 1) { $tela .= ' <font color="red">*</font> ';
 				}
-
 				$tela .= $tdn . $trn;
+				break;
+
+			/* Select Box */
+			case 'CM' :
+				$ntype = trim(substr($type, 3, strlen($type)));
+				$ntype = troca($ntype, '&', ';') . ';';
+				$param = splitx(';', $ntype);
+
+				$tela .= $tr;
+
+				/* label */
+				if (strlen($label) > 0) {
+					$tela .= $tdl . $label . ' ';
+				}
+				if ($required == 1) { $tela .= ' <font color="red">*</font> ';
+				}
+				
+				/* TR da tabela */
+				$tela .= '<td align="left">';
+				//echo implode(';',$vlr);
+				if (is_array($vlr))
+					{
+
+					} else {
+						$vlr = array();
+					}
+				for ($r = 0; $r < count($param); $r++) {
+					if (count(trim($param[$r])) > 0) {
+						$nterm = splitx(':', $param[$r] . ':');
+						$key = $nterm[0];
+						$valor = $nterm[1];
+						$check = '';
+						for ($rx=0;$rx < count($vlr);$rx++)
+							{
+								if ($vlr[$rx] == $key) { $check = 'checked'; }
+							}
+						$tela .= '<input type="checkbox" name="'.$dn.'[]" id="'.$dn.'" value="' . $key . '" '.$check.'>' . $valor . '<br>';
+					}
+				}
+				$tela .= '<br>';
 				break;
 
 			/* Oculto */
@@ -1826,6 +1972,44 @@ if (!function_exists('form_edit')) {
 				break;
 
 			/* String */
+			
+			/* Select Box */
+			case 'QR' :
+				$ntype = trim(substr($type, 3, strlen($type)));
+				$ntype = troca($ntype, ':', ';') . ';';
+				$param = splitx(';', $ntype);
+				$options = array('' => msg('::select an option::'));
+
+				/* recupera dados */
+				$sql = "select * from (" . $param[2] . ") as tabela order by " . $param[1];
+				$CI = &get_instance();
+				$query = $CI -> db -> query($sql);
+				$form = '';
+				foreach ($query->result_array() as $row) {
+					/* recupera ID */
+					$flds = trim($param[0]);
+					$vlrs = trim($param[1]);
+					$flds = $row[$flds];
+					$vlrs = $row[$vlrs];
+					$options[$flds] = $vlrs;
+					$checked = '';
+					$dados = array('name' => $dn, 'id' => $dn, 'value' => $flds, 'class' => 'form_select', 'checked' => $checked);
+					$form .= form_radio($dados).' '.$vlrs.'<br>';					
+				}
+
+				$tela .= $tr;
+
+				/* label */
+				if (strlen($label) > 0) {
+					$tela .= $tdl . $label . ' ';
+				}
+				if ($required == 1) { $tela .= ' <font color="red">*</font> ';
+				}
+				$tela .= '<TD>';
+				$tela .= $form;
+				break;
+
+			/* String */			
 			case 'R' :
 				$ntype = trim(substr($type, 2, strlen($type)));
 				$ntype = troca($ntype, '&', ';') . ';';
@@ -1842,11 +2026,13 @@ if (!function_exists('form_edit')) {
 						if ($key == $vlr) { $checked = true;
 						}
 						$dados = array('name' => $dn, 'id' => $dn, 'value' => $key, 'class' => 'form_select', 'checked' => $checked);
-						$form .= '<tr valign="top"><td>' . form_radio($dados) . '</td>';
-						$form .= '<td class="form_radio">' . $valor . '</td>';
-						$form .= '</tr>';
+						$form .= '<tr valign="top"><td class="form_radio">' . form_radio($dados);
+						//$form .= '</td>';
+						$form .= '' . $valor . '</td>';
+						//$form .= '</tr>';
 					}
 				}
+				$form .= '<tr><td><br></td></tr>';
 				$form .= '</table>';
 
 				/* recupera dados */
@@ -1865,7 +2051,7 @@ if (!function_exists('form_edit')) {
 
 			/* String */
 			case 'D' :
-				/* TR da tabela */
+			/* TR da tabela */
 				$tela .= $tr;
 
 				/* label */
@@ -1891,7 +2077,7 @@ if (!function_exists('form_edit')) {
 
 			/* String */
 			case 'LINK' :
-				/* TR da tabela */
+			/* TR da tabela */
 				$tela .= $tr;
 
 				/* label */
@@ -1909,7 +2095,7 @@ if (!function_exists('form_edit')) {
 				break;
 
 			case 'M' :
-				/* TR da tabela */
+			/* TR da tabela */
 				$tela .= $tr;
 
 				/* label */
@@ -1919,7 +2105,7 @@ if (!function_exists('form_edit')) {
 
 			/* form_number */
 			case 'N' :
-				/* TR da tabela */
+			/* TR da tabela */
 				$tela .= $tr;
 
 				/* label */
@@ -1938,7 +2124,7 @@ if (!function_exists('form_edit')) {
 
 			/* String */
 			case 'S' :
-				/* TR da tabela */
+			/* TR da tabela */
 				$tela .= $tr;
 
 				/* label */
