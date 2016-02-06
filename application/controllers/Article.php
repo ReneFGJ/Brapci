@@ -22,13 +22,14 @@ class article extends CI_Controller {
 		
 		$db_public = 'brapci_publico.';
 		parent::__construct();
+		$this -> lang -> load("app", "portuguese");
 		$this -> load -> library('form_validation');
 		$this -> load -> database();
 		$this -> load -> helper('form');
 		$this -> load -> helper('form_sisdoc');
 		$this -> load -> helper('url');
 		$this -> load -> library('session');
-		/* $this -> lang -> load("app", "portuguese"); */
+		
 		date_default_timezone_set('America/Sao_Paulo');
 	}
 

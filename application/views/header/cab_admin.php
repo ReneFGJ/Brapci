@@ -1,118 +1,72 @@
 <?php
-if (!isset($title_page)) { $title_page = 'Home';
-}
 $this -> load -> view("header/header");
 $this -> load -> view('header/analytics.google.php');
+$this -> load -> view('header/cab_ajax_loading');
 
 $user = $this -> session -> userdata('user');
 $email = $this -> session -> userdata('email');
 $nivel = $this -> session -> userdata('nivel');
+$perfil_show = '';
+/* $user_type */
+$user_type = msg('user');
+switch ($nivel) {
+	case '9' :
+		$user_type = msg('perfil_coordenador');
+		break;
+	default :
+		$user_type = msg('perfil_user');
+		break;
+}
 
-/* Segurança */
-if ($nivel < 5) { redirect(base_url('index.php/home')); }
+$bt_home = '<a href="' . base_url('index.php') . '">' . msg('bt_home') . '</a>';
+$bt_home_admin = '<a href="' . base_url('index.php/admin') . '">' . msg('bt_home_admin') . '</a>';
+$bt_sign_in = '';
+$bt_sign_out = '';
+$bt_admin = '';
+$bt_about = '<a href="' . base_url('index.php/brapci/about') . '">' . msg('bt_about') . '</a>';
 
+$sign = '';
+/********* Tipo de login */
+if (strlen($user) > 0) {
+
+	$perfil_show = '
+		<div style="width: auto; text-align: right; padding: 10px 20px 0px 0px; border: 0px solid #ffffff; float: right; margin: 0px 10px 0px 0px;">
+			<font color="white">' . $user . ' (' . $email . ')</font>
+			<br>
+			<font color="white"><i>' . $user_type . '</i></font>
+		</div>';
+
+	if ($nivel == 9) {
+		$bt_admin = '<a href="' . base_url('index.php/admin') . '">' . msg('bt_admin') . '</a>';
+	} else {
+	}
+	$bt_sign_out = '<a href="' . base_url('index.php/social/logout') . '">' . msg('bt_sign_out') . '</a>';
+
+} else {
+	$bt_sign_in = '<a href="' . base_url('index.php/social/login') . '">' . msg('bt_sign_in') . '</a>';
+}
 ?>
-<div id="cab_admin" class="cab_admin">
-	<table width="98%" border=0 align="center">
-		<tr valign="top">
-			<td class="lt1" >
-			<ul id="nav_cab">
-				<li class="nav_menu">
-					<a href="<?php echo base_url("index.php/home"); ?>">home</a>
-				</li>				
-				
-				<?php
-				echo '<li class="nav_menu">';
-				if (strlen($user) > 0) {
-					echo '<a href="' . base_url("index.php/social/logout") . '"><font color="#9090ff">logout<font></a>';
-				} else {
-					echo '<a href="' . base_url("index.php/social/login") . '">login</a>';
-				}
-				echo '</li>';
-
-				/* Admin */
-				if ($nivel == 9) {
-					echo '<li class="nav_menu">';
-					echo '<a href="' . base_url("index.php/admin/journal") . '">'.msg('publications').'</a>';
-					echo '</li>' . cr();
-					
-					echo '<li class="nav_menu">';
-					echo '<a href="' . base_url("index.php/author/row") . '">'.msg('autoridades').'</a>';
-					echo '</li>' . cr();
-					
-					echo '<li class="nav_menu">';
-					echo '<a href="' . base_url("index.php/cited") . '">'.msg('cited').'</a>';
-					echo '</li>' . cr();					
-					
-					echo '<li class="nav_menu">';
-					echo '<a href="' . base_url("index.php/vocabulario/row") . '">'.msg('vocabulario').'</a>';
-					echo '</li>' . cr();					
-
-					echo '<li class="nav_menu">';
-					echo '<a href="' . base_url("index.php/oai") . '">'.msg('OAI').'</a>';
-					echo '</li>' . cr();		
-
-					echo '<li class="nav_menu">';
-					echo '<a href="' . base_url("index.php/admin/tools") . '">'.msg('tools').'</a>';
-					echo '</li>' . cr();							
-				}
-				?>					
-			</ul></td>
-			<td>
-					<div id="cab_logo_1" class="cab_logo cab_admin_logo_01"></div>
-					<div id="cab_logo_2" class="cab_logo cab_admin_logo_02"></div> 
-			</td>
-		</tr>
-		<tr>
-			<td class="lt1"><br><font color="#C0C0C0" style="margin-left: 10px;"><?php echo $user . ' (' . $email . ')'; ?></font></td>
-		</tr>
-	</table>	
-</div>
-
-<script>
-	/* $("body").addClass("margin120"); -*/
-	var $offset = 0;
-	$(document).on("scroll", function() {
-
-		var $logo1 = $("#cab_logo_1");
-		var $logo2 = $("#cab_logo_2");
-		var $cab = $("#cab_admin");
-
-		var offset = $(document).scrollTop();
-
-		if (offset > 1) {
-			if ($offset == 0) {
-				$($cab).animate({
-					top : "0px",
-					height : "30px"
-				}, 500);
-				$($logo1).animate({
-					top : "-100px",
-					height : "10px"
-				}, 500);
-				$($logo2).animate({
-					top : "0px",
-					height : "41px"
-				}, 500);
-				$offset = 1;
-			}
-
-		} else {
-			$offset = 0;
-			$($cab).animate({
-				top : "0px",
-				height : "90px"
-			}, 500);
-			$($logo1).animate({
-				top : "0px",
-				height : "90px"
-			}, 500);
-			$($logo2).animate({
-				top : "-100px",
-				height : "90px"
-			}, 500);
-		}
-	});
-</script>
-
-<div id="content">
+<style>
+	body {
+		background-color: #ffffff;
+		margin: 150px 0px 0px 0px;
+	}
+</style>
+<body>
+	<div class="cab_admin" style="height: 120px; z-index: 2;" >
+		<?php echo $perfil_show; ?>
+		<div id="navbar">
+			<ul>
+				<li>
+					<a href="<?php echo base_url('index.php'); ?>"> <img alt="Brand" src="<?php echo base_url('img/logo.png'); ?>"> </a>
+				</li>
+				<li class="lis">
+					<?php echo $bt_home; ?>
+				</li>
+				<li class="lis">
+					<?php echo $bt_home_admin; ?>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div id="content_admin">

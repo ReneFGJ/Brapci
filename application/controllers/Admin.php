@@ -62,7 +62,10 @@ class admin extends CI_Controller {
 
 		$tela = $this -> oai_pmh -> oai_resumo();
 		$data['content'] = $tela;
+			
 		$this -> load -> view('content', $data);
+		
+		$this -> load -> view('admin/menu_admin', $data);
 
 	}
 
@@ -79,6 +82,7 @@ class admin extends CI_Controller {
 		$form -> row_edit = base_url('index.php/admin/journal_edit/');
 		$form -> row_view = base_url('index.php/admin/journal_view/');
 		$form -> row = base_url('index.php/admin/journal/');
+		$form -> offset = 200;
 
 		$tela['tela'] = row($form, $id);
 		$url = base_url('index.php/admin/journal');
@@ -335,6 +339,17 @@ class admin extends CI_Controller {
 		$this -> load -> view('form/form', $data);
 
 	}
+	
+	function article_double()
+		{
+		$this -> cab();
+		$this -> load -> model('articles');
+		
+		$tela = $this->articles->double_articles();
+		$data['content'] = $tela;
+		
+		$this->load->view('content',$data);	
+		}
 
 	function journal_edit($id = 0, $check) {
 
@@ -564,6 +579,7 @@ class admin extends CI_Controller {
 		$this -> cab();
 		$menu = array();
 		array_push($menu, array(msg('Autoindex'), msg('find DOI in Abstract'), 'ITE', '/admin/doi_find_abstract'));
+		array_push($menu, array(msg('Articles'), msg('Check duplicate'), 'ITE', '/admin/article_double'));
 		array_push($menu, array(msg('Public Module'), msg('Export to public module'), 'ITE', '/admin/export'));
 		array_push($menu, array(msg('Autoridade'), msg('Check remissive authors n use'), 'ITE', '/admin/author_use'));
 		array_push($menu, array(msg('Autoridade'), msg('Check remissive terms in use'), 'ITE', '/admin/terms_use'));

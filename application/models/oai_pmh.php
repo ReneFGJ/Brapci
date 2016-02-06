@@ -21,47 +21,30 @@ class oai_pmh extends CI_model {
 	function repository_list() {
 		$sql = "select * from brapci_journal 
 						where jnl_status <> 'X'
+						AND jnl_url_oai <> ''	
 						order by jnl_nome
 						";
 		$rlt = db_query($sql);
-		$sx = '';
-		$sx .= '<table width="100%" class="lt1">';
+		$sx = '<h1>'.msg('oai_journals').'</h1>';
 		while ($line = db_read($rlt)) {
+			$last = $line['jnl_last_harvesting'];
+			$url = $line['jnl_url'];
+			//print_r($line);
+			//exit;
 			$link = '<A HREF="' . trim($line['jnl_url']) . '" target="_new">';
-			$link_oai = '<A HREF="' . base_url('index.php/oai/Identify/' . $line['id_jnl']) . '">';
+			$link_oai = base_url('index.php/oai/Identify/' . $line['id_jnl']);
+			
 
-			$sx .= '<TR>';
-			$sx .= '<td>';
+			$sx .= '<a href="'.$link_oai.'" class="link lt2">';
+			$sx .= '<div style="float: left; width: 300px; height: 100px; border: 1px solid #888; margin: 0px 10px 5px 0px; border-radius: 10px; padding: 5px 10px;">';
+			$sx .= '<img src="' . base_url('img/icone_oai.png') . '" height="32" border=0 title="Coleta OAI-PMH" align="right">';			
 			$sx .= $line['jnl_nome'];
-			$sx .= '<td>';
 			$sx .= $line['jnl_token'];
-			$sx .= '<td>';
-			$sx .= stodbr($line['jnl_last_harvesting']);
-			$sx .= '<td align="center">';
-			$sx .= $line['jnl_artigos_indexados'];
+			$sx .= '<br><br><font class="lt1">'.msg('last_update').': '.stodbr($line['jnl_last_harvesting']).'</font>';
 
-			/* OAI */
-			$sx .= '<td align="center">';
-			if (strlen(trim($line['jnl_url_oai'])) > 0) {
-				$sx .= $link_oai;
-				$sx .= '<img src="' . base_url('img/icone_oai.png') . '" height="16" border=0 title="Link da coleta OAI">';
-				$sx .= '</A>';
-			} else {
-				$sx .= '-';
-			}
-
-			/* Site */
-			$sx .= '<td align="center">';
-			if (strlen(trim($line['jnl_url'])) > 0) {
-				$sx .= $link;
-				$sx .= '<img src="' . base_url('img/icone_url.png') . '" height="16" border=0 title="Site da publicação">';
-				$sx .= '</A>';
-			} else {
-				$sx .= '-';
-			}
-			$ln = $line;
+			$sx .= '</div>';
+			$sx .= '</a>';
 		}
-		$sx .= '</table>';
 		return ($sx);
 	}
 

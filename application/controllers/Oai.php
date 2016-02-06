@@ -23,6 +23,7 @@ class oai extends CI_controller {
 		global $db_public;
 
 		parent::__construct();
+		$this -> lang -> load("app", "portuguese");
 		$this -> load -> library('form_validation');
 		$this -> load -> database();
 		$this -> load -> helper('form');
@@ -282,7 +283,7 @@ class oai extends CI_controller {
 
 		$data['content'] = $this -> oai_pmh -> repository_list();
 
-		$this -> load -> view("oai/oai_content", $data);
+		$this -> load -> view("content", $data);
 	}
 
 	function Harvest($id = 0) {

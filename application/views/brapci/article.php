@@ -41,6 +41,11 @@ echo '</div>';
 
 echo '</div>';
 
+echo msg('how_to_cite').':<br>';
+echo $reference;
+
+echo '<BR>';
+echo '<BR>';
 echo '<BR>';
 echo '<div id="cited">[Cited by ' . $at_citacoes . ']</div>';
 

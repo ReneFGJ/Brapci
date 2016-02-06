@@ -28,6 +28,30 @@ if (!function_exists(('msg')))
 					}
 			}
 	}
+/* Cited */
+$lang['how_to_cite'] = 'Como citar este trabalho';
+$lang['mes_01a'] = 'Jan.';
+$lang['mes_02a'] = 'Fev.';
+$lang['mes_03a'] = 'Mar.';
+$lang['mes_04a'] = 'Maio';
+$lang['mes_05a'] = 'Jun.';
+$lang['mes_06a'] = 'Jul';
+$lang['mes_08a'] = 'Ago.';
+$lang['mes_09a'] = 'Set.';
+$lang['mes_10a'] = 'Out.';
+$lang['mes_11a'] = 'Nov.';
+$lang['mes_12a'] = 'Dez.';
+/* CAB */
+$lang['perfil_coordenador'] = 'Coordenador';
+$lang['bt_admin'] = 'admin';
+$lang['bt_home'] = 'home';
+$lang['bt_sign_out'] = 'logout';
+$lang['bt_sign_in'] = 'fazer login';
+$lang['bt_about'] = 'sobre a brapci';
+$lang['bt_home_admin'] = 'admin home';
+$lang['last_update'] = 'Útima atualização';
+	
+$lang['oai_journals'] = 'Publicações compatíveis com OAI-PMH';
 	
 $lang['form_query'] = "Pergunta de Busca";
 $lang['form_found'] = "foram localizado(s)";
@@ -50,4 +74,5 @@ $lang['login_name'] = 'Informe seu login';
 $lang['login_password'] = 'Informe sua senha';
 $lang['login_enter'] = 'Entar';
 $lang['login_social'] = 'Logue com uma conta existente (recomendado)';
+$lang['your_passoword'] = 'sua senha';
 ?>

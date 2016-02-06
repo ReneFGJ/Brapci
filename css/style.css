@@ -175,6 +175,16 @@ h2 {
 			padding: 10px 10px 10px 10px;
 			border-radius: 10px;
 		}
+		
+	#content_admin
+		{
+			width: 96%;
+			border: 0px solid #808080;
+			min-height: 600px;
+			margin: 0 auto;
+			padding: 10px 10px 10px 10px;
+			border-radius: 10px;
+		}		
 
 	#result_select {
 		border: thin solid gray;
@@ -593,7 +603,7 @@ h2 {
 	.tabela01 {
 		font-size: 12px;
 		border: 1px solid #C0C0C0;
-		padding: 1px 1px 1px 1px;
+		padding: 4px 4px 4px 4px;
 	}
 
 	/* RODAPE */

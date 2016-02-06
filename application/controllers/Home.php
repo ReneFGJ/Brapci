@@ -97,7 +97,7 @@ class home extends CI_Controller {
 					$data = array('tela' => $tela);
 					break;					
 				default:
-					$tela = 'Em implantação';
+					$tela = '';
 					$data = array('tela' => $tela);
 					break;
 					

@@ -1,17 +1,17 @@
 <?php
-// This file is part of the Brapci Software. 
-// 
+// This file is part of the Brapci Software.
+//
 // Copyright 2015, UFPR. All rights reserved. You can redistribute it and/or modify
 // Brapci under the terms of the Brapci License as published by UFPR, which
-// restricts commercial use of the Software. 
-// 
+// restricts commercial use of the Software.
+//
 // Brapci is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-// PARTICULAR PURPOSE. See the ProEthos License for more details. 
-// 
+// PARTICULAR PURPOSE. See the ProEthos License for more details.
+//
 // You should have received a copy of the Brapci License along with the Brapci
 // Software. If not, see
-// https://github.com/ReneFGJ/Brapci/tree/master//LICENSE.txt 
+// https://github.com/ReneFGJ/Brapci/tree/master//LICENSE.txt
 /* @author: Rene Faustino Gabriel Junior <renefgj@gmail.com>
  * @date: 2015-12-01
  */
@@ -48,15 +48,15 @@ class social extends CI_Controller {
 
 		$db_public = 'brapci_publico.';
 		parent::__construct();
-		
+
 		$this -> lang -> load("app", "portuguese");
-		$this -> load -> library('form_validation');		
+		$this -> load -> library('form_validation');
 		$this -> load -> database();
 		$this -> load -> helper('form');
 		$this -> load -> helper('form_sisdoc');
 		$this -> load -> helper('url');
 		$this -> load -> library('session');
-		$this -> load -> library('Oauth2');		
+		$this -> load -> library('Oauth2');
 		date_default_timezone_set('America/Sao_Paulo');
 	}
 
@@ -70,6 +70,17 @@ class social extends CI_Controller {
 		$this -> session -> set_userdata($data);
 		redirect(base_url('index.php/home'));
 	}
+	
+	function update()
+		{
+			$sql = "ALTER TABLE users ADD us_password CHAR(20) NOT NULL AFTER `us_email`;";
+			$this->db->query($sql);
+
+			$sql = "update users set us_password = '0c499ec0eb533670fff82c60cdf7b049' where us_email = 'renefgh@gmail.com' ";
+			$this->db->query($sql);
+			
+			redirect(base_url('index.php/social/login'));
+		}
 
 	function login_local() {
 		$dd1 = $this -> input -> post('dd1');
@@ -84,6 +95,7 @@ class social extends CI_Controller {
 			$dd2 = md5($dd2 . 'Brapci');
 			$line = $rlt[0];
 			$dd3 = $line['us_password'];
+
 			if ($dd2 == $dd3) {
 				/* Salva session */
 				$ss_user = $line['us_nome'];
@@ -104,12 +116,12 @@ class social extends CI_Controller {
 	function login() {
 		$this -> load -> view('header/cab');
 		$this -> load -> view("brapci/content");
-		$this->login_parameters();
+		$data = $this -> login_parameters();
+		$this -> load -> view('login/login', $data);
 		$this -> load -> view("header/foot");
 	}
-	
-	function login_parameters()
-		{
+
+	function login_parameters() {
 		$data = array();
 		$data['login_versao'] = 'v0.16.01';
 		$data['versao'] = '';
@@ -120,8 +132,8 @@ class social extends CI_Controller {
 		$data['login_entrar'] = msg('login_enter') . ' >>';
 		$erro = $this -> input -> get('erro');
 		$data['login_error'] = $erro;
-		$data['modo'] = 'Modo: <b>homologação</b>';
-		$this -> load -> view('login/login', $data);
+		$data['modo'] = 'Modo: <b>beta test</b>';
+		return ($data);
 	}
 
 	public function session($provider) {

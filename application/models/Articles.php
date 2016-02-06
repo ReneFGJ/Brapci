@@ -64,6 +64,24 @@ class articles extends CI_model {
 					</table>';
 			return($sx);
 		}
+
+	function double_articles()
+		{
+			$sql = "select * from ( SELECT ar_oai_id, count(*) as total 
+									FROM `brapci_article` 
+								WHERE 1 GROUP by ar_oai_id 
+								) as tabela where total > 1
+								ORDER BY total desc";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			$sx = '';
+			for ($r=0;$r < count($rlt);$r++)
+				{
+					$line = $rlt[$r];	
+					$sx .= $line['ar_oai_id'] . '<br>';
+				}
+			return($sx);
+		}
 	
 	function insert_suporte($codigo,$link,$jid)
 		{
@@ -246,6 +264,9 @@ class articles extends CI_model {
 	}
 
 	function le($id) {
+		$this->load->model("references");
+		$this -> load -> model('keywords');
+		
 		$id = strzero($id, 10);
 		$sql = "select * from brapci_article
 						left join brapci_journal on ar_journal_id = jnl_codigo
@@ -257,14 +278,15 @@ class articles extends CI_model {
 		$line = db_read($query);
 
 		/* Kwywords */
-		$this -> load -> model('keywords');
-
 		$line['ar_keyw_1'] = $this -> keywords -> retrieve_keywords($id, $line['ar_idioma_1']);
 		$line['ar_keyw_2'] = $this -> keywords -> retrieve_keywords($id, $line['ar_idioma_2']);
 		$line['author'] = $this -> author_article($id);
 		$line['authores_row'] = $this -> author_article_row($id);
 		$line['cited'] = $this -> cited($id);
 		$line['link_pdf'] = $this -> arquivos($id);
+		
+		/* reference */
+		$line['reference'] = $this->references->cited($line);
 
 		/* Pages */
 		$p1 = $line['ar_pg_inicial'];

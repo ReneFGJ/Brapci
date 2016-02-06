@@ -1,5 +1,5 @@
-<table width="100%">
-	<TR><TD align="right" width="20%">repositoryName</TD>		<TD><B><?php echo $repositoryName; ?></B></TD></TR>
+<table width="100%" class="tabela01 lt1">
+	<TR><TD align="right" width="20%">repositoryName</TD>		<TD class="lt2"><B><?php echo $repositoryName; ?></B></TD></TR>
 	<TR><TD align="right" width="20%">baseURL</TD>				<TD><B><?php echo $baseURL; ?></B></TD></TR>
 	<TR><TD align="right" width="20%">protocolVersion</TD>		<TD><B><?php echo $protocolVersion; ?></B></TD></TR>
 	<TR><TD align="right" width="20%">adminEmail</TD>			<TD><B><?php echo $adminEmail; ?></B></TD></TR>
