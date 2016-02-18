@@ -69,6 +69,25 @@ class admin extends CI_Controller {
 
 	}
 
+	function games() {
+		$this -> load -> model('articles');
+		$this -> load -> model('oai_pmh');
+		$data = array();
+		$this -> cab();
+		$this -> load -> view('admin/menu_game', $data);
+
+	}
+	
+	function game_idioma($id='') {
+		$this -> load -> model('games');
+		$data = array();
+		$this -> cab();
+		
+		$tela['content'] = $this->games->game_i($id);
+		$this->load->view('content',$tela);
+	
+	}	
+
 	function journal($id = 0) {
 		$this -> cab();
 		$this -> load -> model('journals');

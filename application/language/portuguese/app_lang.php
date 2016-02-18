@@ -50,6 +50,10 @@ $lang['bt_sign_in'] = 'fazer login';
 $lang['bt_about'] = 'sobre a brapci';
 $lang['bt_home_admin'] = 'admin home';
 $lang['last_update'] = 'Útima atualização';
+
+$lang['pt_BR'] = 'Português';
+$lang['en'] = 'Inglês';
+$lang['es'] = 'Espanhol';
 	
 $lang['oai_journals'] = 'Publicações compatíveis com OAI-PMH';
 	
