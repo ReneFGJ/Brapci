@@ -18,7 +18,7 @@ class games extends CI_model
 				}
 			
 			$sql = "SELECT id_kw, kw_word, 
-							kw_folk_idioma_yes + kw_folk_idioma_yes as total,
+							(kw_folk_idioma_yes + kw_folk_idioma_no) as total,
 							kw_idioma 
 						FROM brapci_keyword WHERE kw_idioma = 'pt_BR' order by total limit 1";
 			$rlt = $this->db->query($sql);
