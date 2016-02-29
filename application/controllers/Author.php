@@ -22,12 +22,13 @@ class author extends CI_Controller {
 	function __construct() {
 		date_default_timezone_set('GMT');
 		parent::__construct();
+		$this -> lang -> load("app", "portuguese");
 		$this -> load -> library('form_validation');
 		$this -> load -> database();
 		$this -> load -> helper('form');
 		$this -> load -> helper('form_sisdoc');
 		$this -> load -> helper('url');
-		/* $this -> lang -> load("app", "portuguese"); */
+		
 		$this -> load -> library('session');
 		date_default_timezone_set('America/Sao_Paulo');
 	}
@@ -63,14 +64,15 @@ class author extends CI_Controller {
 		$form->row_view = base_url('index.php/author/view');
 		$form->row_edit = base_url('index.php/author/edit');
 		$form->edit = True;
+		$form->novo = True;
 		$form = $this -> authors -> row($form);
+		$form->pre_where = '( autor_codigo = autor_alias )';
 		
 		
 		$tela['tela'] = row($form,$id);
 		$url = base_url('index.php/author');
-		$tela['tela'] .= form_botton_new($url, 'Novo registro');
 
-		$tela['title'] = 'Documentos';
+		$tela['title'] = 'Controle de Autoridade';
 
 		$this -> load -> view('form/form', $tela);
 		//$this -> load -> view('header/foot');
