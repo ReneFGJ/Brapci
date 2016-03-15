@@ -1,4 +1,8 @@
 <?php
+$newURL = 'http://basessibi.c3sl.ufpr.br/brapci/index.php/ebbc';
+header('Location: '.$newURL);
+
+exit;
 require("cab.php");
 
 require("../_class/_class_article.php");
@@ -7,7 +11,7 @@ $ar = new article;
 require("../_class/_class_referencia.php");
 
 
-/* Classe da Edição */
+/* Classe da Ediï¿½ï¿½o */
 require("../_class/_class_issue.php");
 $edi = new issue;
 

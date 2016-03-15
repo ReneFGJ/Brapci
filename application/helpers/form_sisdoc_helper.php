@@ -29,13 +29,13 @@ const NN_REGEX_NUMERO_ROMANO = '^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?
 //// Autor desconhecido, postado por Fabyo                                                   //
 ///////////////////////////////////////////////////////////////////////////////////////////////
 function extenso($valor = 0, $maiusculas = false) {
-	$singular = array("centavo", "real", "mil", "milh√£o", "bilh√£o", "trilh√£o", "quatrilh√£o");
-	$plural = array("centavos", "reais", "mil", "milh√µes", "bilh√µes", "trilh√µes", "quatrilh√µes");
+	$singular = array("centavo", "real", "mil", "milh„o", "bilh„o", "trilh„o", "quatrilh„o");
+	$plural = array("centavos", "reais", "mil", "milhıes", "bilhıes", "trilhıes", "quatrilhıes");
 
 	$c = array("", "cem", "duzentos", "trezentos", "quatrocentos", "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos");
 	$d = array("", "dez", "vinte", "trinta", "quarenta", "cinquenta", "sessenta", "setenta", "oitenta", "noventa");
 	$d10 = array("dez", "onze", "doze", "treze", "quatorze", "quinze", "dezesseis", "dezesete", "dezoito", "dezenove");
-	$u = array("", "um", "dois", "tr√™s", "quatro", "cinco", "seis", "sete", "oito", "nove");
+	$u = array("", "um", "dois", "trÍs", "quatro", "cinco", "seis", "sete", "oito", "nove");
 
 	$z = 0;
 	$rt = "";
@@ -75,7 +75,17 @@ function extenso($valor = 0, $maiusculas = false) {
 	}
 
 }
-
+/***/
+function sn($it=0)
+	{
+		if ($it == 0)
+			{
+				$rst = mst('N√O');
+			} else {
+				$rst = mst('SIM');		
+			}
+		return($rst);
+	}
 /**
  * @param string $nome O nome a ser normalizado
  * @return string O nome devidamente normalizado
@@ -118,7 +128,7 @@ function page_count() {
 		$scrp = $_SERVER['SCRIPT_FILENAME'];
 		$info = troca($info, $scrp, '');
 	}
-	echo '-->' . $info;
+
 	/* limpa */
 	if (substr($info, 0, 1) == '/') {
 		$info = substr($info, 1, strlen($info));
@@ -131,7 +141,7 @@ function page_count() {
 			$info = substr($info, $pos + 1, strlen($info));
 		}
 	}
-	echo '-->' . $path;
+	
 	/* Info */
 	$pos = strpos($info, '/');
 	if ($pos > 0) {
@@ -197,13 +207,13 @@ function get($key) {
 	/* tratamento */
 	$dp = trim($dp);
 
-	$dp = troca($dp, "'", '¬¥');
+	$dp = troca($dp, "'", '¥');
 	return ($dp);
 
 }
 
 function xls($arquivo = '') {
-	// Configura√ß√µes header para for√ßar o download
+	// ConfiguraÁıes header para forÁar o download
 	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 	header("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
 	header("Cache-Control: no-cache, must-revalidate");
@@ -233,7 +243,7 @@ function brtosql($dt) {
 }
 
 function meses($id = 0) {
-	$mes = array('', 'Janeiro', 'Fevereiro', 'Mar√ßo', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro');
+	$mes = array('', 'Janeiro', 'Fevereiro', 'MarÁo', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro');
 	$id = round($id);
 	return ($mes[$id]);
 }
@@ -242,7 +252,10 @@ function meses_short() {
 	$mes = array('', 'Jan.', 'Fev.', 'Mar.', 'Abr.', 'Maio', 'Jun.', 'Jul.', 'Ago.', 'Set.', 'Out.', 'Nov.', 'Dez.');
 }
 
-function enviaremail($para, $assunto, $texto, $de) {
+function enviaremail($para, $assunto, $texto, $de, $anexos = array()) {
+	global $sem_copia;
+	
+	if (!isset($sem_copia)) { $sem_copia = 0; }
 	if (!is_array($para)) {
 		$para = array($para);
 	}
@@ -252,6 +265,11 @@ function enviaremail($para, $assunto, $texto, $de) {
 	$CI -> load -> library('email', $config);
 	$CI -> email -> subject($assunto);
 	$CI -> email -> message($texto);
+	
+	for ($r=0;$r < count($anexos);$r++)
+		{
+			$CI -> email -> attach($anexos[$r]);
+		}
 
 	/* de */
 	$sql = "select * from mensagem_own where id_m = " . round($de);
@@ -267,8 +285,11 @@ function enviaremail($para, $assunto, $texto, $de) {
 		$CI -> email -> subject($assunto);
 		$CI -> email -> message($texto);
 
-		array_push($para, trim($line['m_email']));
-		//array_push($para, 'renefgj@gmail.com');
+		if ($sem_copia != 1)
+			{
+				array_push($para, trim($line['m_email']));
+			//array_push($para, 'renefgj@gmail.com');
+			}
 
 		/* e-mail com copias */
 		$bcc = array();
@@ -297,7 +318,7 @@ function enviaremail($para, $assunto, $texto, $de) {
 		$CI -> email -> send();
 		return ('ok');
 	} else {
-		echo('<font color="red">Propriet√°rio do e-mail (' . $de . ') n√£o configurado (veja mensagem_own)</font>');
+		echo('<font color="red">Propriet·rio do e-mail (' . $de . ') n„o configurado (veja mensagem_own)</font>');
 		exit ;
 	}
 }
@@ -423,34 +444,34 @@ function strzero($ddx, $ttz) {
 
 function UpperCase($d) {
 
-	$d = troca($d, '√ß', '√á');
+	$d = troca($d, 'Á', '«');
 
-	$d = troca($d, '√°', '√Å');
-	$d = troca($d, '√†', '√Ä');
-	$d = troca($d, '√£', '√É');
-	$d = troca($d, '√¢', '√Ç');
-	$d = troca($d, '√§', '√Ñ');
+	$d = troca($d, '·', '¡');
+	$d = troca($d, '‡', '¿');
+	$d = troca($d, '„', '√');
+	$d = troca($d, '‚', '¬');
+	$d = troca($d, '‰', 'ƒ');
 
-	$d = troca($d, '√©', '√â');
-	$d = troca($d, '√®', '√à');
-	$d = troca($d, '√™', '√ä');
-	$d = troca($d, '√´', '√ã');
+	$d = troca($d, 'È', '…');
+	$d = troca($d, 'Ë', '»');
+	$d = troca($d, 'Í', ' ');
+	$d = troca($d, 'Î', 'À');
 
-	$d = troca($d, '√≠', '√ç');
-	$d = troca($d, '√¨', '√å');
-	$d = troca($d, '√Æ', '√é');
-	$d = troca($d, '√Ø', '√è');
+	$d = troca($d, 'Ì', 'Õ');
+	$d = troca($d, 'Ï', 'Ã');
+	$d = troca($d, 'Ó', 'Œ');
+	$d = troca($d, 'Ô', 'œ');
 
-	$d = troca($d, '¬ï√≥', '√ì');
-	$d = troca($d, '¬ñ√≤', '√í');
-	$d = troca($d, '¬í√µ', '√ï');
-	$d = troca($d, '¬ì√∂', '√ñ');
-	$d = troca($d, '¬î√¥', '√î');
+	$d = troca($d, 'ïÛ', '”');
+	$d = troca($d, 'ñÚ', '“');
+	$d = troca($d, 'íı', '’');
+	$d = troca($d, 'ìˆ', '÷');
+	$d = troca($d, 'îÙ', '‘');
 
-	$d = troca($d, '√∫', '√ö');
-	$d = troca($d, '√π¬ô', '√ô');
-	$d = troca($d, '√ª', '√õ');
-	$d = troca($d, '√º', '√ú');
+	$d = troca($d, '˙', '⁄');
+	$d = troca($d, '˘ô', 'Ÿ');
+	$d = troca($d, '˚', '€');
+	$d = troca($d, '¸', '‹');
 
 	$d = strtoupper($d);
 
@@ -490,7 +511,7 @@ function GerarCPF() {
 
 function validaCPF($cpf = null) {
 	/* @author http://www.geradorcpf.com/script-validar-cpf-php.htm */
-	// Verifica se um n√∫mero foi informado
+	// Verifica se um n˙mero foi informado
 	if (empty($cpf)) {
 		return false;
 	}
@@ -499,16 +520,16 @@ function validaCPF($cpf = null) {
 	$cpf = sonumero($cpf);
 	$cpf = str_pad($cpf, 11, '0', STR_PAD_LEFT);
 
-	// Verifica se o numero de digitos informados √© igual a 11
+	// Verifica se o numero de digitos informados È igual a 11
 	if (strlen($cpf) != 11) {
 		return false;
 	}
-	// Verifica se nenhuma das sequ√™ncias invalidas abaixo
+	// Verifica se nenhuma das sequÍncias invalidas abaixo
 	// foi digitada. Caso afirmativo, retorna falso
 	else if ($cpf == '00000000000' || $cpf == '11111111111' || $cpf == '22222222222' || $cpf == '33333333333' || $cpf == '44444444444' || $cpf == '55555555555' || $cpf == '66666666666' || $cpf == '77777777777' || $cpf == '88888888888' || $cpf == '99999999999') {
 		return false;
 		// Calcula os digitos verificadores para verificar se o
-		// CPF √© v√°lido
+		// CPF È v·lido
 	} else {
 
 		for ($t = 9; $t < 11; $t++) {
@@ -657,7 +678,7 @@ function form_sisdoc_getpost() {
 	$vars = array_merge($get, $post);
 
 	if (!isset($vars['acao'])) { $acao = '';
-	} else { $acao = troca($vars['acao'], "'", '√Ç¬¥');
+	} else { $acao = troca($vars['acao'], "'", '¬¥');
 	}
 
 	for ($k = 0; $k < 100; $k++) {
@@ -707,7 +728,7 @@ function nbr_autor($xa, $tp) {
 	/////////////////////////////
 	$xp1 = "";
 	$xp2 = "";
-	$er1 = array("JUNIOR", "J√ö¬öNIOR", "J√öNIOR", "NETTO", "NETO", "SOBRINHO", "FILHO", "JR.");
+	$er1 = array("JUNIOR", "J⁄öNIOR", "J⁄NIOR", "NETTO", "NETO", "SOBRINHO", "FILHO", "JR.");
 	///////////////////////////// SEPARA NOMES
 	{
 		$xop = 0;
@@ -881,22 +902,22 @@ function highlight($text, $words) {
 function UpperCaseSQL($d) {
 	//$d = strtoupper($d);
 	/* acentos agudos */
-	$d = (str_replace(array('√°', '√©', '√≠', '√≥', '√∫', '√Å', '√â', '√ç', '√ì', '√ö'), array('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'), $d));
+	$d = (str_replace(array('·', 'È', 'Ì', 'Û', '˙', '¡', '…', 'Õ', '”', '⁄'), array('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'), $d));
 
 	/* acentos til */
-	$d = (str_replace(array('√£', '√µ', '√É', '√ï'), array('a', 'o', 'A', 'O'), $d));
+	$d = (str_replace(array('„', 'ı', '√', '’'), array('a', 'o', 'A', 'O'), $d));
 
 	/* acentos cedilha */
-	$d = (str_replace(array('√ß', '√á', '√±', '√ë'), array('c', 'C', 'n', 'N'), $d));
+	$d = (str_replace(array('Á', '«', 'Ò', '—'), array('c', 'C', 'n', 'N'), $d));
 
 	/* acentos agudo inverso */
-	$d = (str_replace(array('√†', '√®', '√¨', '√≤', '√π', '√Ä', '√à', '√å', '√í', '√ô'), array('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'), $d));
+	$d = (str_replace(array('‡', 'Ë', 'Ï', 'Ú', '˘', '¿', '»', 'Ã', '“', 'Ÿ'), array('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'), $d));
 
 	/* acentos agudo cinconflexo */
-	$d = (str_replace(array('√¢', '√™', '√Æ', '√¥', '√ª', '√Ç', '√ä', '√é', '√î', '√õ'), array('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'), $d));
+	$d = (str_replace(array('‚', 'Í', 'Ó', 'Ù', '˚', '¬', ' ', 'Œ', '‘', '€'), array('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'), $d));
 
 	/* trema */
-	$d = (str_replace(array('√§', '√´', '√Ø', '√∂', '√º', '√Ñ', '√ã', '√è', '√ñ', '√ú'), array('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'), $d));
+	$d = (str_replace(array('‰', 'Î', 'Ô', 'ˆ', '¸', 'ƒ', 'À', 'œ', '÷', '‹'), array('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'), $d));
 
 	$d = strtoupper($d);
 	return $d;
@@ -905,35 +926,35 @@ function UpperCaseSQL($d) {
 function LowerCase($term) {
 	$d = Strtolower($term);
 
-	$d = troca($d, '√á', '√ß');
-	$d = troca($d, '√ë', '√±');
+	$d = troca($d, '«', 'Á');
+	$d = troca($d, '—', 'Ò');
 
-	$d = troca($d, '√Å', '√°');
-	$d = troca($d, '√Ä', '√†');
-	$d = troca($d, '√Ç', '√¢');
-	$d = troca($d, '√Ñ', '√§');
-	$d = troca($d, '√Ç', '√¢');
+	$d = troca($d, '¡', '·');
+	$d = troca($d, '¿', '‡');
+	$d = troca($d, '¬', '‚');
+	$d = troca($d, 'ƒ', '‰');
+	$d = troca($d, '¬', '‚');
 
-	$d = troca($d, '√â', '√©');
-	$d = troca($d, '√à', '√®');
-	$d = troca($d, '√ä', '√™');
-	$d = troca($d, '√ã', '√´');
+	$d = troca($d, '…', 'È');
+	$d = troca($d, '»', 'Ë');
+	$d = troca($d, ' ', 'Í');
+	$d = troca($d, 'À', 'Î');
 
-	$d = troca($d, '√ç', '√≠');
-	$d = troca($d, '√å', '√¨');
-	$d = troca($d, '√é¬â', '√Æ');
-	$d = troca($d, '√è', '√Ø');
+	$d = troca($d, 'Õ', 'Ì');
+	$d = troca($d, 'Ã', 'Ï');
+	$d = troca($d, 'Œâ', 'Ó');
+	$d = troca($d, 'œ', 'Ô');
 
-	$d = troca($d, '√ì', '√≥');
-	$d = troca($d, '√í', '√≤');
-	$d = troca($d, '√ï', '√µ');
-	$d = troca($d, '√ñ', '√∂');
-	$d = troca($d, '√î', '√¥');
+	$d = troca($d, '”', 'Û');
+	$d = troca($d, '“', 'Ú');
+	$d = troca($d, '’', 'ı');
+	$d = troca($d, '÷', 'ˆ');
+	$d = troca($d, '‘', 'Ù');
 
-	$d = troca($d, '√ö', '√∫');
-	$d = troca($d, '√ô', '√π');
-	$d = troca($d, '√õ', '√ª');
-	$d = troca($d, '√ú', '√º');
+	$d = troca($d, '⁄', '˙');
+	$d = troca($d, 'Ÿ', '˘');
+	$d = troca($d, '€', '˚');
+	$d = troca($d, '‹', '¸');
 
 	return ($d);
 }
@@ -990,7 +1011,7 @@ class form {
 		if ($bt == 0) { array_push($cp, array('$B8', '', msg('submit'), False, False));
 		}
 
-		/* Monta forum√°rio */
+		/* Monta forum·rio */
 		$ed -> cp = $cp;
 		$result = form_edit($ed);
 
@@ -1077,8 +1098,8 @@ function npag($obj, $blank=1, $tot = 10, $offset = 20) {
 	}
 
 
-	$sx = '<table class="tabela00 lt2" border=1 width="100%">';
-	$sx .= '<tr><td width="50%">';
+	$sx = '<table class="tabela01 border1 lt2 bg_lgrey" border=0 width="100%">';
+	$sx .= '<tr valign="middle"><td width="50%">';
 	$sx .= '<ul id="npag" class="npag">';	
 	if ($pagi > 1) {
 		$linka = '<A HREF="' . $link . '/' . ($pagi - 1) . '">';
@@ -1156,6 +1177,10 @@ function npag($obj, $blank=1, $tot = 10, $offset = 20) {
 
 	$sx .= form_hidden('dd2', 'search');
 	/* ************************** action ************************/
+	$sx .= form_close();
+	$sx .= '</td><td align="right">';
+	$link = $obj->row_edit;
+	$sx .= form_open($link.'/0/0');
 	$sx .= '</td><td align="right">';
 	if ($obj -> novo == true) {
 		$sx .= form_submit('acao', msg('bt_new'));
@@ -1246,7 +1271,7 @@ if (!function_exists('form_edit')) {
 			}
 			if (strlen(get('dd1')) > 0) { $term = get('dd1');
 			}
-			$term = troca($term, "'", "¬¥");
+			$term = troca($term, "'", "¥");
 		}
 		if (strlen(get('dd5'))) {
 			$field = round(get('dd5'));
@@ -1333,18 +1358,27 @@ if (!function_exists('form_edit')) {
 				$wh .= ' (' . $fd[$field] . " like '%" . $term[$rt] . "%') ";
 			}
 			$wh = ' where ' . $wh;
-			/* PRE WHERE */
-			if ((isset($obj->pre_where)) and (strlen($obj->pre_where) > 0))
-				{
-					$wh .= ' AND ('.$obj->pre_where.')';
-				}			
+			
 		} else {
 			$wh = '';
 		}
+		
+		/* PRE WHERE */
+		if ((isset($obj->pre_where)) and (strlen($obj->pre_where) > 0))
+			{
+				if (strlen($wh) == 0)
+					{
+						$wh .= ' where ' . $wh;
+					} else {
+						$wh .= ' AND ';
+					}
+				$wh .= ' ('.$obj->pre_where.')';
+			}		
+			
 		if (strlen($acao) > 0) {
 			$pag = 1;
 		}
-
+		
 		/* total de registros */
 		$sql = "select count(*) as total from " . $tabela . " $wh ";
 		$query = $CI -> db -> query($sql);

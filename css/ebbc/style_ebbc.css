@@ -1,0 +1,28 @@
+.cab_ebbc3
+	{
+	width: 100%;
+	height: 268px;
+	background: url( http://www.brapci.inf.br/img/logo/bg_ebbc.png );
+	}
+body
+	{
+		background-color: #FFFFFF;
+		font-family: Roboto, Arial, Helvetica, sans-serif;
+		font-size: 13px;
+	}
+p
+	{
+		font-family: Roboto, Arial, Helvetica, sans-serif;
+		font-size: 15px;
+		line-height: 170%;
+		padding: 20px 0px 0px 0px;
+	}
+
+h1
+	{
+		font-family: RobotoThin, Arial, Helvetica, sans-serif;
+		font-size: 20px;
+		line-height: 170%;
+		padding: 20px 0px 0px 0px;
+		
+	}
