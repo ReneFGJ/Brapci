@@ -12,6 +12,8 @@ $bt['games'] = 'admin/games';
 
 $bt['cited'] = 'cited';
 
+$bt['skos'] = 'skos';
+
 echo '<h1>Admin Menu</h1>';
 
 foreach ($bt as $key => $value) {

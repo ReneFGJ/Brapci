@@ -422,6 +422,71 @@ h2 {
 		border: 1px solid #E0E0E0;
 	}
 
+	.lt5 {
+		font-family: verdana, tahoma, arial, sans-serif;
+		font-size: 28px;
+		margin: 2px;
+		color: #202020;
+		line-height: 120%;
+	}
+	.lt5 a {
+		font-family: verdana, tahoma, arial, sans-serif;
+		font-size: 28px;
+		margin: 2px;
+		color: #202020;
+		line-height: 120%;
+		text-decoration: none;
+	}
+	.lt5 a:hover {
+		text-decoration: underline;
+	}
+	.lt5 th {
+		background-color: #2076A7;
+		color: #FFFFFF;
+		text-align: left;
+		padding: 4px;
+		margin: 2px;
+		line-height: 120%;
+	}
+	.lt5 td {
+		padding: 4px;
+		margin: 2px;
+		line-height: 120%;
+		border: 1px solid #E0E0E0;
+	}
+	
+	.lt6 {
+		font-family: verdana, tahoma, arial, sans-serif;
+		font-size: 32px;
+		margin: 2px;
+		color: #202020;
+		line-height: 120%;
+	}
+	.lt6 a {
+		font-family: verdana, tahoma, arial, sans-serif;
+		font-size: 32px;
+		margin: 2px;
+		color: #202020;
+		line-height: 120%;
+		text-decoration: none;
+	}
+	.lt6 a:hover {
+		text-decoration: underline;
+	}
+	.lt6 th {
+		background-color: #2076A7;
+		color: #FFFFFF;
+		text-align: left;
+		padding: 4px;
+		margin: 2px;
+		line-height: 120%;
+	}
+	.lt6 td {
+		padding: 4px;
+		margin: 2px;
+		line-height: 120%;
+		border: 1px solid #E0E0E0;
+	}	
 	.legendas {
 		font-family: verdana, tahoma, arial, sans-serif;
 		font-size: 16px;

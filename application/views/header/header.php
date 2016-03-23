@@ -15,11 +15,11 @@ if (!isset($title)) { $title = 'Brapci';
 <link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_brapci_cab.css'); ?>">
 <link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_tools.css'); ?>">
 <link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/form_sisdoc.css'); ?>">
+<link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_colors.css'); ?>">
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<!-- Bootstrap -->
-    <link href="<?php echo base_url('css/bootstrap.min.css');?>" rel="stylesheet">
 <!--- Java Script -->
+<script type="text/javascript" src="<?php echo base_url('js/sisdoc_form.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('js/jquery.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('js/js_copytoclipboard.js'); ?>"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->

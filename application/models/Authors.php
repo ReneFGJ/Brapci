@@ -128,6 +128,53 @@ class authors extends CI_model {
 
 	}
 
+	function lista_obras_do_autor($author='')
+		{
+			$sql = "select * from brapci_article_author
+					INNER JOIN brapci_article on ar_codigo = ae_article
+					INNER JOIN brapci_journal on ae_journal_id = jnl_codigo
+					INNER JOIN brapci_edition ON ed_codigo = ar_edition
+					where ae_author = '$author' and ar_status <> 'X'
+					order by ar_ano DESC, ar_titulo_1";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			$sx = '<ul>';
+			$xano = '';
+			for ($r=0;$r < count($rlt);$r++)
+				{
+					$line = $rlt[$r];
+					
+					$ano = $line['ar_ano'];
+					if ($ano != $xano)
+						{
+							if ($r > 0)
+								{
+									$sx .= '</ul><br>';
+								}
+							$sx .= '<h3>'.$ano.'</h3><br>';
+							$xano = $ano;
+							$sx .= '<ul>';
+						}
+					$sx .= '<li style="margin-left: 30px;">';
+					$link = base_url('index.php/article/view/'.$line['ar_codigo'].'/'.checkpost_link($line['ar_codigo']));
+					$sx .= '<a href="'.$link.'" class="link lt1">';
+					$sx .= $line['ar_titulo_1'].'. ';
+					$sx .= '<b>'.$line['jnl_nome'].'</b>';
+					$sx .= ', v.'.$line['ed_vol'];
+					$sx .= ', n.'.$line['ed_nr'];
+					$sx .= ', '.$line['ed_ano'];
+					$sx .= ', p.'.$line['ar_pg_inicial'];
+					$sx .= '-'.$line['ar_pg_final'];
+					$sx .= '</a>';
+					$sx .= '</li>';
+				}
+			$sx .= '</ul>';
+			//print_r($line);
+			//echo '<hr>';
+			return($sx);
+							
+		}
+
 	function check_remissive()
 		{
 			$sql = "select * from ".$this->tabela."

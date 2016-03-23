@@ -103,7 +103,7 @@ class editions extends CI_model {
 		$sql = "select * from brapci_article
 						left join brapci_section on se_codigo = ar_section
 						where ar_edition = '$issue'
-						order by se_ordem, se_descricao, CHARACTER_LENGTH(ar_pg_inicial), ar_pg_inicial
+						order by se_ordem, se_descricao, CHARACTER_LENGTH(ar_pg_inicial), ar_titulo_1
 						";
 		$rlt = db_query($sql);
 

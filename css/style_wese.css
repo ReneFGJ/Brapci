@@ -1,0 +1,41 @@
+.prefTerm
+	{
+		font-size: 20px;
+	}
+.prefTerm a
+	{
+		font-size: 20px;
+	}	
+.algin_right
+	{
+		float: right;
+	}
+
+.term_skos_concept
+	{
+		font-size: 20px;
+		border: 2px solid #888;
+		border-radius: 20px;
+		padding: 10px;
+		font-weight: bold;
+		text-align: center;
+	}
+.term_skos_narrow
+	{
+		font-size: 14px;
+		border: 2px solid #888;
+		border-radius: 20px;
+		padding: 10px;
+		font-weight: bold;
+		text-align: center;	
+		margin-bottom: 10px;
+		background-color: #eee;	
+	}
+.term_skos_narrow a
+	{
+		text-decoration: none;
+	}
+.term_skos_narrow:hover
+	{
+		background-color: #ccc;	
+	}	

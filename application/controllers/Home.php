@@ -54,6 +54,7 @@ class home extends CI_Controller {
 		global $dd;
 		/* Model */
 		$this -> load -> model('Search');
+		$this -> load -> model('Autorities');
 		
 		$this -> Search -> session();
 
@@ -93,7 +94,7 @@ class home extends CI_Controller {
 					$data = array('tela' => $tela);
 					break;
 				case '2':
-					$tela = $this -> Search -> busca_author($data);
+					$tela = $this -> Autorities -> search_term($data['dd1']);
 					$data = array('tela' => $tela);
 					break;					
 				default:

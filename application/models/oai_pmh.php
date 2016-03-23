@@ -143,7 +143,7 @@ class oai_pmh extends CI_model {
 				$xml = load_file_local($file_id);
 				/* Le XML */
 				$article = $this -> process_le_xml($xml, $file_id);
-
+				
 				/*********************** registro deleted *******************/
 				if ($article['status'] == 'deleted') {
 					$this -> altera_status_chache($idc, 'X');

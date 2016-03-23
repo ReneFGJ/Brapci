@@ -20,7 +20,7 @@ if (strlen($dd2) > 0)
 <!--- CSS Complement -->
 <link rel="stylesheet" href="<?php echo base_url('css/style_brapci_search_form.css'); ?>">
 
-<form id="formWrapper" method="post" style="min-width: 600px; width: 100%;">
+<form id="formWrapper" method="get" style="min-width: 600px; width: 100%;">
 	<div class="formFiled clearfix">
 		<table width="100%" class="lt1 tabela00">
 			<tr valign="top">

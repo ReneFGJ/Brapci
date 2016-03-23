@@ -132,7 +132,13 @@ class articles extends CI_model {
 			$journal_id = $article['journal_id'];
 			$idioma = $article['titles'][0]['idioma'];
 			$titulo = troca($article['titles'][0]['title'],"'",'´');
-			$ar_resumo_1 = troca($article['abstract'][0]['content'],"'",'´');
+			if (isset($article['abstract'][0]['content']))
+				{
+					$ar_resumo_1 = $article['abstract'][0]['content'];
+					$ar_resumo_1 = troca($ar_resumo_1,"'",'´');
+				} else {
+					$ar_resumo_1 = '';
+				}
 			
 			if (isset($article['titles'][1]['idioma']))
 				{

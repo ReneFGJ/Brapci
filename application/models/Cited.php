@@ -21,6 +21,31 @@ class cited extends CI_Model
 			{
 				
 			}
+		function save_ref($id=0,$txt)
+			{
+				$work = strzero($id,10);
+				$c = troca($txt,chr(13),'');
+				$c = troca($txt,'#','%');
+				$c = troca($txt,chr(10),'#');
+				$ln = splitx('#',$c);
+				$sql = "delete from mar_works where m_work = '$work' ";
+				$this->db->query($sql);				
+				
+				for ($r=0;$r < count($ln);$r++)
+					{
+						$ttt = $ln[$r];
+						
+						$sql = "insert into mar_works 
+								(
+								m_status, m_ref, m_work,
+								m_norma
+								)
+								values
+								('@','$ttt','$work',
+								'ABNT')";
+						$this->db->query($sql);
+					}
+			}
 		function show_cited($id = 0)
 		{
 			$id = strzero($id,10);

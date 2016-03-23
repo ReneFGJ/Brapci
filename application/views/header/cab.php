@@ -23,7 +23,8 @@ $bt_sign_in = '';
 $bt_sign_out = '';
 $bt_admin = '';
 $bt_about = '<a href="' . base_url('index.php/brapci/about') . '">' . msg('bt_about') . '</a>';
-
+$bt_thes = '';
+$bt_auth = '';
 $sign = '';
 /********* Tipo de login */
 if (strlen($user) > 0) {
@@ -34,7 +35,8 @@ if (strlen($user) > 0) {
 			<br>
 			<font color="white"><i>' . $user_type . '</i></font>
 		</div>';
-
+	$bt_thes = '<a href="' . base_url('index.php/skos') . '">' . msg('bt_thesauros') . '</a>';
+	$bt_auth = '<a href="' . base_url('index.php/autority') . '">' . msg('bt_autority') . '</a>';
 	if ($nivel == 9) {
 		$bt_admin = '<a href="' . base_url('index.php/admin') . '">' . msg('bt_admin') . '</a>';
 	} else {
@@ -66,6 +68,12 @@ if (strlen($user) > 0) {
 					<?php echo $bt_about; ?>
 				</li>
 				<li class="lis">
+					<?php echo $bt_thes; ?>
+				</li>
+				<li class="lis">
+					<?php echo $bt_auth; ?>
+				</li>				
+				<li class="lis">
 					<?php echo $bt_admin; ?>
 				</li>
 				<li class="lis">
@@ -74,7 +82,7 @@ if (strlen($user) > 0) {
 				</li>
 			</ul>
 		</div>
-		
+
 	</div>
 	<center>
 		<!-----

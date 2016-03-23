@@ -1,11 +1,12 @@
 <?php
-$ref = get("dd2");
+$ref = get("dd62");
 ?>
 Referências:
-<form>
-	<textarea name="dd2" id="dd2" style="width: 100%; height: 400px;"><?php echo $ref;?></textarea>
-	<input type="submit" value="processar >>" class="botao3d">
+<form method="post">
+	<textarea name="dd62" id="dd62" style="width: 100%; height: 400px;"><?php echo $ref;?></textarea>
+	<input name="dd60"type="submit" value="processar >>" class="botao3d">
 	&nbsp;
-	<input type="checkbox" name="dd3" value="1">Versão Final 
-	
+	<br><input type="checkbox" name="dd63" value="1">Versão Final
+	<br><input type="checkbox" name="dd64" value="1">Seprar por linhas 
+	<input type="hidden" name="dd8" value="CITED">
 </form>
