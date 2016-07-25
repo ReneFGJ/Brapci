@@ -1,4 +1,4 @@
-<div id="main_menu">
+<div class="container">
 	<h1><?php echo $title_menu;?></h1>
 	<?php
 	$xtit = '';

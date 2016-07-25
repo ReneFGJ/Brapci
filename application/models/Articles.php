@@ -278,6 +278,7 @@ class articles extends CI_model {
 						left join brapci_journal on ar_journal_id = jnl_codigo
 						left join brapci_edition on ar_edition = ed_codigo 
 						left join brapci_section on ar_section = se_codigo
+						left join ajax_cidade on cidade_codigo = jnl_cidade
 						where ar_codigo = '$id' ";
 		$query = $this -> db -> query($sql);
 		$query = $query -> result();
@@ -307,7 +308,6 @@ class articles extends CI_model {
 
 		if (strlen(trim($line['ar_doi'])) == 0) { $line['ar_doi'] = '<font color="red">empty</font>';
 		}
-
 		return ($line);
 	}
 

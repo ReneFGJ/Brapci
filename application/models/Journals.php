@@ -23,8 +23,8 @@ class journals extends CI_model {
 		}
 	
 	function row($obj) {
-		$obj -> fd = array('id_jnl', 'jnl_nome', 'jnl_tipo', 'jnl_status','jnl_issn_impresso');
-		$obj -> lb = array('ID', 'Nome do autor', 'Tipo', 'Situação', 'ISSN');
+		$obj -> fd = array('id_jnl', 'jnl_nome', 'jnl_tipo','jnl_last_harvesting', 'jnl_status','jnl_issn_impresso');
+		$obj -> lb = array('ID', 'Nome do autor', 'Tipo', 'Harvesting','Situação', 'ISSN');
 		$obj -> mk = array('', 'L', 'C', 'C');
 		return ($obj);
 	}

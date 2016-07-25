@@ -44,11 +44,41 @@ class admin extends CI_Controller {
 	}
 
 	function cab() {
+		$this->load->model('users');
 		$data = array();
-		$data['title'] = 'Brapci : Admin';
+		$data['title'] = 'Brapci : ADMIN';
 		$data['title_page'] = 'ADMIN';
 		$this -> load -> view("header/cab_admin", $data);
-		$this -> security();
+		$data['title'] = '';
+		$this -> users->security();
+	}
+	function cab2($data = array()) {
+		$this->load->model("users");
+		$js = array();
+		$css = array();
+		array_push($js, 'form_sisdoc.js');
+		array_push($js, 'jquery-ui.min.js');
+
+		$data['js'] = $js;
+		$data['css'] = $css;
+
+		$data['title'] = 'Brapci : Admin';
+		$this -> load -> view('header/header', $data);
+		$data['title'] = '';
+
+		if (!(isset($data['nocab']))) {
+			//$this -> load -> view('menus/menu_cab_top', $data);
+			$this -> load -> view('header/cab_admin', $data);
+		} else {
+			$this->load->view('header/header_nomargin.php',null);
+		}
+
+		$this -> load -> model('users');
+		$this->users->security();
+	}
+
+	function footer() {
+		$this -> load -> view('header/footer', null);
 	}
 
 	function index() {
@@ -160,8 +190,6 @@ class admin extends CI_Controller {
 		global $dd, $acao;
 		form_sisdoc_getpost();
 
-		$this -> load -> model("metodologia");
-
 		if (($id < 1) or ($check != checkpost_link($id))) {
 			redirect(base_url('index.php/admin/journal'));
 		}
@@ -174,7 +202,7 @@ class admin extends CI_Controller {
 
 		$data['title'] = 'Brapci : Admin';
 		$data['title_page'] = 'ADMIN';
-		$this -> load -> view("header/cab_admin", $data);
+		$this->cab();
 
 		/* Article */
 		$this -> load -> model('articles');
@@ -183,8 +211,10 @@ class admin extends CI_Controller {
 		$this -> load -> model('archives');
 		$this -> load -> model('cited');
 		$this -> load -> model('tools/tools');
+		$this -> load -> model('metodologias');
 
 		$data = $this -> articles -> le($id);
+		
 		$data['archives'] = $this -> archives -> show_files($id);
 		$data['citeds'] = $this -> cited -> show_cited($id);
 
@@ -241,9 +271,9 @@ class admin extends CI_Controller {
 				break;
 				
 		}
-
-		$metodologia = $this -> metodologia -> le($id, True);
-		$data['metodologia'] = $this -> metodologia -> mostra($metodologia);
+		$id_art = $data['ar_codigo'];
+		$data['metodologias'] = '<div id="metodos" class="border1">'.$this -> metodologias -> mostra($id_art).'</div>';
+		$data['metodologias'] .= $this-> metodologias -> metodos_incluir($id_art);
 
 		$this -> load -> view('admin/article_view', $data);
 		
@@ -254,6 +284,18 @@ class admin extends CI_Controller {
 		$this->load->view('header/foot_admin',$data);
 
 	}
+
+	function metodo($tipo='',$art='')
+		{
+			$sx = 'método';
+			$ar = get("dd1");
+			$this->load->model('metodologias');
+			$this->metodologias->acao($art,$tipo,$ar);
+			$sx = $this->metodologias->mostra($art);
+			$data = array();
+			$data['content'] = $sx. ' '.date("Y-m-d H:i:s");
+			$this->load->view('content',$data);
+		}
 
 	function article_new($issue) {
 		$sql = "select * from brapci_edition where id_ed = " . $issue;
@@ -291,7 +333,7 @@ class admin extends CI_Controller {
 
 		$data['title'] = 'Brapci : Admin';
 		$data['title_page'] = 'ADMIN';
-		$this -> load -> view("header/cab_admin", $data);
+		$this->cab();
 
 		/* Editions */
 		$this -> load -> model('editions');
@@ -315,11 +357,11 @@ class admin extends CI_Controller {
 
 		$tela_articles = $this -> editions -> issue_view($id, 1, 1);
 
-		$tela = '<table width="100%" border=1 class="tabela00">';
+		$tela = '<table width="100%" class="table">';
 		$tela .= '<TR valign="top">';
-		$tela .= '<TD width="10%">';
+		$tela .= '<TD width="20%" style="border-right: 1px solid #cccccc;">';
 		$tela .= $tela_issue;
-		$tela .= '<TD width="90%">';
+		$tela .= '<TD width="80%">';
 
 		$href = '<A HREF="' . base_url('index.php/admin/issue_edit/' . $id . '/' . $jid) . '">';
 		$tela .= ' ' . $href . 'EDIT</a> ';
@@ -353,7 +395,7 @@ class admin extends CI_Controller {
 
 		$data['title'] = 'Brapci : Admin';
 		$data['title_page'] = 'ADMIN';
-		$this -> load -> view("header/cab_admin", $data);
+		$this->cab();
 
 		$this -> load -> model('journals');
 		$data = $this -> journals -> le($id);
@@ -420,7 +462,7 @@ class admin extends CI_Controller {
 		$exp = 150;
 		$data['title'] = 'Brapci : Admin';
 		$data['title_page'] = 'ADMIN - EXPORTAÇÃO';
-		$this -> load -> view("header/cab_admin", $data);
+		$this->cab();
 		$this -> load -> model('export');
 
 		/* Gerar arquivo */

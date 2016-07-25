@@ -1,4 +1,5 @@
-<table>
+<div class="container">
+	<table>
 	<tr valign="top">
 		<td class="lt0">File</td>
 		<td><?php echo $file; ?>
@@ -103,5 +104,7 @@
 		?>
 	</tr>
 </table>
-
+<!--
 <meta http-equiv="refresh" content="5">
+-->
+</div>

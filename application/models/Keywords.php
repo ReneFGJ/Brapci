@@ -79,6 +79,7 @@ class keywords extends CI_model
 		}
 	function save_KEYWORDS($id,$keys,$idioma)
 		{
+			$sx = '';
 			$id = strzero($id,10);
 			$keys = $this->trata_keywords($keys);
 			$akeys = array();
@@ -136,7 +137,7 @@ class keywords extends CI_model
 			foreach ($akeys as $key => $value) {
 				if ($value == 0)
 					{
-						echo 'Not found '.$key.' = '.$keys[$pos].' ('.$idioma.')<BR>';
+						$sx .= 'Termos '.$key.' = '.$keys[$pos].' ('.$idioma.')<BR>';
 						$keyr = $this->incorpore_keyword($keys[$pos],$idioma);
 						$akeys[$key] = $keyr;
 					}
@@ -162,7 +163,7 @@ class keywords extends CI_model
 				{
 					$rlt = $this->db->query($sql);
 				}
-			return(1);
+			return($sx);
 		}
 	function updatex()	
 		{

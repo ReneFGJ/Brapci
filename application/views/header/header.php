@@ -1,29 +1,32 @@
 <?php
-if (!isset($title)) { $title = 'Brapci';
+if (!(isset($title))) { $title = 'none';
 }
-?><head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<meta name="google-site-verification" content="VZpzNVBfl5kOEtr9Upjmed96smfsO9p4N79DZT38toA" />
-<meta name="description" content="">
-<link rel="shortcut icon" href="<?echo base_url('favicon.png'); ?>" />
-<link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/_style_starter.css'); ?>">
-<link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style.css'); ?>">
-<link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_form.css'); ?>">
-<link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_menu.css'); ?>">
-<link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_roboto.css'); ?>">
-<link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_issue.css'); ?>">
-<link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_brapci_cab.css'); ?>">
-<link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_tools.css'); ?>">
-<link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/form_sisdoc.css'); ?>">
-<link rel="STYLESHEET" type="text/css" href="<?echo base_url('css/style_colors.css'); ?>">
-
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<!--- Java Script -->
-<script type="text/javascript" src="<?php echo base_url('js/sisdoc_form.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo base_url('js/jquery.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo base_url('js/js_copytoclipboard.js'); ?>"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="<?php echo base_url('js/bootstrap.min.js'); ?>"></script>
-
-<title><?php echo $title; ?></title>
-</head>
+if (!(isset($bootstrap))) { $bootstrap = 1;
+}
+if (!isset($js)) { $js = array(); }
+if (!isset($css)) { $css = array(); }
+?>
+<header>
+	<head lang="pt-br">
+	<meta charset="utf-8">
+	<title><?php echo $title; ?></title>
+	<script src="<?php echo base_url('js/jquery.js'); ?>"></script>
+	<?php
+	if ($bootstrap == 1) { echo $this -> load -> view('header/header_bootstrap', null, true);
+	}
+ ?>
+	<?php
+	array_push($js,'jquery.mask.js');
+	for ($r = 0; $r < count($js); $r++) {
+		echo '	<script src="' . base_url('js/' . $js[$r]) . '"></script>' . cr();
+	}
+	array_push($css,'style_brapci.css');
+	array_push($css,'style_roboto.css');
+	array_push($css,'style_form_sisdoc.css');
+	array_push($css,'jquery-ui.css');
+	
+	for ($r = 0; $r < count($css); $r++) {
+		echo '	<link rel="stylesheet" href="' . base_url('css/' . $css[$r]) . '">' . cr();
+	}
+	?>
+</header>

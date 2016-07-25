@@ -30,19 +30,18 @@ class games extends CI_model
 			$sx .= '<input type="hidden" name="dd0" value="'.$line['id_kw'].'">';
 			$sx .= '<center>';
 			$sx .= '<table width="400" align="center">';
-			$sx .= '<tr><td align="center" class="lt8 border1" style="padding: 20px;" colspan=2>'.$line['kw_word'].'</td></tr>';
+			$sx .= '<tr><td align="center" style="padding: 20px;" colspan=2><h3>'.$line['kw_word'].'</h3></td></tr>';
 			
-			$sx .= '<tr><td><br><br>';
 			$sx .= '<tr><td align="center" colspan=2>'.msg($line['kw_idioma']).'</td></tr>';
 			$sx .= '<tr><td><br><br>';
 			
 			$sx .= '<tr align="center">';
 			$sx .= '<td align="center">';
-			$sx .= '<input type="submit" value="SIM" name="acao" class="botao3d">';
+			$sx .= '<input type="submit" value="SIM" name="acao" class="btn btn-primary">';
 			$sx .= '</td>';
 
 			$sx .= '<td align="center">';
-			$sx .= '<input type="submit" value="NÃO" name="acao" class="botao3d">';
+			$sx .= '<input type="submit" value="NÃO" name="acao" class="btn btn-danger">';
 			$sx .= '</td>';
 
 			$sx .= '</table>';

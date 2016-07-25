@@ -1,3 +1,4 @@
+<div class="container">
 <?php
 $link = '<img src="'.base_url('img/icone_url.png').'" title="Site da publicação" height="40">';
 $link = '<A HREF="'.$jnl_url.'" target=_new_'.$jnl_codigo.'">'.$link.'</A>';
@@ -20,3 +21,4 @@ echo "
 </table>
 ";
 ?>
+</div>

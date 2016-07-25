@@ -63,77 +63,71 @@ class social extends CI_Controller {
 	public function index() {
 		redirect(base_url('index.php'));
 	}
+	
+	function cab($data = array()) {
+		$js = array();
+		$css = array();
+		array_push($js, 'form_sisdoc.js');
+		array_push($js, 'jquery-ui.min.js');
+
+		$data['js'] = $js;
+		$data['css'] = $css;
+
+		$data['title'] = 'Brapci : Admin';
+		$this -> load -> view('header/header', $data);
+		$data['title'] = '';
+
+		if (!(isset($data['nocab']))) {
+			//$this -> load -> view('menus/menu_cab_top', $data);
+			$this -> load -> view('header/cab_admin', $data);
+		} else {
+			$this->load->view('header/header_nomargin.php',null);
+		}
+
+		$this -> load -> model('users');
+	}
 
 	function logout() {
 		/* Salva session */
-		$data = array('user' => '', 'email' => '', 'image' => '', 'nivel' => '');
-		$this -> session -> set_userdata($data);
-		redirect(base_url('index.php/home'));
+		$this->load->model('users');
+		$this->users->security_logout();
+		redirect(base_url('index.php/main'));
 	}
-	
-	function update()
-		{
-			$sql = "ALTER TABLE users ADD us_password CHAR(20) NOT NULL AFTER `us_email`;";
-			$this->db->query($sql);
 
-			$sql = "update users set us_password = '0c499ec0eb533670fff82c60cdf7b049' where us_email = 'renefgh@gmail.com' ";
-			$this->db->query($sql);
-			
-			redirect(base_url('index.php/social/login'));
-		}
+	function update() {
+		$sql = "ALTER TABLE users ADD us_password CHAR(20) NOT NULL AFTER `us_email`;";
+		$this -> db -> query($sql);
+
+		$sql = "update users set us_password = '0c499ec0eb533670fff82c60cdf7b049' where us_email = 'renefgh@gmail.com' ";
+		$this -> db -> query($sql);
+
+		redirect(base_url('index.php/social/login'));
+	}
 
 	function login_local() {
-		$dd1 = $this -> input -> post('dd1');
-		$dd2 = $this -> input -> post('dd2');
-
-		$dd1 = troca($dd1, "'", '´');
-
-		$sql = "select * from users where us_email = '$dd1' ";
-		$rlt = $this -> db -> query($sql);
-		$rlt = $rlt -> result_array();
-		if (count($rlt) > 0) {
-			$dd2 = md5($dd2 . 'Brapci');
-			$line = $rlt[0];
-			$dd3 = $line['us_password'];
-
-			if ($dd2 == $dd3) {
-				/* Salva session */
-				$ss_user = $line['us_nome'];
-				$ss_email = $line['us_email'];
-				$ss_image = $line['us_image'];
-				$ss_nivel = $line['us_nivel'];
-				$data = array('user' => $ss_user, 'email' => $ss_email, 'image' => $ss_image, 'nivel' => $ss_nivel);
-				$this -> session -> set_userdata($data);
-				redirect(base_url('index.php/home'));
-			} else {
-				redirect(base_url('index.php/social/login/') . '?erro=ERRO DE LOGIN');
-			}
+		$this -> load -> model('users');
+		
+		$dd1 = get('dd1');
+		$dd2 = get('dd2');
+		$ok = 0;	
+		if ((strlen($dd1) > 0) and (strlen($dd2) > 0)) {
+			$dd1 = troca($dd1, "'", '´');
+			$dd2 = troca($dd2, "'", '´');
+			$ok = $this -> users -> security_login($dd1, $dd2);
+		}
+		if ($ok == 1) {
+			redirect(base_url('index.php/home'));
 		} else {
-			redirect(base_url('index.php/social/login/') . '?err=ERRO DE LOGIN');
+			redirect(base_url('index.php/social/login/') . '?erro=ERRO_DE_LOGIN');
 		}
 	}
 
 	function login() {
-		$this -> load -> view('header/cab');
-		$this -> load -> view("brapci/content");
-		$data = $this -> login_parameters();
-		$this -> load -> view('login/login', $data);
-		$this -> load -> view("header/foot");
-	}
-
-	function login_parameters() {
-		$data = array();
-		$data['login_versao'] = 'v0.16.01';
-		$data['versao'] = '';
-		$data['link_debug'] = '';
-		$data['login_name'] = msg('login_name');
-		$data['lg_name'] = '';
-		$data['login_password'] = msg('your_passoword');
-		$data['login_entrar'] = msg('login_enter') . ' >>';
-		$erro = $this -> input -> get('erro');
-		$data['login_error'] = $erro;
-		$data['modo'] = 'Modo: <b>beta test</b>';
-		return ($data);
+		$this -> cab();
+		//$this -> load -> view('auth_social/login_pre', null);
+		$this -> load -> view('auth_social/login', null);
+		//$this -> load -> view('auth_social/login_horizontal', null);
+		$this -> load -> view('header/credits', null);
 	}
 
 	public function session($provider) {

@@ -95,6 +95,7 @@ class admins extends CI_model {
 		$this -> load -> model('tools/tools');
 
 		$data = $this -> articles -> le($id);
+
 		$data['archives'] = $this -> archives -> show_files($id);
 		$data['citeds'] = $this -> cited -> show_cited($id);
 

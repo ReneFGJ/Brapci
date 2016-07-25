@@ -1,5 +1,7 @@
-<fieldset><legend>Articles</legend>
+<div class="container">
+	<h3>Articles</h3>
 	<div>
-	<?php echo $artigos;?>
+		<?php echo $artigos; ?>
 	</div>
-</fieldset>
+	</fieldset>
+</div>

@@ -51,7 +51,7 @@ class home extends CI_Controller {
 	}
 
 	function index() {
-		global $dd;
+
 		/* Model */
 		$this -> load -> model('Search');
 		$this -> load -> model('Autorities');

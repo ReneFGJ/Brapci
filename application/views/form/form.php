@@ -1,3 +1,5 @@
+<div class="container">
+	<div class="row">
 <?php
 
 /* Titulo */
@@ -12,3 +14,5 @@ if (isset($tela_array))
 }
 
 ?>
+</div>
+</div>

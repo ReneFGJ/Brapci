@@ -1,5 +1,4 @@
-<table width="100%">
-	<tr>
+<div class="container" style="padding-top: 20px;">
 	<?php
 	echo '<B>OAI-PMH 2.0</B> | ';
 	echo '<A HREF="'.base_url('index.php/oai/Identify/'.$id).'">Identify</A>';
@@ -16,4 +15,4 @@
 	echo ' | ';
 	echo '<A HREF="'.base_url('index.php/oai/ProcessRecords/'.$id).'">ProcessRecords</A>';	
 	?>
-</table>
+</div>

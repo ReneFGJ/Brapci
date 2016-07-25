@@ -1,3 +1,4 @@
+<div class="container">
 <?php
 for ($r=0;$r < count($links);$r++)
 	{
@@ -11,3 +12,4 @@ setname: <?php echo $setspec; ?>
 <hr>
 opções:
 <?php echo $opcoes; ?>
+</div>

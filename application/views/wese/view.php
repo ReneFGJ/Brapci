@@ -1,3 +1,4 @@
+<div class="container">
 <?php
 $admin = 1;
 ?>
@@ -158,3 +159,4 @@ $admin = 1;
 		</td>
 	</tr>
 </table>
+</div>

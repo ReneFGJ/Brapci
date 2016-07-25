@@ -5,6 +5,182 @@ $edit_link4 = '<img src="' . base_url('img/icone_edit.gif') . '" height="16" id=
 $edit_link5 = '<img src="' . base_url('img/icone_edit.gif') . '" height="16" id="abstract2">';
 $edit_link6 = '<img src="' . base_url('img/icone_edit.gif') . '" height="16" id="issue">';
 
+/* Authors */
+$authors = array('');
+$authores_row = troca($authores_row,chr(13),';');
+$authors = splitx(';',$authores_row);
+?>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-8">
+			<h3><?php echo $jnl_nome; ?></h3>
+			<span class="middle">v. <?php echo $ed_vol . ', n.' . $ed_nr . ', ' . $ed_ano . $pages; ?></span>
+		</div>
+		<div class="col-md-4">
+			<br>
+			BDOI: <?php echo $ar_bdoi; ?><BR>
+			DOI: <?php echo $ar_doi; ?>
+		</div>
+	</div>
+</div>
+	
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table" width="100%">
+				<tr valign="top">
+					<th width="40">field</th>
+					<th width="20">##</th>
+					<th>content</th>
+				</tr>
+				
+				<!---- 100 --->
+				<tr valign="top">
+					<td align="center">
+						<tt>100</tt>
+					</td>
+					<td>
+						<tt>1_</tt>
+					</td>
+					<td>
+						<tt><?php echo $authors[0];?></tt>
+					</td>
+				</tr>
+				
+				<!---- 245 --->
+				<tr valign="top">
+					<td align="center">
+						<tt>245</tt>
+					</td>
+					<td>
+						<tt>10</tt>
+					</td>
+					<td>
+						<tt><?php echo $ar_titulo_1;?> |6 <?php echo msg('idioma'). ' '. msg($ar_idioma_1);?></tt>
+					</td>
+				</tr>
+				
+				<!---- 246 --->
+				<tr valign="top">
+					<td align="center">
+						<tt>246</tt>
+					</td>
+					<td>
+						<tt>10</tt>
+					</td>
+					<td>
+						<tt><?php echo $ar_titulo_2;?> |6 <?php echo msg('idioma'). ' '. msg($ar_idioma_2);?></tt>
+					</td>
+				</tr>
+				
+				<!---- 300 --->
+				<tr valign="top">
+					<td align="center">
+						<tt>300</tt>
+					</td>
+					<td>
+						<tt>10</tt>
+					</td>
+					<td>
+						<tt><?php echo '|a v. '.$ed_vol . ', n. ' . $ed_nr . ', ' . $ed_ano . $pages;?></tt>
+					</td>
+				</tr>
+				
+				<!---- 520 --->
+				<tr valign="top">
+					<td align="center">
+						<tt>520</tt>
+					</td>
+					<td>
+						<tt>3#</tt>
+					</td>
+					<td>
+						<tt>|a <?php echo $ar_resumo_1;?> |6 <?php echo msg('idioma'). ' '. msg($ar_idioma_1);?></tt>
+					</td>
+				</tr>
+				
+				<tr valign="top">
+					<td align="center">
+						<tt>520</tt>
+					</td>
+					<td>
+						<tt>3#</tt>
+					</td>
+					<td>
+						<tt>|a <?php echo $ar_resumo_2;?> |6 <?php echo msg('idioma'). ' '. msg($ar_idioma_2);?></tt>
+					</td>
+				</tr>
+				
+				<!---- 650 --->
+				<?php
+				$ar_keyw_1 = splitx(';',$ar_keyw_2.';');
+				?>
+				<?php for ($r=1;$r < count($ar_keyw_1);$r++) { 
+					$link = '<a href="'.base_url('index.php/').'">'.base_url('index.php/t/').'</a>';
+					?>
+				<tr valign="top">
+					<td align="center">
+						<tt>650</tt>
+					</td>
+					<td>
+						<tt>1_</tt>
+					</td>
+					<td>
+						<tt>|a <?php echo $ar_keyw_1[$r];?> |? <?php echo $ar_idioma_1;?> |6 <?php echo $link;?></tt>
+					</td>
+				</tr>
+				<? } ?>
+				
+				<?php
+				$ar_keyw_2 = splitx(';',$ar_keyw_2.';');
+				?>
+				<?php for ($r=1;$r < count($ar_keyw_2);$r++) { ?>
+				<tr valign="top">
+					<td align="center">
+						<tt>650</tt>
+					</td>
+					<td>
+						<tt>1_</tt>
+					</td>
+					<td>
+						<tt>|a <?php echo $ar_keyw_2[$r];?> |? <?php echo $ar_idioma_2;?></tt>
+					</td>
+				</tr>
+				<? } ?>
+				
+				<!---- 700 --->
+				<?php for ($r=1;$r < count($authors);$r++) { ?>
+				<tr valign="top">
+					<td align="center">
+						<tt>700</tt>
+					</td>
+					<td>
+						<tt>1_</tt>
+					</td>
+					<td>
+						<tt><?php echo $authors[$r];?></tt>
+					</td>
+				</tr>
+				<? } ?>
+				
+				<!---- 773 --->
+				<tr valign="top">
+					<td align="center">
+						<tt>773</tt>
+					</td>
+					<td>
+						<tt>0#</tt>
+					</td>
+					<td>
+						<tt><?php echo '|a '.$cidade_nome.' |t '.$jnl_nome.' $x '.$jnl_issn_impresso;?></tt>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+<?
 /* Barra de progresso */
 echo $progress_bar;
 
@@ -63,19 +239,19 @@ $fld3 = Array();
 $fld4 = Array("name" => "dd14", "maxsize" => "50", "size" => 50, 'value' => $ar_doi);
 $fld5 = Array("name" => "dd15", "maxsize" => "50", "size" => 50, 'value' => $ar_section);
 echo '<table border="1" class="tabela00 lt1">
-		<TR>
+		<tr valign="top">
 		<TD>paginação:</td>
 		<td>' . form_input($fld1) . '-' . form_input($fld2) . '</td>
 		</tr>
-		<TR>
+		<tr valign="top">
 		<TD>fasciculo:</td>
 		<td>' . form_dropdown('dd13', $dt, $ar_edition) . '</td>
 		</tr>
-		<TR>
+		<tr valign="top">
 		<TD>DOI:</td>
 		<td>' . form_input($fld4) . '</td>
 		</tr>
-		<tr>
+		<tr valign="top">
 		<td>Seção:</td>
 		<td>' . form_dropdown('dd15', $dts, $ar_section) . '</td>
 		</tr>
@@ -297,6 +473,7 @@ echo $archives;
 echo $this -> archives -> new_file($id_ar);
 
 //echo $metodologia;
+echo $metodologias;
 
 echo '<BR>';
 echo '<div id="cited">[Cited by ' . $at_citacoes . ']</div>';
@@ -316,6 +493,7 @@ echo '<td width="50%">
 				<a href="' . $link_pdf . '" id="download" class="link" target="new0000010946">download</a>&nbsp;</div>
 			</div>';
 ?>
+</div>
 <script>
 	$("#issue").click(function() {
 		$("#issue_id").toggle();

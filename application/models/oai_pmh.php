@@ -147,7 +147,7 @@ class oai_pmh extends CI_model {
 				/*********************** registro deleted *******************/
 				if ($article['status'] == 'deleted') {
 					$this -> altera_status_chache($idc, 'X');
-					echo '<meta http-equiv="refresh" content="5">';
+					echo '<meta http-equiv="refresh" content="1">';
 					return ('');
 				}
 
@@ -179,6 +179,7 @@ class oai_pmh extends CI_model {
 				$rlt = db_query($sql);
 				if ($line = db_read($rlt)) {
 					/* Existe */
+
 					$this -> altera_status_chache($idc, 'C');
 					$this -> load -> view("oai/oai_process", $article);
 				} else {
@@ -257,7 +258,7 @@ class oai_pmh extends CI_model {
 							foreach ($keys as $key => $value) {
 								$this -> keywords -> save_KEYWORDS($article['codigo'], $value, $key);
 							}
-							$this -> altera_status_chache($idc, 'B');
+							//$this -> altera_status_chache($idc, 'B');
 							/**************** FIM DO PROCESSAMENTO ***************************************/
 						}
 					} else {
@@ -393,11 +394,12 @@ class oai_pmh extends CI_model {
 		$st = fread($fr,512);
 		fclose($fr);
 		
-		echo $file;
+		//echo $file;
 		if (strlen($st)==0)
 		{
 			exit;
 			$doc['status'] = 'deleted';
+			echo '<meta http-equiv="refresh" content="1">';
 			return ($doc);
 		}
 		$dom -> load($file);
@@ -417,7 +419,7 @@ class oai_pmh extends CI_model {
 
 		/* Registro deletado, nao processar */
 		if ($status == 'deleted') {
-			echo '<br>'.$status;
+			//echo '<br>'.$status;
 			$doc['status'] = 'deleted';
 			return ($doc);
 		} else {

@@ -1,3 +1,4 @@
+<div class="container">
 <?php
 $bt = array();
 $bt['publications'] = 'admin/journal';
@@ -14,15 +15,20 @@ $bt['cited'] = 'cited';
 
 $bt['skos'] = 'skos';
 
+$bt['autoindex'] = 'autoindex';
+
 echo '<h1>Admin Menu</h1>';
 
 foreach ($bt as $key => $value) {
 	$icone = '<img src="'.base_url('img/icon/icone_'.$key.'.png').'" align="left;" style="margin: 0px 5px 0px 0px; vertical-align: top;" height="40px">';
-	echo '<a href="'.base_url('index.php/'.$value).'" class="link" style="cursor: pointer;">';
-	echo '<div class="bt_admin">'.$icone.$key.'</div>';
-	echo '</a>';	
+	echo '<div class="col-md-3 col-sm-2 col-xs-6">
+			<a href="'.base_url('index.php/'.$value).'" class="link" style="cursor: pointer;">
+			<div class="bt_admin">'.$icone.$key.'</div>
+			</a>
+		  </div>'.cr();	
 }
 ?>
+</div>
 <style>
 	.bt_admin
 		{

@@ -258,21 +258,13 @@ class oai extends CI_controller {
 		return (1);
 	}
 
-	function security() {
-		$user = $this -> session -> userdata('user');
-		$email = $this -> session -> userdata('email');
-		$nivel = $this -> session -> userdata('nivel');
-		if (round($nivel) < 1) {
-			redirect(base_url('index.php/social/login'));
-		}
-	}
-
 	function cab() {
+		$this->load->model('users');
 		$data = array();
 		$data['title'] = 'Brapci : OAI-PMH';
 		$data['title_page'] = 'ADMIN - OAI';
 		$this -> load -> view("header/cab_admin", $data);
-		$this -> security();
+		$this -> users->security();
 	}
 
 	function index() {
