@@ -125,14 +125,3 @@ th {
 .pad5 {
 	padding: 10px;
 }
-/*************** TOP MENU **********************/
-.navbar {
-	background-color: #3367d6;
-	color: white;
-}
-.navbar-default .navbar-nav > li > a {
-	color: #d0d0d0;
-}
-.navbar-default .navbar-nav > li > a:hover {
-	color: white;
-}

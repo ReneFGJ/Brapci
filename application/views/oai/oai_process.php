@@ -7,19 +7,25 @@
 	<tr valign="top">
 		<td class="lt0">Issue ID</td>
 		<td><?php
-			switch ($issue_id) {
-				case '0' :
-					echo '<font color="green">** Novo **</font>';
-					echo '<br>';
-					echo $issue_ver;
-					break;
-				case '9999999' :
-					echo '<font color="red">** ISSUE Bloqueado **</font>';
-					break;
-				default :
-					echo 'Open Edition '.$issue_id;
-					break;
-			}
+		switch ($issue_id) {
+			case '0' :
+				echo '<a href="' . base_url('index.php/admin/journal_view/' . $id_jnl . '/' . checkpost_link($id_jnl)) . '" target="_blank">';
+				echo '<span class="btn btn-success">Ver todas as edições</span>';
+				echo '</a>&nbsp;';
+
+				echo '<a href="' . base_url('index.php/admin/issue_edit/0/' . $id_jnl) . '">';
+				echo '<span class="btn btn-default">Registrar nova edição</span>';
+				echo '</a>';
+				echo '<br>';
+				echo $issue_ver;
+				break;
+			case '9999999' :
+				echo '<font color="red">** ISSUE Bloqueado **</font>';
+				break;
+			default :
+				echo 'Open Edition ' . $issue_id;
+				break;
+		}
 		?>
 	</tr>
 	<tr valign="top">
@@ -104,7 +110,10 @@
 		?>
 	</tr>
 </table>
-<!--
-<meta http-equiv="refresh" content="5">
--->
+<?php
+if ($issue_id > 0) {
+	echo 'REFRESH em 1 seg.';
+	echo '<meta http-equiv="refresh" content="1">' . cr();
+}
+?>
 </div>

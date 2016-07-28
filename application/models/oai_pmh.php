@@ -25,7 +25,7 @@ class oai_pmh extends CI_model {
 						order by jnl_nome
 						";
 		$rlt = db_query($sql);
-		$sx = '<h1>'.msg('oai_journals').'</h1>';
+		$sx = '<h1>' . msg('oai_journals') . '</h1>';
 		while ($line = db_read($rlt)) {
 			$last = $line['jnl_last_harvesting'];
 			$url = $line['jnl_url'];
@@ -33,14 +33,13 @@ class oai_pmh extends CI_model {
 			//exit;
 			$link = '<A HREF="' . trim($line['jnl_url']) . '" target="_new">';
 			$link_oai = base_url('index.php/oai/Identify/' . $line['id_jnl']);
-			
 
-			$sx .= '<a href="'.$link_oai.'" class="link lt2">';
+			$sx .= '<a href="' . $link_oai . '" class="link lt2">';
 			$sx .= '<div style="float: left; width: 300px; height: 100px; border: 1px solid #888; margin: 0px 10px 5px 0px; border-radius: 10px; padding: 5px 10px;">';
-			$sx .= '<img src="' . base_url('img/icone_oai.png') . '" height="32" border=0 title="Coleta OAI-PMH" align="right">';			
+			$sx .= '<img src="' . base_url('img/icone_oai.png') . '" height="32" border=0 title="Coleta OAI-PMH" align="right">';
 			$sx .= $line['jnl_nome'];
 			$sx .= $line['jnl_token'];
-			$sx .= '<br><br><font class="lt1">'.msg('last_update').': '.stodbr($line['jnl_last_harvesting']).'</font>';
+			$sx .= '<br><br><font class="lt1">' . msg('last_update') . ': ' . stodbr($line['jnl_last_harvesting']) . '</font>';
 
 			$sx .= '</div>';
 			$sx .= '</a>';
@@ -135,6 +134,7 @@ class oai_pmh extends CI_model {
 						limit 1
 					";
 		$rlt = db_query($sql);
+
 		if ($line = db_read($rlt)) {
 			$idc = $line['id_cache'];
 			$file_id = strzero($line['id_cache'], 7);
@@ -143,10 +143,16 @@ class oai_pmh extends CI_model {
 				$xml = load_file_local($file_id);
 				/* Le XML */
 				$article = $this -> process_le_xml($xml, $file_id);
-				
+
 				/*********************** registro deleted *******************/
 				if ($article['status'] == 'deleted') {
 					$this -> altera_status_chache($idc, 'X');
+					echo '<meta http-equiv="refresh" content="1">';
+					return ('');
+				}
+				/*********************** registro deleted *******************/
+				if ($article['status'] == 'reload') {
+					$this -> altera_status_chache($idc, '@');
 					echo '<meta http-equiv="refresh" content="1">';
 					return ('');
 				}
@@ -188,6 +194,8 @@ class oai_pmh extends CI_model {
 						/* Bloqueado */
 						if ($article['issue_id'] == '9999999') {
 							$this -> altera_status_chache($idc, 'F');
+							echo '<meta http-equiv="refresh" content="1">';
+							return ('');
 						} else {
 							/* processa e grava dados */
 							$ids = $this -> recupera_section($article['setSpec'], $article['journal_id']);
@@ -221,7 +229,7 @@ class oai_pmh extends CI_model {
 
 							/* Arquivos */
 							for ($r = 0; $r < count($article['links']); $r++) {
-								$link = $article['links'][0]['link'];
+								$link = $article['links'][$r]['link'];
 								$this -> articles -> insert_suporte($article['codigo'], $link, $article['journal_id']);
 							}
 
@@ -258,7 +266,7 @@ class oai_pmh extends CI_model {
 							foreach ($keys as $key => $value) {
 								$this -> keywords -> save_KEYWORDS($article['codigo'], $value, $key);
 							}
-							//$this -> altera_status_chache($idc, 'B');
+							$this -> altera_status_chache($idc, 'B');
 							/**************** FIM DO PROCESSAMENTO ***************************************/
 						}
 					} else {
@@ -271,7 +279,8 @@ class oai_pmh extends CI_model {
 
 			} else {
 				$this -> altera_status_chache($idc, '@');
-				echo 'ERROR';
+				echo '<meta http-equiv="refresh" content="1">';
+				return('ERROR');
 			}
 		}
 	}
@@ -288,6 +297,7 @@ class oai_pmh extends CI_model {
 		}
 		return ($ano);
 	}
+
 	/******************************************************************************
 	 * RECUPERA NUMERO ************************************************************
 	 ******************************************************************************/
@@ -301,9 +311,9 @@ class oai_pmh extends CI_model {
 			if (strpos($nr, ',') > 0) { $nr = substr($nr, 0, strpos($nr, ','));
 			}
 			if (strpos($nr, '-') > 0) { $nr = substr($nr, 0, strpos($nr, '-'));
-			}			
+			}
 			if (strpos($nr, '(') > 0) { $nr = substr($nr, 0, strpos($nr, '('));
-			}			
+			}
 			$nr = troca($nr, 'n. ', '');
 			$nr = troca($nr, ' ', 'x');
 			if (strpos($nr, 'x') > 0) { $nr = substr($nr, 0, strpos($nr, 'x'));
@@ -314,17 +324,19 @@ class oai_pmh extends CI_model {
 		}
 		return ($nr);
 	}
+
 	/******************************************************************************
 	 * RECUPERA VOLUME ************************************************************
 	 ******************************************************************************/
 	function recupera_vol($s) {
 		$vl = '';
+		$s = troca($s, 'V.', 'v.');
 		if (strpos($s, 'v.')) { $vl = substr($s, strpos($s, 'v.'), strlen($s));
 		}
 		if (strpos($s, 'Vol ')) { $vl = substr($s, strpos($s, 'Vol ') + 4, strlen($s));
 		}
 		if (strpos($s, 'Vol. ')) { $vl = substr($s, strpos($s, 'Vol. ') + 5, strlen($s));
-		}		
+		}
 
 		if (strlen($vl) > 0) {
 			if (strpos($vl, ',') > 0) { $vl = substr($vl, 0, strpos($vl, ','));
@@ -388,17 +400,15 @@ class oai_pmh extends CI_model {
 	function process_le_xml($xml_rs, $file) {
 		$dom = new DOMDocument;
 		$dom = new DOMDocument;
-		
+
 		/* Arquivo vazio */
-		$fr = fopen($file,'r');
-		$st = fread($fr,512);
+		$fr = fopen($file, 'r');
+		$st = fread($fr, 512);
 		fclose($fr);
-		
+
 		//echo $file;
-		if (strlen($st)==0)
-		{
-			exit;
-			$doc['status'] = 'deleted';
+		if (strlen($st) == 0) {
+			$doc['status'] = 'reload';
 			echo '<meta http-equiv="refresh" content="1">';
 			return ($doc);
 		}
@@ -428,15 +438,14 @@ class oai_pmh extends CI_model {
 
 		/* setSpec */
 		$headers = $dom -> getElementsByTagName('setSpec');
-		$size = ($headers->length);
+		$size = ($headers -> length);
 		/* Header inválido */
-		if ($size < 1)
-			{
-				$doc['status'] = 'deleted';
-				return ($doc);
-				exit;
-			}
-		
+		if ($size < 1) {
+			$doc['status'] = 'deleted';
+			return ($doc);
+			exit ;
+		}
+
 		foreach ($headers as $header) {
 			$setSpec = $header -> nodeValue;
 		}
@@ -653,27 +662,27 @@ class oai_pmh extends CI_model {
 					break;
 			}
 		}
-		$sx = '<table width="600" align="center">';
-		$sx .= '<TR align="center" class="lt1" style="background-color: #E0E0E0; ">';
-		$sx .= '<td rowspan=2 width="30%" class="lt4">OAI-PMH';
+		$sx = '<br><table width="100%" align="center" class="table">';
+		$sx .= '<TR align="center" style="background-color: #E0E0E0; ">';
+		$sx .= '<td rowspan=2 width="30%" class="superbig">OAI-PMH';
 		$sx .= '<TD>para coletar</td>';
 		$sx .= '<TD>coletado</td>';
 		$sx .= '<TD>processado</td>';
 		$sx .= '<TD>total</td>';
-		$sx .= '<TR align="center" class="lt4">';
-		$sx .= '<TD width="15%">';
+		$sx .= '</tr>' . cr();
+
+		$sx .= '<TR align="center" >';
+		$sx .= '<TD width="15%" class="superbig">';
 		$sx .= number_format($t[0], 0, ',', '.');
-		$sx .= '<TD width="15%">';
+		$sx .= '<TD width="15%" class="superbig">';
 		$sx .= number_format($t[2], 0, ',', '.');
-		$sx .= '<TD width="15%">';
+		$sx .= '<TD width="15%" class="superbig">';
 		$sx .= number_format(($t[1] + $t[3]), 0, ',', '.');
-		$sx .= '<TD width="15%">';
+		$sx .= '<TD width="15%" class="superbig">';
 		$sx .= number_format(($t[0] + $t[1] + $t[2] + $t[3]), 0, ',', '.');
 		$sx .= '</table>';
 		return ($sx);
 	}
-
-
 
 	function doublePDFlink() {
 		$sql = "select * from (
@@ -704,42 +713,38 @@ class oai_pmh extends CI_model {
 			return (0);
 		}
 	}
-	
-	function fileExistPDFlink($pag=0)
-		{
-			$sz = 30;
-			$OFFSET = ($pag * 100);
-			$data = date("Ymd");
-			$sql = "select * from brapci_article_suporte 
+
+	function fileExistPDFlink($pag = 0) {
+		$sz = 30;
+		$OFFSET = ($pag * 100);
+		$data = date("Ymd");
+		$sql = "select * from brapci_article_suporte 
 					WHERE bs_update <> '$data'
 					and bs_type = 'PDF'
 					order by id_bs 
 					LIMIT 100 OFFSET $OFFSET
 					
 					";
-			$rlt = $this->db->query($sql);
-			$rlt = $rlt->result_array();
-			$sx = '';
-			for ($r=0;$r < count($rlt);$r++)
-				{
-					$line = $rlt[$r];
-					$sx .= '<br>';
-					$sx .= ($r+$pag * 100).'. ';
-					$file = $line['bs_adress']; 
-					$sx .= $file;
-					if (file_exists($file))
-					{
-						$sx .= ' <b><font color="green">OK</font></b>'.cr();
-					} else {
-						$sx .= ' <b><font color="red">file not found</font></b>'.cr();
-					}
-				}
-				 if (count($rlt) > 0)
-				 	{
-				 		$sx .= '<META http-equiv="refresh" content="5;URL='.base_url('index.php/admin/fileexist_pdf/'.($pag+1)).'">';
-				 	}
-			return($sx);
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		$sx = '';
+		for ($r = 0; $r < count($rlt); $r++) {
+			$line = $rlt[$r];
+			$sx .= '<br>';
+			$sx .= ($r + $pag * 100) . '. ';
+			$file = $line['bs_adress'];
+			$sx .= $file;
+			if (file_exists($file)) {
+				$sx .= ' <b><font color="green">OK</font></b>' . cr();
+			} else {
+				$sx .= ' <b><font color="red">file not found</font></b>' . cr();
+			}
 		}
+		if (count($rlt) > 0) {
+			$sx .= '<META http-equiv="refresh" content="5;URL=' . base_url('index.php/admin/fileexist_pdf/' . ($pag + 1)) . '">';
+		}
+		return ($sx);
+	}
 
 	function totalPDFharvesting() {
 		$sql = "select count(*) as total from (
@@ -786,7 +791,7 @@ class oai_pmh extends CI_model {
 		}
 
 	}
-	
+
 	function nextPDFconvert() {
 		$data = date("Ymd");
 		$sql = "select * from brapci_article_suporte where bs_status = 'T'
@@ -804,7 +809,7 @@ class oai_pmh extends CI_model {
 			return (0);
 		}
 
-	}	
+	}
 
 }
 ?>

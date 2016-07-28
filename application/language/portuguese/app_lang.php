@@ -44,12 +44,14 @@ $lang['mes_11a'] = 'Nov.';
 $lang['mes_12a'] = 'Dez.';
 /* CAB */
 $lang['perfil_coordenador'] = 'Coordenador';
+$lang['search'] = 'pesquisar';
 $lang['bt_admin'] = 'admin';
-$lang['bt_home'] = 'home';
+$lang['bt_home'] = 'HOME';
 $lang['bt_sign_out'] = 'logout';
 $lang['bt_sign_in'] = 'fazer login';
 $lang['bt_about'] = 'sobre a brapci';
-$lang['bt_home_admin'] = 'admin home';
+$lang['admin_home'] = 'ADMIN HOME';
+$lang['menu_admin'] = 'ADMIN';
 $lang['last_update'] = 'Útima atualização';
 
 $lang['pt_BR'] = 'Português';

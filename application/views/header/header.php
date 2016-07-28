@@ -17,11 +17,17 @@ if (!isset($css)) { $css = array(); }
  ?>
 	<?php
 	array_push($js,'jquery.mask.js');
+	array_push($js,'sisdoc_form.js');
 	for ($r = 0; $r < count($js); $r++) {
 		echo '	<script src="' . base_url('js/' . $js[$r]) . '"></script>' . cr();
 	}
 	array_push($css,'style_brapci.css');
+	if (isset($nocab))
+		{
+			array_push($css,'style_brapci_nocab.css');		
+		}
 	array_push($css,'style_roboto.css');
+	array_push($css,'style_menu_top.css');
 	array_push($css,'style_form_sisdoc.css');
 	array_push($css,'jquery-ui.css');
 	

@@ -133,16 +133,6 @@ class admins extends CI_model {
 				$this -> authors -> save_AUTHORS($id, $dd[10]);
 				redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
 				break;
-			case 'ABSTRACT1' :
-				$this -> keywords -> save_KEYWORDS($id, $dd[11], $idioma_1);
-				$this -> articles -> save_ABSTRACT($id, $dd[10], 1);
-				redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
-				break;
-			case 'ABSTRACT2' :
-				$this -> keywords -> save_KEYWORDS($id, $dd[11], $idioma_2);
-				$this -> articles -> save_ABSTRACT($id, $dd[10], 2);
-				redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
-				break;
 		}
 
 		$this -> load -> view('admin/article_view', $data);
@@ -214,7 +204,7 @@ class admins extends CI_model {
 		$tela .= '<TD width="90%">';
 		$tela .= $tela_articles;
 		/* Botao novo */
-		$tela .= '<input type="button" style="margin: 20px;" onclick="article_new();" value="NOVO TRABALHO" class="botao3d back_blue back_blue_shadown">';
+		$tela .= '<span class="btn btn-primary" onclick="article_new();">NOVO TRABALHO</span>;
 		$tela .= '
 				<script>
 					function article_new()

@@ -122,11 +122,11 @@ header.sticky {
 	height: 150px;
 	padding-top: 0px;
 	top: -50px;
-	-webkit-transition: height 0.9s;
-	-moz-transition: height 0.9s;
-	-ms-transition: height 0.9s;
-	-o-transition: height 0.9s;
-	transition: height 0.9s;
+	-webkit-transition: height 0.3s;
+	-moz-transition: height 0.3s;
+	-ms-transition: height 0.3s;
+	-o-transition: height 0.3s;
+	transition: height 0.3s;
 }
 
 .logo_scrool {

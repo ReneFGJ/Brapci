@@ -13,7 +13,7 @@
 	<TR valign="top">
 		<TD align="right" class="small" width="10%" style="min-height: 200px;">outras forma citadas</td>		
 		<TD class="lt2" colspan=1 ><?php echo $autor_nomes; ?></td>
-		<TD align="right" class="small" width="10%">intituições</td>		
+		<TD align="right" class="small" width="10%">instituições</td>		
 		<TD class="lt2" colspan=1 ><?php echo $autor_instituicoes; ?></td>
 		</tr>
 	<tr valign="top">

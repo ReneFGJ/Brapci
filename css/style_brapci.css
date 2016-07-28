@@ -1,45 +1,54 @@
-body
-	{
-		background-color: #2076A7;
-		margin-top: 80px;
-	}
-table td
-	{
-		line-height: 200%;
-		font-size: 13px;
-	}
-.container
-	{
-		background: #f8f8f8;
-		border:1px solid #000000;
-		border-radius: 10px;
-		margin-bottom: 30px;
-		padding: 0px 20px 20px 20px;
-	}
-.navbar-default
-{
-	background-color: #1d4161;
-	height: 70px;
-	
+body {
+	/* background-color: #2076A7; */
+	/*background-color: #4791d2; */
+	margin-top: 50px;
 }
-.navbar-default .navbar-nav > li > a 
-	{
-		color: #dfdfdf;
-	}
-	
-.navbar-default .navbar-nav > li > a:hover 
-	{
-		color: #000000;
-		background-color: #c0c0c0;
-	}	
+.search {
+	background-image: url("../img/background/back_00.jpg");
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	/*
+	 background-attachment: fixed;
+	 */
+}
+table td {
+	line-height: 200%;
+	font-size: 13px;
+}
+.cnt {
+	background: #f8f8f8;
+	border: 1px solid #000000;
+	border-radius: 10px;
+	margin-bottom: 30px;
+	padding: 0px 20px 20px 20px;
+}
 
+#formFiled {
+
+	min-height: 1024px;
+}
+
+/******************************* FONT SIZE *************/
+.small {
+	font-size: 10px;
+}
+.middle {
+	font-size: 13px;
+}
+.big {
+	font-size: 17px;
+}
+.superbig {
+	font-size: 20px;
+}
 /******************************** LOGIN ****************/
-.container-login
-	{
-		background: #fcfcfc;
-		border: 2px solid #000000;
-		border-radius: 10px;
-	}
+.container-login {
+	background: #fcfcfc;
+	border: 2px solid #000000;
+	border-radius: 10px;
+}
 
 /****************************** SEARCH *****************/
 #formWrapper {

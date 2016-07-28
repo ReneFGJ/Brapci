@@ -346,10 +346,16 @@ class oai extends CI_controller {
 	}
 
 	function ProcessRecords($jid = 0) {
+		$this -> load -> model('journals');
 		$this -> load -> model('oai_pmh');
 		$data['title'] = 'Brapci : OAI-PMH';
 		$data['id'] = $jid;
 		$this -> cab();
+		
+		$data = $this->journals->le($jid);
+		$data['id'] = $jid;
+		$this -> load -> view('oai/oai_verbs', $data);
+		$this -> load -> view('brapci/journal', $data);
 
 		/* List journals to harvesting */
 		$this -> load -> model('oai_pmh');
@@ -357,6 +363,7 @@ class oai extends CI_controller {
 		$this -> load -> view('oai/oai_content.php', $data);
 
 		$this -> oai_pmh -> process_oai($jid);
+
 	}
 
 	function setspec($jid, $tema = '', $setspec = '') {
@@ -457,6 +464,73 @@ class oai extends CI_controller {
 				break;
 		}
 	}
+	function cache_reset()
+		{
+			$this->cab();
+			$ops = '1:de X para @';
+			$ops .= '&2: de @ para X';
+			$cp = array();
+			array_push($cp,array('$H8','','',False,True));
+			array_push($cp,array('$Q id_jnl:jnl_nome:select * from brapci_journal','','Publicação',False,True));			
+			array_push($cp,array('$O '.$ops,'','Alteração (opcional)',False,True));
+			array_push($cp,array('$[2000-'.date("Y").']','','Data (opcional)',True,True));
+			array_push($cp,array('$B8','','Filtrar',False,True));
+			$form = new form;
+			$data['content'] = $form->editar($cp,'');
+			$this->load->view('content',$data);
+			
+			/****/
+			$idj = get("dd1");
+			if (($idj > 0) and ($form->saved > 0))
+				{
+					$ano = get("dd3");
+					$jid = strzero($idj,7);
+					$sx = 'Code :'.$jid;
+					
+					/* */
+					$ac = get("dd2");
+					switch ($ac)
+						{
+						case '1':
+							$sql = "update oai_cache set cache_status = '@' 
+										WHERE cache_journal = '$jid' 
+										AND cache_status = 'X'
+										AND cache_datastamp like '$ano%' 
+										";
+							$rrr = $this->db->query($sql);
+							break;
+						case '2':
+							break;
+						}
+					
+					
+					$sql = "select * from oai_cache
+								LEFT JOIN brapci_article ON ar_oai_id = cache_oai_id
+								WHERE cache_journal = '$jid' 
+								AND cache_datastamp like '$ano%'
+								ORDER BY cache_datastamp DESC
+							";
+					$rlt = $this->db->query($sql);
+					$rlt = $rlt->result_array();
+					for ($r=0;$r < count($rlt);$r++)
+						{
+							$line = $rlt[$r];
+							$sx .= '<br><tt>';
+							$sx .= strzero($r+1,5).' ';
+							$sx .= $line['cache_datastamp'];
+							$sx .= ' ';
+							$sx .= $line['cache_status'];
+							$sx .= ' ';
+							$sx .= $line['cache_oai_id'];
+							$sx .= ' ';
+							$sx .= $line['ar_status'];
+							$sx .= '</tt>';
+						}
+					$data['content'] = $sx;
+					$data['title'] = '';
+					$this->load->view('content',$data);
+				}
+		}
 
 }
 ?>

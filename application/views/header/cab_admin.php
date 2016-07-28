@@ -44,7 +44,7 @@ if (strlen($user) > 0) {
 	$bt_sign_out = '<a href="' . base_url('index.php/social/logout') . '">' . msg('bt_sign_out') . '</a>';
 
 } else {
-	$bt_sign_in = '<a href="' . base_url('index.php/social/login') . '">' . msg('bt_sign_in') . '</a>';
+	$bt_sign_in = '<a href="' . base_url('index.php/social/login') . '" class="btn btn-warning">' . msg('bt_sign_in') . '</a>';
 }
 ?>
 <body>
@@ -100,7 +100,7 @@ if (strlen($user) > 0) {
 					<?php
 					/************************************************************************************ SIGN IN ************************************************/
 					if (strlen($user) == 0) {
-						echo '<li><a href="'.base_url('index.php/social/login').'">'.msg('sign_in').'</a></li>';
+						echo '<li><a href="'.base_url('index.php/social/login').'" class="btn-warning">'.msg('sign_in').'</a></li>';
 					} else {
 						$user_name = $_SESSION['user'];
 						echo '<li class="dropdown">'.cr();

@@ -18,7 +18,7 @@ switch ($nivel) {
 		break;
 }
 
-$bt_home = '<a href="' . base_url('index.php') . '">' . msg('bt_home') . '</a>';
+$bt_home = '<a href="' . base_url('index.php') . '" class="btn btn-warning">' . msg('bt_home') . '</a>';
 $bt_sign_in = '';
 $bt_sign_out = '';
 $bt_admin = '';
@@ -44,7 +44,7 @@ if (strlen($user) > 0) {
 	$bt_sign_out = '<a href="' . base_url('index.php/social/logout') . '">' . msg('bt_sign_out') . '</a>';
 
 } else {
-	$bt_sign_in = '<a href="' . base_url('index.php/social/login') . '">' . msg('bt_sign_in') . '</a>';
+	$bt_sign_in = '<a href="' . base_url('index.php/social/login') . '" class="btn btn-warning">' . msg('bt_sign_in') . 'xx</a>';
 }
 ?>
 <body>
@@ -65,13 +65,14 @@ if (strlen($user) > 0) {
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li>
-						<a href="<?php echo base_url('index.php');?>">Home <span class="sr-only">(current)</span></a>
+						<a href="<?php echo base_url('index.php');?>">HOME <span class="sr-only">(current)</span></a>
 					</li>
 					<!--
 					<li>
 						<a href="#">Link</a>
 					</li>
 					-->
+					<?php if (strlen($user) > 0) { ?>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo msg('menu_admin');?><span class="caret"></span></a>
 						<ul class="dropdown-menu">
@@ -80,6 +81,7 @@ if (strlen($user) > 0) {
 							</li>
 						</ul>
 					</li>
+					<?php } ?>
 				</ul>
 				<!---
 				<form class="navbar-form navbar-left" role="search">
@@ -100,7 +102,7 @@ if (strlen($user) > 0) {
 					<?php
 					/************************************************************************************ SIGN IN ************************************************/
 					if (strlen($user) == 0) {
-						echo '<li><a href="'.base_url('index.php/social/login').'">'.msg('sign_in').'</a></li>';
+						echo '<li><a href="'.base_url('index.php/social/login').'" class="navbar-nav2 btn-warning">'.msg('sign_in').'</a></li>';
 					} else {
 						$user_name = $_SESSION['user'];
 						echo '<li class="dropdown">'.cr();

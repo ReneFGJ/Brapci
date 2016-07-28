@@ -151,8 +151,7 @@ class users extends CI_model {
 		if (count($rlt) > 0) {
 			$line = $rlt[0];
 
-			
-			$dd2 = $this->password_cripto($pass,$line['us_autenticador']);
+			$dd2 = $this -> password_cripto($pass, $line['us_autenticador']);
 			$dd3 = $line['us_password'];
 
 			if ($dd2 == $dd3) {
@@ -178,61 +177,64 @@ class users extends CI_model {
 		$data2 = $this -> user_drh -> le($id);
 		$data = array_merge($data1, $data2);
 
-		$tela = $this -> load -> view('auth_social/myaccount', $data,true);
-		return($tela);
+		$tela = $this -> load -> view('auth_social/myaccount', $data, true);
+		return ($tela);
 	}
-	
-	function password_cripto($pass,$tipo)
-		{
-			switch ($tipo)
-				{
-					case 'TXT':
-						$dd2 = trim($pass);
-						break;
-					default:
-						$dd2 = md5($pass);
-						break;
-				}
-			return($dd2);
+
+	function password_cripto($pass, $tipo) {
+		switch ($tipo) {
+			case 'TXT' :
+				$dd2 = trim($pass);
+				break;
+			default :
+				$dd2 = md5($pass);
+				break;
 		}
-	
-	function change_password($id)
-		{
-			$form = new form;
-			$cp = array();
-			array_push($cp,array('$H8','','',false,false));
-			array_push($cp,array('$P20','','Senha atual',True,True));
-			array_push($cp,array('$P20','','Nova senha',True,True));
-			array_push($cp,array('$P20','','Confirme nova senha',True,True));
-			array_push($cp,array('$B','','Alterar senha',True,True));
-			
-			$tela = $form->editar($cp,'');
-			
-			/* REGRAS DE VALIDACAO */
-			$data = $this->le($id);
-			$pass = get("dd1");
-			$dd3 = $data['us_password'];
-			$p1 = get("dd2");
-			$p2 = get("dd3");
-			
-			$dd2 = $this->password_cripto($pass,$data['us_autenticador']);
-			
-			if ($dd2 == $dd3)
-				{
-					if ($p1 == $p2)
-						{
-							$sql = "update ".$this->table." set us_password = '".md5($p1)."', us_autenticador = 'MD5' where id_us = ".$id;
-							$this->db->query($sql);
-							redirect(base_url('index.php/main'));
-						} else {
-							$tela .= '<div class="alert">Senhas não conferem</div>';
-						}
-				} else {
-					$tela .= '<div class="alert">Senhas atual não confere!</div>';
-				}
-			
-			return($tela);	
+		return ($dd2);
+	}
+
+	function change_password($id) {
+		$form = new form;
+		$cp = array();
+		array_push($cp, array('$H8', '', '', false, false));
+		array_push($cp, array('$P20', '', 'Senha atual', True, True));
+		array_push($cp, array('$P20', '', 'Nova senha', True, True));
+		array_push($cp, array('$P20', '', 'Confirme nova senha', True, True));
+		array_push($cp, array('$B', '', 'Alterar senha', True, True));
+
+		$tela = $form -> editar($cp, '');
+
+		/* REGRAS DE VALIDACAO */
+		$data = $this -> le($id);
+		$pass = get("dd1");
+		$dd3 = $data['us_password'];
+		$p1 = get("dd2");
+		$p2 = get("dd3");
+
+		$dd2 = $this -> password_cripto($pass, $data['us_autenticador']);
+
+		if ($dd2 == $dd3) {
+			if ($p1 == $p2) {
+				$sql = "update " . $this -> table . " set us_password = '" . md5($p1) . "', us_autenticador = 'MD5' where id_us = " . $id;
+				$this -> db -> query($sql);
+				redirect(base_url('index.php/home'));
+			} else {
+				$tela .= '<div class="alert">Senhas não conferem</div>';
+			}
+		} else {
+			$tela .= '<div class="alert">Senhas atual não confere!</div>';
 		}
 
+		return ($tela);
+	}
+
+}
+
+/****************** Security login ****************/
+function perfil($tp) {
+	$ok = 0;
+	$per = $_SESSION['perfil'];	
+	$ok = 1;
+	return($ok);
 }
 ?>

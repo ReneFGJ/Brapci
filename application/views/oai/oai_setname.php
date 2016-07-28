@@ -8,6 +8,7 @@ for ($r=0;$r < count($links);$r++)
 		echo $lk;
 	}
 ?>
+<br>
 setname: <?php echo $setspec; ?>
 <hr>
 opções:

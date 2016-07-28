@@ -1,102 +1,99 @@
 <?php
-// This file is part of the Brapci Software. 
-// 
+// This file is part of the Brapci Software.
+//
 // Copyright 2015, UFPR. All rights reserved. You can redistribute it and/or modify
 // Brapci under the terms of the Brapci License as published by UFPR, which
-// restricts commercial use of the Software. 
-// 
+// restricts commercial use of the Software.
+//
 // Brapci is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-// PARTICULAR PURPOSE. See the ProEthos License for more details. 
-// 
+// PARTICULAR PURPOSE. See the ProEthos License for more details.
+//
 // You should have received a copy of the Brapci License along with the Brapci
 // Software. If not, see
-// https://github.com/ReneFGJ/Brapci/tree/master//LICENSE.txt 
+// https://github.com/ReneFGJ/Brapci/tree/master//LICENSE.txt
 /* @author: Rene Faustino Gabriel Junior <renefgj@gmail.com>
  * @date: 2015-12-01
  */
 class articles extends CI_model {
-	
-	function resumo()
-		{
-			$sql = "SELECT count(*) as total, ar_status FROM `brapci_article` group by ar_status";
-			$rlt = $this->db->query($sql);
-			$rlt = $rlt->result_array();
-			$sx = '';
-			$rs = array(0,0,0,0,0,0,0,0,0);
-			for ($r=0;$r < count($rlt);$r++)
-				{
-					$line = $rlt[$r];
-					$tp = $line['ar_status'];
-					$total = $line['total'];
-					switch ($tp)
-						{
-						case 'A':
-							$rs[0] = $rs[0] + $total;
-							break;
-						case 'B':
-							$rs[1] = $rs[1] + $total;
-							break;
-						case 'C':
-							$rs[2] = $rs[2] + $total;
-							break;
-						case 'D':
-							$rs[3] = $rs[3] + $total;
-							break;
-						case 'F':
-							$rs[3] = $rs[3] + $total;
-							break;
-						case 'X':
-							$rs[5] = $rs[5] + $total;
-							break;
-						default:
-							$rs[0] = $rs[0] + $total;
-							break;							
-						}
-				}
-			$sx .= '<table width="400">
-					<tr><th>situação</th><th>quant.</th></tr>
-					<tr><td>Em indexação</td><td align="right">'.number_format($rs[0],0,',','.').'</td></tr>
-					<tr><td>Em 1º Revisão</td><td align="right">'.number_format($rs[1],0,',','.').'</td></tr>
-					<tr><td>Em 2º Revisão</td><td align="right">'.number_format($rs[2],0,',','.').'</td></tr>
-					<tr><td>Indexados</td><td align="right">'.number_format($rs[3],0,',','.').'</td></tr>
-					<tr><th>Total</th><td align="right"><b>'.number_format(($rs[0]+$rs[1]+$rs[2]+$rs[3]+$rs[4]),0,',','.').'</b></td></tr>
-					</table>';
-			return($sx);
-		}
 
-	function double_articles()
-		{
-			$sql = "select * from ( SELECT ar_oai_id, count(*) as total 
+	var $table = 'brapci_article';
+	var $saved = 0;
+
+	function resumo() {
+		$sql = "SELECT count(*) as total, ar_status FROM `brapci_article` group by ar_status";
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		$sx = '';
+		$rs = array(0, 0, 0, 0, 0, 0, 0, 0, 0);
+		for ($r = 0; $r < count($rlt); $r++) {
+			$line = $rlt[$r];
+			$tp = $line['ar_status'];
+			$total = $line['total'];
+			switch ($tp) {
+				case 'A' :
+					$rs[0] = $rs[0] + $total;
+					break;
+				case 'B' :
+					$rs[1] = $rs[1] + $total;
+					break;
+				case 'C' :
+					$rs[2] = $rs[2] + $total;
+					break;
+				case 'D' :
+					$rs[3] = $rs[3] + $total;
+					break;
+				case 'F' :
+					$rs[3] = $rs[3] + $total;
+					break;
+				case 'X' :
+					$rs[5] = $rs[5] + $total;
+					break;
+				default :
+					$rs[0] = $rs[0] + $total;
+					break;
+			}
+		}
+		$sx .= '<table width="400">
+					<tr><th>situação</th><th>quant.</th></tr>
+					<tr><td>Em indexação</td><td align="right">' . number_format($rs[0], 0, ',', '.') . '</td></tr>
+					<tr><td>Em 1º Revisão</td><td align="right">' . number_format($rs[1], 0, ',', '.') . '</td></tr>
+					<tr><td>Em 2º Revisão</td><td align="right">' . number_format($rs[2], 0, ',', '.') . '</td></tr>
+					<tr><td>Indexados</td><td align="right">' . number_format($rs[3], 0, ',', '.') . '</td></tr>
+					<tr><th>Total</th><td align="right"><b>' . number_format(($rs[0] + $rs[1] + $rs[2] + $rs[3] + $rs[4]), 0, ',', '.') . '</b></td></tr>
+					</table>';
+		return ($sx);
+	}
+
+	function double_articles() {
+		$sql = "select * from ( SELECT ar_oai_id, count(*) as total 
 									FROM `brapci_article` 
 								WHERE 1 GROUP by ar_oai_id 
 								) as tabela where total > 1
 								ORDER BY total desc";
-			$rlt = $this->db->query($sql);
-			$rlt = $rlt->result_array();
-			$sx = '';
-			for ($r=0;$r < count($rlt);$r++)
-				{
-					$line = $rlt[$r];	
-					$sx .= $line['ar_oai_id'] . '<br>';
-				}
-			return($sx);
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		$sx = '';
+		for ($r = 0; $r < count($rlt); $r++) {
+			$line = $rlt[$r];
+			$sx .= $line['ar_oai_id'] . '<br>';
 		}
-	
-	function insert_suporte($codigo,$link,$jid)
-		{
-			$sql = "select * from brapci_article_suporte where bs_adress = '$link' ";
-			$rlt = db_query($sql);
-			if ($line = db_read($rlt))
-				{
-					return(0);
-				} else {
-					$data = date("Ymd");
-					
-					$type = 'URL';
-					if (substr($link,0,3) == '10.') { $type = 'DOI'; }
-					
-					$sql = "insert into brapci_article_suporte 
+		return ($sx);
+	}
+
+	function insert_suporte($codigo, $link, $jid) {
+		$sql = "select * from brapci_article_suporte where bs_adress = '$link' ";
+		$rlt = db_query($sql);
+		if ($line = db_read($rlt)) {
+			return (0);
+		} else {
+			$data = date("Ymd");
+
+			$type = 'URL';
+			if (substr($link, 0, 3) == '10.') { $type = 'DOI';
+			}
+
+			$sql = "insert into brapci_article_suporte 
 							(
 							bs_article, bs_type, bs_adress,
 							bs_status, bs_journal_id, bs_update
@@ -105,10 +102,10 @@ class articles extends CI_model {
 							'A','$jid',$data							
 							)					
 					";
-					$this->db->query($sql);
-					return(1);
-				}
+			$this -> db -> query($sql);
+			return (1);
 		}
+	}
 
 	function insert_new_article($article) {
 		$id = $article['idf'];
@@ -122,34 +119,32 @@ class articles extends CI_model {
 			$sql = "update brapci_article set 
 					ar_edition= '$edition',
 					ar_section = '$section'
-					where id_ar = ".$line['id_ar'];
-			$rlt = $this->db->query($sql);
-			return($cod);
+					where id_ar = " . $line['id_ar'];
+			$rlt = $this -> db -> query($sql);
+			return ($cod);
 		} else {
 			$section = $article['section'];
 			$edition = $article['issue_id'];
-			
+
 			$journal_id = $article['journal_id'];
 			$idioma = $article['titles'][0]['idioma'];
-			$titulo = troca($article['titles'][0]['title'],"'",'´');
-			if (isset($article['abstract'][0]['content']))
-				{
-					$ar_resumo_1 = $article['abstract'][0]['content'];
-					$ar_resumo_1 = troca($ar_resumo_1,"'",'´');
-				} else {
-					$ar_resumo_1 = '';
-				}
-			
-			if (isset($article['titles'][1]['idioma']))
-				{
-					$idioma2 = $article['titles'][1]['idioma'];
-					$titulo2 = troca($article['titles'][1]['title'],"'",'´');
-					$ar_resumo_2 = troca($article['abstract'][1]['content'],"'",'´');
-				} else {
-					$idioma2 = '';
-					$titulo2 = '';
-					$ar_resumo_2 = '';
-				}
+			$titulo = troca($article['titles'][0]['title'], "'", '´');
+			if (isset($article['abstract'][0]['content'])) {
+				$ar_resumo_1 = $article['abstract'][0]['content'];
+				$ar_resumo_1 = troca($ar_resumo_1, "'", '´');
+			} else {
+				$ar_resumo_1 = '';
+			}
+
+			if (isset($article['titles'][1]['idioma'])) {
+				$idioma2 = $article['titles'][1]['idioma'];
+				$titulo2 = troca($article['titles'][1]['title'], "'", '´');
+				$ar_resumo_2 = troca($article['abstract'][1]['content'], "'", '´');
+			} else {
+				$idioma2 = '';
+				$titulo2 = '';
+				$ar_resumo_2 = '';
+			}
 
 			if ($idioma2 == 'pt-BR') {
 				$idioma3 = $idioma;
@@ -191,13 +186,13 @@ class articles extends CI_model {
 			'','$id','',
 			'$ano','',0)			
 			";
-			$this->db->query($sql);
-			$this->updatex();
-			
+			$this -> db -> query($sql);
+			$this -> updatex();
+
 			$rlt = db_query($xsql);
 			$line = db_read($rlt);
 			$cod = $line['ar_codigo'];
-			return($cod);							
+			return ($cod);
 		}
 	}
 
@@ -205,13 +200,12 @@ class articles extends CI_model {
 		/* title 1 */
 		$p1 = trim($p1);
 		$p2 = trim($p2);
-		
+
 		/* Regras */
-		if ((strpos($p1,'-') > 0) and (strlen($p2) == 0))
-			{
-				$p2 = trim(substr($p1,strpos($p1,'-')+1,10));
-				$p1 = trim(substr($p1,0,strpos($p1,'-')));
-			}
+		if ((strpos($p1, '-') > 0) and (strlen($p2) == 0)) {
+			$p2 = trim(substr($p1, strpos($p1, '-') + 1, 10));
+			$p1 = trim(substr($p1, 0, strpos($p1, '-')));
+		}
 
 		$sql = "update brapci_article set
 					ar_pg_inicial = '$p1',
@@ -270,9 +264,9 @@ class articles extends CI_model {
 	}
 
 	function le($id) {
-		$this->load->model("references");
+		$this -> load -> model("references");
 		$this -> load -> model('keywords');
-		
+
 		$id = strzero($id, 10);
 		$sql = "select * from brapci_article
 						left join brapci_journal on ar_journal_id = jnl_codigo
@@ -287,13 +281,16 @@ class articles extends CI_model {
 		/* Kwywords */
 		$line['ar_keyw_1'] = $this -> keywords -> retrieve_keywords($id, $line['ar_idioma_1']);
 		$line['ar_keyw_2'] = $this -> keywords -> retrieve_keywords($id, $line['ar_idioma_2']);
+		$line['ar_keyw_3'] = $this -> keywords -> retrieve_keywords($id, $line['ar_idioma_3']);
+		$line['keywords'] = $this -> keywords -> retrieve_keywords_all($id);
 		$line['author'] = $this -> author_article($id);
 		$line['authores_row'] = $this -> author_article_row($id);
 		$line['cited'] = $this -> cited($id);
 		$line['link_pdf'] = $this -> arquivos($id);
-		
+		$line['links'] = $this -> arquivos_files($id);
+
 		/* reference */
-		$line['reference'] = $this->references->cited($line);
+		$line['reference'] = $this -> references -> cited($line);
 
 		/* Pages */
 		$p1 = $line['ar_pg_inicial'];
@@ -320,6 +317,116 @@ class articles extends CI_model {
 		} else {$fl = '';
 		}
 		return ($fl);
+	}
+
+	function arquivos_files($id) {
+		$sql = "select * from brapci_article_suporte where bs_article = '$id' order by bs_type ";
+		$rlt = $this -> db -> query($sql);
+		$line = $rlt -> result_array();
+		return ($line);
+	}
+
+	function cp($id = '') {
+		$cv = array("dd2", "dd4", "dd5", "dd7", "dd9", "dd10", "dd12", "dd14", "dd15");
+		for ($r = 0; $r < count($cv); $r++) {
+			$dd = $cv[$r];
+			$_POST[$dd] = troca(get($dd), chr(13), ' ');
+			$_POST[$dd] = troca($_POST[$dd], chr(10), '');
+		}
+		/* paginacao */
+		$pg = get("dd17");
+		if (strpos($pg, '-')) {
+			$_POST['dd18'] = substr($pg, strpos($pg, '-') + 1, strlen($pg));
+			$_POST['dd17'] = substr($pg, 0, strpos($pg, '-'));
+		}
+		/* idioma */
+		$sqlido = "ido_codigo:ido_descricao:select * from ajax_idioma order by ido_ordem";
+
+		$cp = array();
+		array_push($cp, array('$H8', 'id_ar', '', false, true));
+
+		array_push($cp, array('$A', '', msg('idioma_01'), false, true));
+		array_push($cp, array('$T80:4', 'ar_titulo_1', msg('ar_titulo_1'), true, true));
+		array_push($cp, array('$Q ' . $sqlido, 'ar_idioma_1', msg('ar_idioma_1'), true, true));
+		array_push($cp, array('$T80:7', 'ar_resumo_1', msg('ar_resumo_1'), false, true));
+		array_push($cp, array('$T80:2', 'ar_key1', msg('ar_key1'), false, true));
+
+		array_push($cp, array('$A', '', msg('idioma_02'), false, true));
+		array_push($cp, array('$T80:4', 'ar_titulo_2', msg('ar_titulo_2'), false, true));
+		array_push($cp, array('$Q ' . $sqlido, 'ar_idioma_2', msg('ar_idioma_2'), false, true));
+		array_push($cp, array('$T80:7', 'ar_resumo_2', msg('ar_resumo_2'), false, true));
+		array_push($cp, array('$T80:2', 'ar_key2', msg('ar_key2'), false, true));
+
+		array_push($cp, array('$A', '', msg('idioma_03'), false, true));
+		array_push($cp, array('$T80:4', 'ar_titulo_3', msg('ar_titulo_3'), false, true));
+		array_push($cp, array('$Q ' . $sqlido, 'ar_idioma_3', msg('ar_idioma_3'), false, true));
+		array_push($cp, array('$T80:7', 'ar_resumo_3', msg('ar_resumo_3'), false, true));
+		array_push($cp, array('$T80:2', 'ar_key3', msg('ar_key3'), false, true));
+
+		array_push($cp, array('$A', '', msg('other_info'), false, true));
+		array_push($cp, array('$S10', 'ar_pg_inicial', msg('ar_pg_inicial'), false, true));
+		array_push($cp, array('$S10', 'ar_pg_final', msg('ar_pg_final'), false, true));
+		array_push($cp, array('$S80', 'ar_doi', msg('ar_doi'), false, true));
+		array_push($cp, array('$S80', 'ar_section', msg('ar_section'), false, true));
+
+		return ($cp);
+	}
+
+	function change_language($id)
+		{
+			$id = strzero($id,10);
+			$data = $this->le($id);
+			$id = $data['id_ar'];
+			
+			$t1 = $data['ar_titulo_1'];
+			$t2 = $data['ar_titulo_2'];
+			
+			$l1 = $data['ar_idioma_1'];
+			$l2 = $data['ar_idioma_2'];
+			
+			$r1 = $data['ar_resumo_1'];
+			$r2 = $data['ar_resumo_2'];
+			
+			$k1 = $data['ar_key1'];
+			$k2 = $data['ar_key2'];
+			
+			$sql = "update ".$this->table." set
+						ar_titulo_1 = '$t2',
+						ar_titulo_2 = '$t1',
+						ar_idioma_1 = '$l2',
+						ar_idioma_2 = '$l1',
+						ar_resumo_1 = '$r2',
+						ar_resumo_2 = '$r1',
+						ar_key1 	= '$k2',
+						ar_key2 	= '$k1'
+					where id_ar = ".$id;
+					
+			$this->db->query($sql);
+			return('');			
+		}
+
+	function editar($id) {
+		$sx = '';
+		$cp = $this -> cp();
+
+		$form = new form;
+		$form -> id = $id;
+		$sx .= $form -> editar($cp, $this -> table);
+
+		$this -> saved = $form -> saved;
+
+		if ($form -> saved > 0) {
+			/* delete */
+			$this -> keywords -> delete_KWYWORDS($id);
+			/* idioma 1 */
+			$this -> keywords -> save_KEYWORDS($id, get("dd5"), get("dd3"));
+			/* idioma 2 */
+			$this -> keywords -> save_KEYWORDS($id, get("dd10"), get("dd8"));
+			/* idioma 3 */
+			$this -> keywords -> save_KEYWORDS($id, get("dd15"), get("dd13"));
+		}
+
+		return ($sx);
 	}
 
 	function cited($id) {
@@ -430,6 +537,30 @@ class articles extends CI_model {
 		$sx .= '</table>';
 		return ($sx);
 	}
+
+	function autoindex_change_linguage()
+		{
+			$sx = '';
+			$sql = "select count(*) as total from ".$this->table." where ar_idioma_2 = 'pt_BR' and ar_idioma_1 <> 'pt_BR' limit 1";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			$sx .= '<h4>Total '.$rlt[0]['total'].'</h4>';
+			
+			$sql = "select * from ".$this->table." where ar_idioma_2 = 'pt_BR' and ar_idioma_1 <> 'pt_BR' limit 1";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			
+			for ($r=0;$r < count($rlt);$r++)
+				{
+					$line = $rlt[$r];
+					$id = $line['ar_codigo'];
+					$sx .= ''.$line['ar_titulo_1']. ' - '.$line['ar_idioma_1'].' <b>&lt;==&gt;</b> '.$line['ar_idioma_2'];
+					$sx .= '<hr>';
+					$this->change_language($id);
+					$sx .= cr().'<meta http-equiv="refresh" content="1">';
+				}
+			return($sx);
+		}
 
 }
 ?>

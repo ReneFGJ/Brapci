@@ -186,6 +186,13 @@ class admin extends CI_Controller {
 		echo $scielo;
 	}
 
+	function article_change($id,$chk)
+		{
+			$this->load->model('articles');
+			$this->articles->change_language($id);
+			redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
+		}
+
 	function article_view($id, $check, $status = '') {
 		global $dd, $acao;
 		form_sisdoc_getpost();
@@ -252,16 +259,6 @@ class admin extends CI_Controller {
 				$this -> authors -> save_AUTHORS($id, $dd[10]);
 				redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
 				break;
-			case 'ABSTRACT1' :
-				$this -> keywords -> save_KEYWORDS($id, $dd[11], $idioma_1);
-				$this -> articles -> save_ABSTRACT($id, $dd[10], 1);
-				redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
-				break;
-			case 'ABSTRACT2' :
-				$this -> keywords -> save_KEYWORDS($id, $dd[11], $idioma_2);
-				$this -> articles -> save_ABSTRACT($id, $dd[10], 2);
-				redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
-				break;
 			case 'CITED':
 				if (get("dd63") == '1')
 					{
@@ -274,16 +271,66 @@ class admin extends CI_Controller {
 		$id_art = $data['ar_codigo'];
 		$data['metodologias'] = '<div id="metodos" class="border1">'.$this -> metodologias -> mostra($id_art).'</div>';
 		$data['metodologias'] .= $this-> metodologias -> metodos_incluir($id_art);
+		
+		/* article - parte I */
+		$data['tab_descript'] = $this -> load -> view('admin/article_view_tt', $data, true); 
+		$data['tab_marc21'] = $this -> load -> view('admin/article_view_marc21', $data, true); 
+		$data['tab_editar'] = $this->articles->editar($id);
+		$data['tab_refer'] = $this -> load -> view('admin/article_view_refer', $data, true);
+		
+		if ($this->articles->saved > 0)
+			{
+				redirect(base_url('index.php/admin/article_view/'.$id.'/'.checkpost_link($id)));
+				exit;
+			}
 
 		$this -> load -> view('admin/article_view', $data);
 		
-		$this->load->view('cited/cited_import',$data);
+		//print_r($data);
+		//exit;
 		
 		$data['content'] = '</table><br><br>';
 		$this->load->view('content',$data);
 		$this->load->view('header/foot_admin',$data);
 
 	}
+
+	function refer($ar='')
+		{
+			$this->load->model("cited");
+			
+			$data['nocab'] = true;
+			$this->load->view('header/header',$data);
+			$cp = array();
+			array_push($cp,array('$H8','','',False,True));
+			array_push($cp,array('$T80:10','',msg('bibliography'),True,True));
+			array_push($cp,array('$O 1:SIM','',msg('finalizar'),True,True));
+			array_push($cp,array('$B8','','Processar >>>',False,True));
+			$form = new form;
+			$tela = $form->editar($cp,'');
+			
+			if ($form->saved > 0)
+				{
+					$this->cited->save_ref($ar,get("dd1"));
+					$tela = '<script> wclose(); </script>';
+				} else {
+					$ln = $this->cited->save_ref_pre(get("dd1"));
+					$tela .= '<ul>';
+					for ($r=0;$r < count($ln);$r++)
+						{
+							if (strlen($ln[$r]) > 5)
+								{
+									$tela .= '<li>'.$ln[$r].'</li>';
+								}
+						}
+					$tela .= '</ul>';
+					
+				}
+			
+			$data['content'] = $tela;
+			$data['title'] = '';
+			$this->load->view('content',$data);
+		}
 
 	function metodo($tipo='',$art='')
 		{
@@ -363,14 +410,15 @@ class admin extends CI_Controller {
 		$tela .= $tela_issue;
 		$tela .= '<TD width="80%">';
 
-		$href = '<A HREF="' . base_url('index.php/admin/issue_edit/' . $id . '/' . $jid) . '">';
-		$tela .= ' ' . $href . 'EDIT</a> ';
+		$href = '<A HREF="' . base_url('index.php/admin/issue_edit/' . $id . '/' . $jid) . '" class="btn btn-default">';
+		$tela .= ' ' . $href . 'Editar edição</a> ';
 		$tela .= ' | ';
-		$href = '<A HREF="' . base_url('index.php/admin/issue_edit/0/' . $jid) . '">';
-		$tela .= ' ' . $href . ' NEW</a> ';
+		$href = '<A HREF="' . base_url('index.php/admin/issue_edit/0/' . $jid) . '" class="btn btn-default">';
+		$tela .= ' ' . $href . ' Nova edição</a> ';
+		$tela .= '<hr>';
 		$tela .= $tela_articles;
 		/* Botao novo */
-		$tela .= '<input type="button" style="margin: 20px;" onclick="article_new();" value="NOVO TRABALHO" class="botao3d back_blue back_blue_shadown">';
+		$tela .= '<input type="button" style="margin: 20px;" onclick="article_new();" value="NOVO TRABALHO" class="btn btn-default">';
 		$tela .= '
 				<script>
 					function article_new()
@@ -406,7 +454,7 @@ class admin extends CI_Controller {
 		$this -> load -> model('editions');
 		$this -> editions -> row = base_url('index.php/admin/issue_view/');
 
-		$link_new = '<a href="' . base_url('index.php/admin/issue_edit/0/' . $id) . '" class="lt1 link">' . msg('issue_new') . '</a>';
+		$link_new = '<a href="' . base_url('index.php/admin/issue_edit/0/' . $id) . '" class="btn btn-default">' . msg('issue_new') . '</a>';
 
 		$data['tela'] = $link_new . $this -> editions -> editions_row($id);
 		$data['title'] = 'Editions';
@@ -503,7 +551,18 @@ class admin extends CI_Controller {
 		$this -> load -> model("doi");
 		$this -> cab();
 		$data = array();
+		$data['title'] = '';
 		$data['content'] = $this -> doi -> find_doi_in_abstract($id);
+		$this -> load -> view('content', $data);
+	}
+
+	function doi_find_files($id = '') {
+		/* Model */
+		$this -> load -> model("doi");
+		$this -> cab();
+		$data = array();
+		$data['title'] = '';
+		$data['content'] = $this -> doi -> find_doi_in_files($id);
 		$this -> load -> view('content', $data);
 	}
 
@@ -654,6 +713,8 @@ class admin extends CI_Controller {
 		$this -> cab();
 		$menu = array();
 		array_push($menu, array(msg('Autoindex'), msg('find DOI in Abstract'), 'ITE', '/admin/doi_find_abstract'));
+		array_push($menu, array(msg('Autoindex'), msg('find DOI in Files'), 'ITE', '/admin/doi_find_files'));
+		array_push($menu, array(msg('Autoindex'), msg('set_protugues_primary'), 'ITE', '/admin/linguage_portuguese_first'));
 		array_push($menu, array(msg('Articles'), msg('Check duplicate'), 'ITE', '/admin/article_double'));
 		array_push($menu, array(msg('Public Module'), msg('Export to public module'), 'ITE', '/admin/export'));
 		array_push($menu, array(msg('Autoridade'), msg('Check remissive authors n use'), 'ITE', '/admin/author_use'));
@@ -664,11 +725,22 @@ class admin extends CI_Controller {
 		array_push($menu, array(msg('PDF'), msg('File Exist'), 'ITE', '/admin/fileexist_pdf'));
 		array_push($menu, array(msg('OAI'), msg('Harvesting all publications'), 'ITE', '/oai/harvest'));
 		array_push($menu, array(msg('OAI'), msg('Resume all harvesting'), 'ITE', '/oai/harvesting'));
+		array_push($menu, array(msg('OAI'), msg('Reset OAI cached'), 'ITE', '/oai/cache_reset'));
 		$data = array();
 		$data['menu'] = $menu;
 		$data['title_menu'] = msg('tools');
 		$this -> load -> view('header/main_menu', $data);
 	}
+
+	function linguage_portuguese_first()
+		{
+			$this->cab();
+			$this->load->model('articles');
+			
+			$tela = $this->articles->autoindex_change_linguage();
+			$data['content'] = $tela;
+			$this->load->view('content',$data);
+		}
 
 }
 ?>

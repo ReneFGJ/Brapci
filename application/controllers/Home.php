@@ -81,7 +81,7 @@ class home extends CI_Controller {
 		$data['anoi'] = $ano_ini;
 		$data['anof'] = $ano_fim;
 		
-		$this -> load -> view("brapci/content");
+		//$this -> load -> view("brapci/content");
 		$this -> load -> view("brapci/search_form",$data);
 
 		/* Busca */

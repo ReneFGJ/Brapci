@@ -17,6 +17,7 @@
  */
 class keywords extends CI_model
 	{
+	var $keywords = array();
 	function cp()
 		{
 			$cp = array();
@@ -77,6 +78,13 @@ class keywords extends CI_model
 						
 			return($sx);
 		}
+	function delete_KWYWORDS($id)
+		{
+			$id = strzero($id,10);
+			$sql = "delete from brapci_article_keyword where kw_article = '$id' ";
+			$this->db->query($sql);
+			return('');
+		}
 	function save_KEYWORDS($id,$keys,$idioma)
 		{
 			$sx = '';
@@ -89,48 +97,27 @@ class keywords extends CI_model
 					if (strlen($keys[$r]) > 0)
 						{
 							$name = substr($keys[$r],0,100);
+							$name = UpperCaseSql($name);
 							if (!isset($akeys[$name]))
-								{
-									
+								{									
 									$akeys[$name] = 0;
 									if (strlen($nkeys) > 0) { $nkeys .= ', '; }
 									$xkeys = troca($keys[$r],"'","´");
-									$nkeys .= "'".$xkeys."' ";
+									$nkeys .= "'".UpperCaseSql($xkeys)."' ";
 								}
 						}
 				}
 			/* retorna se vazio */
 			if (count($akeys) == 0) { return(''); }
 			
-			$sql = "select * from brapci_keyword where kw_word_asc IN ($nkeys) and kw_idioma = '$idioma'";
+			$sql = "select kw_word_asc, kw_use from brapci_keyword where kw_word_asc IN ($nkeys) and kw_idioma = '$idioma'";
 			$rlt = db_query($sql);
 			while ($line = db_read($rlt))
 			{
 				$name = trim($line['kw_word_asc']);
 				$akeys[$name] = $line['kw_use'];
 			}
-			
-			/* Excluir palavras no idioma */
-			$sql = "select * from brapci_article_keyword
-					inner join brapci_keyword on kw_keyword = kw_codigo 
-					where kw_article = '$id' and kw_idioma = '$idioma'
-					order by kw_ord
-			";
-			
-			$rlt = db_query($sql);
-			$sql = 'delete from brapci_article_keyword where id_ak IN ($hw) ';
-			$hw = '';
-			while ($line = db_read($rlt))
-				{
-					if (strlen($hw) > 0) { $hw .= ', '; }
-					$hw .= trim($line['id_ak']);
-				}		
-			$sql = troca($sql,'$hw',$hw);
-			if (strlen($hw) > 0)
-				{
-					$rlt = $this->db->query($sql);		
-				}
-				
+
 			/* Salva novas keywords */
 			$hw = '';
 			$pos = 0;
@@ -159,6 +146,7 @@ class keywords extends CI_model
 			}
 			$sql = "insert into brapci_article_keyword (kw_keyword, kw_article, kw_ord) values $hw ";
 			$sql = troca($sql,'$hw',$hw);
+
 			if (strlen($hw) > 0)
 				{
 					$rlt = $this->db->query($sql);
@@ -206,15 +194,28 @@ class keywords extends CI_model
 					order by kw_ord
 			";
 
-			$rlt = db_query($sql);
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
 			$keys = '';
-			while ($line = db_read($rlt))
+			for ($r=0;$r < count($rlt);$r++)
 				{
+					$line = $rlt[$r];
 					if (strlen($keys) > 0) { $keys .= '; '; }
 					$keys .= trim($line['kw_word']);
 				}
 			return($keys);
 		}
+	function retrieve_keywords_all($id)
+		{
+			$sql = "select * from brapci_article_keyword
+					inner join brapci_keyword on kw_keyword = kw_codigo 
+					where kw_article = '$id' 
+					order by kw_idioma, kw_ord
+			";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			return($rlt);
+		}	
 	function trata_keywords($keys)
 		{
 			/* Keywords */
