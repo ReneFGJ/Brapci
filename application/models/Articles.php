@@ -275,16 +275,16 @@ class articles extends CI_model {
 						left join ajax_cidade on cidade_codigo = jnl_cidade
 						where ar_codigo = '$id' ";
 		$query = $this -> db -> query($sql);
-		$query = $query -> result();
-		$line = db_read($query);
+		$query = $query->result_array();
+		$line = $query[0];
 
 		/* Kwywords */
 		$line['ar_keyw_1'] = $this -> keywords -> retrieve_keywords($id, $line['ar_idioma_1']);
 		$line['ar_keyw_2'] = $this -> keywords -> retrieve_keywords($id, $line['ar_idioma_2']);
 		$line['ar_keyw_3'] = $this -> keywords -> retrieve_keywords($id, $line['ar_idioma_3']);
 		$line['keywords'] = $this -> keywords -> retrieve_keywords_all($id);
-		$line['author'] = $this -> author_article($id);
-		$line['authores_row'] = $this -> author_article_row($id);
+		$line = $this -> authors($id,$line);
+
 		$line['cited'] = $this -> cited($id);
 		$line['link_pdf'] = $this -> arquivos($id);
 		$line['links'] = $this -> arquivos_files($id);
@@ -372,25 +372,24 @@ class articles extends CI_model {
 		return ($cp);
 	}
 
-	function change_language($id)
-		{
-			$id = strzero($id,10);
-			$data = $this->le($id);
-			$id = $data['id_ar'];
-			
-			$t1 = $data['ar_titulo_1'];
-			$t2 = $data['ar_titulo_2'];
-			
-			$l1 = $data['ar_idioma_1'];
-			$l2 = $data['ar_idioma_2'];
-			
-			$r1 = $data['ar_resumo_1'];
-			$r2 = $data['ar_resumo_2'];
-			
-			$k1 = $data['ar_key1'];
-			$k2 = $data['ar_key2'];
-			
-			$sql = "update ".$this->table." set
+	function change_language($id) {
+		$id = strzero($id, 10);
+		$data = $this -> le($id);
+		$id = $data['id_ar'];
+
+		$t1 = $data['ar_titulo_1'];
+		$t2 = $data['ar_titulo_2'];
+
+		$l1 = $data['ar_idioma_1'];
+		$l2 = $data['ar_idioma_2'];
+
+		$r1 = $data['ar_resumo_1'];
+		$r2 = $data['ar_resumo_2'];
+
+		$k1 = $data['ar_key1'];
+		$k2 = $data['ar_key2'];
+
+		$sql = "update " . $this -> table . " set
 						ar_titulo_1 = '$t2',
 						ar_titulo_2 = '$t1',
 						ar_idioma_1 = '$l2',
@@ -399,11 +398,11 @@ class articles extends CI_model {
 						ar_resumo_2 = '$r1',
 						ar_key1 	= '$k2',
 						ar_key2 	= '$k1'
-					where id_ar = ".$id;
-					
-			$this->db->query($sql);
-			return('');			
-		}
+					where id_ar = " . $id;
+
+		$this -> db -> query($sql);
+		return ('');
+	}
 
 	function editar($id) {
 		$sx = '';
@@ -446,6 +445,40 @@ class articles extends CI_model {
 		}
 		$sx .= '</ul>';
 		return ($sx);
+	}
+
+	function authors($id,$line) {
+		$sql = "
+				SELECT * FROM `brapci_article_author` 
+				inner join brapci_autor on autor_codigo = ae_author
+				where ae_article = '$id'
+				order by ae_pos			
+				 ";
+		$rlt2 = $this -> db -> query($sql);
+		$rlt2 = $rlt2 -> result_array();
+		$sxa = '';
+		$sxb = '';
+		$sxc = '';
+		$id = 0;
+		for ($r = 0; $r < count($rlt2); $r++) {
+			$line1 = $rlt2[$r];
+			$id++;
+			if (strlen($sxa) > 0) { $sxa .= '; ';
+			}
+			$sxa .= htmlspecialchars($line1['autor_nome']);
+			$info = trim($line1['ae_bio']);
+			if (strlen($info) > 0) {
+				$sxb .= ' <sup><a href="#" title="' . $info . '">' . $id . '</a></sup>';
+				$sxc .= htmlspecialchars($line1['autor_nome']) . chr(13) . chr(10);
+			}
+			$sxa .= '.';
+		}
+
+		$line['authors'] = $rlt2;
+		$line['author'] = $sxb;
+		$line['authores_row'] = $sxa;
+		return($line);
+
 	}
 
 	function author_article($id) {
@@ -538,29 +571,27 @@ class articles extends CI_model {
 		return ($sx);
 	}
 
-	function autoindex_change_linguage()
-		{
-			$sx = '';
-			$sql = "select count(*) as total from ".$this->table." where ar_idioma_2 = 'pt_BR' and ar_idioma_1 <> 'pt_BR' limit 1";
-			$rlt = $this->db->query($sql);
-			$rlt = $rlt->result_array();
-			$sx .= '<h4>Total '.$rlt[0]['total'].'</h4>';
-			
-			$sql = "select * from ".$this->table." where ar_idioma_2 = 'pt_BR' and ar_idioma_1 <> 'pt_BR' limit 1";
-			$rlt = $this->db->query($sql);
-			$rlt = $rlt->result_array();
-			
-			for ($r=0;$r < count($rlt);$r++)
-				{
-					$line = $rlt[$r];
-					$id = $line['ar_codigo'];
-					$sx .= ''.$line['ar_titulo_1']. ' - '.$line['ar_idioma_1'].' <b>&lt;==&gt;</b> '.$line['ar_idioma_2'];
-					$sx .= '<hr>';
-					$this->change_language($id);
-					$sx .= cr().'<meta http-equiv="refresh" content="1">';
-				}
-			return($sx);
+	function autoindex_change_linguage() {
+		$sx = '';
+		$sql = "select count(*) as total from " . $this -> table . " where ar_idioma_2 = 'pt_BR' and ar_idioma_1 <> 'pt_BR' limit 1";
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		$sx .= '<h4>Total ' . $rlt[0]['total'] . '</h4>';
+
+		$sql = "select * from " . $this -> table . " where ar_idioma_2 = 'pt_BR' and ar_idioma_1 <> 'pt_BR' limit 1";
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+
+		for ($r = 0; $r < count($rlt); $r++) {
+			$line = $rlt[$r];
+			$id = $line['ar_codigo'];
+			$sx .= '' . $line['ar_titulo_1'] . ' - ' . $line['ar_idioma_1'] . ' <b>&lt;==&gt;</b> ' . $line['ar_idioma_2'];
+			$sx .= '<hr>';
+			$this -> change_language($id);
+			$sx .= cr() . '<meta http-equiv="refresh" content="1">';
 		}
+		return ($sx);
+	}
 
 }
 ?>

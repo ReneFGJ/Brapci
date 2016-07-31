@@ -546,6 +546,34 @@ class admin extends CI_Controller {
 		}
 	}
 
+	function export_author()
+		{
+			$exp = 150;
+			$this->cab();
+			$this -> load -> model('export');
+			
+			$tela = $this->export->export_author();
+			$data['content'] = $tela.'<br><br>';
+			$this->load->view('content',$data);
+			
+			$this->load->view('header/foot',null);
+			
+		}
+
+	function export_keywords()
+		{
+			$exp = 150;
+			$this->cab();
+			$this -> load -> model('export');
+			
+			$tela = $this->export->export_keywords();
+			$data['content'] = $tela.'<br><br>';
+			$this->load->view('content',$data);
+			
+			$this->load->view('header/foot',null);
+			
+		}
+		
 	function doi_find_abstract($id = '') {
 		/* Model */
 		$this -> load -> model("doi");
@@ -717,6 +745,8 @@ class admin extends CI_Controller {
 		array_push($menu, array(msg('Autoindex'), msg('set_protugues_primary'), 'ITE', '/admin/linguage_portuguese_first'));
 		array_push($menu, array(msg('Articles'), msg('Check duplicate'), 'ITE', '/admin/article_double'));
 		array_push($menu, array(msg('Public Module'), msg('Export to public module'), 'ITE', '/admin/export'));
+		array_push($menu, array(msg('Public Module'), msg('Export Author to public module'), 'ITE', '/admin/export_author'));
+		array_push($menu, array(msg('Public Module'), msg('Export Keywords to public module'), 'ITE', '/admin/export_keywords'));
 		array_push($menu, array(msg('Autoridade'), msg('Check remissive authors n use'), 'ITE', '/admin/author_use'));
 		array_push($menu, array(msg('Autoridade'), msg('Check remissive terms in use'), 'ITE', '/admin/terms_use'));
 		array_push($menu, array(msg('Autoridade'), msg('Check language of terms'), 'ITE', '/admin/terms_language'));

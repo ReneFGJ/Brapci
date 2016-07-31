@@ -82,4 +82,6 @@ $lang['login_password'] = 'Informe sua senha';
 $lang['login_enter'] = 'Entar';
 $lang['login_social'] = 'Logue com uma conta existente (recomendado)';
 $lang['your_passoword'] = 'sua senha';
+
+$lang['form_year_cut'] = 'delimitação da busca:';
 ?>

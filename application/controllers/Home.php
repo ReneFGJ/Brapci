@@ -107,6 +107,9 @@ class home extends CI_Controller {
 		/* Mostra resultado */
 		$this -> load -> view("brapci/search_result", $data);
 
+		/* Mostra resultado */
+		$this -> load -> view("brapci/jumbo", $data);
+
 		/* Mostra rodape */
 		$this -> load -> view("header/foot");
 	}

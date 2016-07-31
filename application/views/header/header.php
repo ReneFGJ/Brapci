@@ -9,7 +9,7 @@ if (!isset($css)) { $css = array(); }
 <header>
 	<head lang="pt-br">
 	<meta charset="utf-8">
-	<title><?php echo $title; ?></title>
+	<title>Brapci: Base de Dados em Ciência da Informação</title>
 	<script src="<?php echo base_url('js/jquery.js'); ?>"></script>
 	<?php
 	if ($bootstrap == 1) { echo $this -> load -> view('header/header_bootstrap', null, true);

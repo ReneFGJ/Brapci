@@ -8,36 +8,51 @@ if (isset($_SESSION['bp_session'])) {
 /* Page count */
 $pc = page_count();
 ?>
-</div>
-<BR>
-<BR>
-<div id="conteudo_foot">
-	<table width="100%" align="center" bgcolor="white" border=0>
-		<TR valign="top">
-			<td width="50%">
-			<div class="fb-page" 
-			  data-href="https://www.facebook.com/brapci.ci/"
-			  data-width="400" 
-			  data-hide-cover="false"
-			  data-show-facepile="false" 
-			  data-show-posts="false"
-			  show_facepile="true"></div>
-			</TD>
-			<td width="50%" align="right">
-			<!--
-			<div class="fb-page" data-href="https://www.facebook.com/brapci.ci/" 
-				data-tabs="timeline" data-width="1024" 
-				data-height="250" 
-				data-small-header="false" 
-				data-adapt-container-width="false" 
-				data-hide-cover="true" 
-				data-show-facepile="false">
-			</div>
-			-->
-			</TD>
-			<tr>
-			<TD class="lt0" align="right" colspan=2><?php echo msg('session') . ':'; ?> <?php echo $ssid; ?></TD>
-			</tr>
-		</TR>
-	</table>
+<!------- Facebook -------->
+<div id="fb-root"></div>
+<script>
+	( function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id))
+				return;
+			js = d.createElement(s);
+			js.id = id;
+			js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.7&appId=547858661992170";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk')); 
+</script>
+
+<div class="container-fluid" id="conteudo_foot" style="background-color: #cccccc; padding: 20px;">
+	<div class="row">
+		<div class="col-md-3 col-md-offset-2">
+			<b>BRAPCI</b> - Base de Dados em Ciência da Informação<br>
+			Acervo de Publicações Brasileiras em Ciência da Informação<br>
+			Universidade Federal do Paraná<br>
+			Versão 3.0 beta | 2016<br>
+			brapcici@gmail.com
+			<br>
+			<br>
+		</div>
+		<div class="col-md-1">
+			<div class="fb-like" data-href="https://www.facebook.com/brapci.ci/" data-layout="box_count" data-action="like" data-size="large" data-show-faces="true" data-share="true"></div>
+			<br>
+			<br>
+		</div>
+		<div class="col-md-3 hidden-xs">
+			<div class="fb-page"
+			data-href="https://www.facebook.com/brapci.ci/"
+			data-width="400"
+			data-hide-cover="false"
+			data-show-facepile="false"
+			data-show-posts="false"
+			show_facepile="true"></div>
+			<br>
+			<br>			
+		</div>
+		<div class="col-md-2">
+			<img src="<?php echo base_url('img/logo/oai_access.png'); ?>"><br>
+			<?php echo msg('session') . ':'; ?>
+			<b><?php echo $ssid; ?></b>			
+		</div>
+	</div>
 </div>

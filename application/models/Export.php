@@ -19,6 +19,118 @@ class export extends CI_model {
 	var $sql;
 	var $ini = 0;
 	var $total = 0;
+	
+	function export_author()
+		{
+			$sql = "select autor_nome, autor_codigo, autor_alias from brapci_autor 
+						WHERE autor_nome <> '' and autor_codigo = autor_alias
+						ORDER BY autor_nome ";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			/*************** FILE ***************/
+			//$flt = fopen('_search/_autor.txt','w+');
+			$flt = fopen('js/autor_complete.js','w+');
+			/*************** FILE ***************/
+			$scr = 'var availableTags = {'.cr();	
+			fwrite($flt,$scr);
+			$sx = '';
+			$ix = array();
+			
+			for ($r=0;$r < count($rlt);$r++)
+				{
+					$line = $rlt[$r];
+					$txt = $line['autor_alias'].'|'.$line['autor_codigo'].'|'.trim($line['autor_nome']);
+					$txt = '"'.trim($line['autor_nome']).'",';
+					$txt = uppercasesql($txt);
+					$ttt = UpperCaseSql(troca(trim($line['autor_nome']),',',' '));
+					$ttt = troca($ttt,' ',';');
+					if (strlen($ttt) > 2)
+					{
+					$lnt = splitx(';',$ttt.';');
+					for ($q=0;$q < count($lnt);$q++)
+						{
+							$fld = $lnt[$q];
+							if (strlen($fld) > 1)
+								{
+								if (!(isset($ix[$fld])))
+									{
+									$ix[$fld] = 'ok';
+									}
+								}
+						}
+					fwrite($flt,'			"'.$line['autor_codigo'].'" :'.$txt.cr());
+					}
+					$sx .= '<tt>'.'#'.strzero($r,5).' - '.$txt.'</tt><br>'.cr();
+				}
+			$scr = '    }'.cr();
+			fwrite($flt,$scr);
+			fclose($flt);
+			
+			/* indice de autores */
+			$fff = fopen('_search/_autor_index.txt','w+');
+			foreach ($ix as $key => $value) {
+				fwrite($fff,$key.cr());
+			}
+			fclose($fff);
+			return($sx);
+		}
+
+	function export_keywords()
+		{
+			$sql = "select kw_word, kw_codigo, kw_use from brapci_keyword 
+						WHERE kw_word <> '' and kw_codigo = kw_use AND kw_idioma = 'pt_BR'
+						ORDER BY kw_word ";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			/*************** FILE ***************/
+			$flt = fopen('js/keywords_complete.js','w+');
+			/*************** FILE ***************/
+			$scr = 'var keysTags = {'.cr();	
+			fwrite($flt,$scr);
+			$sx = '';
+			$ix = array();
+			
+			for ($r=0;$r < count($rlt);$r++)
+				{
+					$line = $rlt[$r];
+					$txt = $line['kw_use'].'|'.$line['kw_codigo'].'|'.trim($line['kw_word']);
+					$txt = '"'.trim(troca($line['kw_word'],'"','´')).'",';
+					$txt = uppercasesql($txt);
+					$ttt = UpperCaseSql(troca(trim($line['kw_word']),',',' '));
+					$ttt = troca($ttt,' ',';');
+					if (strlen($ttt) > 2)
+					{
+					$lnt = splitx(';',$ttt.';');
+					for ($q=0;$q < count($lnt);$q++)
+						{
+							$fld = $lnt[$q];
+							if (strlen($fld) > 1)
+								{
+								if (!(isset($ix[$fld])))
+									{
+									$ix[$fld] = 'ok';
+									}
+								}
+						}
+					$txt = troca($txt,chr(13),' ');
+					$txt = troca($txt,chr(10),' ');
+					$txt = troca($txt,'/','-');
+					fwrite($flt,'			"'.$line['kw_codigo'].'" :'.$txt.cr());
+					}
+					$sx .= '<tt>'.'#'.strzero($r,5).' - '.$txt.'</tt><br>'.cr();
+				}
+			$scr = '    }'.cr();
+			fwrite($flt,$scr);
+			fclose($flt);
+			
+			/* indice de autores */
+			$fff = fopen('_search/_keywords_index.txt','w+');
+			foreach ($ix as $key => $value) {
+				fwrite($fff,$key.cr());
+			}
+			fclose($fff);
+			return($sx);
+		}
 
 	function exporta_texto() {
 		global $db_public;
