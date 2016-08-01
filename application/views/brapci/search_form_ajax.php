@@ -22,10 +22,6 @@
 		margin: 0;
 		padding: 0;
 	}
-	.container {
-		width: 800px;
-		margin: 0 auto;
-	}
 
 	.autocomplete-suggestions {
 		-webkit-box-sizing: border-box;

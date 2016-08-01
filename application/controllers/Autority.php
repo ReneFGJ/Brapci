@@ -110,7 +110,18 @@ class autority extends CI_Controller {
 		$data['producao'] = $this-> load-> authors -> lista_obras_do_autor($author);
 		$this -> load -> view('wese/author_profile', $data);
 	}
+	/***************************************************************************** term */
+	function k($keyword = '') {
+		/* Load model */
+		$this -> load -> model("keywords");
+		$this -> load -> model("autorities");
+		
+		$this -> cab();
 
+		$data = $this -> autorities -> le_k($keyword);
+		$data['producao'] = $this-> load-> keywords -> lista_obras_por_keyword($keyword);
+		$this -> load -> view('wese/author_profile', $data);
+	}
 	function edc($idc = 0, $tp = '') {
 		/* Load model */
 		$this -> load -> model("skoses");

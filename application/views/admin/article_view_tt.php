@@ -62,7 +62,7 @@ for ($r=0;$r < count($links);$r++)
 				echo $link;
 			}
 	}
-if (perfil("#bib"))
+if (perfil("#BIB")==1)
 	{
 		echo '<div>';
 		echo '<br>';

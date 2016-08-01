@@ -1,6 +1,7 @@
 <?php
 class autorities extends CI_model {
 	var $tabela = 'brapci_autor';
+	var $tabela_key = 'brapci_keyword';
 	
 	function le_c($author)
 		{
@@ -22,7 +23,26 @@ class autorities extends CI_model {
 			}
 		return($line);	
 		}
+	function le_k($keyw)
+		{
 		
+		$sql = "select * from ".$this->tabela_key."
+				where kw_codigo='$keyw'";
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		if (count($rlt) > 0)
+			{
+				$line = $rlt[0];
+				$id = $line['kw_codigo'];
+				$line['uri'] = base_url('index.php/autority/a/'.$id);	
+				$line['autor_alias'] = $this->used_le($id);
+				$line['autor_coautores'] = $this->coutores_do_autor($id);
+				//$line['hidden'] = $this->hidden_le($id);
+			} else {
+				$line = array();
+			}
+		return($line);	
+		}	
 	function coutores_do_autor($author='')
 		{
 			$sql = "select autor_codigo, autor_nome, count(*) as total from (

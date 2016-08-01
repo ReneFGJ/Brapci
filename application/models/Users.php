@@ -1,4 +1,21 @@
 <?php
+/****************** Security login ****************/
+function perfil($p, $trava = 0) {
+	$ac = 0;
+	if (isset($_SESSION['perfil'])) {
+		$perf = $_SESSION['perfil'];
+		for ($r = 0; $r < strlen($p); $r = $r + 4) {
+			$pc = substr($p, $r, 4);
+			//echo '<BR>'.$pc.'='.$perf.'=='.$ac;
+			if (strpos(' ' . $perf, $pc) > 0) { $ac = 1;
+			}
+		}
+	} else {
+		$ac = 0;
+	}
+	return ($ac);
+}
+
 class users extends CI_model {
 	var $table = 'users';
 
@@ -230,11 +247,4 @@ class users extends CI_model {
 
 }
 
-/****************** Security login ****************/
-function perfil($tp) {
-	$ok = 0;
-	$per = $_SESSION['perfil'];	
-	$ok = 1;
-	return($ok);
-}
 ?>

@@ -1,9 +1,5 @@
 /* override bootstrap styles */
-.nav {
-	background-color: #105687;
-	color: #000000;
-	border: 0px solid;
-}
+
 .navbar-default .navbar-nav > li > a {
 	color: #f0f0f0;
 }

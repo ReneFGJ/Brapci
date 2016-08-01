@@ -100,7 +100,7 @@ for ($r = 0; $r < count($rlt); $r++) {
 		background-position: top;
 	}
 </style>
-<form method="get" id="form_search">
+<form method="post" id="form_search" action="<?php echo base_url('index.php/home/');?>">
 	<div class="container-fluid search" style="min-height: 400px;">
 		<div class="row ">
 			<div class="row" style="margin-top: 50px;">
@@ -112,10 +112,10 @@ for ($r = 0; $r < count($rlt); $r++) {
 				<div class="col-xs-10 col-xs-offset-1">
 					<div class="input-group" style="padding: 5px; ">						
 						<input type="text" class="form-control selector" <?php echo $style_dd4a;?> name="dd4a" id="dd4a" placeholder="Busca por..." value="<?php echo get("dd4a"); ?>"/>
-						<input type="text" class="form-control selector" <?php echo $style_dd4b;?> name="dd4b" id="dd4b" placeholder="Busca pelo autor..." value="<?php echo get("dd4b"); ?>" "/>
+						<input type="text" class="form-control selector" <?php echo $style_dd4b;?> name="dd4b" id="dd4b" placeholder="Busca pelo autor..." value="<?php echo get("dd4b"); ?>" />
 						<input type="text" class="form-control selector" <?php echo $style_dd4c;?> name="dd4c" id="dd4c" placeholder="Busca no titulo..." value="<?php echo get("dd4c"); ?>" />
 						<input type="text" class="form-control selector" <?php echo $style_dd4d;?> name="dd4d" id="dd4d" placeholder="Busca nas palavras-chave..." value="<?php echo get("dd4d"); ?>" />
-						<input type="text" class="form-control selector" <?php echo $style_dd4e;?> name="dd4d" id="dd4e" placeholder="Busca nos resumos..." value="<?php echo get("dd4e"); ?>" />
+						<input type="text" class="form-control selector" <?php echo $style_dd4e;?> name="dd4e" id="dd4e" placeholder="Busca nos resumos..." value="<?php echo get("dd4e"); ?>" />
 						<span class="input-group-btn">
 							<button class="btn btn-primary" type="button" onclick="submit();">
 								pesquisar
@@ -156,7 +156,7 @@ for ($r = 0; $r < count($rlt); $r++) {
 				</div>
 			</div>
 			<!--- ROW -->
-			<input type="hidden" name="acao" value="busca">
+			<input type="hidden" name="acao" value="busca_termo">
 		</div>
 	</div>
 	</div>
