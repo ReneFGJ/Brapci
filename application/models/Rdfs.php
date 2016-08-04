@@ -136,7 +136,9 @@ class rdfs extends CI_model
 			$keywords = $data['keywords'];
 			for ($r=0;$r < count($keywords);$r++)
 				{
-					$sx .= '	dc:term "'.$keywords[$r]['kw_word'].'"@'.troca($keywords[$r]['kw_idioma'],'_','-').' ;'.cr();
+					$key = $keywords[$r]['kw_word'];
+					$key = troca($key,'"','');
+					$sx .= '	dc:term "'.$key.'"@'.troca($keywords[$r]['kw_idioma'],'_','-').' ;'.cr();
 				}
 //			$sx .= '	bibo:uri "[http://www.springerlink.com/(0ovzk455jqgeeazsaue2cl45)/app/home/contribution.asp?referrer=parent&backto=issue,16,31;journal,337,3947;linkingpublicationresults,1:105633,1][doi:10.1007/11568322_16]";'.cr();
 			
