@@ -33,7 +33,7 @@ class references extends CI_model {
 		$pgf = trim($ln['ar_pg_final']);
 		$doi = trim($ln['ar_doi']);
 		$tipo = trim($ln['jnl_tipo']);
-		$link = ' Disponível em: &lt;' . base_url('v/'.$ln['id_ar']) . '&gt;.';
+		$link = ' Disponível em: &lt;' . base_url('v/a/'.$ln['id_ar']) . '&gt;.';
 		$acesso = ' Acesso em: ' . date("d") . ' ' . msg('mes_' . date("m") . 'a') . ' ' . date("Y") . '.';
 		$pag = '';
 

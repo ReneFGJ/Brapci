@@ -21,6 +21,96 @@ $email_adm = '';
 
 require_once ("libs/email/PHPMailerAutoload.php");
 
+function enviaremail($para, $assunto, $texto, $de, $anexos = array()) {
+	global $sem_copia;
+
+	if (!isset($sem_copia)) { $sem_copia = 0;
+	}
+	if (!is_array($para)) {
+		$para = array($para);
+	}
+	$CI = &get_instance();
+	
+	/* de */
+	$sql = "select * from mensagem_own where id_m = " . round($de);
+	$rlt = $CI -> db -> query($sql);
+	$rlt = $rlt -> result_array();
+	$line = $rlt[0];	
+
+	$config = Array('protocol' => $line['smtp_protocol'], 'smtp_host' => $line['smtp_host'], 'smtp_port' => $line['smtp_port'], 'smtp_user' => $line['smtp_user'], 'smtp_pass' => $line['smtp_pass'], 'mailtype' => 'html', 'charset' => 'iso-8859-1', 'wordwrap' => TRUE);
+
+	$CI -> load -> library('email', $config);
+	$CI -> email -> subject($assunto);
+	$CI -> email -> message($texto);
+
+	for ($r = 0; $r < count($anexos); $r++) {
+		$CI -> email -> attach($anexos[$r]);
+	}
+
+
+
+	/* Header & footer */
+	$email_header = '';
+	$email_footer = '';
+
+	/***************************************************/
+	if (count($rlt) == 1) {
+		$line = $rlt[0];
+		$e_mail = trim($line['m_email']);
+		$e_nome = trim($line['m_descricao']);
+
+		/***************** HEADER AND FOOTER */
+		$email_header = $line['m_header'];
+		$email_footer = $line['m_foot'];
+
+		if (strlen($email_header) > 0) {
+			$email_header = '<table width="550"><tr><td><img src="' . base_url($email_header) . '"></td><tr><tr><td><br><br>';
+		}
+		if (strlen($email_footer) > 0) {
+			$email_footer = '</td></tr><tr><td><img src="' . base_url($email_footer) . '"></td></tr></table>';
+		}
+
+		$CI -> email -> from($e_mail, $e_nome);
+		$CI -> email -> to($para[0]);
+		$CI -> email -> subject($assunto);
+		$CI -> email -> message($email_header . $texto . $email_footer);
+
+		if ($sem_copia != 1) {
+			array_push($para, trim($line['m_email']));
+			//array_push($para, 'renefgj@gmail.com');
+		}
+
+		/* e-mail com copias */
+		$bcc = array();
+		for ($r = 1; $r < count($para); $r++) {
+			array_push($bcc, $para[$r]);
+		}
+
+		if (count($bcc) > 0) {
+			$CI -> email -> bcc($bcc);
+		}
+
+		$sx = '<div id="email_enviado">';
+		$sx .= '<h3>' . msg('email_enviado') . '</h3>';
+		for ($r = 0; $r < count($para); $r++) {
+			$sx .= $para[$r];
+			$sx .= '<br>';
+		}
+		$sx .= '<br>';
+		$sx .= '</div>';
+		$sx .= '<script>
+				setTimeout(function() {	$(\'#email_enviado\').fadeOut(\'fast\');}, 3000);
+				</script>
+				';
+
+		$CI -> email -> send();
+		return ('ok');
+	} else {
+		echo('<font color="red">Proprietário do e-mail (' . $de . ') não configurado (veja mensagem_own)</font>');
+		exit ;
+	}
+}
+
 function sendmail($para, $titulo, $texto) {
 	global $email_from, $email_from_name, $email_port, $email_smtp, $email_pass, $email_user, $email_auth, $email_debug, $email_replay, $email_sign;
 	

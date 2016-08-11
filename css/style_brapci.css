@@ -1,14 +1,17 @@
 body {
 	/* background-color: #2076A7; */
 	background-color: #4791d2;
-	margin-top: 100px;
+	margin-top: 50px;
 }
 .container
 	{
 		background-color: #ffffff;
 		border: 1px solid #000000;
 		border-radius: 20px;
+		margin-top: 20px;
 		margin-bottom: 20px;
+		padding-top: 20px;
+		padding-bottom: 40px;
 	}
 .search {
 	background-image: url("../img/background/back_00.jpg");
@@ -76,4 +79,13 @@ table td {
 	background-image: -o-linear-gradient(top, #f6f6f6, #eae8e8);
 	background-image: linear-gradient(top, #f6f6f6, #eae8e8);
 }
+
+/****** iframe PDF *****/
+.iframe_pdf
+	{
+		border: 0px solid #000000;
+		width: 100%;
+		min-height: 500px;
+		height: 100%;
+	}
 

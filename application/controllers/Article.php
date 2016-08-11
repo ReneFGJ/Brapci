@@ -1,17 +1,17 @@
 <?php
-// This file is part of the Brapci Software. 
-// 
+// This file is part of the Brapci Software.
+//
 // Copyright 2015, UFPR. All rights reserved. You can redistribute it and/or modify
 // Brapci under the terms of the Brapci License as published by UFPR, which
-// restricts commercial use of the Software. 
-// 
+// restricts commercial use of the Software.
+//
 // Brapci is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-// PARTICULAR PURPOSE. See the ProEthos License for more details. 
-// 
+// PARTICULAR PURPOSE. See the ProEthos License for more details.
+//
 // You should have received a copy of the Brapci License along with the Brapci
 // Software. If not, see
-// https://github.com/ReneFGJ/Brapci/tree/master//LICENSE.txt 
+// https://github.com/ReneFGJ/Brapci/tree/master//LICENSE.txt
 /* @author: Rene Faustino Gabriel Junior <renefgj@gmail.com>
  * @date: 2015-12-01
  */
@@ -19,7 +19,7 @@
 class article extends CI_Controller {
 	function __construct() {
 		global $db_public;
-		
+
 		$db_public = 'brapci_publico.';
 		parent::__construct();
 		$this -> lang -> load("app", "portuguese");
@@ -27,33 +27,29 @@ class article extends CI_Controller {
 		$this -> load -> database();
 		$this -> load -> helper('form');
 		$this -> load -> helper('form_sisdoc');
+		$this -> load -> helper('email');
 		$this -> load -> helper('url');
 		$this -> load -> library('session');
-		
+
 		date_default_timezone_set('America/Sao_Paulo');
 	}
-	
+
 	function cab() {
-		$this->load->model('users');
+		$this -> load -> model('users');
 		$data = array();
-		$data['title'] = 'Brapci: Artigo';
 		$data['title_page'] = 'Artigo';
 		$this -> load -> view("header/cab", $data);
 		$data['title'] = '';
-	}	
+	}
 
 	function index() {
 		global $dd;
-		$this->load->view("brapci/article");
+		$this -> load -> view("brapci/article");
 	}
-	
+
 	function view($id, $check, $status = '') {
 		global $dd, $acao;
 		form_sisdoc_getpost();
-
-		if (($id < 1) or ($check != checkpost_link($id))) {
-			redirect(base_url('index.php/admin/journal'));
-		}
 
 		/* Alterar Status */
 		if (strlen($status) > 0) {
@@ -63,7 +59,7 @@ class article extends CI_Controller {
 
 		$data['title'] = 'Brapci : Admin';
 		$data['title_page'] = 'ADMIN';
-		$this->cab();
+		$this -> cab();
 
 		/* Article */
 		$this -> load -> model('articles');
@@ -75,7 +71,7 @@ class article extends CI_Controller {
 		$this -> load -> model('metodologias');
 
 		$data = $this -> articles -> le($id);
-		
+
 		$data['archives'] = $this -> archives -> show_files($id);
 		$data['citeds'] = $this -> cited -> show_cited($id);
 
@@ -96,49 +92,101 @@ class article extends CI_Controller {
 		}
 
 		$id_art = $data['ar_codigo'];
-		$data['metodologias'] = '<div id="metodos" class="border1">'.$this -> metodologias -> mostra($id_art).'</div>';
-		$data['metodologias'] .= $this-> metodologias -> metodos_incluir($id_art);
-		
+		$data['metodologias'] = '<div id="metodos" class="border1">' . $this -> metodologias -> mostra($id_art) . '</div>';
+		$data['metodologias'] .= $this -> metodologias -> metodos_incluir($id_art);
+
 		/* article - parte I */
-		$data['tab_descript'] = $this -> load -> view('admin/article_view_tt', $data, true); 
-		$data['tab_marc21'] = $this -> load -> view('admin/article_view_marc21', $data, true); 
-		$data['tab_editar'] = $this->articles->editar($id);
+		$data['$tab_pdf'] = '';
+		$data['tab_descript'] = $this -> load -> view('admin/article_view_tt', $data, true);
+		$links = $data['links'];
+
+		$ll = '';
+		for ($r = 0; $r < count($links); $r++) {
+			$liz = $links[$r];
+			$id = $liz['id_bs'];
+			$tp = $liz['bs_type'];
+			$lk = $liz['bs_adress'];
+			switch ($tp) {
+				case 'PDF' :
+					if (substr($lk, 0, 4) == 'http') {
+						$ll .= $this -> load -> view('suport/pdf.php', $liz, true);
+					}
+					if (substr($lk, 0, 1) == '_') {
+						if (file_exists($lk)) {
+							$url = base_url('index.php/article/download_view/' . $id);
+							$data['tab_pdf'] = '<iframe src="' . $url . '" class="iframe_pdf"></iframe>';
+							$data['link_pdf'] = $url = base_url('index.php/article/download/' . $id);
+						} else {
+							$data['tab_pdf'] = '<div class="alert alert-danger" role="alert">File not found!</div>';
+						}
+					}
+					break;
+				case '' :
+					break;
+			}
+		}
+		$data['linkss'] = $ll;
+
+		$data['tab_marc21'] = $this -> load -> view('admin/article_view_marc21', $data, true);
+		$data['tab_editar'] = $this -> articles -> editar($id);
 		$data['tab_refer'] = $this -> load -> view('admin/article_view_refer', $data, true);
 
 		$this -> load -> view('article/article_view', $data);
-		
-		//print_r($data);
-		//exit;
-		
+
 		$data['content'] = '</table><br><br>';
-		$this->load->view('content',$data);
-		$this->load->view('header/foot_admin',$data);
+
+		$this -> load -> view('content', $data);
+		$this -> load -> view('header/foot_admin', $data);
 
 	}
-	function view_old($id='',$chk='') {
+
+	function view_old($id = '', $chk = '') {
 		global $dd;
-		
-		$this->load->model("metodologia");
-		
+
+		$this -> load -> model("metodologia");
+
 		$user_nivel = $this -> session -> userdata('nivel');
-				
+
 		form_sisdoc_getpost();
-	
-		$this->session->userdata('search');
-		
+
+		$this -> session -> userdata('search');
+
 		$this -> load -> view("header/cab");
 
 		$this -> load -> view("brapci/content");
-		$this->load->model("articles");
-		$data = $this->articles->le($id);
+		$this -> load -> model("articles");
+		$data = $this -> articles -> le($id);
 		$data['user_nivel'] = $user_nivel;
-		
-		$metodologia = $this->metodologia->le($id);
-		$data['metodologia'] = $this->metodologia->mostra($metodologia);
-		
-		$this->load->view("brapci/article",$data);
-		$this->load->view("header/foot",$data);
+
+		$metodologia = $this -> metodologia -> le($id);
+		$data['metodologia'] = $this -> metodologia -> mostra($metodologia);
+
+		$this -> load -> view("brapci/article", $data);
+		$this -> load -> view("header/foot", $data);
 	}
+	
+	function download_view($id='')
+		{
+			$this->load->model('articles');
+			$this->articles->view_pdf($id);
+		}
+		
+	function download($id='')
+		{
+			$this->load->model('articles');
+			$this->articles->download_pdf($id);
+		}	
+	function email($id)
+		{
+			$id = round($id);
+			$this->load->model('articles');
+			$data = $this->articles->le($id);
+			$content = $this->load->view('article/article_email',$data,true);
+			$content = utf8_decode($content);
+			$subject = utf8_decode($data['ar_titulo_1']);
+			enviaremail('renefgj@gmail.com','[Brapci] - '.$subject,$content,1);
+			$this->load->view('success',null);						
+		}	
+
 }
 ?>
-		

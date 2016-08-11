@@ -152,6 +152,9 @@ class users extends CI_model {
 				return ('');
 			}
 		}
+		echo "OPS";
+		print_r($_SESSION);
+		exit;
 		redirect(base_url('index.php/social/login'));
 	}
 

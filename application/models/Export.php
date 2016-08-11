@@ -545,6 +545,145 @@ class export extends CI_model {
 		return ($tote);
 	}
 
+function resume()
+	{
+		$sql = "SELECT jnl_tipo, count(*) as total FROM `brapci_journal` 
+					where jnl_status <> 'X' 
+					group by jnl_tipo ";
+		$rlt = $this->db->query($sql);
+		$rlt = $rlt->result_array();
+		$sx = '';
+		for ($r=0;$r < count($rlt);$r++)
+			{
+				$line = $rlt[$r];
+				$type = $line['jnl_tipo'];
+				$total = $line['total'];
+				switch($type)
+					{
+					case 'J':
+						$sx .= '<span class="big"><b>'.$line['total'].'</b> '.'Revistas Ciêntificas'.'</span></br>';
+						break;
+					}
+			}
+		$sx .= '<br/>';
+		/*************************************** TOTAL DE ARTIGOS *******************/
+		$sql = "SELECT count(*) as total, jnl_tipo, jtp_descricao
+				FROM `brapci_article` 
+				INNER JOIN brapci_journal on ar_journal_id = jnl_codigo
+				INNER JOIN brapci_journal_tipo ON jnl_tipo = jtp_codigo
+				WHERE (ar_status <> 'X' and ar_status <> '') 
+				group by jnl_tipo, jtp_descricao 
+				ORDER BY total desc ";
+		$rlt = $this->db->query($sql);
+		$rlt = $rlt->result_array();
+		
+		for ($r=0;$r < count($rlt);$r++)
+			{
+				$line = $rlt[$r];
+				$type = $line['jnl_tipo'];
+				$total = $line['total'];
+				switch($type)
+					{
+					case 'J':
+						$sx .= '<b>'.number_format($line['total'],0,',','.').'</b> '.'Trabalhos em Revistas Ciêntificas'.'</br>';
+						break;
+					case 'E':
+						$sx .= '<b>'.number_format($line['total'],0,',','.').'</b> '.'Trabalhos em Eventos'.'</br>';
+						break;
+					case 'A':
+						$sx .= '<b>'.number_format($line['total'],0,',','.').'</b> '.'Teses'.'</br>';
+						break;
+					case 'L':
+						$sx .= '<b>'.number_format($line['total'],0,',','.').'</b> '.'Livros'.'</br>';
+						break;						
+					case 'D':
+						$sx .= '<b>'.number_format($line['total'],0,',','.').'</b> '.'Disertações'.'</br>';
+						break;						
+					case 'C':
+						$sx .= '<b>'.number_format($line['total'],0,',','.').'</b> '.'Capítulos de livros'.'</br>';
+						break;						
+											}
+			}	
+			
+	/****************** Autores ****************************************************************************************/
+	$sql = "SELECT 'A' as type, count(*) as total FROM `brapci_autor` where autor_alias = autor_codigo UNION SELECT 'U' as type, count(*) as total FROM `brapci_autor` where autor_alias <> autor_codigo";
+	$rlt = $this->db->query($sql);
+	$rlt = $rlt->result_array();
+	$sb = '';
+	for ($r=0;$r < count($rlt);$r++)
+		{
+			$line = $rlt[$r];
+			$type = $line['type'];
+			switch ($type)
+				{
+				case 'A':
+					$sb .= '<span class="big"><b>'.number_format($line['total'],0,',','.').'</b> '.'Autores'.'</span></br>';
+					break;
+				case 'U':
+					$sb .= '<b>'.number_format($line['total'],0,',','.').'</b> '.'Remissivas de Autores'.'</br>';
+					break;
+				}
+		}
+	$sb .= '<br>';
+		
+	/***************** Keywords ****************************************************************************************/
+	$sql = "SELECT count(*) as total, 'A' as type, kw_idioma FROM `brapci_keyword` where kw_codigo = kw_use group by kw_idioma
+			UNION
+			SELECT count(*) as total, 'U' as type, kw_idioma FROM `brapci_keyword` where kw_codigo <> kw_use group by kw_idioma
+			ORDER BY kw_idioma, type
+			";
+	$rlt = $this->db->query($sql);
+	$rlt = $rlt->result_array();
+	$sc = '';
+	for ($r=0;$r < count($rlt);$r++)
+		{
+			$line = $rlt[$r];
+			$type = $line['type'];
+			switch ($type)
+				{
+				case 'A':
+					$sc .= '<span class="big"><b>'.number_format($line['total'],0,',','.').'</b> '.' Palavras-chave em '.msg($line['kw_idioma']).'</span></br>';
+					break;
+				case 'U':
+					$sc .= '<b>'.number_format($line['total'],0,',','.').'</b> '.'Remissivas em '.msg($line['kw_idioma']).'</br>';
+					$sc .= '<br>';
+					break;
+				}
+		}	
+			
+	$sa = '
+			<div class="container">
+				<div class="jumbotron col-md-5" style="border-radius: 20px;">
+					<span class="big"><b>PUBLICAÇÕES</b></span>
+					<br>
+					<br>
+					<span class="middle">'.$sx.'
+					</span>
+				</div>
+				<div class="col-md-1"></div>
+				<div class="jumbotron col-md-5" style="border-radius: 20px;">
+					<span class="big"><b>AUTORIDADES</b></span>
+					<br>
+					<br>
+					<span class="middle">			
+						'.$sb.'
+						'.$sc.'
+						1 Tesauro<br>
+					</span>
+				</div>
+			</div>	
+		';
+		
+		$dir = $_SERVER['SCRIPT_FILENAME'];
+		$dir = troca($dir,'index.php','');
+		$filename = $dir.'application/views/brapci/jumbo.php';
+
+		$flt = fopen($filename,'w');
+		fwrite($flt,$sa);
+		fclose($flt);			
+		return($sa);		
+	}
+
 }
 
 function qualificacao($x) {

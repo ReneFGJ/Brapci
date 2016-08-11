@@ -112,8 +112,8 @@ class home extends CI_Controller {
 		if ((strlen($acao) > 0) and (strlen($dd4) > 0)) {
 			switch ($tipo) {
 				case '0' :
-					$tela = $this -> Search -> busca_form($data);
-					$data = array('tela' => $tela);
+					$telax = $this -> Search -> busca_form($data);
+					$data = array('tela' => $telax['tela1'], 'tela2' => $telax['tela2']);
 					break;
 				case '1' :
 					$telax = $this -> Search -> busca_form_autor($data);

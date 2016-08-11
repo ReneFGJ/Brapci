@@ -275,7 +275,7 @@ class articles extends CI_model {
 						left join ajax_cidade on cidade_codigo = jnl_cidade
 						where ar_codigo = '$id' ";
 		$query = $this -> db -> query($sql);
-		$query = $query->result_array();
+		$query = $query -> result_array();
 		$line = $query[0];
 
 		/* Kwywords */
@@ -283,7 +283,7 @@ class articles extends CI_model {
 		$line['ar_keyw_2'] = $this -> keywords -> retrieve_keywords($id, $line['ar_idioma_2']);
 		$line['ar_keyw_3'] = $this -> keywords -> retrieve_keywords($id, $line['ar_idioma_3']);
 		$line['keywords'] = $this -> keywords -> retrieve_keywords_all($id);
-		$line = $this -> authors($id,$line);
+		$line = $this -> authors($id, $line);
 
 		$line['cited'] = $this -> cited($id);
 		$line['link_pdf'] = $this -> arquivos($id);
@@ -447,7 +447,7 @@ class articles extends CI_model {
 		return ($sx);
 	}
 
-	function authors($id,$line) {
+	function authors($id, $line) {
 		$sql = "
 				SELECT * FROM `brapci_article_author` 
 				inner join brapci_autor on autor_codigo = ae_author
@@ -477,7 +477,7 @@ class articles extends CI_model {
 		$line['authors'] = $rlt2;
 		$line['author'] = $sxb;
 		$line['authores_row'] = $sxa;
-		return($line);
+		return ($line);
 
 	}
 
@@ -592,6 +592,47 @@ class articles extends CI_model {
 		}
 		return ($sx);
 	}
+
+	function view_pdf($id) {
+		$sql = "select * from brapci_article_suporte where id_bs = " . round($id);
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		if (count($rlt) > 0) {
+			$line = $rlt[0];
+			$file = trim($line['bs_adress']);
+			if (file_exists($file)) {
+				$this->pdf_register($id,1);
+				header('Content-type: application/pdf');
+				readfile($file);
+			}
+		}
+	}
+	function download_pdf($id) {
+		$sql = "select * from brapci_article_suporte where id_bs = " . round($id);
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		if (count($rlt) > 0) {
+			$line = $rlt[0];
+			$file = trim($line['bs_adress']);
+			if (file_exists($file)) {
+				$this->pdf_register($id,2);
+				header('Content-type: application/pdf');
+				readfile($file);
+			}
+		}
+	}
+	
+	function pdf_register($id,$type)
+		{
+			$session = $_SESSION['bp_session'];
+			$ip = ip();
+			$sql = "insert into pdf_download 
+						(
+						pdf_ip, pdf_id, pdf_session, pdf_session_type
+						) values (
+						'$ip','$id','$session','$type')	";
+			$this->db->query($sql);
+		}
 
 }
 ?>

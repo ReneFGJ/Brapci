@@ -14,9 +14,6 @@ if (isset($_SESSION['anof'])) {
 	$ano2 = date("Y");
 }
 
-
- 
-
 /******************************************************** Mount Form Select ****************/
 $check_dd3 = array('', '', '', '', '', '', '', '', '', '', '');
 if (strlen(get("dd3")) > 0) {
@@ -101,7 +98,7 @@ for ($r = 0; $r < count($rlt); $r++) {
 	}
 </style>
 <form method="post" id="form_search" action="<?php echo base_url('index.php/home/');?>">
-	<div class="container-fluid search" style="min-height: 400px;">
+	<div class="container-fluid search" style="min-height: 200px;">
 		<div class="row ">
 			<div class="row" style="margin-top: 50px;">
 				<div class="col-xs-10 col-xs-offset-1">
@@ -143,20 +140,26 @@ for ($r = 0; $r < count($rlt); $r++) {
 					<div class="visible-xs visible-sm"></div>
 					<br>
 				</div>
-				<div class="col-md-2 col-xs-8 col-xs-offset-2 text-right" style="color: #ffffff;">
+			</div>
+			<div class="row">
+				<div class="col-md-4 col-xs-7 col-xs-offset-2 col-md-offset-2" style="color: #ffffff;">
 					<!---------------------------------------------------------------------------- YEARS ----------->
 					<?php echo msg('form_year_cut'); ?>
-					<select style="color: #000000;" name="dd5">
+					<div class="visible-xs visible-sm"></div>
+					<select style="color: #ffffff; background-color: #000000;" name="dd5">
 						<?php echo $data1; ?>
 					</select>
 					-
-					<select style="color: #000000;" name="dd6">
+					<select style="color: #ffffff; background-color: #000000;" name="dd6">
 						<?php echo $data2; ?>
 					</select>
 				</div>
 			</div>
 			<!--- ROW -->
 			<input type="hidden" name="acao" value="busca_termo">
+			<div class="row">
+					<div col="col-md-12">&nbsp;</div>
+			</div>
 		</div>
 	</div>
 	</div>

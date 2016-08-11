@@ -44,16 +44,16 @@ class admin extends CI_Controller {
 	}
 
 	function cab() {
-		$this->load->model('users');
+		$this -> load -> model('users');
 		$data = array();
-		$data['title'] = 'Brapci : ADMIN';
 		$data['title_page'] = 'ADMIN';
 		$this -> load -> view("header/cab_admin", $data);
 		$data['title'] = '';
-		$this -> users->security();
+		$this -> users -> security();
 	}
+
 	function cab2($data = array()) {
-		$this->load->model("users");
+		$this -> load -> model("users");
 		$js = array();
 		$css = array();
 		array_push($js, 'form_sisdoc.js');
@@ -70,11 +70,11 @@ class admin extends CI_Controller {
 			//$this -> load -> view('menus/menu_cab_top', $data);
 			$this -> load -> view('header/cab_admin', $data);
 		} else {
-			$this->load->view('header/header_nomargin.php',null);
+			$this -> load -> view('header/header_nomargin.php', null);
 		}
 
 		$this -> load -> model('users');
-		$this->users->security();
+		$this -> users -> security();
 	}
 
 	function footer() {
@@ -92,9 +92,9 @@ class admin extends CI_Controller {
 
 		$tela = $this -> oai_pmh -> oai_resumo();
 		$data['content'] = $tela;
-			
+
 		$this -> load -> view('content', $data);
-		
+
 		$this -> load -> view('admin/menu_admin', $data);
 
 	}
@@ -107,16 +107,16 @@ class admin extends CI_Controller {
 		$this -> load -> view('admin/menu_game', $data);
 
 	}
-	
-	function game_idioma($id='') {
+
+	function game_idioma($id = '') {
 		$this -> load -> model('games');
 		$data = array();
 		$this -> cab();
-		
-		$tela['content'] = $this->games->game_i($id);
-		$this->load->view('content',$tela);
-	
-	}	
+
+		$tela['content'] = $this -> games -> game_i($id);
+		$this -> load -> view('content', $tela);
+
+	}
 
 	function journal($id = 0) {
 		$this -> cab();
@@ -186,12 +186,11 @@ class admin extends CI_Controller {
 		echo $scielo;
 	}
 
-	function article_change($id,$chk)
-		{
-			$this->load->model('articles');
-			$this->articles->change_language($id);
-			redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
-		}
+	function article_change($id, $chk) {
+		$this -> load -> model('articles');
+		$this -> articles -> change_language($id);
+		redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
+	}
 
 	function article_view($id, $check, $status = '') {
 		global $dd, $acao;
@@ -207,9 +206,8 @@ class admin extends CI_Controller {
 			$this -> db -> query($sql);
 		}
 
-		$data['title'] = 'Brapci : Admin';
 		$data['title_page'] = 'ADMIN';
-		$this->cab();
+		$this -> cab();
 
 		/* Article */
 		$this -> load -> model('articles');
@@ -221,7 +219,7 @@ class admin extends CI_Controller {
 		$this -> load -> model('metodologias');
 
 		$data = $this -> articles -> le($id);
-		
+
 		$data['archives'] = $this -> archives -> show_files($id);
 		$data['citeds'] = $this -> cited -> show_cited($id);
 
@@ -259,90 +257,82 @@ class admin extends CI_Controller {
 				$this -> authors -> save_AUTHORS($id, $dd[10]);
 				redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
 				break;
-			case 'CITED':
-				if (get("dd63") == '1')
-					{
-						$data['tela'] = $this->cited->save_ref($id,get("dd62"));
-						redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
-					}				
+			case 'CITED' :
+				if (get("dd63") == '1') {
+					$data['tela'] = $this -> cited -> save_ref($id, get("dd62"));
+					redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
+				}
 				break;
-				
 		}
 		$id_art = $data['ar_codigo'];
-		$data['metodologias'] = '<div id="metodos" class="border1">'.$this -> metodologias -> mostra($id_art).'</div>';
-		$data['metodologias'] .= $this-> metodologias -> metodos_incluir($id_art);
-		
+		$data['metodologias'] = '<div id="metodos" class="border1">' . $this -> metodologias -> mostra($id_art) . '</div>';
+		$data['metodologias'] .= $this -> metodologias -> metodos_incluir($id_art);
+
 		/* article - parte I */
-		$data['tab_descript'] = $this -> load -> view('admin/article_view_tt', $data, true); 
-		$data['tab_marc21'] = $this -> load -> view('admin/article_view_marc21', $data, true); 
-		$data['tab_editar'] = $this->articles->editar($id);
+		$data['tab_descript'] = $this -> load -> view('admin/article_view_tt', $data, true);
+		$data['tab_marc21'] = $this -> load -> view('admin/article_view_marc21', $data, true);
+		$data['tab_editar'] = $this -> articles -> editar($id);
 		$data['tab_refer'] = $this -> load -> view('admin/article_view_refer', $data, true);
-		
-		if ($this->articles->saved > 0)
-			{
-				redirect(base_url('index.php/admin/article_view/'.$id.'/'.checkpost_link($id)));
-				exit;
-			}
+
+		if ($this -> articles -> saved > 0) {
+			redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
+			exit ;
+		}
 
 		$this -> load -> view('admin/article_view', $data);
-		
+
 		//print_r($data);
 		//exit;
-		
+
 		$data['content'] = '</table><br><br>';
-		$this->load->view('content',$data);
-		$this->load->view('header/foot_admin',$data);
+		$this -> load -> view('content', $data);
+		$this -> load -> view('header/foot_admin', $data);
 
 	}
 
-	function refer($ar='')
-		{
-			$this->load->model("cited");
-			
-			$data['nocab'] = true;
-			$this->load->view('header/header',$data);
-			$cp = array();
-			array_push($cp,array('$H8','','',False,True));
-			array_push($cp,array('$T80:10','',msg('bibliography'),True,True));
-			array_push($cp,array('$O 1:SIM','',msg('finalizar'),True,True));
-			array_push($cp,array('$B8','','Processar >>>',False,True));
-			$form = new form;
-			$tela = $form->editar($cp,'');
-			
-			if ($form->saved > 0)
-				{
-					$this->cited->save_ref($ar,get("dd1"));
-					$tela = '<script> wclose(); </script>';
-				} else {
-					$ln = $this->cited->save_ref_pre(get("dd1"));
-					$tela .= '<ul>';
-					for ($r=0;$r < count($ln);$r++)
-						{
-							if (strlen($ln[$r]) > 5)
-								{
-									$tela .= '<li>'.$ln[$r].'</li>';
-								}
-						}
-					$tela .= '</ul>';
-					
+	function refer($ar = '') {
+		$this -> load -> model("cited");
+
+		$data['nocab'] = true;
+		$this -> load -> view('header/header', $data);
+		$cp = array();
+		array_push($cp, array('$H8', '', '', False, True));
+		array_push($cp, array('$T80:10', '', msg('bibliography'), True, True));
+		array_push($cp, array('$O 1:SIM', '', msg('finalizar'), True, True));
+		array_push($cp, array('$B8', '', 'Processar >>>', False, True));
+		$form = new form;
+		$tela = $form -> editar($cp, '');
+
+		if ($form -> saved > 0) {
+			$this -> cited -> save_ref($ar, get("dd1"));
+			$tela = '<script> wclose(); </script>';
+		} else {
+			$ln = $this -> cited -> save_ref_pre(get("dd1"));
+			$tela .= '<ul>';
+			for ($r = 0; $r < count($ln); $r++) {
+				if (strlen($ln[$r]) > 5) {
+					$tela .= '<li>' . $ln[$r] . '</li>';
 				}
-			
-			$data['content'] = $tela;
-			$data['title'] = '';
-			$this->load->view('content',$data);
+			}
+			$tela .= '</ul>';
+
 		}
 
-	function metodo($tipo='',$art='')
-		{
-			$sx = 'método';
-			$ar = get("dd1");
-			$this->load->model('metodologias');
-			$this->metodologias->acao($art,$tipo,$ar);
-			$sx = $this->metodologias->mostra($art);
-			$data = array();
-			$data['content'] = $sx. ' '.date("Y-m-d H:i:s");
-			$this->load->view('content',$data);
-		}
+		$data['content'] = $tela;
+		$data['title'] = '';
+		$this -> load -> view('content', $data);
+	}
+
+	function metodo($tipo = '', $art = '') {
+		$sx = 'método';
+		$ar = get("dd1");
+		$this -> load -> model('metodologias');
+		$this -> metodologias -> acao($art, $tipo, $ar);
+		$sx = $this -> metodologias -> mostra($art);
+		$data = array();
+		$data['content'] = $sx . ' ' . date("Y-m-d H:i:s");
+		$this -> load -> view('content', $data);
+	}
 
 	function article_new($issue) {
 		$sql = "select * from brapci_edition where id_ed = " . $issue;
@@ -377,10 +367,7 @@ class admin extends CI_Controller {
 		if (($id < 1) or ($check != checkpost_link($id))) {
 			redirect(base_url('index.php/admin/journal'));
 		}
-
-		$data['title'] = 'Brapci : Admin';
-		$data['title_page'] = 'ADMIN';
-		$this->cab();
+		$this -> cab();
 
 		/* Editions */
 		$this -> load -> model('editions');
@@ -440,10 +427,7 @@ class admin extends CI_Controller {
 		if (($id < 1) or ($check != checkpost_link($id))) {
 			redirect(base_url('index.php/admin/journal'));
 		}
-
-		$data['title'] = 'Brapci : Admin';
-		$data['title_page'] = 'ADMIN';
-		$this->cab();
+		$this -> cab();
 
 		$this -> load -> model('journals');
 		$data = $this -> journals -> le($id);
@@ -462,17 +446,16 @@ class admin extends CI_Controller {
 		$this -> load -> view('form/form', $data);
 
 	}
-	
-	function article_double()
-		{
+
+	function article_double() {
 		$this -> cab();
 		$this -> load -> model('articles');
-		
-		$tela = $this->articles->double_articles();
+
+		$tela = $this -> articles -> double_articles();
 		$data['content'] = $tela;
-		
-		$this->load->view('content',$data);	
-		}
+
+		$this -> load -> view('content', $data);
+	}
 
 	function journal_edit($id = 0, $check) {
 
@@ -506,11 +489,19 @@ class admin extends CI_Controller {
 
 	}
 
+	function export_resume() {
+		$exp = 150;
+
+		$this -> load -> model('export');
+		$this -> export -> resume();
+		$this -> cab();
+		$this -> load -> view('success', null);
+	}
+
 	function export($id = '') {
 		$exp = 150;
-		$data['title'] = 'Brapci : Admin';
-		$data['title_page'] = 'ADMIN - EXPORTAÇÃO';
-		$this->cab();
+
+		$this -> cab();
 		$this -> load -> model('export');
 
 		/* Gerar arquivo */
@@ -546,34 +537,32 @@ class admin extends CI_Controller {
 		}
 	}
 
-	function export_author()
-		{
-			$exp = 150;
-			$this->cab();
-			$this -> load -> model('export');
-			
-			$tela = $this->export->export_author();
-			$data['content'] = $tela.'<br><br>';
-			$this->load->view('content',$data);
-			
-			$this->load->view('header/foot',null);
-			
-		}
+	function export_author() {
+		$exp = 150;
+		$this -> cab();
+		$this -> load -> model('export');
 
-	function export_keywords()
-		{
-			$exp = 150;
-			$this->cab();
-			$this -> load -> model('export');
-			
-			$tela = $this->export->export_keywords();
-			$data['content'] = $tela.'<br><br>';
-			$this->load->view('content',$data);
-			
-			$this->load->view('header/foot',null);
-			
-		}
-		
+		$tela = $this -> export -> export_author();
+		$data['content'] = $tela . '<br><br>';
+		$this -> load -> view('content', $data);
+
+		$this -> load -> view('header/foot', null);
+
+	}
+
+	function export_keywords() {
+		$exp = 150;
+		$this -> cab();
+		$this -> load -> model('export');
+
+		$tela = $this -> export -> export_keywords();
+		$data['content'] = $tela . '<br><br>';
+		$this -> load -> view('content', $data);
+
+		$this -> load -> view('header/foot', null);
+
+	}
+
 	function doi_find_abstract($id = '') {
 		/* Model */
 		$this -> load -> model("doi");
@@ -631,6 +620,7 @@ class admin extends CI_Controller {
 		$this -> load -> view('content', $data);
 
 	}
+
 	function harvesting_pdf($pag = 0) {
 		$this -> load -> model('Oai_pmh');
 		$this -> cab();
@@ -643,11 +633,10 @@ class admin extends CI_Controller {
 		for ($rx = 1; $rx <= 1; $rx++) {
 			$reg = $this -> Oai_pmh -> nextPDFharvesting();
 			$id = round($reg['id_bs']);
-			if ($id == 0)
-				{
-					echo 'FIM';
-					exit;
-				}
+			if ($id == 0) {
+				echo 'FIM';
+				exit ;
+			}
 			$url = $reg['bs_adress'];
 			$sx .= '<tr>';
 			$sx .= '<td>' . $url . '</td>' . cr();
@@ -677,7 +666,7 @@ class admin extends CI_Controller {
 		if (count($reg) > 0) {
 			$sx .= '<br>Total para coleta: ' . $this -> Oai_pmh -> totalPDFharvesting();
 			$sx .= '<br>ID:' . $reg['id_bs'];
-			$sx .= '<meta http-equiv=refresh content="5;URL='.base_url('index.php/admin/harvesting_pdf/'.($pag+1)).'">';
+			$sx .= '<meta http-equiv=refresh content="5;URL=' . base_url('index.php/admin/harvesting_pdf/' . ($pag + 1)) . '">';
 		} else {
 			$sx .= 'Nada para coletar';
 		}
@@ -695,11 +684,10 @@ class admin extends CI_Controller {
 		for ($rx = 1; $rx <= 1; $rx++) {
 			$reg = $this -> Oai_pmh -> nextPDFconvert();
 			$id = round($reg['id_bs']);
-			if ($id == 0)
-				{
-					echo 'FIM';
-					exit;
-				}
+			if ($id == 0) {
+				echo 'FIM';
+				exit ;
+			}
 			$url = $reg['bs_adress'];
 			$sx .= '<tr>';
 			$sx .= '<td>' . $url . '</td>' . cr();
@@ -728,7 +716,7 @@ class admin extends CI_Controller {
 
 		if (count($reg) > 0) {
 			$sx .= '<br>ID:' . $reg['id_bs'];
-			$sx .= '<meta http-equiv=refresh content="5;URL='.base_url('index.php/admin/harvesting_pdf_convert/'.($pag+1)).'">';
+			$sx .= '<meta http-equiv=refresh content="5;URL=' . base_url('index.php/admin/harvesting_pdf_convert/' . ($pag + 1)) . '">';
 		} else {
 			$sx .= 'Nada para converter';
 		}
@@ -747,6 +735,7 @@ class admin extends CI_Controller {
 		array_push($menu, array(msg('Public Module'), msg('Export to public module'), 'ITE', '/admin/export'));
 		array_push($menu, array(msg('Public Module'), msg('Export Author to public module'), 'ITE', '/admin/export_author'));
 		array_push($menu, array(msg('Public Module'), msg('Export Keywords to public module'), 'ITE', '/admin/export_keywords'));
+		array_push($menu, array(msg('Public Module'), msg('Export Resume to Public'), 'ITE', '/admin/export_resume'));
 		array_push($menu, array(msg('Autoridade'), msg('Check remissive authors n use'), 'ITE', '/admin/author_use'));
 		array_push($menu, array(msg('Autoridade'), msg('Check remissive terms in use'), 'ITE', '/admin/terms_use'));
 		array_push($menu, array(msg('Autoridade'), msg('Check language of terms'), 'ITE', '/admin/terms_language'));
@@ -762,15 +751,14 @@ class admin extends CI_Controller {
 		$this -> load -> view('header/main_menu', $data);
 	}
 
-	function linguage_portuguese_first()
-		{
-			$this->cab();
-			$this->load->model('articles');
-			
-			$tela = $this->articles->autoindex_change_linguage();
-			$data['content'] = $tela;
-			$this->load->view('content',$data);
-		}
+	function linguage_portuguese_first() {
+		$this -> cab();
+		$this -> load -> model('articles');
+
+		$tela = $this -> articles -> autoindex_change_linguage();
+		$data['content'] = $tela;
+		$this -> load -> view('content', $data);
+	}
 
 }
 ?>

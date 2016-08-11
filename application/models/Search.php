@@ -445,13 +445,8 @@ class search extends CI_model {
 		global $db_public, $dd, $SESSION;
 
 		$term = $this -> tratar_term($term);
-
 		$total = $this -> result_total_articles($term, $datai, $dataf);
-
-		//$term = utf8_decode($term);
-
 		$sessao = $this -> sessao;
-
 		$wh = $this -> where(UpperCaseSql($term), 'ar_asc');
 		if (strlen($datai) > 0) { $wh .= ' and ar_ano >= ' . $datai;
 		}
@@ -497,16 +492,18 @@ class search extends CI_model {
 		}
 		if (strlen($wha) > 0) { $wh .= ' and (' . $wha . ')';
 		}
+		/**************************** page *************************/
+		$pag = (round(get("pag")) * 50);
 
+		/****** offset **********/
 		$sql = "select * from " . $db_public . "artigos 
 					inner join brapci_journal on ar_journal_id = jnl_codigo
 					left join " . $db_public . "usuario_selecao on ar_codigo = sel_work and sel_sessao = '" . $sessao . "'
 					where " . $wh . "
 					";
-		$sql .= " order by ar_ano desc ";
-		$sql .= " limit 500 offset 0 ";
-		echo $sql;
-		exit ;
+		$sql .= " order by ar_ano desc, Article_Title  ";
+		$sql .= " limit 50 offset $pag ";
+
 		$rlt = db_query($sql);
 
 		$this -> query = $wh;
@@ -595,7 +592,6 @@ class search extends CI_model {
 		$sql .= " order by ar_ano desc ";
 		$sql .= " limit 100 offset 0 ";
 
-
 		$rlt = $this -> db -> query($sql);
 		$rlt = $rlt -> result_array();
 		$total = count($rlt);
@@ -623,7 +619,7 @@ class search extends CI_model {
 		return ($sx);
 
 	}
-	
+
 	function result_article_auth($term_code = '') {
 		global $db_public, $db_base;
 
@@ -850,15 +846,15 @@ class search extends CI_model {
 		$this -> js = $js;
 
 		$link = '<A HREF="' . base_url('index.php/article/view/' . $line['ar_codigo'] . '/' . checkpost_link($line['ar_codigo'])) . '"
-					 class="lt1"
+					 class="big"
 					 target="_new' . $line['ar_codigo'] . '"
 					 >';
 
 		$id++;
 		$cod = trim($line['ar_codigo']);
 
-		$sx .= '<TR valign="top">';
-		$sx .= '<td rowspan=1>';
+		$sx .= '<div class="row">';
+		$sx .= '<div class="col-md-12">';
 
 		/* Marcacao */
 		$selected = round($line['sel_ativo']);
@@ -867,10 +863,12 @@ class search extends CI_model {
 		}
 		$jscmd = 'onchange="mark(\'#mt' . trim($cod) . '\',this);" ';
 		$fm = '<input type="checkbox" name="ddq" ' . $jscmd . ' ' . $selected . '>';
-		$sx .= $fm;
-
-		$sx .= '<td colspan=1>';
+		
+		/*************** numeracao **************/
 		$sx .= $id . '. ';
+		$sx .= $fm;
+		$sx .= ' - ';
+
 		$sx .= $link;
 		$sx .= (trim(UpperCase($line['Article_Title'])));
 
@@ -879,7 +877,7 @@ class search extends CI_model {
 
 		$jscmd = 'onclick="abstractshow(\'#mt' . trim($cod) . '\');" ';
 
-		$sx .= '<BR>';
+		$sx .= '<BR><p style="margin-right: 20px;">';
 		$sx .= '<img src="' . base_url('img/icone_abstract.png') . '" height="16" style="cursor: pointer;" id="it' . $cod . '" ' . $jscmd . ' align="left">';
 		/* enviar por e-mail */
 		if (isset($email)) { $sx .= $this -> send_to_email($cod, 16);
@@ -939,7 +937,7 @@ class search extends CI_model {
 		}
 
 		/* Pontos */
-
+		$sx .= '</p>';
 		$sx .= '</div>';
 
 		/* Para a marcacao de pontos */
@@ -958,7 +956,9 @@ class search extends CI_model {
 		$termos = splitx(";", UpperCaseSql($termos));
 
 		$sx .= $this -> metodo_pontos($titulo, $resumo, $keyword, $termos);
-
+		$sx .= '</div>' . cr();
+		$sx .= '</div>' . cr();
+		$sx .= '<hr>';
 		return ($sx);
 	}
 
@@ -1394,18 +1394,25 @@ class search extends CI_model {
 			$data2 = (date("Y") + 1);
 		}
 		$sx = '';
+
 		/* registra consulta */
-
-		if (strlen($dd[1])) {
+		/*****************************************************************************************/
+		$sa = '';
+		if (strlen($data['dd4']) > 0) {
 			//$this -> registra_consulta($dd[2]);
-		}
+			$sr = $this -> result_search($data, $data1, $data2);
+			if (strlen($this -> query) > 0) {
 
-		$sx .= '<TR><td colspan=2 >';
-		if (strlen($dd[1]) > 0) {
-			$sr = $this -> result_search($dd, $data1, $data2);
-			$sx .= $this -> realce($sr, $data['dd1']);
+				$sa = $this -> result_journals();
+				$sa .= $this -> result_year();
+				$sa .= $this -> result_author();
+				$sa .= $this -> result_keyword();
+			}
+			$sx .= $this -> realce($sr, $data['dd4']);
 		}
-		return ($sx);
+		$data['tela1'] = $sx;
+		$data['tela2'] = $sa;
+		return ($data);
 	}
 
 	function busca_form_keyword($data = array()) {
@@ -1602,20 +1609,13 @@ class search extends CI_model {
 	function result_search($post = array(), $data1, $data2) {
 		global $dd, $acao;
 		$sx = '';
-		$sx .= '<table border=1 class="lt1" width="100%">';
-		$sx .= '<TR valign="top">';
-		$sx .= '<td>';
-		$sx .= $this -> lang -> line('form_query') . '<B> ' . $dd[1] . '</B> ';
+		$sx .= msg('form_query') . '<B>' . $post['dd4'] . '</b>';
 		/* realiza busca */
-		$sx .= $this -> result_article($dd[1], $data1, $data2);
+		$data1 = $post['anoi'];
+		$data2 = $post['anof'];
 
-		$sx .= '<td width="120">';
-		$sa = $this -> result_journals();
-		$sa .= $this -> result_year();
-		$sa .= $this -> result_author();
-		$sa .= $this -> result_keyword();
-		$sx .= $sa;
-		$sx .= '</table>';
+		$sx .= $this -> result_article($post['dd4'], $data1, $data2);
+
 		return ($sx);
 	}
 
@@ -1632,7 +1632,6 @@ class search extends CI_model {
 		$sx .= $this -> result_autor_key($key_cod);
 		return ($sx);
 	}
-
 
 	function result_search_author($key_cod = '') {
 		global $dd, $acao;

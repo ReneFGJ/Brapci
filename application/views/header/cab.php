@@ -108,9 +108,7 @@ if (strlen($user) > 0) {
 						echo '<li class="dropdown">'.cr();
 						echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">'.$user_name.'<span class="caret"></span></a>'.cr();
 						echo '<ul class="dropdown-menu">'.cr();
-						echo '<li><a href="#">Action</a></li>'.cr();
-						echo '<li><a href="#">Another action</a></li>'.cr();
-						echo '<li><a href="#">Something else here</a></li>'.cr();
+						echo '<li><a href="#">'.msg('my_account').'</a></li>'.cr();
 						echo '<li role="separator" class="divider"></li>'.cr();
 						echo '<li>'.$bt_sign_out.'</li>'.cr();
 						echo '</ul>'.cr();

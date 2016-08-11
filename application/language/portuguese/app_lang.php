@@ -54,9 +54,15 @@ $lang['admin_home'] = 'ADMIN HOME';
 $lang['menu_admin'] = 'ADMIN';
 $lang['last_update'] = 'Útima atualização';
 
+$lang['to index'] = 'indexando';
+$lang['finished'] = 'finalizado';
+$lang['revised'] = 'revisado';
+$lang['to review'] = 'para revisão';
+
 $lang['pt_BR'] = 'Português';
 $lang['en'] = 'Inglês';
 $lang['es'] = 'Espanhol';
+$lang['fr'] = 'Francês';
 	
 $lang['oai_journals'] = 'Publicações compatíveis com OAI-PMH';
 	
@@ -71,6 +77,9 @@ $lang['status_article_C'] = '2º revisão';
 $lang['status_article_D'] = 'revisado';
 
 $lang['issue_new'] = 'novo fascículo';
+
+/* Top Menu */
+$lang['sign_in'] = 'ACESSAR';
 
 /* SESSIOn */
 $lang['save_session'] = 'Salvar busca >>>';

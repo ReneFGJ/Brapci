@@ -58,14 +58,14 @@ if (strlen($user) > 0) {
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="<?php echo base_url('index.php');?>"><img alt="Brand" src="<?php echo base_url('img/logo.png'); ?>"></a>
+				<a class="navbar-brand" href="<?php echo base_url('index.php'); ?>"><img alt="Brand" src="<?php echo base_url('img/logo.png'); ?>"></a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li>
-						<a href="<?php echo base_url('index.php');?>">Home <span class="sr-only">(current)</span></a>
+						<a href="<?php echo base_url('index.php'); ?>">Home <span class="sr-only">(current)</span></a>
 					</li>
 					<!--
 					<li>
@@ -73,10 +73,10 @@ if (strlen($user) > 0) {
 					</li>
 					-->
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo msg('menu_admin');?><span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo msg('menu_admin'); ?><span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li>
-								<a href="<?php echo base_url('index.php/admin');?>"><?php echo msg('admin_home');?></a>
+								<a href="<?php echo base_url('index.php/admin'); ?>"><?php echo msg('admin_home'); ?></a>
 							</li>
 						</ul>
 					</li>
@@ -100,19 +100,17 @@ if (strlen($user) > 0) {
 					<?php
 					/************************************************************************************ SIGN IN ************************************************/
 					if (strlen($user) == 0) {
-						echo '<li><a href="'.base_url('index.php/social/login').'" class="btn-warning">'.msg('sign_in').'</a></li>';
+						echo '<li><a href="' . base_url('index.php/social/login') . '" class="btn-warning">' . msg('sign_in') . '</a></li>';
 					} else {
 						$user_name = $_SESSION['user'];
-						echo '<li class="dropdown">'.cr();
-						echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">'.$user_name.'<span class="caret"></span></a>'.cr();
-						echo '<ul class="dropdown-menu">'.cr();
-						echo '<li><a href="#">Action</a></li>'.cr();
-						echo '<li><a href="#">Another action</a></li>'.cr();
-						echo '<li><a href="#">Something else here</a></li>'.cr();
-						echo '<li role="separator" class="divider"></li>'.cr();
-						echo '<li>'.$bt_sign_out.'</li>'.cr();
-						echo '</ul>'.cr();
-						echo '</li>'.cr();
+						echo '<li class="dropdown">' . cr();
+						echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">' . $user_name . '<span class="caret"></span></a>' . cr();
+						echo '<ul class="dropdown-menu">' . cr();
+						echo '<li><a href="#">' . msg('my_account') . '</a></li>' . cr();
+						echo '<li role="separator" class="divider"></li>' . cr();
+						echo '<li>' . $bt_sign_out . '</li>' . cr();
+						echo '</ul>' . cr();
+						echo '</li>' . cr();
 						echo '';
 					}
 					?>
@@ -120,3 +118,4 @@ if (strlen($user) > 0) {
 			</div><!-- /.navbar-collapse -->
 		</div><!-- /.container-fluid -->
 	</nav>
+<br>

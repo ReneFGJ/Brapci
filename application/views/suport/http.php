@@ -1,0 +1,1 @@
+<span class="label label-danger" style="width: 100%;">PDF</span>

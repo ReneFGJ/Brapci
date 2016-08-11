@@ -217,22 +217,22 @@ class editions extends CI_model {
 			$sx .= $link;
 			switch($sta) {
 				case 'A' :
-					$sx .= '<font color="green">to index<font>';
+					$sx .= '<font color="green">'.msg('to index').'<font>';
 					break;
 				case 'F' :
-					$sx .= '<font color="orange">revised<font>';
+					$sx .= '<font color="orange">'.msg('revised').'<font>';
 					break;
 				case 'D' :
-					$sx .= '<font color="blue">finished<font>';
+					$sx .= '<font color="blue">'.msg('finished').'<font>';
 					break;
 				case 'C' :
-					$sx .= '<font color="orange">revised<font>';
+					$sx .= '<font color="orange">'.msg('revised').'<font>';
 					break;
 				case 'B' :
-					$sx .= '<font color="orange">to review<font>';
+					$sx .= '<font color="orange">'.msg('to review').'<font>';
 					break;
 				case '' :
-					$sx .= '<font color="green">to review<font>';
+					$sx .= '<font color="green">'.msg('to review').'<font>';
 					break;
 				default :
 					$sx .= '(' . $sta . ')';

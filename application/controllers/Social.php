@@ -98,7 +98,7 @@ class social extends CI_Controller {
 		$sql = "ALTER TABLE users ADD us_password CHAR(20) NOT NULL AFTER `us_email`;";
 		$this -> db -> query($sql);
 
-		$sql = "update users set us_password = '0c499ec0eb533670fff82c60cdf7b049' where us_email = 'renefgh@gmail.com' ";
+		$sql = "update users set us_password = '0c499ec0eb533670fff82c60cdf7b049', us_perfil = '#ADM#BIB' where us_email = 'renefgj@gmail.com' ";
 		$this -> db -> query($sql);
 
 		redirect(base_url('index.php/social/login'));
@@ -171,7 +171,6 @@ class social extends CI_Controller {
 				$user = $provider -> get_user_info($token);
 
 				/* Ativa sessão ID */
-
 				$ss_user = $user['name'];
 				$ss_email = trim($user['email']);
 				$ss_image = $user['image'];
@@ -188,6 +187,8 @@ class social extends CI_Controller {
 					/* Atualiza quantidade de acessos */
 					$line = $query[0];
 					$ss_nivel = $line['us_nivel'];
+					$id_us = $line['id_us'];
+					$id = $line['id_us'];
 
 					$sql = "update users set us_last = '$data',
 									us_acessos = (us_acessos + 1) 
@@ -215,10 +216,17 @@ class social extends CI_Controller {
 					$c3 = 7;
 					$sql = "update users set us_codigo = lpad($c1,$c3,0) where $c2='' ";
 					$rlt = $this -> db -> query($sql);
+					
+					$sql = "select * from users where us_email = '$ss_email' ";
+					$query = $this -> db -> query($sql);
+					$query = $query -> result_array();	
+					$line = $query[0];				
+					$id = $line['id_us'];
 				}
-
+				$ss_perfil = $line['us_perfil'];
+				
 				/* Salva session */
-				$data = array('user' => $ss_user, 'email' => $ss_email, 'image' => $ss_image, 'nivel' => $ss_nivel);
+				$data = array('id'=> $id, 'user' => $ss_user, 'email' => $ss_email, 'image' => $ss_image, 'nivel' => $ss_nivel, 'perfil' => $ss_perfil);
 				$this -> session -> set_userdata($data);
 
 				if ($this -> uri -> segment(3) == 'google') {

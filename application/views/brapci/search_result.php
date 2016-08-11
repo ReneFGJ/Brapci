@@ -3,7 +3,7 @@
 		<?php echo $tela; ?>
 	</div>
 	<div class="col-md-2">
-		<?php echo $tela2; ?>
+		<?php if (isset($tela2)) { echo $tela2; } ?>
 	</div>
 	<script>
 				function abstractshow(ms) {
