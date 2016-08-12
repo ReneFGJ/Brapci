@@ -37,7 +37,7 @@ class rdf extends CI_controller {
 	}
 
 	function index($type='',$id='') {
-		set_time_limit(60*10);
+		set_time_limit(6000*10);
 		header('Content-type: text/plain');
 		$this->load->model('rdfs');
 		$this->load->model('articles');
@@ -53,6 +53,10 @@ class rdf extends CI_controller {
 						AND at_metodo_1 LIKE '0%' 
 					limit 30000
 				";
+		$sql = "select ar_codigo from brapci_article 
+						WHERE ar_status <> 'X'
+					limit 30000
+				";
 		$rlt5 = $this->db->query($sql);
 		$rlt5 = $rlt5->result_array();
 		for ($rq=0;$rq < count($rlt5);$rq++)
@@ -62,7 +66,10 @@ class rdf extends CI_controller {
 				//echo '#1-'.$rq.'# '.date("H:i:s").$id.cr();
 				$data = $this->articles->le($id);
 				$sx .= $this->rdfs->rdf_article($data);
-				$wh = '(';
+				
+				if (isset($data['authors']))
+				{
+					$wh = '(';
 				for ($r=0;$r < count($data['authors']);$r++)
 					{
 						$line = $data['authors'][$r];
@@ -70,10 +77,13 @@ class rdf extends CI_controller {
 						$wha .= " autor_alias = '".$line['autor_alias']."' ";
 					}
 				$wh .= ')';
+				} else {
+					$wh = '';
+				}
 			}		
-
+		if (strlen($wha) > 1) { $wha = '('.$wha.') AND ' ;}
 		/******************************************************************* AUTHOR **********/
-		$sql = "select * from brapci_autor WHERE (".$wha.") AND (autor_alias = autor_codigo) order by autor_alias";
+		$sql = "select * from brapci_autor WHERE ".$wha." (autor_alias = autor_codigo) order by autor_alias";
 
 		$rlt = $this->db->query($sql);
 		$rlt = $rlt->result_array();

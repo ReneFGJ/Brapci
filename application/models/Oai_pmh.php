@@ -59,6 +59,12 @@ class oai_pmh extends CI_model {
 		if (count($line) > 0) {
 			/* já existe */
 		} else {
+			$data = date("Ymd");		
+			$sql = "update brapci_journal set jnl_last_harvesting = '$data', jnl_update = '$data' where id_jnl = $jid ";
+			echo $sql;
+			exit;
+			$rlt = $this -> db -> query($sql);
+			
 			/* Insere na agenda */
 			$sql = "insert into oai_cache (
 					cache_oai_id, cache_status, cache_journal, 
@@ -280,7 +286,7 @@ class oai_pmh extends CI_model {
 			} else {
 				$this -> altera_status_chache($idc, '@');
 				echo '<meta http-equiv="refresh" content="1">';
-				return('ERROR');
+				return ('ERROR');
 			}
 		}
 	}

@@ -47,7 +47,7 @@ echo '</div>' . cr();
 
 echo '<div class="col-md-2 col-xs-2 text-right">';
 if (strlen($link_pdf)) {
-	echo '<span onclick="newwin(\'' . base_url('index.php/download/' . '1') . '\');" style="cursor: pointer;">';
+	echo '<span onclick="newwin(\'' . ($link_pdf) . '\');" style="cursor: pointer;">';
 	echo '<img src="' . base_url('img/icon/icone_pdf.png') . '" class="img-responsive" style="padding: 10px;" align="right">';
 	echo '</span>';
 }

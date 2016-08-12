@@ -1,18 +1,20 @@
 <div class="container">
 	<div class="row">
-<?php
+		<div class="col-md-12">
+			<?php
 
-/* Titulo */
-echo '<h1>'.$title.'</h1>';
+			/* Titulo */
+			if (isset($title)) {
+				echo '<h1>' . $title . '</h1>';
+			}
 
-/* Mostra formulario */
-echo $tela;
+			/* Mostra formulario */
+			echo $tela;
 
-if (isset($tela_array))
-{
-	print_r($tela_array);
-}
-
-?>
-</div>
+			if (isset($tela_array)) {
+				print_r($tela_array);
+			}
+		?>
+		</div>
+	</div>
 </div>

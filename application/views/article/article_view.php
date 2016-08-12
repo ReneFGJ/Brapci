@@ -27,7 +27,7 @@
     
     <?php
 
-	if (strlen($_SESSION['email']) > 5) {
+	if (isset($_SESSION['email']) AND (strlen($_SESSION['email']) > 5)) {
 		echo '<li role="presentation"><a href="#export" aria-controls="export" role="tab" data-toggle="tab">e-mail</a></li>';
 	}
     ?>    
@@ -58,7 +58,7 @@
     <?php } ?>
     
     <?php
-	if (strlen($_SESSION['email']) > 5) { 		
+	if (isset($_SESSION['email']) AND (strlen($_SESSION['email']) > 5)) {		
 	?>    
    <div role="tabpanel" class="tab-pane" id="export">
     	enviar por e-mail <a href="<?php echo base_url('index.php/article/email/' . $ar_codigo); ?>"> para <?php echo $_SESSION['email']; ?>
