@@ -152,6 +152,7 @@ class tools extends CI_model
 				$nx = array();
 				$ns = array();
 				$nf = array();
+				$nz = array();
 				for ($r=0;$r < count($lns);$r++)
 					{
 						$mn = $lns[$r];
@@ -200,10 +201,11 @@ class tools extends CI_model
 				/*  matriz */
 				$sx = '*Vertices '.count($nf).cr();
 				foreach ($nf as $key => $val1) {
-					$sx .= ($key+1).' "'.$val1.'"'.cr();
+					$n1 = number_format($ns[$val1]/10,4);
+					$sx .= ($key+1).' "'.$val1.'" '.$n1.' '.$ns[$val1].' '.$ns[$val1].' '.cr();
 				}
-				$sx .= cr();
-				$sx .= '*Arcs :1 "SAMPLK1"'.cr();
+
+				$sx .= '*Edges'.cr();
 				
 				foreach ($nf as $key1 => $val1) {
 					foreach ($nf as $key2 => $val2 ) {
