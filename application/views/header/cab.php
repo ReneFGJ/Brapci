@@ -81,7 +81,27 @@ if (strlen($user) > 0) {
 							</li>
 						</ul>
 					</li>
-					<?php } ?>
+					<?php } ?>	
+					<?php if (strlen($user) > 0) { ?>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo msg('menu_tools');?><span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="<?php echo base_url('index.php/tool/change01');?>"><?php echo msg('change_xls');?></a>
+							</li>
+							<li>
+								<a href="<?php echo base_url('index.php/tool/change02');?>"><?php echo msg('gerar_list_nomes');?></a>
+							</li>
+							<li>
+								<a href="<?php echo base_url('index.php/tool/change03');?>"><?php echo msg('gerar_matriz');?></a>
+							</li>
+							<li>
+								<a href="<?php echo base_url('index.php/tool/change04');?>"><?php echo msg('gerar_pajek');?></a>
+							</li>							
+						</ul>
+					</li>
+					<?php } ?>						
+								
 				</ul>
 				<!---
 				<form class="navbar-form navbar-left" role="search">
