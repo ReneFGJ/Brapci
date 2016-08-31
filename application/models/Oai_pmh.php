@@ -61,8 +61,6 @@ class oai_pmh extends CI_model {
 		} else {
 			$data = date("Ymd");		
 			$sql = "update brapci_journal set jnl_last_harvesting = '$data', jnl_update = '$data' where id_jnl = $jid ";
-			echo $sql;
-			exit;
 			$rlt = $this -> db -> query($sql);
 			
 			/* Insere na agenda */
