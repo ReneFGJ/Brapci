@@ -1,5 +1,5 @@
 <div class="container">
-	<h3>Articles</h3>
+	<h3>Trabalhos publicados</h3>
 	<div>
 		<?php echo $artigos; ?>
 	</div>

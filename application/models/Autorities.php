@@ -3,6 +3,39 @@ class autorities extends CI_model {
 	var $tabela = 'brapci_autor';
 	var $tabela_key = 'brapci_keyword';
 	
+	/* PESSOAS */
+	
+	function search_person($n,$pg=1)
+		{
+			$n = troca($n,'"','');
+			$n = troca($n,' ',';');
+			$n = UpperCaseSql($n).';';
+			$ns = splitx(';',$n);
+			$wh = '';
+			$sx = '';
+			for ($r=0;$r < count($ns);$r++)
+				{
+					$nm = $ns[$r];
+					if (strlen($wh) > 0)
+						{
+							$wh .= ' AND ';
+						}
+					$wh .= " autor_nome like '%$nm%' ";
+				}
+			$sql = "select * from brapci_autor ";
+			$sql .= " left join ajax_nacionalidade on id_nasc = autor_nacionalidade ";
+			$sql .= " where ".$wh;
+			$sql .= " order by autor_nome ";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			for ($r=0;$r < count($rlt);$r++)
+				{
+					$line = $rlt[$r];
+					$sx .= $this->load->view('authority/person',$line,true);
+				}
+			return($sx);
+		}
+	
 	function le_c($author)
 		{
 		
@@ -10,6 +43,7 @@ class autorities extends CI_model {
 				where autor_codigo='$author'";
 		$rlt = $this -> db -> query($sql);
 		$rlt = $rlt -> result_array();
+
 		if (count($rlt) > 0)
 			{
 				$line = $rlt[0];

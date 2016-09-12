@@ -131,7 +131,7 @@ class author extends CI_Controller {
 			$tela = $this->articles->articles_author($codigo);
 			$data['artigos'] = $tela;
 			
-			$this -> load -> view("brapci/autor_article.php", $data);
+			$this -> load -> view("brapci/autor_article", $data);
 			
 		}
 	}

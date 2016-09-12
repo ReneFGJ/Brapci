@@ -93,4 +93,18 @@ $lang['login_social'] = 'Logue com uma conta existente (recomendado)';
 $lang['your_passoword'] = 'sua senha';
 
 $lang['form_year_cut'] = 'delimitação da busca:';
+
+/* Controle de autoridade */
+$lang['menu_authority_controle'] = 'Controle de Autoridade';
+$lang['menu_authority_person'] = 'Pessoas';
+$lang['Search for...'] = 'Busca por ...';
+$lang['authority_search'] = 'Busca por autoridades';
+
+/* Tools */
+$lang['menu_tools'] = 'Ferramentas';
+$lang['change_xls'] = 'Converter CSV para Matrix';
+$lang['gerar_list_nomes'] = 'Extrair nomes de uma Matrix';
+$lang['gerar_matriz'] = 'Gerar Matrix';
+$lang['gerar_pajek'] = 'Gerar arquivo para o Pajek (.pjk)';
+
 ?>

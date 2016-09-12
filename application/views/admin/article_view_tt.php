@@ -53,25 +53,22 @@ if (strlen($link_pdf)) {
 }
 
 /* Links externos */
-for ($r=0;$r < count($links);$r++)
-	{
-		$type = trim($links[$r]['bs_type']);
-		if ( $type == 'URL')
-			{
-				$link = '<a href="'.$links[$r]['bs_adress'].'" target="_blank">'.msg('view_source').'</a><br>';
-				echo $link;
-			}
+for ($r = 0; $r < count($links); $r++) {
+	$type = trim($links[$r]['bs_type']);
+	if ($type == 'URL') {
+		$link = '<a href="' . $links[$r]['bs_adress'] . '" target="_blank">' . msg('view_source') . '</a><br>';
+		echo $link;
 	}
-if (perfil("#BIB")==1)
-	{
-		echo '<div>';
-		echo '<br>';
-		echo 'Tools<br>';
-		echo '<a href="'.base_url("index.php/admin/article_change/".round($id_ar).'/'.checkpost_link(round($id_ar))).'" title="'.msg("change_language").'">';
-		echo '<span class="glyphicon glyphicon-refresh superbig" aria-hidden="true"></span>';
-		echo '</a>';
-		echo '</div>';
-	}
+}
+if (perfil("#BIB") == 1) {
+	echo '<div>';
+	echo '<br>';
+	echo 'Tools<br>';
+	echo '<a href="' . base_url("index.php/admin/article_change/" . round($id_ar) . '/' . checkpost_link(round($id_ar))) . '" title="' . msg("change_language") . '">';
+	echo '<span class="glyphicon glyphicon-refresh superbig" aria-hidden="true"></span>';
+	echo '</a>';
+	echo '</div>';
+}
 echo '</div>' . cr();
 echo '</div>' . cr();
 

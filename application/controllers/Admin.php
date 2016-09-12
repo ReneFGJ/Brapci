@@ -243,24 +243,24 @@ class admin extends CI_Controller {
 		switch(get("dd8")) {
 			case 'ARCHIVE' :
 				$this -> archives -> save_LINK($id, $data['ar_journal_id'], $dd[9]);
-				redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
+				redirect(base_url('index.php/v/a/' . $id . '/' . checkpost_link($id)));
 				break;
 			case 'ISSUE' :
 				$this -> articles -> save_ISSUE($id, $dd[11], $dd[12], $dd[13], $dd[14], $dd[15]);
-				redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
+				redirect(base_url('index.php/v/a/' . $id . '/' . checkpost_link($id)));
 				break;
 			case 'TITLE' :
 				$this -> articles -> save_TITLE($id, $dd[10], $dd[11], $dd[12], $dd[13]);
-				redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
+				redirect(base_url('index.php/v/a/' . $id . '/' . checkpost_link($id)));
 				break;
 			case 'AUTHOR' :
 				$this -> authors -> save_AUTHORS($id, $dd[10]);
-				redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
+				redirect(base_url('index.php/v/a/' . $id . '/' . checkpost_link($id)));
 				break;
 			case 'CITED' :
 				if (get("dd63") == '1') {
 					$data['tela'] = $this -> cited -> save_ref($id, get("dd62"));
-					redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
+					redirect(base_url('index.php/v/a/' . $id . '/' . checkpost_link($id)));
 				}
 				break;
 		}

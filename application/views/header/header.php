@@ -1,6 +1,8 @@
 <?php
 if (!(isset($title))) { $title = 'none';
 }
+if (!(isset($metadata))) { $metadata = '';
+}
 if (!(isset($bootstrap))) { $bootstrap = 1;
 }
 if (!isset($js)) { $js = array(); }
@@ -9,7 +11,8 @@ if (!isset($css)) { $css = array(); }
 <header>
 	<head lang="pt-br">
 	<meta charset="utf-8">
-	<title>Brapci: Base de Dados em Ciência da Informação</title>
+	<title><?php echo $title;?></title>
+	<?php echo $metadata;?>
 	<script src="<?php echo base_url('js/jquery.js'); ?>"></script>
 	<?php
 	if ($bootstrap == 1) { echo $this -> load -> view('header/header_bootstrap', null, true);

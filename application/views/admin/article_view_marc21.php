@@ -152,10 +152,10 @@ $authors = splitx(';', $authores_row);
 						<tt>1_</tt>
 					</td>
 					<td>
-						<tt>|a <?php echo $kw_word; ?> |9 <?php echo $kw_idioma;?> |6 <?php echo $link; ?></tt>
+						<tt>|a <?php echo $kw_word; ?> |9 <?php echo $kw_idioma; ?> |6 <?php echo $link; ?></tt>
 					</td>
 				</tr>
-				<? } ?>
+				<?php } ?>
 				
 				<!---- 700 --->
 				<?php for ($r=1;$r < count($authors);$r++) { ?>
@@ -170,7 +170,7 @@ $authors = splitx(';', $authores_row);
 						<tt><?php echo '|a ' . $authors[$r]; ?></tt>
 					</td>
 				</tr>
-				<? } ?>
+				<?php } ?>
 				
 				<!---- 773 --->
 				<tr valign="top">
@@ -224,7 +224,7 @@ $authors = splitx(';', $authores_row);
 						?></tt>
 					</td>
 				</tr>
-				<? } ?>							
+				<?php } ?>							
 			</table>
 		</div>
 	</div>

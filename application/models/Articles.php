@@ -277,7 +277,19 @@ class articles extends CI_model {
 		$query = $this -> db -> query($sql);
 		$query = $query -> result_array();
 		$line = $query[0];
-
+		
+		/* Title */
+		$line['ar_titulo_1'] = troca($line['ar_titulo_1'],chr(13),'');
+		$line['ar_titulo_1'] = troca($line['ar_titulo_1'],chr(10),'');
+		$line['ar_titulo_2'] = troca($line['ar_titulo_2'],chr(13),'');
+		$line['ar_titulo_2'] = troca($line['ar_titulo_2'],chr(10),'');
+		
+		/* RESUMO */
+		$line['ar_resumo_1'] = troca($line['ar_resumo_1'],chr(13),'');
+		$line['ar_resumo_1'] = troca($line['ar_resumo_1'],chr(10),'');
+		$line['ar_resumo_2'] = troca($line['ar_resumo_2'],chr(13),'');
+		$line['ar_resumo_2'] = troca($line['ar_resumo_2'],chr(10),'');
+		
 		/* Kwywords */
 		$line['ar_keyw_1'] = $this -> keywords -> retrieve_keywords($id, $line['ar_idioma_1']);
 		$line['ar_keyw_2'] = $this -> keywords -> retrieve_keywords($id, $line['ar_idioma_2']);
@@ -286,7 +298,7 @@ class articles extends CI_model {
 		$line = $this -> authors($id, $line);
 
 		$line['cited'] = $this -> cited($id);
-		$line['link_pdf'] = $this -> arquivos($id);
+		$line['link_pdf'] = $this -> arquivos_id($id);
 		$line['links'] = $this -> arquivos_files($id);
 
 		/* reference */
@@ -306,6 +318,17 @@ class articles extends CI_model {
 		if (strlen(trim($line['ar_doi'])) == 0) { $line['ar_doi'] = '<font color="red">empty</font>';
 		}
 		return ($line);
+	}
+
+	function arquivos_id($id) {
+		$sql = "select * from brapci_article_suporte where bs_article = '$id' and bs_adress like '_repo%' order by bs_type ";
+		$rlt = db_query($sql);
+		$line = db_read($rlt);
+		$link = round($line['id_bs']);
+		if ($link > 0) { $fl = base_url('index.php/article/download/'.$link);
+		} else {$fl = '';
+		}
+		return ($fl);
 	}
 
 	function arquivos($id) {
@@ -540,7 +563,7 @@ class articles extends CI_model {
 		$r = 0;
 		foreach ($query as $row) {
 			$r++;
-			$link = '<A HREF="' . base_url('index.php/admin/article_view/' . $row -> id_ar . '/' . checkpost_link($row -> id_ar)) . '" target="_new' . $row -> id_ar . '">';
+			$link = '<A HREF="' . base_url('index.php/v/a/' . $row -> id_ar . '/' . checkpost_link($row -> id_ar)) . '" target="_new' . $row -> id_ar . '">';
 			//$title = trim($row['ar_titulo_1']);
 			$title = $row -> ar_titulo_1;
 			$journal = $row -> jnl_nome;
@@ -555,7 +578,7 @@ class articles extends CI_model {
 			$sx .= $link;
 			$sx .= trim($title) . '. ';
 			$sx .= trim($journal);
-			if (strlen($vol)) { $sx .= 'v. ' . $vol;
+			if (strlen($vol)) { $sx .= ', v. ' . $vol;
 			}
 			if (strlen($nr)) { $sx .= ', nr. ' . $nr;
 			}

@@ -1,5 +1,18 @@
 <?php
-$this -> load -> view("header/header");
+if (!isset($title_page))
+	{
+		$data['title'] = ':: Brapci ::';;
+	} else {
+		$data['title'] = $title_page . ' :: Brapci ::';		
+	}
+
+if (isset($metadata))
+	{
+		$data['metadata'] = $metadata;
+	} else {
+		$data['metadata'] = '';
+	}
+$this -> load -> view("header/header",$data);
 $this -> load -> view('header/analytics.google.php');
 $this -> load -> view('header/cab_ajax_loading');
 
@@ -100,7 +113,17 @@ if (strlen($user) > 0) {
 							</li>							
 						</ul>
 					</li>
-					<?php } ?>						
+					<?php } ?>	
+					
+					<!-- Controle de Autoridade --->
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo msg('menu_authority_controle');?><span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="<?php echo base_url('index.php/authority/person');?>"><?php echo msg('menu_authority_person');?></a>
+							</li>
+						</ul>
+					</li>
 								
 				</ul>
 				<!---

@@ -34,10 +34,12 @@ class article extends CI_Controller {
 		date_default_timezone_set('America/Sao_Paulo');
 	}
 
-	function cab() {
+	function cab($data=array()) {
 		$this -> load -> model('users');
-		$data = array();
-		$data['title_page'] = 'Artigo';
+		if (isset($data['title']))
+			{
+				$data['title_page'] = $data['title'];
+			}
 		$this -> load -> view("header/cab", $data);
 		$data['title'] = '';
 	}
@@ -49,18 +51,9 @@ class article extends CI_Controller {
 
 	function view($id, $check, $status = '') {
 		global $dd, $acao;
-		form_sisdoc_getpost();
-
-		/* Alterar Status */
-		if (strlen($status) > 0) {
-			$sql = "update brapci_article set ar_status = '$status' where id_ar = " . $id;
-			$this -> db -> query($sql);
-		}
-
-		$data['title'] = 'Brapci : Admin';
-		$data['title_page'] = 'ADMIN';
-		$this -> cab();
-
+		$this -> load -> model('Search');
+		$this -> Search -> registra_visualizacao($id);
+		
 		/* Article */
 		$this -> load -> model('articles');
 		$this -> load -> model('keywords');
@@ -68,9 +61,20 @@ class article extends CI_Controller {
 		$this -> load -> model('archives');
 		$this -> load -> model('cited');
 		$this -> load -> model('tools/tools');
-		$this -> load -> model('metodologias');
+		$this -> load -> model('metodologias');		
 
 		$data = $this -> articles -> le($id);
+
+		/* Alterar Status */
+		if (strlen($status) > 0) {
+			$sql = "update brapci_article set ar_status = '$status' where id_ar = " . $id;
+			$this -> db -> query($sql);
+		}
+
+		$data['title'] = $data['ar_titulo_1'];
+		$data['title_page'] = 'ADMIN';
+		$data['metadata'] = $this->load->view('article/article_metadata',$data,true);
+		$this -> cab($data);		
 
 		$data['archives'] = $this -> archives -> show_files($id);
 		$data['citeds'] = $this -> cited -> show_cited($id);
@@ -115,7 +119,8 @@ class article extends CI_Controller {
 						if (file_exists($lk)) {
 							$url = base_url('index.php/article/download_view/' . $id);
 							$data['tab_pdf'] = '<iframe src="' . $url . '" class="iframe_pdf"></iframe>';
-							$data['link_pdf'] = $url = base_url('index.php/article/download/' . $id);
+
+							$data['link_pdf'] = base_url('index.php/article/download/' . $id);
 						} else {
 							$data['tab_pdf'] = '<div class="alert alert-danger" role="alert">File not found!</div>';
 						}
@@ -128,14 +133,15 @@ class article extends CI_Controller {
 		$data['linkss'] = $ll;
 
 		$data['tab_marc21'] = $this -> load -> view('admin/article_view_marc21', $data, true);
+		//$data['tab_marc21'] = '';
 		$data['tab_editar'] = $this -> articles -> editar($id);
 		$data['tab_refer'] = $this -> load -> view('admin/article_view_refer', $data, true);
 
 		$this -> load -> view('article/article_view', $data);
 
 		$data['content'] = '</table><br><br>';
-
 		$this -> load -> view('content', $data);
+		
 		$this -> load -> view('header/foot_admin', $data);
 
 	}
@@ -164,29 +170,42 @@ class article extends CI_Controller {
 		$this -> load -> view("brapci/article", $data);
 		$this -> load -> view("header/foot", $data);
 	}
-	
-	function download_view($id='')
-		{
-			$this->load->model('articles');
-			$this->articles->view_pdf($id);
+
+	function download_view($id = '') {
+		$this -> load -> model('search');
+		$this -> load -> model('articles');
+		$this -> search -> registra_download($id, '102');
+		$this -> articles -> view_pdf($id);
+	}
+
+	function download($id = '') {
+		$this -> load -> model('articles');
+		$this -> load -> model('search');
+		$this -> search -> registra_download($id, '101');
+		$this -> articles -> download_pdf($id);
+	}
+
+	function email($id) {
+		$id = round($id);
+		$this -> load -> model('search');
+		$this -> load -> model('articles');
+		$data = $this -> articles -> le($id);
+		$this -> search -> registra_download($id, '103');
+		$content = $this -> load -> view('article/article_email', $data, true);
+		$content = utf8_decode($content);
+		$subject = utf8_decode($data['ar_titulo_1']);
+		$email = $_SESSION['email'];
+		if (strlen($email) > 0) {
+			try {
+				//enviaremail('renefgj@gmail.com', '[Brapci] - ' . $subject, $content, 1);
+				enviaremail($email, '[Brapci] - ' . $subject, $content, 1);
+				$this -> load -> view('success', null);
+			} catch (Exception $e) {
+				echo 'Exceção capturada: ', $e -> getMessage(), "\n";
+			}
+
 		}
-		
-	function download($id='')
-		{
-			$this->load->model('articles');
-			$this->articles->download_pdf($id);
-		}	
-	function email($id)
-		{
-			$id = round($id);
-			$this->load->model('articles');
-			$data = $this->articles->le($id);
-			$content = $this->load->view('article/article_email',$data,true);
-			$content = utf8_decode($content);
-			$subject = utf8_decode($data['ar_titulo_1']);
-			enviaremail('renefgj@gmail.com','[Brapci] - '.$subject,$content,1);
-			$this->load->view('success',null);						
-		}	
+	}
 
 }
 ?>

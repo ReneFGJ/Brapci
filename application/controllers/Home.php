@@ -110,6 +110,10 @@ class home extends CI_Controller {
 		$tipo = get('dd3');
 		$data['dd4'] = $dd4;
 		if ((strlen($acao) > 0) and (strlen($dd4) > 0)) {
+			/* REGISTRA BUSCA */
+			$session = $_SESSION['bp_session'];
+			$this -> Search -> registra_consulta($tipo, $ano_ini, $ano_fim, $dd4);
+
 			switch ($tipo) {
 				case '0' :
 					$telax = $this -> Search -> busca_form($data);
@@ -117,11 +121,11 @@ class home extends CI_Controller {
 					break;
 				case '1' :
 					$telax = $this -> Search -> busca_form_autor($data);
-					$data = array('tela' => $telax['tela1'], 'tela2' => $telax['tela2']);	
+					$data = array('tela' => $telax['tela1'], 'tela2' => $telax['tela2']);
 					break;
 				case '3' :
 					$telax = $this -> Search -> busca_form_keyword($data);
-					$data = array('tela' => $telax['tela1'], 'tela2' => $telax['tela2']);					
+					$data = array('tela' => $telax['tela1'], 'tela2' => $telax['tela2']);
 					break;
 				default :
 					$tela = '';
@@ -138,6 +142,15 @@ class home extends CI_Controller {
 		/* Mostra rodape */
 		$this -> load -> view("header/foot");
 	}
+
+	function download($id=0)
+		{
+			$this->load->model('articles');
+			$this->load->model('search');
+			$this->Search->registra_download($id);
+			$id = round($id);
+			$this->articles->view_pdf($id);
+		}
 
 	/* Tutorial */
 	function tutorial($id = 0) {

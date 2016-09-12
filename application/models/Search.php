@@ -1359,23 +1359,58 @@ class search extends CI_model {
 		return ($sx);
 	}
 
-	function registra_consulta($txt) {
-		global $db_public, $user;
-		$data = date("Ymd");
-		$hora = date("H:i:s");
-		$usr = $user -> codigo;
-		$session = $SESSION['ssid'];
-		$sql = "insert into " . $db_public . "query 
+	function registra_consulta($tipo, $qanoi, $qanof, $txt) {
+		global $db_public;
+		$session = $_SESSION['bp_session'];
+		$ip = ip();
+		$sql = "insert into " . $db_public . "queries 
 			(
-			q_session, q_query, q_data,
-			q_hora, q_user
+				q_session, q_termo, 
+				q_tipo, q_anoi, q_anof, q_ip
 			) values (
-			'$session','$txt',$data,
-			'$hora','$usr'
+				'$session','$txt',
+				'$tipo','$qanoi','$qanof','$ip'
 			)";
-		$rlt = db_query($sql);
+		$rlt = $this->db->query($sql);
 	}
 
+	function registra_visualizacao($id) {
+		global $db_public;
+		$session = $_SESSION['bp_session'];
+		$ip = ip();
+		$qanoi=0;
+		$qanof=0;
+		$tipo = 100;
+		$txt = '';
+		$sql = "insert into " . $db_public . "queries 
+			(
+				q_session, q_termo, q_view,
+				q_tipo, q_anoi, q_anof, q_ip
+			) values (
+				'$session','$txt','$id',
+				'$tipo','$qanoi','$qanof','$ip'
+			)";
+		$rlt = $this->db->query($sql);
+	}
+	function registra_download($id,$tipo='101') {
+		global $db_public;
+		$session = $_SESSION['bp_session'];
+		$ip = ip();
+		$qanoi=0;
+		$qanof=0;
+		$txt = '';
+		$sql = "insert into " . $db_public . "queries 
+			(
+				q_session, q_termo, q_view,
+				q_tipo, q_anoi, q_anof, q_ip
+			) values (
+				'$session','$txt','$id',
+				'$tipo','$qanoi','$qanof','$ip'
+			)";
+		$rlt = $this->db->query($sql);
+	}
+		
+	
 	function busca_form($data = array()) {
 		global $dd, $SESSION;
 
