@@ -31,6 +31,16 @@ class v extends CI_controller {
 		global $dd;
 		$this -> load -> view("brapci/article");
 	}
+	
+	function t($id = '')
+		{
+			$this -> load -> model('keywords');
+			$this->cab();
+			
+			$data = $this->keywords->le($id);
+			$this->load->view('keyword/view',$data);
+			
+		}
 
 	function a($id = '') {
 		global $dd, $acao;

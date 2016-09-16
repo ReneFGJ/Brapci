@@ -92,6 +92,9 @@ if (strlen($user) > 0) {
 							<li>
 								<a href="<?php echo base_url('index.php/admin');?>"><?php echo msg('admin_home');?></a>
 							</li>
+							<li>
+								<a href="<?php echo base_url('index.php/admin/resumo_status/0');?>"><?php echo msg('ADMIN_TASK');?></a>
+							</li>
 						</ul>
 					</li>
 					<?php } ?>	

@@ -107,4 +107,10 @@ $lang['gerar_list_nomes'] = 'Extrair nomes de uma Matrix';
 $lang['gerar_matriz'] = 'Gerar Matrix';
 $lang['gerar_pajek'] = 'Gerar arquivo para o Pajek (.pjk)';
 
+$lang['idioma_01'] = 'Idioma preferencial';
+$lang['idioma_02'] = 'Idioma alternativo #1';
+$lang['idioma_03'] = 'Idioma alternativo #2';
+
+$lang['change_language'] = 'Altera posição dos titulos PRINCIPAL e SECUNDÁRIO';
+
 ?>

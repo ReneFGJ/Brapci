@@ -46,8 +46,9 @@ class admin extends CI_Controller {
 	function cab() {
 		$this -> load -> model('users');
 		$data = array();
-		$data['title_page'] = 'ADMIN';
-		$this -> load -> view("header/cab_admin", $data);
+		$data['title_page'] = 'Brapci :: ADMIN';
+		$data['title'] = 'Brapci :: ADMIN';
+		$this -> load -> view("header/cab", $data);
 		$data['title'] = '';
 		$this -> users -> security();
 	}
@@ -86,10 +87,14 @@ class admin extends CI_Controller {
 		$this -> load -> model('oai_pmh');
 
 		$this -> cab();
+		
+		/* RESUMO GERAL */
 		$tela = $this -> articles -> resumo();
+		$data['title'] = '';
 		$data['content'] = $tela;
 		$this -> load -> view('content', $data);
-
+		
+		/* RESUMO OAI */
 		$tela = $this -> oai_pmh -> oai_resumo();
 		$data['content'] = $tela;
 
@@ -219,6 +224,11 @@ class admin extends CI_Controller {
 		$this -> load -> model('metodologias');
 
 		$data = $this -> articles -> le($id);
+		if (strlen($data['ar_key1']) == 0)
+			{
+				$this->articles->inserir_keywords($id);
+				$data = $this -> articles -> le($id);		
+			}		
 
 		$data['archives'] = $this -> archives -> show_files($id);
 		$data['citeds'] = $this -> cited -> show_cited($id);
@@ -270,9 +280,15 @@ class admin extends CI_Controller {
 
 		/* article - parte I */
 		$data['tab_descript'] = $this -> load -> view('admin/article_view_tt', $data, true);
+		$data['tab_descript'] .= $this -> articles->acao($data['ar_codigo'],$data['ar_status']);
+
+		
+		
 		$data['tab_marc21'] = $this -> load -> view('admin/article_view_marc21', $data, true);
 		$data['tab_editar'] = $this -> articles -> editar($id);
 		$data['tab_refer'] = $this -> load -> view('admin/article_view_refer', $data, true);
+		$data['tab_support'] = $this -> articles-> supports($id);
+		$data['tab_support'] .= $this -> articles-> supports_novo($id);
 
 		if ($this -> articles -> saved > 0) {
 			redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
@@ -284,11 +300,68 @@ class admin extends CI_Controller {
 		//print_r($data);
 		//exit;
 
-		$data['content'] = '</table><br><br>';
-		$this -> load -> view('content', $data);
+		//$this -> load -> view('content', $data);
 		$this -> load -> view('header/foot_admin', $data);
 
 	}
+
+	function support_cancelar($id=0,$conf='')
+		{
+		$this -> load -> model("articles");			
+		$data['nocab'] = true;
+		$this -> load -> view('header/header', $data);
+		
+		$data = $this->articles->le_support($id);
+		$data['content'] = $data['bs_adress'];
+		$data['excluir'] = true;
+		$data['id'] = $data['id_bs'];
+		$data['link'] = 'index.php/admin/support_cancelar/'.$id;
+		$data['title'] = '';
+		$data['content'] = $this->load->view('admin/confirm',$data,true);
+		
+		switch($conf)
+			{
+				case '1':
+					$this->articles->support_alterar_status($id,'X');
+					echo '<script> wclose(); </script>';
+					break;
+			}
+		
+
+		$this->load->view('content',$data);			
+		}
+
+	function support_editar($id=0,$art='')
+		{
+		$this -> load -> model("articles");			
+		$data['nocab'] = true;
+		$this -> load -> view('header/header', $data);
+		
+		$cp = array();
+		array_push($cp,array('$H8','id_bs','',false,true));
+		array_push($cp,array('$HV','bs_article',$art,true,true));
+		$op = 'URL:Link de Internet&DOI:DOI&PDF:PDF&HTM:HTM&MP3:MP3&OAI:OAI&DOC:DOC';
+		array_push($cp,array('$O '.$op,'bs_type','Tipo',true,true));
+		array_push($cp,array('$S80','bs_adress','Link',true,true));
+		$op = 'A:Ativo&X:Cancelado&@:Coletar&Z:Excluir';
+		array_push($cp,array('$O '.$op,'bs_status','Situação',true,true));
+		array_push($cp,array('$HV','bs_update',date("Ymd"),true,true));
+		
+		$form = new form;
+		$form->id=$id;
+		$data['title'] = '';
+		$data['content'] = $form->editar($cp,'brapci_article_suporte');
+		if ($form->saved > 0)
+			{
+				$this->articles->excluir_suportes();
+				echo '
+					<script> 
+						close(); 
+					</script>';
+			}
+
+		$this->load->view('content',$data);			
+		}
 
 	function refer($ar = '') {
 		$this -> load -> model("cited");
@@ -730,7 +803,8 @@ class admin extends CI_Controller {
 		$menu = array();
 		array_push($menu, array(msg('Autoindex'), msg('find DOI in Abstract'), 'ITE', '/admin/doi_find_abstract'));
 		array_push($menu, array(msg('Autoindex'), msg('find DOI in Files'), 'ITE', '/admin/doi_find_files'));
-		array_push($menu, array(msg('Autoindex'), msg('set_protugues_primary'), 'ITE', '/admin/linguage_portuguese_first'));
+		array_push($menu, array(msg('Autoindex'), msg('set_portugues_primary'), 'ITE', '/admin/linguage_portuguese_first'));
+		array_push($menu, array(msg('Autoindex'), msg('set_second_linguage'), 'ITE', '/admin/linguage_second'));
 		array_push($menu, array(msg('Articles'), msg('Check duplicate'), 'ITE', '/admin/article_double'));
 		array_push($menu, array(msg('Public Module'), msg('Export to public module'), 'ITE', '/admin/export'));
 		array_push($menu, array(msg('Public Module'), msg('Export Author to public module'), 'ITE', '/admin/export_author'));
@@ -759,6 +833,32 @@ class admin extends CI_Controller {
 		$data['content'] = $tela;
 		$this -> load -> view('content', $data);
 	}
+	function linguage_second() {
+		$this -> cab();
+		$this -> load -> model('articles');
+
+		$tela = $this -> articles -> autoindex_linguage_second();
+		$data['content'] = $tela;
+		$this -> load -> view('content', $data);
+	}
+	function resumo_status($id)
+		{
+			$this->load->model('articles');
+			
+			$this->cab();
+			$sx = $this->articles->task_next('A');
+			$data['content'] = $sx;
+			$data['title'] = '';
+			$this->load->view('content',$data);
+			
+		}
+	function article_alterar_status($ar,$sta)
+		{
+			$this->load->model('articles');
+			$this->articles->mudar_status($ar,$sta);
+			$link = base_url('index.php/admin/resumo_status/0');
+			redirect($link);
+		}
 
 }
 ?>

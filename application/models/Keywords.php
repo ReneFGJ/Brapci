@@ -31,6 +31,21 @@ class keywords extends CI_model {
 		array_push($cp, array('$O 0:NÃO&1:SIM', 'kw_hidden', msg('oculto'), False, True));
 		return ($cp);
 	}
+	
+	function le($id)
+		{
+			$id = strzero($id,10);
+			$sql = "select * from brapci_keyword where kw_codigo = '$id' ";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			if (count($rlt) > 0)
+				{
+					$line = $rlt[0];
+					return($line);
+				} else {
+					return(array());
+				}
+		}
 
 	function check_keywords_language() {
 		$sql = "select count(*) as total, kw_idioma from brapci_keyword where 

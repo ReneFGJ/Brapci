@@ -142,7 +142,7 @@ $authors = splitx(';', $authores_row);
 					$kw_keyword = $line['kw_keyword'];
 					$kw_idioma = $line['kw_idioma'];
 					
-					$link = '<a href="'.base_url('index.php/').'">'.base_url('index.php/t/'.$kw_keyword).'</a>';
+					$link = '[ <a href="'.base_url('index.php/v/t/'.$kw_keyword).'">link</a> ]';
 					?>
 				<tr valign="top">
 					<td align="center">

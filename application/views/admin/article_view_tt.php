@@ -1,3 +1,4 @@
+
 <div class="row">
 	<div class="col-md-12 text-center">
 		<h2><?php echo $ar_titulo_1; ?></h2>
@@ -22,7 +23,7 @@ if (strlen($ar_resumo_1) > 0) {
 	$title_abstract_1 = show_abastract_name($ar_idioma_1);
 	$title_key_1 = show_key_name($ar_idioma_1);
 	echo $title_abstract_1 . $ar_resumo_1 . cr();
-	echo '<br>' . $title_key_1 . $ar_key1 . cr();
+	echo '<br>' . $title_key_1 . $ar_keyw_1 . cr();
 	echo '<br>';
 }
 
@@ -31,7 +32,7 @@ if (strlen($ar_resumo_2) > 0) {
 	$title_key_2 = show_key_name($ar_idioma_2);
 	echo '<br>';
 	echo $title_abstract_2 . $ar_resumo_2 . cr();
-	echo '<br>' . $title_key_2 . $ar_key2 . cr();
+	echo '<br>' . $title_key_2 . $ar_keyw_2 . cr();
 	echo '<br>';
 }
 
@@ -40,7 +41,7 @@ if (strlen($ar_resumo_3) > 0) {
 	$title_key_3 = show_key_name($ar_idioma_3);
 	echo '<br>';
 	echo $title_abstract_3 . $ar_resumo_3 . cr();
-	echo '<br>' . $title_key_3 . $ar_key3 . cr();
+	echo '<br>' . $title_key_3 . $ar_keyw_3 . cr();
 	echo '<br>';
 }
 echo '</div>' . cr();

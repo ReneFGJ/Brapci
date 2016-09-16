@@ -19,9 +19,153 @@ class articles extends CI_model {
 
 	var $table = 'brapci_article';
 	var $saved = 0;
+	
+	function excluir_suportes()
+		{
+			$sql = "delete from brapci_article_suporte where bs_status = 'Z' ";
+			$rlt = $this->db->query($sql);
+		}
+
+	function mudar_status($ar, $st) {
+		$this -> inserir_historico($ar, 'alt_status_' . $st);
+		$sql = "update " . $this -> table . " set ar_status = '$st' where ar_codigo = '$ar' ";
+		$this -> db -> query($sql);
+		return (1);
+	}
+
+	function inserir_historico($ar, $acao) {
+		$user = $_SESSION['id'];
+		$sql = "insert into brapci_historico 
+					( h_artigo, h_user, h_acao)
+					values
+					('$ar','$user','$acao')	";
+		$this -> db -> query($sql);
+		return (1);
+	}
+
+	function inserir_keywords($id) {
+		$data = $this -> le($id);
+		$k1 = $data['ar_keyw_1'];
+		$k2 = $data['ar_keyw_2'];
+		$k3 = $data['ar_keyw_3'];
+		$sql = "update " . $this -> table . " set ar_key1='$k1', ar_key2='$k2', ar_key3='$k3' where id_ar = $id";
+		$this -> db -> query($sql);
+	}
+
+	function acao($id, $ar) {
+		$sx = '<br><br>ações para o registro:<br>';
+		switch($ar) {
+			case 'A' :
+				$sx .= '<a href="' . base_url('index.php/admin/article_alterar_status/' . $id . '/B') . '" class="btn btn-primary">Renviar para Revisão(I)</a>';
+				$sx .= ' | ';
+				$sx .= '<a href="' . base_url('index.php/admin/article_alterar_status/' . $id . '/X') . '" class="btn btn-danger">Cancelar trabalho</a>';
+				break;
+			case 'X' :
+				$sx .= '<a href="' . base_url('index.php/admin/article_alterar_status/' . $id . '/A') . '" class="btn btn-primary">Renviar para Edição</a>';
+		}
+		return ($sx);
+	}
+
+	function le_support($id) {
+		$id_art = strzero($id, 10);
+		$sql = "select * from brapci_article_suporte where bs_article = '$id_art'";
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		if (count($rlt) > 0) {
+			return ($rlt[0]);
+		} else {
+			return ( array());
+		}
+	}
+
+	function support_alterar_status($id, $status) {
+		$id_art = strzero($id, 10);
+		$sql = "update brapci_article_suporte set bs_status = '$status' where bs_article = '$id_art'";
+		$rlt = $this -> db -> query($sql);
+		return (1);
+	}
+
+	function supports_novo($id) {
+		$id = strzero($id, 10);
+		$link = ' onclick="newxy(\'' . base_url('index.php/admin/support_editar/0/' . $id) . '\',600,300);" ';
+		$sx = '<br><br><span class="btn btn-primary" ' . $link . '>Inserir Suporte</span>';
+		return ($sx);
+	}
+
+	function supports($id) {
+		$id_art = strzero($id, 10);
+		$sql = "select * from brapci_article_suporte where bs_article = '$id_art'";
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+
+		$sx = '<table class="table">';
+		$sx .= '<tr>
+						<th>tipo</th>
+						<th>endereço</th>
+						<th>sit.</th>
+						<th>atual.</th>
+						<th width="180">ação</th>
+					</tr>' . cr();
+		for ($r = 0; $r < count($rlt); $r++) {
+			$line = $rlt[$r];
+			$sx .= '<tr>';
+			$sx .= '<td>';
+			$sx .= $line['bs_type'];
+			$sx .= '</td>';
+
+			$sx .= '<td>';
+			$sx .= $line['bs_adress'];
+			$sx .= '</td>';
+
+			$sx .= '<td>';
+			$sx .= $line['bs_status'];
+			$sx .= '</td>';
+
+			$sx .= '<td>';
+			$sx .= stodbr($line['bs_update']);
+			$sx .= '</td>';
+			$sx .= '<td align="right">';
+
+			$link = 'onclick="newxy(\'' . base_url('index.php/admin/support_editar/' . $line['id_bs'] . '/' . $line['bs_article']) . '\',600,400);"';
+			$sx .= '<span ' . $link . ' class="btn btn-primary">editar</span>';
+			
+			$sx .= '</td>';
+
+			$sx .= '</tr>' . cr();
+		}
+		$sx .= '</table>';
+		return ($sx);
+	}
+
+	function task_next($id) {
+		$sql = "select * from brapci_article 
+						where ar_status = '$id'
+						order by id_ar
+						limit 50
+					";
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		$sx = '<table class="table">';
+		$sx .= '<tr>
+						<th>título</th>
+						<th>tipo</th>
+						<th>atualização</th>
+					</tr>';
+		for ($r = 0; $r < count($rlt); $r++) {
+			$line = $rlt[$r];
+			$link = '<a href="' . base_url('index.php/admin/article_view/' . $line['id_ar'] . '/' . checkpost_link($line['id_ar'])) . '">';
+			$sx .= '<tr>';
+			$sx .= '<td>' . $link . $line['ar_titulo_1'] . '</a></td>';
+			$sx .= '<td>' . $link . $line['ar_section'] . '</a></td>';
+			$sx .= '<td>' . $link . stodbr($line['ar_data_envio']) . '</a></td>';
+			$sx .= '</tr>';
+		}
+		$sx .= '</table>';
+		return ($sx);
+	}
 
 	function resumo() {
-		$sql = "SELECT count(*) as total, ar_status FROM `brapci_article` group by ar_status";
+		$sql = "SELECT count(*) as total, ar_status FROM brapci_article group by ar_status";
 		$rlt = $this -> db -> query($sql);
 		$rlt = $rlt -> result_array();
 		$sx = '';
@@ -54,9 +198,10 @@ class articles extends CI_model {
 					break;
 			}
 		}
+		$link1 = '<a href="' . base_url('index.php/admin/resumo_status/0/') . '">';
 		$sx .= '<table width="400">
 					<tr><th>situação</th><th>quant.</th></tr>
-					<tr><td>Em indexação</td><td align="right">' . number_format($rs[0], 0, ',', '.') . '</td></tr>
+					<tr><td>' . $link1 . 'Em indexação</a></td><td align="right">' . number_format($rs[0], 0, ',', '.') . '</td></tr>
 					<tr><td>Em 1º Revisão</td><td align="right">' . number_format($rs[1], 0, ',', '.') . '</td></tr>
 					<tr><td>Em 2º Revisão</td><td align="right">' . number_format($rs[2], 0, ',', '.') . '</td></tr>
 					<tr><td>Indexados</td><td align="right">' . number_format($rs[3], 0, ',', '.') . '</td></tr>
@@ -277,19 +422,19 @@ class articles extends CI_model {
 		$query = $this -> db -> query($sql);
 		$query = $query -> result_array();
 		$line = $query[0];
-		
+
 		/* Title */
-		$line['ar_titulo_1'] = troca($line['ar_titulo_1'],chr(13),'');
-		$line['ar_titulo_1'] = troca($line['ar_titulo_1'],chr(10),'');
-		$line['ar_titulo_2'] = troca($line['ar_titulo_2'],chr(13),'');
-		$line['ar_titulo_2'] = troca($line['ar_titulo_2'],chr(10),'');
-		
+		$line['ar_titulo_1'] = troca($line['ar_titulo_1'], chr(13), '');
+		$line['ar_titulo_1'] = troca($line['ar_titulo_1'], chr(10), '');
+		$line['ar_titulo_2'] = troca($line['ar_titulo_2'], chr(13), '');
+		$line['ar_titulo_2'] = troca($line['ar_titulo_2'], chr(10), '');
+
 		/* RESUMO */
-		$line['ar_resumo_1'] = troca($line['ar_resumo_1'],chr(13),'');
-		$line['ar_resumo_1'] = troca($line['ar_resumo_1'],chr(10),'');
-		$line['ar_resumo_2'] = troca($line['ar_resumo_2'],chr(13),'');
-		$line['ar_resumo_2'] = troca($line['ar_resumo_2'],chr(10),'');
-		
+		$line['ar_resumo_1'] = troca($line['ar_resumo_1'], chr(13), '');
+		$line['ar_resumo_1'] = troca($line['ar_resumo_1'], chr(10), '');
+		$line['ar_resumo_2'] = troca($line['ar_resumo_2'], chr(13), '');
+		$line['ar_resumo_2'] = troca($line['ar_resumo_2'], chr(10), '');
+
 		/* Kwywords */
 		$line['ar_keyw_1'] = $this -> keywords -> retrieve_keywords($id, $line['ar_idioma_1']);
 		$line['ar_keyw_2'] = $this -> keywords -> retrieve_keywords($id, $line['ar_idioma_2']);
@@ -325,7 +470,7 @@ class articles extends CI_model {
 		$rlt = db_query($sql);
 		$line = db_read($rlt);
 		$link = round($line['id_bs']);
-		if ($link > 0) { $fl = base_url('index.php/article/download/'.$link);
+		if ($link > 0) { $fl = base_url('index.php/article/download/' . $link);
 		} else {$fl = '';
 		}
 		return ($fl);
@@ -616,6 +761,26 @@ class articles extends CI_model {
 		return ($sx);
 	}
 
+	function autoindex_linguage_second() {
+		$sx = '';
+		$sql = "select count(*) as total from " . $this -> table . " where (ar_idioma_2 = '' or ar_idioma_2 is null) and (ar_idioma_1 <> 'en') limit 1";
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		$sx .= '<h4>Total ' . $rlt[0]['total'] . '</h4>';
+
+		$sql = "update " . $this -> table . " set ar_idioma_2 = 'en' where (ar_idioma_2 = '' or ar_idioma_2 is null) and (ar_idioma_1 <> 'en') ";
+		$rlt = $this -> db -> query($sql);
+
+		$sql = "update " . $this -> table . " set ar_idioma_3 = 'en' where ar_idioma_3 = 'us' ";
+		$rlt = $this -> db -> query($sql);
+		$sql = "update " . $this -> table . " set ar_idioma_2 = 'en' where ar_idioma_2 = 'us' ";
+		$rlt = $this -> db -> query($sql);
+		$sql = "update " . $this -> table . " set ar_idioma_1 = 'en' where ar_idioma_1 = 'us' ";
+		$rlt = $this -> db -> query($sql);
+
+		return ($sx);
+	}
+
 	function view_pdf($id) {
 		$sql = "select * from brapci_article_suporte where id_bs = " . round($id);
 		$rlt = $this -> db -> query($sql);
@@ -624,12 +789,13 @@ class articles extends CI_model {
 			$line = $rlt[0];
 			$file = trim($line['bs_adress']);
 			if (file_exists($file)) {
-				$this->pdf_register($id,1);
+				$this -> pdf_register($id, 1);
 				header('Content-type: application/pdf');
 				readfile($file);
 			}
 		}
 	}
+
 	function download_pdf($id) {
 		$sql = "select * from brapci_article_suporte where id_bs = " . round($id);
 		$rlt = $this -> db -> query($sql);
@@ -638,24 +804,23 @@ class articles extends CI_model {
 			$line = $rlt[0];
 			$file = trim($line['bs_adress']);
 			if (file_exists($file)) {
-				$this->pdf_register($id,2);
+				$this -> pdf_register($id, 2);
 				header('Content-type: application/pdf');
 				readfile($file);
 			}
 		}
 	}
-	
-	function pdf_register($id,$type)
-		{
-			$session = $_SESSION['bp_session'];
-			$ip = ip();
-			$sql = "insert into pdf_download 
+
+	function pdf_register($id, $type) {
+		$session = $_SESSION['bp_session'];
+		$ip = ip();
+		$sql = "insert into pdf_download 
 						(
 						pdf_ip, pdf_id, pdf_session, pdf_session_type
 						) values (
 						'$ip','$id','$session','$type')	";
-			$this->db->query($sql);
-		}
+		$this -> db -> query($sql);
+	}
 
 }
 ?>

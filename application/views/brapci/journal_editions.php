@@ -2,6 +2,10 @@
 $link = '<img src="' . base_url('img/icone_url.png') . '" title="Site da publicação" height="40">';
 $link = '<A HREF="' . $jnl_url . '" target=_new_' . $jnl_codigo . '">' . $link . '</A>';
 ?>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			
 <div style="float: right"><?php echo $link; ?></div>
 
 <h1><?php echo $jnl_nome . ', ' . $cidade_nome; ?></h1>
@@ -21,3 +25,7 @@ ISSN: <?php echo $jnl_issn_impresso . ', eISSN: ' . $jnl_issn_eletronico; ?>
 </td><td><?php echo $issue_view; ?>
 </td></tr>
 </table>
+
+		</div>
+	</div>
+</div>
