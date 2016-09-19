@@ -251,10 +251,14 @@ class authors extends CI_model {
 		array_push($cp, array('$H', 'id_autor', '', True, True));
 		array_push($cp, array('$S100', 'autor_nome', 'Nome de citação', False, True));
 		array_push($cp, array('$S100', 'autor_lattes', 'Lattes do autor', False, True));
-		array_push($cp, array('$S1', 'autor_genero', 'Genero', False, True));
+		array_push($cp, array('$O : &M:Masculino&F:Feminino', 'autor_genero', 'Genero', False, True));
 		$sql = "select nasc_codigo, nasc_descricao from ajax_nacionalidade where nasc_ativo = 1 order by nasc_descricao ";
 		array_push($cp, array('$Q nasc_codigo:nasc_descricao:' . $sql, 'autor_nacionalidade', 'Nascionalidade', False, True));
 		array_push($cp, array('$S7', 'autor_alias', 'Remissiva', False, True));
+		
+		array_push($cp, array('$S8', 'autor_nasc', 'Nascimento', False, True));
+		array_push($cp, array('$S8', '	autor_fale', 'Falecimento', False, True));
+		
 		/* Botao */
 		array_push($cp, array('$B8', '', 'Gravar >>>', False, True));
 		return ($cp);
