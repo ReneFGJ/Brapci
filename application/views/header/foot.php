@@ -28,7 +28,7 @@ $pc = page_count();
 			<b>BRAPCI</b> - Base de Dados em Ciência da Informação<br>
 			Acervo de Publicações Brasileiras em Ciência da Informação<br>
 			Universidade Federal do Paraná<br>
-			Versão 3.0 beta | 2016<br>
+			Versão 3.1 beta | 2016<br>
 			brapcici@gmail.com
 			<br>
 			<br>

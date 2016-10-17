@@ -8,8 +8,8 @@ body {
 		background-color: #ffffff;
 		border: 1px solid #000000;
 		border-radius: 20px;
-		margin-top: 20px;
-		margin-bottom: 20px;
+		margin-top: 80px;
+		margin-bottom: 80px;
 		padding-top: 20px;
 		padding-bottom: 40px;
 	}
@@ -23,6 +23,13 @@ body {
 	 background-attachment: fixed;
 	 */
 }
+/* pANELS */
+.jumbors
+	{
+		padding: 10px 15px;
+		background-color: #f0f0f0;
+		border: 1px solid #f8f8f8;
+	}
 table td {
 	line-height: 200%;
 	font-size: 13px;

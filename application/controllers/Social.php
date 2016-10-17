@@ -63,7 +63,7 @@ class social extends CI_Controller {
 	public function index() {
 		redirect(base_url('index.php'));
 	}
-	
+
 	function cab($data = array()) {
 		$js = array();
 		$css = array();
@@ -81,7 +81,7 @@ class social extends CI_Controller {
 			//$this -> load -> view('menus/menu_cab_top', $data);
 			$this -> load -> view('header/cab_admin', $data);
 		} else {
-			$this->load->view('header/header_nomargin.php',null);
+			$this -> load -> view('header/header_nomargin.php', null);
 		}
 
 		$this -> load -> model('users');
@@ -89,8 +89,8 @@ class social extends CI_Controller {
 
 	function logout() {
 		/* Salva session */
-		$this->load->model('users');
-		$this->users->security_logout();
+		$this -> load -> model('users');
+		$this -> users -> security_logout();
 		redirect(base_url('index.php/main'));
 	}
 
@@ -104,12 +104,27 @@ class social extends CI_Controller {
 		redirect(base_url('index.php/social/login'));
 	}
 
+	function ac($id = '') {
+		$this -> load -> model('users');
+
+		$line = $this -> users -> le($id);
+		/* Salva session */
+		$ss_id = $line['id_us'];
+		$ss_user = $line['us_nome'];
+		$ss_email = $line['us_email'];
+		$ss_image = $line['us_image'];
+		$ss_perfil = $line['us_perfil'];
+		$data = array('id' => $ss_id, 'user' => $ss_user, 'email' => $ss_email, 'image' => $ss_image, 'perfil' => $ss_perfil);
+		$this -> session -> set_userdata($data);
+		redirect(base_url('index.php/home'));
+	}
+
 	function login_local() {
 		$this -> load -> model('users');
-		
+
 		$dd1 = get('dd1');
 		$dd2 = get('dd2');
-		$ok = 0;	
+		$ok = 0;
 		if ((strlen($dd1) > 0) and (strlen($dd2) > 0)) {
 			$dd1 = troca($dd1, "'", '´');
 			$dd2 = troca($dd2, "'", '´');
@@ -216,17 +231,17 @@ class social extends CI_Controller {
 					$c3 = 7;
 					$sql = "update users set us_codigo = lpad($c1,$c3,0) where $c2='' ";
 					$rlt = $this -> db -> query($sql);
-					
+
 					$sql = "select * from users where us_email = '$ss_email' ";
 					$query = $this -> db -> query($sql);
-					$query = $query -> result_array();	
-					$line = $query[0];				
+					$query = $query -> result_array();
+					$line = $query[0];
 					$id = $line['id_us'];
 				}
 				$ss_perfil = $line['us_perfil'];
-				
+
 				/* Salva session */
-				$data = array('id'=> $id, 'user' => $ss_user, 'email' => $ss_email, 'image' => $ss_image, 'nivel' => $ss_nivel, 'perfil' => $ss_perfil);
+				$data = array('id' => $id, 'user' => $ss_user, 'email' => $ss_email, 'image' => $ss_image, 'nivel' => $ss_nivel, 'perfil' => $ss_perfil);
 				$this -> session -> set_userdata($data);
 
 				if ($this -> uri -> segment(3) == 'google') {

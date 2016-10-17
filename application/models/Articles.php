@@ -88,7 +88,10 @@ class articles extends CI_model {
 	function supports_novo($id) {
 		$id = strzero($id, 10);
 		$link = ' onclick="newxy(\'' . base_url('index.php/admin/support_editar/0/' . $id) . '\',600,300);" ';
+		$link2 = ' onclick="newxy(\'' . base_url('index.php/admin/support_upload/' . $id) . '\',600,300);" ';
 		$sx = '<br><br><span class="btn btn-primary" ' . $link . '>Inserir Suporte</span>';
+		$sx .= '&nbsp;';
+		$sx .= '<span class="btn btn-primary" ' . $link2 . '>Upload de PDF</span>';
 		return ($sx);
 	}
 

@@ -561,7 +561,8 @@ function resume()
 				switch($type)
 					{
 					case 'J':
-						$sx .= '<span class="big"><b>'.$line['total'].'</b> '.'Revistas Ciêntificas'.'</span></br>';
+						$link = '<a href="'.base_url('index.php/journal').'">';
+						$sx .= '<b><span class="big">'.$link.$line['total'].''.'</b> '.'Revistas Ciêntificas</a>'.'</span></br>';
 						break;
 					}
 			}
@@ -653,15 +654,14 @@ function resume()
 			
 	$sa = '
 			<div class="container">
-				<div class="jumbotron col-md-5" style="border-radius: 20px;">
+				<div class="jumbors col-md-3" style="border-radius: 20px;">
 					<span class="big"><b>PUBLICAÇÕES</b></span>
 					<br>
 					<br>
 					<span class="middle">'.$sx.'
 					</span>
 				</div>
-				<div class="col-md-1"></div>
-				<div class="jumbotron col-md-5" style="border-radius: 20px;">
+				<div class="jumbors col-md-3 col-md-offset-1" style="border-radius: 20px;">
 					<span class="big"><b>AUTORIDADES</b></span>
 					<br>
 					<br>

@@ -362,7 +362,28 @@ class admin extends CI_Controller {
 
 		$this->load->view('content',$data);			
 		}
+	function support_upload($id=0,$art='')
+		{
+		$this -> load -> model("articles");
+		$this -> load -> model("geds");			
+		$data['nocab'] = true;
+		$this -> load -> view('header/header', $data);
+	
+		$data['content'] = $this->geds->upload($id);
+		$data['title'] = '';
+	
+		if (isset($_FILES['userfile']) and (strlen($_FILES['userfile']['name']) > 0))
+			{
+				$this->geds->save_post_file($id);
+				//$this->articles->excluir_suportes();
+				echo '
+					<script> 
+						close(); 
+					</script>';
+			}
 
+		$this->load->view('content',$data);			
+		}
 	function refer($ar = '') {
 		$this -> load -> model("cited");
 
@@ -568,7 +589,11 @@ class admin extends CI_Controller {
 		$this -> load -> model('export');
 		$this -> export -> resume();
 		$this -> cab();
-		$this -> load -> view('success', null);
+		
+		
+		$data['content'] = $this -> load -> view('success', null, true);
+		$data['title'] = 'Export to resumo';
+		$this->load->view('content',$data);		
 	}
 
 	function export($id = '') {

@@ -39,7 +39,6 @@ class journal extends CI_Controller {
 	
 		$this->session->userdata('search');		
 		$this -> load -> view("header/cab");
-		$this -> load -> view("brapci/content");
 		
 		/* */
 		$this->load->model('journals');
@@ -48,7 +47,9 @@ class journal extends CI_Controller {
 		$data['tela'] = $this->journals->show_publish();
 		$data['titulo'] = 'Publicações disponíveis';
 		
-		$this -> load -> view("show",$data);
+		$data['content'] = $this -> load -> view("show",$data, true);
+		$data['title'] = '';
+		$this->load->view('content',$data);
 		
 		$this -> load -> view("header/foot");
 	}
@@ -63,7 +64,6 @@ class journal extends CI_Controller {
 		form_sisdoc_getpost();
 		
 		$this -> load -> view("header/cab");
-		$this -> load -> view("brapci/content");
 		
 		$this->load->model('editions');
 		$data = $this->editions->le($id);
@@ -95,8 +95,7 @@ class journal extends CI_Controller {
 	
 		$this->session->userdata('search');		
 		$this -> load -> view("header/cab");
-		$this -> load -> view("brapci/content");
-		
+	
 		/* */
 		$this->load->model('journals');
 		
