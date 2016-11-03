@@ -40,6 +40,7 @@ class tools extends CI_model
 		function trata($txt)
 			{
 				$txt = troca($txt,'; ',';');
+				$txt = troca($txt,'"','');
 				for ($r=0;$r < 32;$r++)
 					{
 						if (($r != 13) and ($r != 10))
@@ -112,7 +113,13 @@ class tools extends CI_model
 						
 						for ($a=0;$a < count($au);$a++)
 							{
-								$mm = nbr_autor($au[$a],5);
+								if (get("dd1")=='1')
+									{
+										$mm = nbr_autor($au[$a],5);		
+									} else {
+										$mm = $au[$a];
+									}
+								
 								$mm = troca($mm,',','');
 								$mm = troca($mm,'. ','');
 								$mm = troca($mm,'.','');
@@ -202,7 +209,13 @@ class tools extends CI_model
 						
 						for ($a=0;$a < count($au);$a++)
 							{
-								$mm = nbr_autor($au[$a],5);
+								if (get("dd1")=='1')
+									{
+										$mm = nbr_autor($au[$a],5);		
+									} else {
+										$mm = $au[$a];
+									}								
+
 								$mm = troca($mm,',','');
 								$mm = troca($mm,'. ','');
 								$mm = troca($mm,'.','');

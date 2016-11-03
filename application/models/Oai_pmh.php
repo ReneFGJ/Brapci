@@ -194,6 +194,7 @@ class oai_pmh extends CI_model {
 					$this -> load -> view("oai/oai_process", $article);
 				} else {
 					if ($article['issue_id'] != '0000000') {
+						$article['setSpec'] = troca($article['setSpec'],'+','_');
 
 						/* Bloqueado */
 						if ($article['issue_id'] == '9999999') {
