@@ -16,7 +16,7 @@ foreach ($dados as $key => $value) {
 				type : 'column'
 			},
 			title : {
-				text : 'Produção de Trabalhos'
+				text : '<?php echo $title_div;?>'
 			},
 			subtitle : {
 				text : 'Source: Brapci (<?php echo date("Y");?>)'
@@ -34,7 +34,7 @@ foreach ($dados as $key => $value) {
 			yAxis : {
 				min : 0,
 				title : {
-					text : 'Trabalhos Publicados'
+					text : '<?php echo $axis_x;?>'
 				}
 			},
 			legend : {
@@ -44,7 +44,7 @@ foreach ($dados as $key => $value) {
 				pointFormat : '<b>{point.y:.0f} trabalhos</b>'
 			},
 			series : [{
-				name : 'Trabalhos',
+				name : '<?php echo $axis_y;?>',
 				data : [<?php echo $dt;?>],
 				dataLabels : {
 					enabled : true,
