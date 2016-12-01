@@ -16,7 +16,7 @@
  * @date: 2015-12-01
  */
 
-class indicador extends CI_Controller {
+class enancib2016 extends CI_Controller {
 	function __construct() {
 		global $db_public;
 
@@ -29,54 +29,46 @@ class indicador extends CI_Controller {
 		$this -> load -> helper('form_sisdoc');
 		$this -> load -> helper('url');
 		$this -> load -> library('session');
-
 		date_default_timezone_set('America/Sao_Paulo');
+
 	}
 
-	function index($tp = '') {
-		redirect(base_url('index.php/indicador/report/' . $tp));
+	function cab($id = 0) {
+		$this -> load -> view("enancib/header");
+		$data['logo'] = base_url('img/enancib/logo_enancib17.jpg');
+		$this -> load -> view("enancib/cab", $data);
 	}
 
-	function report($tp = '') {
-		/* Model */
-		$this -> load -> model('Search');
-		$this -> load -> model('indicadores');
-		$this -> Search -> session();
-
-		$this -> load -> view("header/cab");
-
-		/* Busca */
-
-		/* Mostra resultado */
-		$data = array();
-		$tit = '';
-		$tela = $this -> load -> view('grapho/grapho_header.php', null, true);
-		switch ($tp) {
-			case '1' :
-				$tela .= $this -> indicadores -> indicador_producao_journals_ano();
-				break;
-			case '2' :
-				$tela .= $this -> indicadores -> indicador_autores_producao();
-				break;
-			case '3' :
-				$tela .= $this -> indicadores -> colaboracao();
-				break;
-			case '4':
-				$tela .= $this -> indicadores -> indicador_producao_ano();
-				break;							
-			default :
-				$tela = $this -> load->view('grapho/menu_indicators',null,true);
-				break;
+	function index($ed = 0) {
+		$this -> load -> model('journals');
+		$this -> load -> model('editions');
+		$issue = 1017;
+		if ($ed == 0) {
+			$ed = 4;
+			$issue = 1017;
 		}
+		$this -> cab($ed);
 
-		$data['title'] = $tit;
-		$data['content'] = $tela;
-		$this -> load -> view('content', $data);
+		$this -> load -> model('editions');
+		$data = $this -> editions -> le($issue);
 
-		/* Mostra rodape */
-		$this -> load -> view("header/foot");
+		$journal = $data['jnl_codigo'];
+
+		$this -> session -> userdata('search');
+
+		$data = array();
+		$data = $this -> journals -> le($journal);
+
+		/* Le trabalhos */
+		$data['table'] = $this -> editions -> issue_view_bootstrap($issue, 0);
+		$data['issue_view'] = $this -> load->view('enancib/table',$data,true);
+
+		/* */
+		$data['edicoes'] = '';
+
+		/* VIEW */
+		$this -> load -> view("brapci/journal_editions", $data);
 	}
 
 }
 ?>
-

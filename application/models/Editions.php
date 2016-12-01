@@ -174,6 +174,84 @@ class editions extends CI_model {
 		return ($sx);
 	}
 
+	function issue_view_bootstrap($issue = 0, $ed = 1, $admin=0) {
+		$issue = strzero($issue, 7);
+		$sql = "select * from brapci_article
+						left join brapci_section on se_codigo = ar_section
+						where ar_edition = '$issue'
+						order by se_ordem, se_descricao, CHARACTER_LENGTH(ar_pg_inicial), ar_titulo_1
+						";
+		$rlt = db_query($sql);
+		$sx = '<div class="container"><div class="row"><div class="col-md-12">';
+		$sx .= '<table id="fresh-table" class="table" border=1 width="100%">';
+		$art = 0;
+		$xsec = '';
+		$sh = '<thead><tr> 
+					<th data-field="pos" data-sortable="true"><abbr title="Categoria">#</abbr></th>
+					<th data-field="work" data-sortable="true"><abbr title="Work">'.msg('work').'</abbr></th>
+					<th data-field="pag" data-sortable="true"><abbr title="Pag">'.msg('pag.').'</abbr></th>
+					<th data-field="status" data-sortable="true"><abbr title="Status">'.msg('status').'</abbr></th>
+					</tr>
+					</thead>
+					<tbody>';
+		$sx .= $sh;
+		while ($line = db_read($rlt)) {
+			$cor = '';
+			$xcor = '';
+			$sta = trim($line['ar_status']);
+			if ($sta == 'X') { $cor = '<font color="red"><S>';
+				$xcor = '</S></font>';
+			}
+			if ((($sta == 'X') and ($ed == 1)) or ($sta != 'X')) {
+				if ($admin == 1)
+					{
+						$link = '<A HREF="' . base_url('index.php/admin/article_view/' . $line['id_ar']) . '/' . checkpost_link($line['id_ar']) . '" >';
+					} else {
+						$link = '<A HREF="' . base_url('index.php/article/view/' . $line['ar_codigo']) . '/' . checkpost_link($line['ar_codigo']) . '" >';
+					}
+				
+				$sec = trim($line['se_descricao']);
+				if ($sec != $xsec) {
+					$xsec = $sec;
+//					$sx .= '<tr bgcolor="#F0F0F0"><td class="lt3" colspan=5>' . $sec . '</td></tr>';
+					//$sx .= $sh;
+					$art = 1;
+				} else {
+					$art++;
+				}
+				$sx .= '<tr valign="top">';
+				$sx .= '<td align="center">';
+				$sx .= $cor . $art . '.' . $xcor;
+				$sx .= '</td>';
+
+				$sx .= '<td class="lt2 borderb1">';
+				$sx .= $link;
+				$sx .= $cor . trim($line['ar_titulo_1']) . $xcor;
+				$sx .= '</A>';
+				$sx .= '</td>';
+
+				$sx .= '<td width="60" align="center" class="borderb1"><nobr>';
+				$pag = $cor . $line['ar_pg_inicial'];
+				if ($line['ar_pg_final'] > 0) {
+					$pag .= ' - ' . $line['ar_pg_final'];
+				}
+				$pag .= $xcor;
+
+				$sx .= $pag;
+				$sx .= '</nobr></td>';
+
+				$sx .= '<td width="120" align="center" class="borderb1">';
+				$sta = $cor . msg('status_article_' . $line['ar_status']) . $xcor;
+				$sx .= $sta;
+				$sx .= '</td>';
+				$sx .= '</tr>';
+			}
+		}
+		$sx .= '</tbody></table>';
+		$sx .= '</div></div>';
+		return ($sx);
+	}
+
 	function editions_row($journal = '', $idi = 0) {
 		$journal = strzero($journal, 7);
 		$sql = "select * from " . $this -> tabela . " 

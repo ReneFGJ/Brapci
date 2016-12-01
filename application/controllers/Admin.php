@@ -733,6 +733,7 @@ class admin extends CI_Controller {
 			$id = round($reg['id_bs']);
 			if ($id == 0) {
 				echo 'FIM';
+				redirect(base_url('index.php/admin/'));
 				exit ;
 			}
 			$url = $reg['bs_adress'];
@@ -853,9 +854,10 @@ class admin extends CI_Controller {
 	function linguage_portuguese_first() {
 		$this -> cab();
 		$this -> load -> model('articles');
-
+		$this->articles->autoindex_linguage();
 		$tela = $this -> articles -> autoindex_change_linguage();
 		$data['content'] = $tela;
+		$data['title'] = 'Autoindex linguage';
 		$this -> load -> view('content', $data);
 	}
 	function linguage_second() {

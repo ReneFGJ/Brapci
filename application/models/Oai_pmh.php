@@ -195,7 +195,8 @@ class oai_pmh extends CI_model {
 				} else {
 					if ($article['issue_id'] != '0000000') {
 						$article['setSpec'] = troca($article['setSpec'],'+','_');
-
+						$article['setSpec'] = troca($article['setSpec'],':','_');
+						
 						/* Bloqueado */
 						if ($article['issue_id'] == '9999999') {
 							$this -> altera_status_chache($idc, 'F');
@@ -454,6 +455,9 @@ class oai_pmh extends CI_model {
 		foreach ($headers as $header) {
 			$setSpec = $header -> nodeValue;
 		}
+		$setSpec = troca($setSpec,':','_');
+		$setSpec = troca($setSpec,' ','_');
+		$setSpec = troca($setSpec,'+','_');
 		$doc['setSpec'] = $setSpec;
 
 		/* setSpec */

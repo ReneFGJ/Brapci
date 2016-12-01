@@ -216,16 +216,22 @@ class articles extends CI_model {
 	function double_articles() {
 		$sql = "select * from ( SELECT ar_oai_id, count(*) as total 
 									FROM `brapci_article` 
-								WHERE 1 GROUP by ar_oai_id 
+								WHERE ar_oai_id <> '' 
+								GROUP by ar_oai_id 
 								) as tabela where total > 1
 								ORDER BY total desc";
 		$rlt = $this -> db -> query($sql);
 		$rlt = $rlt -> result_array();
-		$sx = '';
+		$sx = '<ul>';
 		for ($r = 0; $r < count($rlt); $r++) {
 			$line = $rlt[$r];
-			$sx .= $line['ar_oai_id'] . '<br>';
+			$sx .= '<li>';
+			$sx .= '<a href="'.base_url('index.php').'">';
+			$sx .= $line['ar_oai_id'];
+			$sx .= ' ('.$line['total'].')';
+			$sx .= '</li>';
 		}
+		$sx .= '<ul>';
 		return ($sx);
 	}
 
@@ -762,6 +768,14 @@ class articles extends CI_model {
 			$sx .= cr() . '<meta http-equiv="refresh" content="1">';
 		}
 		return ($sx);
+	}
+	function autoindex_linguage() {
+				$sql = "update " . $this -> table . " set
+						ar_idioma_1 = 'pt_BR', 
+						ar_idioma_2 = 'en' 
+					where (ar_idioma_1 = '0' or ar_idioma_1 = '' or ar_idioma_1 is null)";
+		$rlt = $this -> db -> query($sql);
+		
 	}
 
 	function autoindex_linguage_second() {

@@ -51,11 +51,11 @@ class rdf extends CI_controller {
 		$sql = "select ar_codigo from brapci_article 
 						WHERE ar_status <> 'X'
 						AND at_metodo_1 LIKE '0%' 
-					limit 30000
+					limit 5000
 				";
 		$sql = "select ar_codigo from brapci_article 
 						WHERE ar_status <> 'X'
-					limit 30000
+					limit 500
 				";
 		$rlt5 = $this->db->query($sql);
 		$rlt5 = $rlt5->result_array();

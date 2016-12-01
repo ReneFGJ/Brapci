@@ -155,6 +155,7 @@ class keywords extends CI_model {
 					if (strlen($nkeys) > 0) { $nkeys .= ', ';
 					}
 					$xkeys = troca($keys[$r], "'", "´");
+					$xkeys = troca($xkeys,'─','-');
 					$nkeys .= "'" . UpperCaseSql($xkeys) . "' ";
 				}
 			}
@@ -213,6 +214,7 @@ class keywords extends CI_model {
 
 	function incorpore_keyword($term, $idioma) {
 		$term = troca($term, "'", "´");
+		$term = troca($term,'─','-');
 		$sql = "select * from brapci_keyword where kw_word_asc = '" . ($term) . "' and kw_idioma = '$idioma' ";
 		$query = $this -> db -> query($sql);
 

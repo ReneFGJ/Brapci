@@ -1,0 +1,214 @@
+/* 
+IC TEMA ver1.0.1 (24/08/2016)
+Tema com as classes padrão para os sites de eventos realizados pela Iniciação Científica na PUCPR
+Data: 02/08/2016
+Autor: Paulo Cezar Teilor Junior
+E-mail: cezar.teilor@pucpr.br
+
+<!-- Tema Customizados IC -->
+<link href="css/ic_tema_ver1.css" rel="stylesheet">
+
+*/
+
+
+
+/* -------------- 
+    RESETS 
+----------
+Resets de algumas classes do Bootstrap
+
+Usados em: 
+- 1º Demo day
+- ...
+*/
+
+/* -----  Nav ---------- */
+.container-fluid {padding: 0;}
+.navbar {margin-bottom: 0;}
+
+
+/* ----- Padrões Textos ---------- */
+
+h1, h2, h3 {font-weight: bold; text-transform: uppercase;}
+h4 {line-height: 24px;}
+p{color:#8b8b8b; line-height: 22px; }
+
+/* ---- ///RESETS ---------- */
+
+
+/* -------------------
+PADDINGS
+-----------------*/
+.geral-pd-sm {padding: 10px;}
+.geral-pd-md {padding: 30px;}
+.geral-pd-lg {padding: 60px;}
+
+.upper-pd-sm {padding-top: 10px;}
+.upper-pd-md {padding-top: 30px;}
+.upper-pd-lg {padding-top: 60px;}
+
+.lower-pd-sm {padding-bottom: 10px;}
+.lower-pd-md {padding-bottom: 30px;}
+.lower-pd-lg {padding-bottom: 60px;}
+
+.left-pd-sm {padding-left: 10px;}
+.left-pd-md {padding-left: 30px;}
+.left-pd-lg {padding-left: 60px;}
+
+.right-pd-sm {padding-right: 10px;}
+.right-pd-md {padding-right: 30px;}
+.right-pd-lg {padding-right: 60px;}
+
+.vertical-pd-sm {padding: 10px 0px;}
+.vertical-pd-md {padding: 30px 0px;}
+.vertical-pd-lg {padding: 60px 0px;}
+
+.horizontal-pd-sm {padding: 0px 10px;}
+.horizontal-pd-md {padding: 0px 30px;}
+.horizontal-pd-lg {padding: 0px 60px;}
+
+
+
+/* ---- ///PADDINGS ---------- */
+
+/* -------------------
+PADDINGS
+-----------------*/
+
+
+
+/* -------------------
+ANIMAÇÔES EM CSS
+-----------------*/
+/* Class */ 
+.go-right{
+    position: relative;
+    -webkit-animation: SlideIn 5s infinite; /* Chrome, Safari, Opera */
+    -webkit-animation-direction: alternate; /* Chrome, Safari, Opera */
+    animation: SlideIn 5s infinite;
+    animation-direction: alternate;}
+
+
+/* Animation */ 
+/* Chrome, Safari, Opera */
+@-webkit-keyframes go-right {
+    0%   {left: 0px; top: 0px;}
+    100% {left: 200px; top: 0px;}
+}
+
+@keyframes go-right {
+    0%   {left: -500px; top: 0px; opacity: 0.0;}
+    100% {left: 1px; top: 0px; opacity: 1.0;}
+}
+
+}
+
+/* ---- ///ANIMAÇÕES EM CSS ---------- */
+
+/* -------------------
+CLASSES EXCLUSIVAS SEMIC 2016
+-----------------*/
+/* Geral */
+.semic-16 {}
+.bg-semic-16 {background-image: url("https://cip.pucpr.br/eventos/semic/16/img/bg_banner.png"); background-repeat: no-repeat; background-position:top left;}
+.bg-white {background-color: #fff;}
+.semic-16 ul{font-family: Open Sans, sans-serif; font-weight: lighter; line-height: 26px;}
+.semic-16 .m-over-g{opacity: 0.6;}
+.semic-16 .m-over-g:hover{opacity: 1;}
+
+/* Texto H1,2,3,4,5...p */
+.semic-16 p {color: #696969;font-family: Open Sans Light, sans-serif; font-size: 16px; line-height: 24px;}
+.semic-16 h1 {color:#1a4d51; font-family: Open Sans ExtraBold, sans-serif; font-size: 43px; text-transform: none; letter-spacing: -0.8px;}
+.semic-16 h1 small{color: inherit; font-family: Open Sans, sans-serif; letter-spacing: none; }
+.semic-16 .inv{color: #fff;}
+.semic-16 h4{color: #1a4d51; font-family: Open Sans, sans-serif;}
+.semic-16 b{font-weight: bolder; color: #1a4d51; font-family: Open Sans; }
+
+/* Programação Cultural */ 
+.semic-16 .pc-data {color: #99bf5b; font-family: Open Sans, sans-serif; font-size: 20px; font-weight: bold;}
+.semic-16 .pc-tipo {color: #8dcf9d; font-family:inherit; font-size: 13px; font-weight: bold; padding: 25px 0 0 0;}
+.semic-16 .pc-local {font-size: 13px; text-transform: uppercase; line-height: 14px; padding: 0px 0 0 0;}
+.semic-16 .pc-title{color:#1a4d51; font-family: Open Sans, sans-serif; font-size: 24px; line-height: 29px; font-weight: bold;}
+.semic-16 .pc-p{color: #696969;font-family: Open Sans, sans-serif; font-size: 13px; line-height: 18px;}
+.semic-16 .bg-pc{background: url("https://cip.pucpr.br/eventos/semic/16/img/img__26.jpg"); background-repeat: no-repeat;}
+.semic-16 .pc-tipo-border{border-left: 8px solid; }
+
+/* Rodape */
+.semic-16 .rodape{background-color: #1a4d51; color: #fff;}
+.semic-16 .rodape p{color: inherit;}
+.semic-16 .rodape .b-b {border-bottom: 1px solid #fff;}
+.semic-16 .rodape li{border-bottom: 1px solid #fff; padding: 8px 0px; list-style-type: none; padding-left: 0px;}
+.semic-16 .rodape ul{padding-left: 3px;}
+
+/* NAVBAR */
+.semic-16 .navbar-default{background:transparent; background-image:none; border-color:transparent; box-shadow:none;}
+.semic-16 .navbar {border: none; border-radius: 0; background-color: rgba(0,0,0,0.0);}
+.semic-16 .navbar li a {font-family: Open Sans, sans-serif; font-weight: bold; font-size:15px; text-transform: uppercase; color:#1a4d51; padding: 28px 12px;}
+.semic-16 .navbar li a:hover {font-family: Open Sans, sans-serif; font-weight: bold; font-size:15px; text-transform: uppercase; color:#94c249; padding: 28px 12px;}
+/* .semic-16 .dropdown-menu{background-color: rgba(255, 255, 255, 0.9); border: none; text-align: left; padding: 0 15px;} */
+
+
+
+
+/* SECTION TRABALHOS */
+.semic-16 .bg-trab{background-image: url("https://cip.pucpr.br/eventos/semic/16/img/img__24_24.jpg"); background-repeat: no-repeat; background-position: top left; min-height: 150px;}
+
+/* Widgets */ 
+.semic-16 .titulo{font-size: 60px; line-height: 65px; padding-bottom: 25px;}
+.semic-16 .titulo2{font-size: 40px; line-height: 40px; padding-bottom: 25px;}
+.semic-16 .breadcrumb{background-color: #fff; color: #1a4d51;}
+.semic-16 .gravata{font-family: Open Sans, sans-serif; font-size: 28px; line-height: 32px; font-style: italic; color: #1a4d51; padding-bottom: 25px;}
+.semic-16 q{font-family: Open Sans, sans-serif; font-size: 46px; font-weight: bold; color: #696969; text-align: center;}
+.semic-16 h3{font-family: Open Sans, sans-serif; font-size: 32px; color: #696969; text-transform: none; padding-bottom: 25px;}
+
+/* Table */
+.semic-16 .img-small{height: 50px;}
+.semic-16 .fresh-table .t-h1{font-size: 22px;}
+
+/* Premiações */
+.semic-16 premio-1{}
+.semic-16 premio-2{}
+.semic-16 premio-3{}
+.semic-16 mc-hr{color: #94c249;}
+
+
+/* Slides Premiação */
+.slide-ppt
+.semic-16 .slide{padding: 30px;}
+.semic-16 .slide-bg-fff{background-color: #fff;}
+.semic-16 .slide-radius{border-radius: 8px 8px 0 0;}
+.semic-16 .slide-div{padding-top: 250px;}
+.semic-16 .slide-dim{height: 1100px;}
+
+
+
+/* -------------------
+CLASSES EXCLUSIVAS I DEMO DAY
+-----------------*/
+/* Geral */
+.pibep-dd{background-color: #f5f3ee;}
+
+/* ---- Padrões de textos ------- */
+
+.pibep-dd strong{color:#94C249;}
+
+/* ---- NAV ------- */
+.pibep-dd .navbar-default {background-color: #94C249; border-color: #94C249;}
+.pibep-dd .navbar-default .navbar-nav>li>a {color:#ffffff;}
+.pibep-dd .navbar-default .navbar-brand {color:#ffffff;}
+.pibep-dd .navbar-default .navbar-toggle .icon-bar {background-color: #fff;}
+
+/* ---- Sections backgrounds e cores invertidas */
+.pibep-dd section.container-fluid.bg-inv {background-color: #94C249;}
+.pibep-dd .bg-inv p, .pibep-dd .bg-inv h1, .pibep-dd .bg-inv h2, .pibep-dd .bg-inv h3, .pibep-dd .bg-inv h5 {color: #fff;}
+.pibep-dd .bg-inv h5 {font-size: 50px; font-weight: bold;}
+.pibep-dd .bg-inv .divider hr{border-top: 0;}
+
+
+
+
+
+
+
+
+

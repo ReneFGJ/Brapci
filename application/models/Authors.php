@@ -1,17 +1,17 @@
 <?php
-// This file is part of the Brapci Software. 
-// 
+// This file is part of the Brapci Software.
+//
 // Copyright 2015, UFPR. All rights reserved. You can redistribute it and/or modify
 // Brapci under the terms of the Brapci License as published by UFPR, which
-// restricts commercial use of the Software. 
-// 
+// restricts commercial use of the Software.
+//
 // Brapci is distributed in the hope that it will be useful, but WITHOUT ANY
 // WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-// PARTICULAR PURPOSE. See the ProEthos License for more details. 
-// 
+// PARTICULAR PURPOSE. See the ProEthos License for more details.
+//
 // You should have received a copy of the Brapci License along with the Brapci
 // Software. If not, see
-// https://github.com/ReneFGJ/Brapci/tree/master//LICENSE.txt 
+// https://github.com/ReneFGJ/Brapci/tree/master//LICENSE.txt
 /* @author: Rene Faustino Gabriel Junior <renefgj@gmail.com>
  * @date: 2015-12-01
  */
@@ -42,7 +42,7 @@ class authors extends CI_model {
 		$idt = 0;
 		for ($r = 0; $r < count($aut); $r++) {
 			$autor = $aut[$r];
-			$autor = troca($autor,"´",'');
+			$autor = troca($autor, "´", '');
 			if (strpos($autor, ',') > 0) {
 				$autor = substr($autor, strpos($autor, ','), strlen($autor)) . ' ' . substr($autor, 0, strpos($autor, ','));
 			}
@@ -62,16 +62,13 @@ class authors extends CI_model {
 		for ($r = 0; $r < count($aut_asc); $r++) {
 			$autor = $aut_asc[$r];
 			$code = trim(mb_detect_encoding($autor));
-			if (1==2)
-			{
-			if (($code == 'UTF-8') or ($code == ''))
-				{
+			if (1 == 2) {
+				if (($code == 'UTF-8') or ($code == '')) {
 					$autor = utf8_decode($autor);
 					$code = trim(mb_detect_encoding($autor));
-					if (($code == 'UTF-8') or ($code == ''))
-						{
-							$autor = utf8_decode($autor);
-						}
+					if (($code == 'UTF-8') or ($code == '')) {
+						$autor = utf8_decode($autor);
+					}
 				}
 			}
 			$sql = "select * from brapci_autor where autor_nome = '$autor'";
@@ -124,80 +121,76 @@ class authors extends CI_model {
 				) ";
 			$pos++;
 		}
-		$rlt = $this -> db -> query($sql);
+		if (count($autc) > 0) {
+			$rlt = $this -> db -> query($sql);
+		}
 
 	}
 
-	function lista_obras_do_autor($author='')
-		{
-			$sql = "select * from brapci_article_author
+	function lista_obras_do_autor($author = '') {
+		$sql = "select * from brapci_article_author
 					INNER JOIN brapci_article on ar_codigo = ae_article
 					INNER JOIN brapci_journal on ae_journal_id = jnl_codigo
 					INNER JOIN brapci_edition ON ed_codigo = ar_edition
 					where ae_author = '$author' and ar_status <> 'X'
 					order by ar_ano DESC, ar_titulo_1";
-			$rlt = $this->db->query($sql);
-			$rlt = $rlt->result_array();
-			$sx = '<ul>';
-			$xano = '';
-			for ($r=0;$r < count($rlt);$r++)
-				{
-					$line = $rlt[$r];
-					
-					$ano = $line['ar_ano'];
-					if ($ano != $xano)
-						{
-							if ($r > 0)
-								{
-									$sx .= '</ul><br>';
-								}
-							$sx .= '<h3>'.$ano.'</h3><br>';
-							$xano = $ano;
-							$sx .= '<ul>';
-						}
-					$sx .= '<li style="margin-left: 30px;">';
-					$link = base_url('index.php/article/view/'.$line['ar_codigo'].'/'.checkpost_link($line['ar_codigo']));
-					$sx .= '<a href="'.$link.'" class="link lt1">';
-					$sx .= $line['ar_titulo_1'].'. ';
-					$sx .= '<b>'.$line['jnl_nome'].'</b>';
-					$sx .= ', v.'.$line['ed_vol'];
-					$sx .= ', n.'.$line['ed_nr'];
-					$sx .= ', '.$line['ed_ano'];
-					$sx .= ', p.'.$line['ar_pg_inicial'];
-					$sx .= '-'.$line['ar_pg_final'];
-					$sx .= '</a>';
-					$sx .= '</li>';
-				}
-			$sx .= '</ul>';
-			//print_r($line);
-			//echo '<hr>';
-			return($sx);
-							
-		}
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		$sx = '<ul>';
+		$xano = '';
+		for ($r = 0; $r < count($rlt); $r++) {
+			$line = $rlt[$r];
 
-	function check_remissive()
-		{
-			$sql = "select * from ".$this->tabela."
+			$ano = $line['ar_ano'];
+			if ($ano != $xano) {
+				if ($r > 0) {
+					$sx .= '</ul><br>';
+				}
+				$sx .= '<h3>' . $ano . '</h3><br>';
+				$xano = $ano;
+				$sx .= '<ul>';
+			}
+			$sx .= '<li style="margin-left: 30px;">';
+			$link = base_url('index.php/article/view/' . $line['ar_codigo'] . '/' . checkpost_link($line['ar_codigo']));
+			$sx .= '<a href="' . $link . '" class="link lt1">';
+			$sx .= $line['ar_titulo_1'] . '. ';
+			$sx .= '<b>' . $line['jnl_nome'] . '</b>';
+			$sx .= ', v.' . $line['ed_vol'];
+			$sx .= ', n.' . $line['ed_nr'];
+			$sx .= ', ' . $line['ed_ano'];
+			$sx .= ', p.' . $line['ar_pg_inicial'];
+			$sx .= '-' . $line['ar_pg_final'];
+			$sx .= '</a>';
+			$sx .= '</li>';
+		}
+		$sx .= '</ul>';
+		//print_r($line);
+		//echo '<hr>';
+		return ($sx);
+
+	}
+
+	function check_remissive() {
+		$sql = "select * from " . $this -> tabela . "
 						inner join brapci_article_author on autor_codigo = ae_author 
 						where autor_codigo <> autor_alias 
 						limit 10
 						";
-			$rlt = $this->db->query($sql);
-			$rlt = $rlt->result_array();
-			$sx = '<table width="100%" class="lt1">';
-			for ($r=0;$r < count($rlt);$r++)
-				{
-					$line = $rlt[$r];
-					$use = $line['autor_alias'];
-					$remissiva = $line['autor_codigo'];
-					$sql = "update brapci_article_author set ae_author = '$use' where ae_author = '$remissiva' ";
-					$rrr = $this->db->query($sql);				
-					$sx .= '<tr>';
-					$sx .= '<td>'.$line['autor_nome'].'</td>';
-				}
-			$sx .= '</table>';
-			return($sx);			
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		$sx = '<table width="100%" class="lt1">';
+		for ($r = 0; $r < count($rlt); $r++) {
+			$line = $rlt[$r];
+			$use = $line['autor_alias'];
+			$remissiva = $line['autor_codigo'];
+			$sql = "update brapci_article_author set ae_author = '$use' where ae_author = '$remissiva' ";
+			$rrr = $this -> db -> query($sql);
+			$sx .= '<tr>';
+			$sx .= '<td>' . $line['autor_nome'] . '</td>';
 		}
+		$sx .= '</table>';
+		return ($sx);
+	}
 
 	function inserir_novo_autor($nome) {
 		/* Valida recuperacao */
@@ -226,7 +219,7 @@ class authors extends CI_model {
 		$rrr = $this -> db -> query($sql);
 		$rrr = $rrr -> result_array();
 		$line = $rrr[0];
-		return($line['autor_codigo']);
+		return ($line['autor_codigo']);
 	}
 
 	function updatex() {
@@ -255,10 +248,10 @@ class authors extends CI_model {
 		$sql = "select nasc_codigo, nasc_descricao from ajax_nacionalidade where nasc_ativo = 1 order by nasc_descricao ";
 		array_push($cp, array('$Q nasc_codigo:nasc_descricao:' . $sql, 'autor_nacionalidade', 'Nascionalidade', False, True));
 		array_push($cp, array('$S7', 'autor_alias', 'Remissiva', False, True));
-		
+
 		array_push($cp, array('$S8', 'autor_nasc', 'Nascimento', False, True));
 		array_push($cp, array('$S8', '	autor_fale', 'Falecimento', False, True));
-		
+
 		/* Botao */
 		array_push($cp, array('$B8', '', 'Gravar >>>', False, True));
 		return ($cp);

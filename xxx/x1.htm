@@ -1,0 +1,333 @@
+	<!-- Tabela dnamica -->
+	<div class="fresh-table">
+		<!--    Available colors for the full background: full-color-blue, full-color-azure, full-color-green, full-color-red, full-color-orange
+		Available colors only for the toolbar: toolbar-color-blue, toolbar-color-azure, toolbar-color-green, toolbar-color-red, toolbar-color-orange
+		-->
+
+		<div class="bootstrap-table">
+			<div class="fixed-table-toolbar">
+				<div class="bars pull-left">
+					<div class="toolbar">
+						<!--
+						<button id="alertBtn" class="btn btn-default">Alert</button>
+						-->
+					</div>
+				</div>
+				<div class="columns columns-right pull-right">
+					<button class="btn btn-default" type="button" name="toggle" title="Toggle">
+						<i class="glyphicon glyphicon glyphicon-th-list"></i> Lista compacta
+					</button>
+					<div class="keep-open btn-group" title="Columns">
+						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+							<i class="glyphicon glyphicon glyphicon-cog"></i><span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu">
+							<li>
+								<label>
+									<input data-field="programa" value="0" checked="checked" type="checkbox">
+									<abbr title="Categoria">Prog.</abbr></label>
+							</li>
+							<li>
+								<label>
+									<input data-field="data" value="1" checked="checked" type="checkbox">
+									Data</label>
+							</li>
+							<li>
+								<label>
+									<input data-field="tipo" value="2" checked="checked" type="checkbox">
+									Tipo</label>
+							</li>
+							<li>
+								<label>
+									<input data-field="titulo" value="3" checked="checked" type="checkbox">
+									Titulo</label>
+							</li>
+							<li>
+								<label>
+									<input data-field="modalidade" value="4" checked="checked" type="checkbox">
+									<abbr title="Programa">Modalidade</abbr></label>
+							</li>
+							<li>
+								<label>
+									<input data-field="local" value="5" checked="checked" type="checkbox">
+									Local</label>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="pull-left search  col-md-9">
+					<input class="form-control" placeholder="Pesquise aqui a programação" type="text">
+				</div>
+			</div>
+			<div class="fixed-table-container" style="padding-bottom: 0px;">
+				<div class="fixed-table-header" style="display: none;">
+					<table></table>
+				</div>
+				<div class="fixed-table-body">
+					<div class="fixed-table-loading" style="top: 46px;">
+						Loading, please wait...
+					</div>
+					<table id="fresh-table" class="table table-hover table-striped">
+						<thead>
+							<tr>
+								<th style="" data-field="programa">
+								<div class="th-inner sortable both">
+									<abbr title="Categoria">Prog.</abbr>
+								</div><div class="fht-cell"></div></th><th style="" data-field="data">
+								<div class="th-inner sortable both">
+									Data
+								</div><div class="fht-cell"></div></th><th class="text-center" style="" data-field="tipo">
+								<div class="th-inner sortable both">
+									Tipo
+								</div><div class="fht-cell"></div></th><th class="t-h1" style="" data-field="titulo">
+								<div class="th-inner sortable both">
+									Titulo
+								</div><div class="fht-cell"></div></th><th style="" data-field="modalidade">
+								<div class="th-inner sortable both">
+									<abbr title="Programa">Modalidade</abbr>
+								</div><div class="fht-cell"></div></th><th style="" data-field="local">
+								<div class="th-inner sortable both">
+									Local
+								</div><div class="fht-cell"></div></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr data-index="0">
+								<td style="">PIBIC</td><td style="">18 Out
+								<br>
+								10:30 às 12:30</td><td class="text-center" style=""><img src="SEMIC_files/icone-oral-grad.png" class="img-small">
+								<br>
+								<small>Oral</small></td><td class="t-h1" style=""><a href="https://cip.pucpr.br/eventos/semic/16/resumo_template.php?id=0011439" target="_blank"><i><small>Direito</small></i>
+								<br>
+								<b>[ DIR9 ] Ato-fato Jurídico Caducificante</b>
+								<p>
+									João Paulo Josviak Dresch; Carolina Kosma Krieger
+								</p></a></td><td style="">Bolsa PUCPR-PIBIC</td><td style="">Brasílio Vicente de Castro</td>
+							</tr>
+							<tr data-index="1">
+								<td style="">PIBIC</td><td style="">18 Out
+								<br>
+								10:30 às 12:30</td><td class="text-center" style=""><img src="SEMIC_files/icone-oral-grad.png" class="img-small">
+								<br>
+								<small>Oral</small></td><td class="t-h1" style=""><a href="https://cip.pucpr.br/eventos/semic/16/resumo_template.php?id=0009779" target="_blank"><i><small>Direito</small></i>
+								<br>
+								<b>[ DIR12 ] Privacidade na Sociedade de Exposição.</b>
+								<p>
+									Priscilla Aquino de Oliveira; Cinthia Obladen de Almendra Freitas
+								</p></a></td><td style="">Bolsa CNPq-PIBIC</td><td style="">Brasílio Vicente de Castro</td>
+							</tr>
+							<tr data-index="2">
+								<td style="">PIBIC</td><td style="">18 Out
+								<br>
+								10:30 às 12:30</td><td class="text-center" style=""><img src="SEMIC_files/icone-oral-grad.png" class="img-small">
+								<br>
+								<small>Oral</small></td><td class="t-h1" style=""><a href="https://cip.pucpr.br/eventos/semic/16/resumo_template.php?id=0010880" target="_blank"><i><small>Direito</small></i>
+								<br>
+								<b>[ DIR18 ] A Utilização de Jurisprudencia do Sistema Americano Pelo Supremo Tribunal Federal</b>
+								<p>
+									Miguel Silva Pereira; Danielle Anne Pamplona
+								</p></a></td><td style="">Iniciação Científica Voluntária</td><td style="">Brasílio Vicente de Castro</td>
+							</tr>
+							<tr data-index="3">
+								<td style="">PIBIC</td><td style="">18 Out
+								<br>
+								10:30 às 12:30</td><td class="text-center" style=""><img src="SEMIC_files/icone-oral-grad.png" class="img-small">
+								<br>
+								<small>Oral</small></td><td class="t-h1" style=""><a href="https://cip.pucpr.br/eventos/semic/16/resumo_template.php?id=0010829" target="_blank"><i><small>Direito</small></i>
+								<br>
+								<b>[ DIR19 ] A Liberdade de Expressão no Sistema Interamericano</b>
+								<p>
+									Patricia Almeida de Moraes; Danielle Anne Pamplona
+								</p></a></td><td style="">Bolsa PUCPR-PIBIC</td><td style="">Brasílio Vicente de Castro</td>
+							</tr>
+							<tr data-index="4">
+								<td style="">PIBIC</td><td style="">18 Out
+								<br>
+								10:30 às 12:30</td><td class="text-center" style=""><img src="SEMIC_files/icone-oral-grad.png" class="img-small">
+								<br>
+								<small>Oral</small></td><td class="t-h1" style=""><a href="https://cip.pucpr.br/eventos/semic/16/resumo_template.php?id=0011069" target="_blank"><i><small>Direito</small></i>
+								<br>
+								<b>[ DIR36 ] A Influência da Crise Econômica nas Negociações
+								Coletivas do Trabalho no Brasil em Tempo de Globalização e a Importância
+								dos Acordos Coletivos</b>
+								<p>
+									Jéssica Itoda Localli Ferreira; Luiz Alberto Pereira Ribeiro
+								</p></a></td><td style="">Bolsa PUCPR-PIBIC</td><td style="">Brasílio Vicente de Castro</td>
+							</tr>
+							<tr data-index="5">
+								<td style="">PIBIC</td><td style="">18 Out
+								<br>
+								10:30 às 12:30</td><td class="text-center" style=""><img src="SEMIC_files/icone-oral-grad.png" class="img-small">
+								<br>
+								<small>Oral</small></td><td class="t-h1" style=""><a href="https://cip.pucpr.br/eventos/semic/16/resumo_template.php?id=0010801" target="_blank"><i><small>Direito</small></i>
+								<br>
+								<b>[ DIR39 ] Análise do Emprego Consciente das Fases da Metodologia de Gasparin ao Projeto Puc Cidadania</b>
+								<p>
+									Juliana Ferrarini; Paulo Roberto Veroneze
+								</p></a></td><td style="">Iniciação Científica Voluntária</td><td style="">Brasílio Vicente de Castro</td>
+							</tr>
+							<tr data-index="6">
+								<td style="">PIBIC</td><td style="">18 Out
+								<br>
+								10:30 às 12:30</td><td class="text-center" style=""><img src="SEMIC_files/icone-oral-grad.png" class="img-small">
+								<br>
+								<small>Oral</small></td><td class="t-h1" style=""><a href="https://cip.pucpr.br/eventos/semic/16/resumo_template.php?id=0010756" target="_blank"><i><small>Direito</small></i>
+								<br>
+								<b>[ DIR41 ] Estudo da Legislação Sobre Resíduos Sólidos
+								(Logística Reversa) Aplicáveis ao Caso das Cooperativas de Reciclagem da
+								Região de Maringá-PR</b>
+								<p>
+									Thaiara Castanho Grande; Paulo Roberto Veroneze
+								</p></a></td><td style="">Bolsa PUCPR-PIBIC</td><td style="">Brasílio Vicente de Castro</td>
+							</tr>
+							<tr data-index="7">
+								<td style="">PIBIC</td><td style="">18 Out
+								<br>
+								10:30 às 12:30</td><td class="text-center" style=""><img src="SEMIC_files/icone-oral-grad.png" class="img-small">
+								<br>
+								<small>Oral</small></td><td class="t-h1" style=""><a href="https://cip.pucpr.br/eventos/semic/16/resumo_template.php?id=0010692" target="_blank"><i><small>Direito</small></i>
+								<br>
+								<b>[ DIR44 ] das Políticas Públicas de Enfrentamento Preventivo para Combate da Violência Doméstica</b>
+								<p>
+									Camila Martins Schiavone; Tatiana Coutinho Pitta
+								</p></a></td><td style="">Iniciação Científica Voluntária</td><td style="">Brasílio Vicente de Castro</td>
+							</tr>
+							<tr data-index="8">
+								<td style="">PIBIC</td><td style="">18 Out
+								<br>
+								13:30 às 15:30</td><td class="text-center" style=""><img src="SEMIC_files/icone-oral-grad.png" class="img-small">
+								<br>
+								<small>Oral</small></td><td class="t-h1" style=""><a href="https://cip.pucpr.br/eventos/semic/16/resumo_template.php?id=0010543" target="_blank"><i><small>Direito</small></i>
+								<br>
+								<b>[ DIR46 ] Desastres Ambientais em Curitiba e Região Metropolitana: Aprendemos com Nossos Erros?</b>
+								<p>
+									Carolina Efing; Vladimir Passos de Freitas
+								</p></a></td><td style="">Bolsa PUCPR-PIBIC</td><td style="">Brasílio Vicente de Castro</td>
+							</tr>
+							<tr data-index="9">
+								<td style="">PIBIC</td><td style="">18 Out
+								<br>
+								13:30 às 15:30</td><td class="text-center" style=""><img src="SEMIC_files/icone-oral-grad.png" class="img-small">
+								<br>
+								<small>Oral</small></td><td class="t-h1" style=""><a href="https://cip.pucpr.br/eventos/semic/16/resumo_template.php?id=0011023" target="_blank"><i><small>Direito</small></i>
+								<br>
+								<b>[ DIR47 ] Necessidade da Reforma Institucional na Segurança Pública e Atuação da Polícia nas Cidades da Periferia de Curitiba</b>
+								<p>
+									Michelle Pontarolli Araújo; Vladimir Passos de Freitas
+								</p></a></td><td style="">Iniciação Científica Voluntária</td><td style="">Brasílio Vicente de Castro</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="fixed-table-footer" style="display: none;">
+					<table>
+						<tbody>
+							<tr></tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="fixed-table-pagination">
+					<div class="pull-left pagination-detail">
+						<span class="pagination-info"></span><span class="page-list"><span class="btn-group dropup">
+								<button type="button" class="btn btn-default  dropdown-toggle" data-toggle="dropdown">
+									<span class="page-size">10</span><span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<li class="active">
+										<a href="javascript:void(0)">10</a>
+									</li>
+									<li>
+										<a href="javascript:void(0)">25</a>
+									</li>
+									<li>
+										<a href="javascript:void(0)">50</a>
+									</li>
+									<li>
+										<a href="javascript:void(0)">100</a>
+									</li>
+								</ul></span> rows visible</span>
+					</div>
+					<div class="pull-right pagination">
+						<ul class="pagination">
+							<li class="page-first disabled">
+								<a href="javascript:void(0)">«</a>
+							</li>
+							<li class="page-pre disabled">
+								<a href="javascript:void(0)">‹</a>
+							</li>
+							<li class="page-number active">
+								<a href="javascript:void(0)">1</a>
+							</li>
+							<li class="page-number">
+								<a href="javascript:void(0)">2</a>
+							</li>
+							<li class="page-number">
+								<a href="javascript:void(0)">3</a>
+							</li>
+							<li class="page-number">
+								<a href="javascript:void(0)">4</a>
+							</li>
+							<li class="page-number">
+								<a href="javascript:void(0)">5</a>
+							</li>
+							<li class="page-next">
+								<a href="javascript:void(0)">›</a>
+							</li>
+							<li class="page-last">
+								<a href="javascript:void(0)">»</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div><div class="clearfix"></div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</section>
+			<!-- CODIGO ANALYTICS -->
+	<!-- Javascript -->
+	<script type="text/javascript" src="SEMIC_files/jquery-1.js"></script>
+	<script type="text/javascript" src="SEMIC_files/bootstrap.js"></script>
+	<script type="text/javascript" src="SEMIC_files/bootstrap-table.js"></script>
+	<script type="text/javascript">
+		var $table = $('#fresh-table'),
+		    $alertBtn = $('#alertBtn'),
+		    full_screen = false;
+
+		$().ready(function() {
+			$table.bootstrapTable({
+				toolbar : ".toolbar",
+
+				showRefresh : false,
+				search : true,
+				showToggle : true,
+				showColumns : true,
+				pagination : true,
+				striped : true,
+				sortable : true,
+				pageSize : 10,
+				pageList : [10, 25, 50, 100],
+
+				formatShowingRows : function(pageFrom, pageTo, totalRows) {
+					//do nothing here, we don't want to show the text "showing x of y from..."
+				},
+				formatRecordsPerPage : function(pageNumber) {
+					return pageNumber + " rows visible";
+				},
+				icons : {
+					refresh : 'glyphicon glyphicon-refresh',
+					toggle : 'glyphicon glyphicon-th-list',
+					columns : 'glyphicon glyphicon-cog',
+					detailOpen : 'glyphicon glyphicon-plus-sign',
+					detailClose : 'glyphicon glyphicon-minus-sign'
+				}
+			});
+		});
+
+
+	</script>
+
+	</body>
+</html>
