@@ -547,6 +547,7 @@ class admin extends CI_Controller {
 
 		$tela = $this -> articles -> double_articles();
 		$data['content'] = $tela;
+		$data['title'] = '';
 
 		$this -> load -> view('content', $data);
 	}

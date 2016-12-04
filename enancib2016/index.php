@@ -1,5 +1,5 @@
 <?php
-$newURL = 'http://basessibi.c3sl.ufpr.br/brapci/index.php/enancib17/';
+$newURL = 'http://basessibi.c3sl.ufpr.br/brapci/index.php/enancib2016/';
 header('Location: '.$newURL);
 
 exit;
@@ -17,7 +17,7 @@ $edi = new issue;
 
 
 /* Le dados do artigo */
-$issue = 1017;
+$issue = 1383;
 echo '<H1>Anais do Evento</h1>';
 echo ($edi->issue_legend($issue));
 echo $ar->article_issue($issue);

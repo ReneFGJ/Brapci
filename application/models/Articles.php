@@ -214,22 +214,81 @@ class articles extends CI_model {
 	}
 
 	function double_articles() {
-		$sql = "select * from ( SELECT ar_oai_id, count(*) as total 
+		$sql = "select * from ( SELECT ar_oai_id, count(*) as total, max(id_ar) as idmax
 									FROM `brapci_article` 
-								WHERE ar_oai_id <> '' 
+								WHERE ar_oai_id <> '' and ar_status <> 'X'
 								GROUP by ar_oai_id 
 								) as tabela where total > 1
 								ORDER BY total desc";
 		$rlt = $this -> db -> query($sql);
 		$rlt = $rlt -> result_array();
-		$sx = '<ul>';
+		$sx = '<h1>Verificando duplicados</h2>';
+		$sx .= '<h2>Método I - ID OAI Duplicados</h2>';
+		$sx .= '<ul>';
 		for ($r = 0; $r < count($rlt); $r++) {
 			$line = $rlt[$r];
 			$sx .= '<li>';
 			$sx .= '<a href="'.base_url('index.php').'">';
 			$sx .= $line['ar_oai_id'];
 			$sx .= ' ('.$line['total'].')';
+			$sx .= ' - '.$line['idmax'];
 			$sx .= '</li>';
+			
+			$oaiid = $line['ar_oai_id'];
+			$max = $line['idmax'];
+			$sql = "update brapci_article set ar_status = 'X' 
+						where ar_oai_id = '$oaiid' and ar_oai_id <> '' and id_ar < $max ";
+			$rrr = $this->db->query($sql);
+		}
+		$sx .= '<ul>';
+		if (count($rlt) == 0)
+			{
+				$sx .= '<span color="green">Nenhum OAI ID duplicado</span>';
+			}
+			
+			
+		/*** METODO II **/
+		$sx .= '<h2>Método II - Título, fascículo duplicados</h2>';
+		$sql = "select * from (
+				SELECT count(*) as total, ar_titulo_1, ar_ano, ar_journal_id, ar_edition, max(id_ar) as idmax FROM `brapci_article`
+				where ar_status <> 'X' and NOT (ar_titulo_1 like '%editorial%')
+				group by substr(ar_titulo_1,1,50), ar_ano, ar_journal_id, ar_edition
+			) as tabela
+			where total > 1
+			order by total desc
+			limit 100";
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		$sx .= '<ul>';
+		for ($r = 0; $r < count($rlt); $r++) {
+			$line = $rlt[$r];
+			$sx .= '<li>';
+			$sx .= '<a href="'.base_url('index.php').'">';
+			$sx .= $line['ar_titulo_1'];
+			$sx .= ' ('.$line['total'].')';
+			$sx .= ' - '.$line['idmax'];
+			$sx .= '</li>';
+			
+			$max = $line['idmax'];
+			$journal = $line['ar_journal_id'];
+			$ed = $line['ar_edition'];
+			$title = substr($line['ar_titulo_1'],0,100);
+			$i = strlen($title)-1;
+			while (substr($title,$i,1) != ' ')
+				{
+					if (strlen($title) < 20) { $title = substr($line['ar_titulo_1'],0,100).'  ';  }
+					$title = substr($title,0,strlen($title)-1);
+					$i = strlen($title)-1;
+				}
+			$title = trim($title);
+			$sql = "update brapci_article set ar_status = 'X' 
+							where ar_journal_id = '$journal'
+						    AND ar_edition = '$ed'
+						    AND ar_titulo_1 LIKE '$title%'
+						    AND id_ar < $max
+						 ";
+			$rrr = $this->db->query($sql);
+//			$sx .= '<br>'.$sql;
 		}
 		$sx .= '<ul>';
 		return ($sx);

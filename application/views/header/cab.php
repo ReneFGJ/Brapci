@@ -50,6 +50,7 @@ if (strlen($user) > 0) {
 		</div>';
 	$bt_thes = '<a href="' . base_url('index.php/skos') . '">' . msg('bt_thesauros') . '</a>';
 	$bt_auth = '<a href="' . base_url('index.php/autority') . '">' . msg('bt_autority') . '</a>';
+	$bt_indi = '<a href="' . base_url('index.php/indicador') . '">' . msg('bt_indicator') . '</a>';
 	if ($nivel == 9) {
 		$bt_admin = '<a href="' . base_url('index.php/admin') . '">' . msg('bt_admin') . '</a>';
 	} else {
@@ -127,6 +128,9 @@ if (strlen($user) > 0) {
 							</li>
 						</ul>
 					</li>
+					<li>
+						<a href="<?php echo base_url('index.php/indicador');?>"><?php echo msg('indicadores');?></a>
+					</li>				
 								
 				</ul>
 				<!---

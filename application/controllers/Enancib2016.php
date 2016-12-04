@@ -42,10 +42,10 @@ class enancib2016 extends CI_Controller {
 	function index($ed = 0) {
 		$this -> load -> model('journals');
 		$this -> load -> model('editions');
-		$issue = 1017;
+		$issue = 1383;
 		if ($ed == 0) {
-			$ed = 4;
-			$issue = 1017;
+			$ed = 17;
+			$issue = 1383;
 		}
 		$this -> cab($ed);
 

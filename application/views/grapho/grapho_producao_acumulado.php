@@ -16,7 +16,7 @@ foreach ($dados as $key => $value) {
 				type : 'line'
 			},
 			title : {
-				text : 'Produção acumulado'
+				text : 'Produção acumulada'
 			},
 			subtitle : {
 				text : 'Source: Brapci (<?php echo date("Y");?>)'
