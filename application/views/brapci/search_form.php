@@ -114,9 +114,8 @@ for ($r = 0; $r < count($rlt); $r++) {
 						<input type="text" class="form-control selector" <?php echo $style_dd4d;?> name="dd4d" id="dd4d" placeholder="Busca nas palavras-chave..." value="<?php echo get("dd4d"); ?>" />
 						<input type="text" class="form-control selector" <?php echo $style_dd4e;?> name="dd4e" id="dd4e" placeholder="Busca nos resumos..." value="<?php echo get("dd4e"); ?>" />
 						<span class="input-group-btn">
-							<button class="btn btn-primary" type="button" onclick="submit();">
-								pesquisar
-							</button> </span>
+							<input type="submit" class="btn btn-primary" value="pesquisar">
+						</span>
 					</div><!-- /input-group -->
 				</div><!-- /.col-lg-6 -->
 			</div><!-- /.row -->
