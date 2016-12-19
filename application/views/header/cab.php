@@ -2,7 +2,7 @@
 /* Datas comemorativas */
 if ((date("md") >= 1215) and (date("md") < 1226))
 	{
-		echo '<script type="text/javascript" src="http://blogparts.giffy.me/0017/parts.js" />'.cr();
+		//echo '<script type="text/javascript" src="http://blogparts.giffy.me/0017/parts.js" />'.cr();
 		//echo '<script type="text/javascript" src="http://blogparts.giffy.me/0001/parts.js" />'.cr();
 		//echo '<script type="text/javascript" src="http://blogparts.giffy.me/0002/parts.js" />'.cr();
 		//echo '<script type="text/javascript" src="http://blogparts.giffy.me/0035/parts.js" />'.cr();
@@ -23,7 +23,6 @@ if ((date("md") == 0612))
 	}	
 	
 	
-echo '<script type="text/javascript" src="http://blogparts.giffy.me/0036/parts.js" />'.cr();
 /***********************************************************************************/
 if (!isset($title_page))
 	{
