@@ -1,8 +1,8 @@
 <div class="container" style="background-color: #ffffff; border:1px solid; border-radius: 20px; padding: 30px 0px;">
-	<div class="col-md-10">
+	<div class="col-md-9">
 		<?php echo $tela; ?>
 	</div>
-	<div class="col-md-2">
+	<div class="col-md-3">
 		<?php if (isset($tela2)) { echo $tela2; } ?>
 	</div>
 	<script>

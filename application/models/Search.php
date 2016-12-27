@@ -21,6 +21,8 @@ class search extends CI_model {
 	var $js = '';
 	var $ssid = '';
 
+	var $limit = 25;
+
 	function __construct() {
 		global $db_public;
 
@@ -441,7 +443,7 @@ class search extends CI_model {
 	 *
 	 *
 	 */
-	function result_article($term = '', $datai = '', $dataf = '') {
+	function result_article($term = '', $datai = '', $dataf = '', $data = array()) {
 		global $db_public, $dd, $SESSION;
 
 		$term = $this -> tratar_term($term);
@@ -493,7 +495,10 @@ class search extends CI_model {
 		if (strlen($wha) > 0) { $wh .= ' and (' . $wha . ')';
 		}
 		/**************************** page *************************/
-		$pag = (round(get("pag")) * 50);
+		$page = round($data['pag']);
+		if ($page == 0) { $page = 1;
+		}
+		$pag = round(($page - 1) * $this -> limit);
 
 		/****** offset **********/
 		$sql = "select * from " . $db_public . "artigos 
@@ -502,8 +507,7 @@ class search extends CI_model {
 					where " . $wh . "
 					";
 		$sql .= " order by ar_ano desc, Article_Title  ";
-		$sql .= " limit 50 offset $pag ";
-
+		$sql .= " limit " . $this -> limit . " offset $pag ";
 		$rlt = db_query($sql);
 
 		$this -> query = $wh;
@@ -511,6 +515,9 @@ class search extends CI_model {
 		$sx = chr(13) . chr(10);
 		/* total */
 		$sx .= ', ' . $this -> lang -> line('form_found') . ' <B>' . $total . '</B> ' . $this -> lang -> line('form_records');
+
+		/******************************** paginação ************************************/
+		$sx .= $this -> paginacao($page, $total);
 
 		$sx .= '<div id="result_select">selection</div>';
 		$sx .= '<table width="100%" class="lt1">';
@@ -556,7 +563,7 @@ class search extends CI_model {
 
 		$sx .= ', found ' . $total;
 
-		$sx .= '<div id="result_select">selection</div>';
+		$sx .= '<div id="result_select">' . msg('result_search') . '</div>';
 		$sx .= '<table width="100%" class="lt1">';
 		$id = 0;
 		$wh = '';
@@ -863,7 +870,7 @@ class search extends CI_model {
 		}
 		$jscmd = 'onchange="mark(\'#mt' . trim($cod) . '\',this);" ';
 		$fm = '<input type="checkbox" name="ddq" ' . $jscmd . ' ' . $selected . '>';
-		
+
 		/*************** numeracao **************/
 		$sx .= $id . '. ';
 		$sx .= $fm;
@@ -1135,7 +1142,7 @@ class search extends CI_model {
 
 		$sql .= "group by jnl_nome_abrev order by total desc ";
 		$rlt = db_query($sql);
-		$sx .= '<table class="lt0" width="160">';
+		$sx .= '<table class="lt0 table" width="100%">';
 		$sx .= '<TR><Th>' . msg("journal") . '<Th>' . msg('quant.');
 
 		while ($line = db_read($rlt)) {
@@ -1164,7 +1171,7 @@ class search extends CI_model {
 		$sql .= "group by ar_ano order by ar_ano desc, total desc ";
 
 		$rlt = db_query($sql);
-		$sx .= '<table class="lt0" width="160">';
+		$sx .= '<table class="lt0 table" width="100%">';
 		$sx .= '<TR><Th>' . msg("year") . '<Th>' . msg('quant.');
 
 		while ($line = db_read($rlt)) {
@@ -1201,7 +1208,7 @@ class search extends CI_model {
 				limit 20
 			";
 		$rlt = db_query($sql);
-		$sx .= '<table class="lt0" width="160">';
+		$sx .= '<table class="lt0 table" width="100%">';
 		$sx .= '<TR><Th>' . msg("author") . '<Th>' . msg('quant.');
 
 		while ($line = db_read($rlt)) {
@@ -1304,7 +1311,7 @@ class search extends CI_model {
 			";
 
 		$rlt = db_query($sql);
-		$sx .= '<table class="lt0" width="160">';
+		$sx .= '<table class="lt0 table" width="160">';
 		$sx .= '<TR><Th>' . msg("keyword") . '<Th>' . msg('quant.');
 		while ($line = db_read($rlt)) {
 			$sx .= '<TR>';
@@ -1362,6 +1369,13 @@ class search extends CI_model {
 	function registra_consulta($tipo, $qanoi, $qanof, $txt) {
 		global $db_public;
 		$session = $_SESSION['bp_session'];
+
+		$dt = array('anoi' => $qanoi, 'anof' => $qanof, 'term' => $txt, 'type' => $tipo);
+		for ($r = 97; $r <= 102; $r++) {
+			$dt['dd4' . chr($r)] = get("dd4" . chr($r));
+		}
+		$this -> session -> set_userdata($dt);
+
 		$ip = ip();
 		$sql = "insert into " . $db_public . "queries 
 			(
@@ -1371,15 +1385,15 @@ class search extends CI_model {
 				'$session','$txt',
 				'$tipo','$qanoi','$qanof','$ip'
 			)";
-		$rlt = $this->db->query($sql);
+		$rlt = $this -> db -> query($sql);
 	}
 
 	function registra_visualizacao($id) {
 		global $db_public;
 		$session = $_SESSION['bp_session'];
 		$ip = ip();
-		$qanoi=0;
-		$qanof=0;
+		$qanoi = 0;
+		$qanof = 0;
 		$tipo = 100;
 		$txt = '';
 		$sql = "insert into " . $db_public . "queries 
@@ -1390,14 +1404,15 @@ class search extends CI_model {
 				'$session','$txt','$id',
 				'$tipo','$qanoi','$qanof','$ip'
 			)";
-		$rlt = $this->db->query($sql);
+		$rlt = $this -> db -> query($sql);
 	}
-	function registra_download($id,$tipo='101') {
+
+	function registra_download($id, $tipo = '101') {
 		global $db_public;
 		$session = $_SESSION['bp_session'];
 		$ip = ip();
-		$qanoi=0;
-		$qanof=0;
+		$qanoi = 0;
+		$qanof = 0;
 		$txt = '';
 		$sql = "insert into " . $db_public . "queries 
 			(
@@ -1407,10 +1422,9 @@ class search extends CI_model {
 				'$session','$txt','$id',
 				'$tipo','$qanoi','$qanof','$ip'
 			)";
-		$rlt = $this->db->query($sql);
+		$rlt = $this -> db -> query($sql);
 	}
-		
-	
+
 	function busca_form($data = array()) {
 		global $dd, $SESSION;
 
@@ -1478,7 +1492,7 @@ class search extends CI_model {
 			$sr = $this -> result_search_keyword($data, $data1, $data2);
 			if (strlen($this -> query) > 0) {
 
-				$sa = $this -> result_journals();
+				$sa = $this -> result_journals($data);
 				$sa .= $this -> result_year();
 				$sa .= $this -> result_author();
 				$sa .= $this -> result_keyword();
@@ -1644,12 +1658,12 @@ class search extends CI_model {
 	function result_search($post = array(), $data1, $data2) {
 		global $dd, $acao;
 		$sx = '';
-		$sx .= msg('form_query') . '<B>' . $post['dd4'] . '</b>';
+		$sx .= msg('form_query') . ' <b>' . $post['dd4'] . '</b>';
 		/* realiza busca */
 		$data1 = $post['anoi'];
 		$data2 = $post['anof'];
 
-		$sx .= $this -> result_article($post['dd4'], $data1, $data2);
+		$sx .= $this -> result_article($post['dd4'], $data1, $data2, $post);
 
 		return ($sx);
 	}
@@ -1671,7 +1685,7 @@ class search extends CI_model {
 	function result_search_author($key_cod = '') {
 		global $dd, $acao;
 		$sx = '';
-		$sx .= '<table border=1 class="lt1" width="100%">';
+		$sx .= '<table border=1 class="lt1 table" width="100%">';
 		$sx .= '<TR valign="top">';
 		$sx .= '<td>';
 		$sx .= msg('find') . '<B> ' . $dd[2] . '</B>';
@@ -1751,6 +1765,61 @@ class search extends CI_model {
 		$sx .= '</table>';
 		return ($sx);
 
+	}
+
+	function paginacao($p = 1, $t = 0) {
+		$tot = 5;
+		$ini = $p - 2;
+		if ($ini < 1) { $ini = 1;
+		}
+		$max = 5;
+		$tp = $this -> limit;
+		$tot = (int)($t / $tp) + 1;
+		$sx = '' . cr();
+
+		$sx .= '<div class="row">';
+
+		/* DIV #6 */
+		$sx .= '<div class="col-md-6">';
+		$sx .= '<ul class="pagination">' . cr();
+
+		/**************************/
+		if ($ini > 1) {
+			$sx .= '<li><a href="' . base_url('index.php/home/pag/' . ($ini - 1)) . '"> << ' . msg('prev') . '</a></li>' . cr();
+		}
+		for ($r = $ini; $r <= ($ini + $max); $r++) {
+			if ($r <= $tot) {
+				$cl = '';
+				if ($p == $r) {
+					$cl = 'active';
+				}
+				$sx .= '<li class="' . $cl . '"><a href="' . base_url('index.php/home/pag/' . $r) . '">' . $r . '</a></li>' . cr();
+			}
+		}
+		if (($ini + $max) < $tot) {
+			$sx .= '<li><a href="' . base_url('index.php/home/pag/' . ($r)) . '">' . msg('next') . ' >></a></li>' . cr();
+		}
+		$sx .= '</ul>';
+		$sx .= '</div>';
+
+		/* DIV #3 */
+		$sx .= '<div class="col-md-3 center-block" style="margin-top: 30px;">';
+		$sx .= '<input type="checkbox" class="form_control">';
+		$sx .= ' ';
+		$sx .= msg('select_all');
+		$sx .= '</div>';
+
+
+		/* DIV #3 */
+		$sx .= '<div class="col-md-3" style="margin-top: 30px;">';
+		$sx .= msg('showing') . ' ';
+		$ff = (($p) * $this -> limit - 1);
+		if ($ff > $t) { $ff = $t;
+		}
+		$sx .= (($p - 1) * $this -> limit + 1) . '-' . ($ff) . ' de ' . $t;
+		$sx .= '</div>';
+		$sx .= '</div>';
+		return ($sx);
 	}
 
 }

@@ -50,7 +50,11 @@ class home extends CI_Controller {
 		redirect(base_url('index.php/home'));
 	}
 
-	function index() {
+	function index()
+		{
+			$this->pag();
+		}
+	function pag($pag='') {
 		/* Model */
 		$this -> load -> model('Search');
 		$this -> load -> model('Autorities');
@@ -58,11 +62,23 @@ class home extends CI_Controller {
 
 		$this -> Search -> session();
 
-		form_sisdoc_getpost();
-
 		$this -> session -> userdata('search');
 
 		$this -> load -> view("header/cab");
+		
+		if (strlen($pag) > 0)
+			{
+				$_POST['dd5'] = $_SESSION['anoi'];
+				$_POST['dd6'] = $_SESSION['anof'];
+				$_POST['acao'] = 'search';
+				$_POST['dd3'] = $_SESSION['type'];
+				$_POST['dd4a'] = $_SESSION['dd4a'];
+				$_POST['dd4b'] = $_SESSION['dd4b'];
+				$_POST['dd4c'] = $_SESSION['dd4c'];
+				$_POST['dd4d'] = $_SESSION['dd4d'];
+				$_POST['dd4e'] = $_SESSION['dd4e'];
+				$_POST['dd4f'] = $_SESSION['dd4f'];
+			}
 
 		/* Dados do Get */
 		$ano_ini = round(substr(get("dd5"), 0, 4));
@@ -101,6 +117,7 @@ class home extends CI_Controller {
 		$data['ano_max'] = date("Y") + 1;
 		$data['anoi'] = $ano_ini;
 		$data['anof'] = $ano_fim;
+		$data['pag'] = $pag;
 
 		//$this -> load -> view("brapci/content");
 		$this -> load -> view("brapci/search_form", $data);
@@ -112,7 +129,7 @@ class home extends CI_Controller {
 		if ((strlen($acao) > 0) and (strlen($dd4) > 0)) {
 			/* REGISTRA BUSCA */
 			$session = $_SESSION['bp_session'];
-			$this -> Search -> registra_consulta($tipo, $ano_ini, $ano_fim, $dd4);
+			$this -> Search -> registra_consulta($tipo, $ano_ini, $ano_fim, $dd4, $pag);
 
 			switch ($tipo) {
 				case '0' :

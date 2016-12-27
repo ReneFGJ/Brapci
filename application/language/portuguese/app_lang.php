@@ -113,4 +113,7 @@ $lang['idioma_03'] = 'Idioma alternativo #2';
 
 $lang['change_language'] = 'Altera posição dos titulos PRINCIPAL e SECUNDÁRIO';
 
+$lang['select_all'] = 'selecionar todos';
+$lang['showing'] = 'mostrando';
+
 ?>

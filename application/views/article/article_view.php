@@ -19,6 +19,7 @@
     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Descrição</a></li>
     <li role="presentation"><a href="#refer" aria-controls="refer" role="tab" data-toggle="tab">Referências</a></li>
     <li role="presentation"><a href="#marc" aria-controls="marc" role="tab" data-toggle="tab">MARC21</a></li>
+    <li role="presentation"><a href="#rdf" aria-controls="rdf" role="tab" data-toggle="tab">RDF</a></li>
     <?php
 	if (isset($tab_pdf) and strlen($tab_pdf) > 10) {
 		echo '<li role="presentation" class="hidden-xs"><a href="#pdf" aria-controls="pdf" role="tab" data-toggle="tab">PDF</a></li>';
@@ -58,7 +59,12 @@
     	<div style="float: right;"><a href="<?php echo $link_pdf; ?>" id="download" class="link" target="new<?php echo $ar_codigo; ?>">download</a>&nbsp;</div>
     </div>
     <?php } ?>
-    
+
+    <div role="tabpanel" class="tab-pane hidden-xs" id="rdf">
+    	<?php echo $tab_rdf; ?>
+    	<div style="float: right;"><a href="<?php echo $link_rdf; ?>" id="download" class="link" target="new<?php echo $ar_codigo; ?>">download</a>&nbsp;</div>
+    </div>
+
     <?php
 	if (isset($_SESSION['email']) AND (strlen($_SESSION['email']) > 5)) {		
 	?>    

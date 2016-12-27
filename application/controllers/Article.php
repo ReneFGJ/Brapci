@@ -133,6 +133,8 @@ class article extends CI_Controller {
 		$data['linkss'] = $ll;
 
 		$data['tab_marc21'] = $this -> load -> view('admin/article_view_marc21', $data, true);
+		$data['tab_rdf'] = $this -> load -> view('admin/article_view_rdf', $data, true);
+		$data['link_rdf'] = base_url('index.php/article/rdf/'.$id);
 		//$data['tab_marc21'] = '';
 		$data['tab_editar'] = $this -> articles -> editar($id);
 		$data['tab_refer'] = $this -> load -> view('admin/article_view_refer', $data, true);
@@ -140,9 +142,9 @@ class article extends CI_Controller {
 		$this -> load -> view('article/article_view', $data);
 
 		$data['content'] = '</table><br><br>';
-		$this -> load -> view('content', $data);
+		//$this -> load -> view('content', $data);
 		
-		$this -> load -> view('header/foot_admin', $data);
+		$this -> load -> view('header/foot', $data);
 
 	}
 
