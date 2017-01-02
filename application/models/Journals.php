@@ -162,11 +162,13 @@ class journals extends CI_model {
 					$id++;
 					$tp = $line['jtp_descricao'];
 					
+					
 					if ($tp <> $xtp)
 						{
 							$sx .= '<TR><TD colspan=3 class="lt4">'.$tp;
 							$xtp = $tp;
 							$sx .= $sh;
+							$id = 1;
 						}
 					$link = base_url('index.php/journal/view/'.$line['id_jnl']);
 					$link = '<A HREF="'.$link.'" class="link">';

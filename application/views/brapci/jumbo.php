@@ -4,7 +4,7 @@
 					<span class="big"><b>PUBLICAÇÕES</b></span>
 					<br>
 					<br>
-					<span class="middle"><b><span class="big"><a href="http://localhost/projeto/Brapci/index.php/journal">47</b> Revistas Ciêntificas</a></span></br><br/><b>16.270</b> Trabalhos em Revistas Ciêntificas</br><b>1.833</b> Trabalhos em Eventos</br><b>1</b> Teses</br>
+					<span class="middle"><b><span class="big"><a href="http://localhost/projeto/Brapci/index.php/journal">47</b> Revistas Científicas</a></span></br><br/><b>16.270</b> Trabalhos em Revistas Ciêntificas</br><b>1.833</b> Trabalhos em Eventos</br><b>1</b> Teses</br>
 					</span>
 				</div>
 				<div class="jumbors col-md-3 col-md-offset-1" style="border-radius: 20px;">

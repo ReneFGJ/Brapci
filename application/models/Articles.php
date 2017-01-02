@@ -767,7 +767,7 @@ class articles extends CI_model {
 				inner join brapci_article on ae_article = ar_codigo
 				inner join brapci_edition on ar_edition = ed_codigo
 				inner join brapci_journal on jnl_codigo = ar_journal_id 
-				where ae_author = '$codigo'			
+				where ae_author = '$codigo' and ar_status <> 'X'			
 				order by ed_ano desc ";
 
 		$query = $this -> db -> query($sql);
@@ -793,7 +793,7 @@ class articles extends CI_model {
 			$sx .= trim($journal);
 			if (strlen($vol)) { $sx .= ', v. ' . $vol;
 			}
-			if (strlen($nr)) { $sx .= ', nr. ' . $nr;
+			if (strlen($nr)) { $sx .= ', n. ' . $nr;
 			}
 			$sx .= ', ' . $ano;
 			/* tipo */

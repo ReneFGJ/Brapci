@@ -548,7 +548,7 @@ class export extends CI_model {
 function resume()
 	{
 		$sql = "SELECT jnl_tipo, count(*) as total FROM `brapci_journal` 
-					where jnl_status <> 'X' 
+					where (jnl_status = 'A' or jnl_status = 'B')  
 					group by jnl_tipo ";
 		$rlt = $this->db->query($sql);
 		$rlt = $rlt->result_array();
@@ -562,7 +562,7 @@ function resume()
 					{
 					case 'J':
 						$link = '<a href="'.base_url('index.php/journal').'">';
-						$sx .= '<b><span class="big">'.$link.$line['total'].''.'</b> '.'Revistas Ciêntificas</a>'.'</span></br>';
+						$sx .= '<b><span class="big">'.$link.$line['total'].''.'</b> '.'Revistas Científicas</a>'.'</span></br>';
 						break;
 					}
 			}
@@ -586,7 +586,7 @@ function resume()
 				switch($type)
 					{
 					case 'J':
-						$sx .= '<b>'.number_format($line['total'],0,',','.').'</b> '.'Trabalhos em Revistas Ciêntificas'.'</br>';
+						$sx .= '<b>'.number_format($line['total'],0,',','.').'</b> '.'Trabalhos em Revistas Científicas'.'</br>';
 						break;
 					case 'E':
 						$sx .= '<b>'.number_format($line['total'],0,',','.').'</b> '.'Trabalhos em Eventos'.'</br>';
