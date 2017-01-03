@@ -34,12 +34,11 @@ class article extends CI_Controller {
 		date_default_timezone_set('America/Sao_Paulo');
 	}
 
-	function cab($data=array()) {
+	function cab($data = array()) {
 		$this -> load -> model('users');
-		if (isset($data['title']))
-			{
-				$data['title_page'] = $data['title'];
-			}
+		if (isset($data['title'])) {
+			$data['title_page'] = $data['title'];
+		}
 		$this -> load -> view("header/cab", $data);
 		$data['title'] = '';
 	}
@@ -53,7 +52,7 @@ class article extends CI_Controller {
 		global $dd, $acao;
 		$this -> load -> model('Search');
 		$this -> Search -> registra_visualizacao($id);
-		
+
 		/* Article */
 		$this -> load -> model('articles');
 		$this -> load -> model('keywords');
@@ -61,7 +60,7 @@ class article extends CI_Controller {
 		$this -> load -> model('archives');
 		$this -> load -> model('cited');
 		$this -> load -> model('tools/tools');
-		$this -> load -> model('metodologias');		
+		$this -> load -> model('metodologias');
 
 		$data = $this -> articles -> le($id);
 
@@ -73,8 +72,8 @@ class article extends CI_Controller {
 
 		$data['title'] = $data['ar_titulo_1'];
 		$data['title_page'] = 'ADMIN';
-		$data['metadata'] = $this->load->view('article/article_metadata',$data,true);
-		$this -> cab($data);		
+		$data['metadata'] = $this -> load -> view('article/article_metadata', $data, true);
+		$this -> cab($data);
 
 		$data['archives'] = $this -> archives -> show_files($id);
 		$data['citeds'] = $this -> cited -> show_cited($id);
@@ -134,7 +133,7 @@ class article extends CI_Controller {
 
 		$data['tab_marc21'] = $this -> load -> view('admin/article_view_marc21', $data, true);
 		$data['tab_rdf'] = $this -> load -> view('admin/article_view_rdf', $data, true);
-		$data['link_rdf'] = base_url('index.php/article/rdf/'.$id);
+		$data['link_rdf'] = base_url('index.php/article/rdf/' . $id);
 		//$data['tab_marc21'] = '';
 		$data['tab_editar'] = $this -> articles -> editar($id);
 		$data['tab_refer'] = $this -> load -> view('admin/article_view_refer', $data, true);
@@ -142,8 +141,16 @@ class article extends CI_Controller {
 		$this -> load -> view('article/article_view', $data);
 
 		$data['content'] = '</table><br><br>';
-		//$this -> load -> view('content', $data);
+
+		if (isset($_SESSION['nivel'])) {
+			if ($_SESSION['nivel'] == 9) {
+				$data['title'] = '';
+				$data['content'] = '<a href="' . base_url('index.php/admin/article_view/' . $data['ar_codigo'] . '/' . checkpost_link($data['ar_codigo'])) . '" class="btn btn-default">editar metadados</a>';
+				$this -> load -> view('content', $data);
+			}
+		}
 		
+
 		$this -> load -> view('header/foot', $data);
 
 	}
