@@ -56,12 +56,17 @@ class articles extends CI_model {
 		$sx = '<br><br>ações para o registro:<br>';
 		switch($ar) {
 			case 'A' :
-				$sx .= '<a href="' . base_url('index.php/admin/article_alterar_status/' . $id . '/B') . '" class="btn btn-primary">Renviar para Revisão(I)</a>';
+				$sx .= '<a href="' . base_url('index.php/admin/article_alterar_status/' . $id . '/B') . '" class="btn btn-primary">Enviar para Revisão(I)</a>';
 				$sx .= ' | ';
 				$sx .= '<a href="' . base_url('index.php/admin/article_alterar_status/' . $id . '/X') . '" class="btn btn-danger">Cancelar trabalho</a>';
 				break;
+			case 'B' :
+				$sx .= '<a href="' . base_url('index.php/admin/article_alterar_status/' . $id . '/C') . '" class="btn btn-primary">Enviar para Revisão(II)</a>';
+				$sx .= ' | ';
+				$sx .= '<a href="' . base_url('index.php/admin/article_alterar_status/' . $id . '/A') . '" class="btn btn-warning">Reenviar para Edição</a>';
+				break;				
 			case 'X' :
-				$sx .= '<a href="' . base_url('index.php/admin/article_alterar_status/' . $id . '/A') . '" class="btn btn-primary">Renviar para Edição</a>';
+				$sx .= '<a href="' . base_url('index.php/admin/article_alterar_status/' . $id . '/A') . '" class="btn btn-warning">Reenviar para Edição</a>';
 		}
 		return ($sx);
 	}
@@ -562,7 +567,7 @@ class articles extends CI_model {
 		return ($line);
 	}
 
-	function cp($id = '') {
+	function cp($id = '',$jid='') {
 		$cv = array("dd2", "dd4", "dd5", "dd7", "dd9", "dd10", "dd12", "dd14", "dd15");
 		for ($r = 0; $r < count($cv); $r++) {
 			$dd = $cv[$r];
@@ -603,7 +608,9 @@ class articles extends CI_model {
 		array_push($cp, array('$S10', 'ar_pg_inicial', msg('ar_pg_inicial'), false, true));
 		array_push($cp, array('$S10', 'ar_pg_final', msg('ar_pg_final'), false, true));
 		array_push($cp, array('$S80', 'ar_doi', msg('ar_doi'), false, true));
-		array_push($cp, array('$S80', 'ar_section', msg('ar_section'), false, true));
+		array_push($cp, array('$S80', 'ar_section', msg('ar_section'), true, true));
+		$sql = "select ed_codigo, concat(ed_ano,', v.',ed_vol,', ',ed_nr) as description from brapci_edition where ed_journal_id = '".$jid."' order by description desc";
+		array_push($cp, array('$Q ed_codigo:description:'.$sql, 'ar_edition', msg('ar_edition'), true, true));
 
 		return ($cp);
 	}
@@ -640,9 +647,9 @@ class articles extends CI_model {
 		return ('');
 	}
 
-	function editar($id) {
+	function editar($id,$jid) {
 		$sx = '';
-		$cp = $this -> cp();
+		$cp = $this -> cp($id,$jid);
 
 		$form = new form;
 		$form -> id = $id;

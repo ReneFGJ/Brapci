@@ -282,10 +282,10 @@ class admin extends CI_Controller {
 		$data['tab_descript'] = $this -> load -> view('admin/article_view_tt', $data, true);
 		$data['tab_descript'] .= $this -> articles->acao($data['ar_codigo'],$data['ar_status']);
 
-		
+		$jid = $data['ar_journal_id'];
 		
 		$data['tab_marc21'] = $this -> load -> view('admin/article_view_marc21', $data, true);
-		$data['tab_editar'] = $this -> articles -> editar($id);
+		$data['tab_editar'] = $this -> articles -> editar($id,$jid);
 		$data['tab_refer'] = $this -> load -> view('admin/article_view_refer', $data, true);
 		$data['tab_support'] = $this -> articles-> supports($id);
 		$data['tab_support'] .= $this -> articles-> supports_novo($id);

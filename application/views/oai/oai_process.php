@@ -16,6 +16,11 @@
 				echo '<a href="' . base_url('index.php/admin/issue_edit/0/' . $id_jnl) . '">';
 				echo '<span class="btn btn-default">Registrar nova edição</span>';
 				echo '</a>';
+				echo '</a>&nbsp;';
+
+				echo '<a href="' . base_url('index.php/admin/issue_edit/0/' . $id_jnl) . '">';
+				echo '<span class="btn btn-danger">Ignorar processamento</span>';
+				echo '</a>';				
 				echo '<br>';
 				echo $issue_ver;
 				break;

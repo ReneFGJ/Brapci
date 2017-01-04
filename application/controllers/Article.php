@@ -135,7 +135,7 @@ class article extends CI_Controller {
 		$data['tab_rdf'] = $this -> load -> view('admin/article_view_rdf', $data, true);
 		$data['link_rdf'] = base_url('index.php/article/rdf/' . $id);
 		//$data['tab_marc21'] = '';
-		$data['tab_editar'] = $this -> articles -> editar($id);
+		$data['tab_editar'] = '';
 		$data['tab_refer'] = $this -> load -> view('admin/article_view_refer', $data, true);
 
 		$this -> load -> view('article/article_view', $data);
@@ -143,7 +143,9 @@ class article extends CI_Controller {
 		$data['content'] = '</table><br><br>';
 
 		if (isset($_SESSION['nivel'])) {
-			if ($_SESSION['nivel'] == 9) {
+
+			if (($_SESSION['nivel'] == 9) and (strlen($_SESSION['user']) > 0))
+			{
 				$data['title'] = '';
 				$data['content'] = '<a href="' . base_url('index.php/admin/article_view/' . $data['ar_codigo'] . '/' . checkpost_link($data['ar_codigo'])) . '" class="btn btn-default">editar metadados</a>';
 				$this -> load -> view('content', $data);

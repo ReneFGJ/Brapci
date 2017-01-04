@@ -57,6 +57,9 @@ $authors = splitx(';', $authores_row);
 				</tr>							
 				<?php } ?>
 				<!---- 100 --->
+				<?php
+				if (count($authors) > 0)
+				{ ?>
 				<tr valign="top">
 					<td align="center">
 						<tt>100</tt>
@@ -68,7 +71,7 @@ $authors = splitx(';', $authores_row);
 						<tt><?php echo '|a ' . $authors[0]; ?></tt>
 					</td>
 				</tr>
-				
+				<?php }?>
 				<!---- 245 --->
 				<tr valign="top">
 					<td align="center">
