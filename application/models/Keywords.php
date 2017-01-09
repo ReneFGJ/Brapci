@@ -278,6 +278,7 @@ class keywords extends CI_model {
 		$keys = troca($keys, '  ', '');
 		$keys = troca($keys, '  ', '');
 		$keys = troca($keys, '  ', '');
+		$keys = troca($keys, '/ ', '; ');
 		$keys .= ';';
 		$keys = splitx(';', $keys);
 		return ($keys);
