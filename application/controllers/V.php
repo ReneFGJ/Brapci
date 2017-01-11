@@ -129,7 +129,7 @@ class v extends CI_controller {
 
 		$data['tab_marc21'] = $this -> load -> view('admin/article_view_marc21', $data, true);
 		//$data['tab_marc21'] = '';
-		$data['tab_editar'] = $this -> articles -> editar($id);
+		$data['tab_editar'] = '';
 		$data['tab_refer'] = $this -> load -> view('admin/article_view_refer', $data, true);
 
 		$this -> load -> view('article/article_view', $data);
