@@ -106,6 +106,10 @@ if (strlen($user) > 0) {
 					<li>
 						<a href="<?php echo base_url('index.php');?>">HOME <span class="sr-only">(current)</span></a>
 					</li>
+					
+					<li>
+						<a href="<?php echo base_url('index.php/main/about');?>">Sobre a Brapci</a>
+					</li>					
 					<!--
 					<li>
 						<a href="#">Link</a>

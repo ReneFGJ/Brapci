@@ -326,34 +326,62 @@ class editions extends CI_model {
 		return ($sx);
 	}
 
-	function editions($journal = '', $tipo = 'VIEW') {
+	function editions($journal = '', $tipo = '2') {
 		$journal = strzero($journal, 7);
 		$sql = "select * from " . $this -> tabela . " 
 						where ed_journal_id = '$journal'
-						order by ed_ano desc, ed_vol 
+						order by ed_ano desc, ed_vol desc, ed_nr desc
 			";
-		$sx = '<Table class="tabela00 lt1" width="400">';
 		$query = $this -> db -> query($sql);
 		$rlt = $query -> result();
 
 		$xano = '';
 		$issue = 0;
-		while ($line = db_read($rlt)) {
-			$link = '<A HREF="' . base_url('index.php/journal/issue/' . $line['id_ed']) . '" class="link lt0">';
-			$issue++;
-			$ano = $line['ed_ano'];
-			if ($xano != $ano) {
-				$sx .= '<TR>';
-				$sx .= '<TD width="50" align="center">' . $ano;
-				$xano = $ano;
+		
+		switch($tipo)
+			{
+			case '2':
+				$sx = '<ul class="ul_editions">';
+				while ($line = db_read($rlt)) {
+					$link = '<A HREF="' . base_url('index.php/journal/issue/' . $line['id_ed']) . '" class="link lt0">';
+					$issue++;
+					$ano = $line['ed_ano'];
+					if ($xano != $ano) {
+						$sx .= '<li class="li_editions_year">';
+						$sx .= $ano;
+						$sx .= '</li>';
+						$xano = $ano;
+					}
+					$sx .= '<li class="li_editions">';
+					$sx .= $link;
+					$sx .= 'v.' . $line['ed_vol'];
+					$sx .= ', n.' . $line['ed_nr'];
+					$sx .= '</a>';
+					$sx .= '</li>';
+				}
+				$sx .= '</ul>';
+				$sx .= 'Total de <B>' . $issue . '</B> edições';
+				break;
+			default:
+				$sx = '<Table class="tabela00 lt1" width="400">';
+				while ($line = db_read($rlt)) {
+					$link = '<A HREF="' . base_url('index.php/journal/issue/' . $line['id_ed']) . '" class="link lt0">';
+					$issue++;
+					$ano = $line['ed_ano'];
+					if ($xano != $ano) {
+						$sx .= '<TR>';
+						$sx .= '<TD width="50" align="center">' . $ano;
+						$xano = $ano;
+					}
+					$sx .= '<TD class="tabela01" width="100" align="center">';
+					$sx .= $link;
+					$sx .= 'v.' . $line['ed_vol'];
+					$sx .= ', n.' . $line['ed_nr'];
+				}
+				$sx .= '<TR><TD colspan=10>Total de <B>' . $issue . '</B> edições';
+				$sx .= '</table>';
+				break;
 			}
-			$sx .= '<TD class="tabela01" width="100" align="center">';
-			$sx .= $link;
-			$sx .= 'v.' . $line['ed_vol'];
-			$sx .= ', n.' . $line['ed_nr'];
-		}
-		$sx .= '<TR><TD colspan=10>Total de <B>' . $issue . '</B> edições';
-		$sx .= '</table>';
 		return ($sx);
 	}
 

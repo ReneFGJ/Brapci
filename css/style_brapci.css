@@ -67,6 +67,30 @@ table td {
 	border-radius: 10px;
 }
 
+/************************************ UL / LI **********/
+.ul_editions
+	{
+		list-style-type: none;
+		display: inline;
+	}
+.li_editions
+	{
+		color: blue;
+		list-style-type: none;
+		display: inline;
+		width: 180px;
+		
+	}
+	
+.li_editions_year
+	{
+		/* display: block; */
+		color: #404040;
+		border: 1px solid #d0d0d0;
+		font-size: 150%;
+		list-style-type: none;
+	}	
+
 /****************************** SEARCH *****************/
 #formWrapper {
 	width: 100%;
