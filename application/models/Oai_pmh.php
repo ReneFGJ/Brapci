@@ -57,6 +57,7 @@ class oai_pmh extends CI_model {
 		$line = $rlt -> result_array();
 
 		if (count($line) > 0) {
+			return('<span class="label label-warning">Already!</span>');
 			/* já existe */
 		} else {
 			$data = date("Ymd");		
@@ -74,6 +75,7 @@ class oai_pmh extends CI_model {
 					0
 					)";
 			$this -> db -> query($sql);
+			return('<span class="label label-success">Insert!</span>');
 		}
 	}
 
@@ -84,14 +86,16 @@ class oai_pmh extends CI_model {
 		$xml = simplexml_load_string($xml_rs);
 
 		$xml = $xml -> ListIdentifiers -> header;
-
+		$sx = '<ul>';
 		for ($r = 0; $r < count($xml); $r++) {
 			$ida = $xml[$r] -> identifier;
 			$date = $xml[$r] -> datestamp;
 			$setSpec = $xml[$r] -> setSpec;
-			$this -> oai_listset($ida, $setSpec, $date);
+			$rt = $this -> oai_listset($ida, $setSpec, $date);
+			$sx .= '<li>'.$ida.' - '.$rt.'</li>';
 		}
-		return (0);
+		$sx .= '</ul>';
+		return ($sx);
 
 	}
 
@@ -184,6 +188,8 @@ class oai_pmh extends CI_model {
 				$sql = "select * from brapci_article where ar_edition = '" . $article['issue_id'] . "' 
 						and 
 						(ar_titulo_1 like '$titulo%' or ar_titulo_2 like '$titulo%')
+						and 
+						ar_journal_id = '".strzero($jid, 7)."'
 				";
 				$article['section'] = '';
 				$rlt = db_query($sql);
@@ -214,11 +220,16 @@ class oai_pmh extends CI_model {
 								$data['links'] = $article['links'];
 
 								$sql = "select * from brapci_section order by se_descricao ";
-								$rlt = db_query($sql);
+								$rlt = $this->db->query($sql);
+								$rlt = $rlt->result_array();
+								
 								$sx = '<table width="100%" class="tabela01"><tr valign="top"><td>';
 								$id = 0;
-								while ($line = db_read($rlt)) {
-									if ($id > 10) { $sx .= '</td><td>';
+								$div = round(count($rlt)/4)+1;
+								for ($r=0;$r < count($rlt);$r++)
+								{
+									$line = $rlt[$r];
+									if ($id > $div) { $sx .= '</td><td width="25%">';
 										$id = 0;
 									}
 									$sx .= '<a href="' . base_url('index.php/oai/setspec/' . $jid . '/' . $line['se_codigo'] . '/' . $article['setSpec']) . '">' . $line['se_descricao'] . '</a><br>';
@@ -309,6 +320,9 @@ class oai_pmh extends CI_model {
 	 ******************************************************************************/
 	function recupera_nr($s) {
 		$nr = '';
+		$s = troca($s,'esp.','');
+		$s = troca($s,'Esp.','');
+		$s = troca($s,'esp','');
 		if (strpos($s, 'n.')) { $nr = substr($s, strpos($s, 'n.'), strlen($s));
 		}
 		if (strpos($s, 'No ')) { $nr = substr($s, strpos($s, 'No ') + 3, strlen($s));
@@ -385,7 +399,6 @@ class oai_pmh extends CI_model {
 									and ed_ano = '$ano' 
 									and ed_journal_id = '$jid' ";
 			$rlt = db_query($sql);
-			//echo '<HR>'.$sql.'<hr>';
 			$sx = "v. $vol, n. $nr, $ano";
 			$this -> issue = $sx;
 
@@ -642,6 +655,13 @@ class oai_pmh extends CI_model {
 		}
 		return ($sx);
 	}
+	
+	function oai_resset_cache($id)
+		{
+			$sql = "update oai_cache set cache_status = '@' where cache_journal = '".strzero($id,7)."'";
+			$rlt = $this->db->query($sql);
+			return(1);
+		}
 
 	function oai_resumo($jid = 0) {
 		$wh = ' 1 = 1 ';
@@ -671,25 +691,15 @@ class oai_pmh extends CI_model {
 					break;
 			}
 		}
-		$sx = '<br><table width="100%" align="center" class="table">';
-		$sx .= '<TR align="center" style="background-color: #E0E0E0; ">';
-		$sx .= '<td rowspan=2 width="30%" class="superbig">OAI-PMH';
-		$sx .= '<TD>para coletar</td>';
-		$sx .= '<TD>coletado</td>';
-		$sx .= '<TD>processado</td>';
-		$sx .= '<TD>total</td>';
-		$sx .= '</tr>' . cr();
-
-		$sx .= '<TR align="center" >';
-		$sx .= '<TD width="15%" class="superbig">';
-		$sx .= number_format($t[0], 0, ',', '.');
-		$sx .= '<TD width="15%" class="superbig">';
-		$sx .= number_format($t[2], 0, ',', '.');
-		$sx .= '<TD width="15%" class="superbig">';
-		$sx .= number_format(($t[1] + $t[3]), 0, ',', '.');
-		$sx .= '<TD width="15%" class="superbig">';
-		$sx .= number_format(($t[0] + $t[1] + $t[2] + $t[3]), 0, ',', '.');
-		$sx .= '</table>';
+		
+		$sx = '';
+		$sx .= 'OAI-PMH Status';
+		$sx .= '<ul class="nav nav-tabs nav-justified">';
+		$sx .= '<li><a href="#">para coletar <span class="badge">'.number_format($t[0], 0, ',', '.').'</span></a></li>';
+		$sx .= '<li><a href="#">coletado <span class="badge">'.number_format($t[2], 0, ',', '.').'</span></a></li>';
+		$sx .= '<li><a href="#">processado <span class="badge">'.number_format(($t[1] + $t[3]), 0, ',', '.').'</span></a></li>';
+		$sx .= '<li><a href="#">total <span class="badge">'.number_format(($t[0] + $t[1] + $t[2] + $t[3]), 0, ',', '.').'</span></a></li>';
+		$sx .= '</ul>';
 		return ($sx);
 	}
 

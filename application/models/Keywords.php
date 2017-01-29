@@ -156,6 +156,7 @@ class keywords extends CI_model {
 					}
 					$xkeys = troca($keys[$r], "'", "´");
 					$xkeys = troca($xkeys,'─','-');
+					$xkeys = troca($xkeys,'ś','S');
 					$nkeys .= "'" . UpperCaseSql($xkeys) . "' ";
 				}
 			}

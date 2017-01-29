@@ -19,6 +19,11 @@ class cited extends CI_Model {
 	function inport_cited_text($s) {
 
 	}
+	
+	function index()
+		{
+			$this->main->cab();
+		}
 
 	function save_ref_pre($txt) {
 		$c = troca($txt, chr(13), '');

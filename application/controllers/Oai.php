@@ -460,10 +460,44 @@ class oai extends CI_controller {
 		// Initiate connection
 		switch ($meth1) {
 			case '1' :
-				$this -> oai_pmh -> ListIdentifiers_Method_1($link);
+				$data['content'] .= $this -> oai_pmh -> ListIdentifiers_Method_1($link);
+				$data['title'] = '';
+				$this->load->view('content',$data);
 				break;
 		}
 	}
+	
+	function ReScan($id = 0,$conf='') {
+		$this->load->model('oai_pmh');
+		$this -> cab();
+		$data = array();
+		$data['id'] = $id;
+		$this -> load -> view('oai/oai_verbs', $data);
+
+		$this -> load -> model('journals');
+		$data = $this -> journals -> le($id);
+		$this -> load -> view('brapci/journal', $data);
+
+		$link = $data['jnl_url_oai'];
+		$this -> jid = $data['id_jnl'];
+		$sx = '';
+		$data['content'] = $sx;
+		$data['title'] = '';
+
+		if ($conf == '1') {
+			$sx .= $this->load->view('success',null,true);
+			$this->oai_pmh->oai_resset_cache($id);
+		} else {
+			$sx .= '<div class="jumbotron">
+				  <h1>Confirma resetar?</h1>
+				  <p>Esta opção irá ressetar todo o cache de coleta de todos os trabalhos disponíveis na revista.</p>
+				  <p><a class="btn btn-primary btn-lg" href="'.base_url('index.php/oai/ReScan/'.$id.'/1').'" role="button">SIM, Confirmo</a></p>
+				</div>';			
+		}
+		$data['content'] = $sx;
+		$this->load->view('content',$data);		
+	}
+		
 	function cache_reset()
 		{
 			$this->cab();

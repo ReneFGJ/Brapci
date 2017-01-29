@@ -207,6 +207,8 @@ class articles extends CI_model {
 			}
 		}
 		$link1 = '<a href="' . base_url('index.php/admin/resumo_status/0/') . '">';
+		$sx .= '<div class="row">';
+		$sx .= '<div class="col-md-6">';
 		$sx .= '<table width="400">
 					<tr><th>situação</th><th>quant.</th></tr>
 					<tr><td>' . $link1 . 'Em indexação</a></td><td align="right">' . number_format($rs[0], 0, ',', '.') . '</td></tr>
@@ -215,6 +217,14 @@ class articles extends CI_model {
 					<tr><td>Indexados</td><td align="right">' . number_format($rs[3], 0, ',', '.') . '</td></tr>
 					<tr><th>Total</th><td align="right"><b>' . number_format(($rs[0] + $rs[1] + $rs[2] + $rs[3] + $rs[4]), 0, ',', '.') . '</b></td></tr>
 					</table>';
+		$sx .= '</div>';
+		$sx .= '<div class="col-md-6">';
+		if (perfil('#ADM'))
+			{
+				$sx .= $this -> oai_pmh -> oai_resumo();		
+			}		
+		$sx .= '</div>';
+		$sx .= '</div>';
 		return ($sx);
 	}
 

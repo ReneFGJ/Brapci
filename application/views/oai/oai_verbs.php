@@ -14,5 +14,7 @@
 	echo '<A HREF="'.base_url('index.php/oai/Harvesting/'.$id).'">HarvestingRecords</A>';	
 	echo ' | ';
 	echo '<A HREF="'.base_url('index.php/oai/ProcessRecords/'.$id).'">ProcessRecords</A>';	
+	echo ' | ';
+	echo '<A HREF="'.base_url('index.php/oai/ReScan/'.$id).'">ReScan</A>';	
 	?>
 </div>

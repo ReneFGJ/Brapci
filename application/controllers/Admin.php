@@ -91,16 +91,18 @@ class admin extends CI_Controller {
 		/* RESUMO GERAL */
 		$tela = $this -> articles -> resumo();
 		$data['title'] = '';
+		
+		$tela .= $this -> load -> view('admin/menu_admin', $data, true);
+		
 		$data['content'] = $tela;
 		$this -> load -> view('content', $data);
 		
 		/* RESUMO OAI */
-		$tela = $this -> oai_pmh -> oai_resumo();
-		$data['content'] = $tela;
+		//$tela = $this -> oai_pmh -> oai_resumo();
+		//$data['content'] = $tela;
+		//$this -> load -> view('content', $data);
 
-		$this -> load -> view('content', $data);
-
-		$this -> load -> view('admin/menu_admin', $data);
+		
 
 	}
 

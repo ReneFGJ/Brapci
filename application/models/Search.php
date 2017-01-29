@@ -340,6 +340,7 @@ class search extends CI_model {
 		}
 		if (strlen($sqlw) > 0) { $wh .= ' AND (' . $sqlw . ' ) ';
 		}
+		$wh = troca($wh,'AND  OR','OR');
 		return ($wh);
 	}
 

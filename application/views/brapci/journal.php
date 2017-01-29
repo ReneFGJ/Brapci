@@ -1,10 +1,20 @@
 <div class="container">
 <?php
-$link = '<img src="'.base_url('img/icone_url.png').'" title="Site da publicação" height="40">';
-$link = '<A HREF="'.$jnl_url.'" target=_new_'.$jnl_codigo.'">'.$link.'</A>';
+if (strlen($jnl_url) > 0)
+	{
+		$link = '<img src="'.base_url('img/icone_url.png').'" title="Site da publicação" height="40">';
+		$link = '<A HREF="'.$jnl_url.'" target=_new_'.$jnl_codigo.'">'.$link.'</A>';
+	} else {
+		$link = '';
+	}
 
-$linko = '<img src="'.base_url('img/icone_oai.png').'" title="Harvesting" height="40">';
-$linko = '<A HREF="'.base_url('index.php/oai/Identify/'.$jnl_codigo).'" target=_new_'.$jnl_codigo.'">'.$linko.'</A>';
+if (strlen($jnl_url_oai) > 0)
+	{
+		$linko = '<img src="'.base_url('img/icone_oai.png').'" title="Harvesting" height="40">';
+		$linko = '<A HREF="'.base_url('index.php/oai/Identify/'.$jnl_codigo).'" target=_new_'.$jnl_codigo.'">'.$linko.'</A>';
+	} else {
+		$linko = '';
+	}
 
 
 echo "
