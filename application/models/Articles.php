@@ -618,7 +618,10 @@ class articles extends CI_model {
 		array_push($cp, array('$S10', 'ar_pg_inicial', msg('ar_pg_inicial'), false, true));
 		array_push($cp, array('$S10', 'ar_pg_final', msg('ar_pg_final'), false, true));
 		array_push($cp, array('$S80', 'ar_doi', msg('ar_doi'), false, true));
-		array_push($cp, array('$S80', 'ar_section', msg('ar_section'), true, true));
+		
+		$sql = "select * from brapci_section where se_ativo = 1 order by se_descricao";
+		array_push($cp, array('$Q se_codigo:se_descricao:'.$sql, 'ar_section', msg('ar_section'), true, true));
+		
 		$sql = "select ed_codigo, concat(ed_ano,', v.',ed_vol,', ',ed_nr) as description from brapci_edition where ed_journal_id = '".$jid."' order by description desc";
 		array_push($cp, array('$Q ed_codigo:description:'.$sql, 'ar_edition', msg('ar_edition'), true, true));
 
@@ -666,6 +669,8 @@ class articles extends CI_model {
 		$sx .= $form -> editar($cp, $this -> table);
 
 		$this -> saved = $form -> saved;
+		
+		echo '<hr>'.$form -> saved.'</hr>';
 
 		if ($form -> saved > 0) {
 			/* delete */
@@ -705,7 +710,7 @@ class articles extends CI_model {
 				SELECT * FROM `brapci_article_author` 
 				inner join brapci_autor on autor_codigo = ae_author
 				where ae_article = '$id'
-				order by ae_pos			
+				order by ae_pos	, id_ae		
 				 ";
 		$rlt2 = $this -> db -> query($sql);
 		$rlt2 = $rlt2 -> result_array();
@@ -785,7 +790,7 @@ class articles extends CI_model {
 				inner join brapci_edition on ar_edition = ed_codigo
 				inner join brapci_journal on jnl_codigo = ar_journal_id 
 				where ae_author = '$codigo' and ar_status <> 'X'			
-				order by ed_ano desc ";
+				order by ae_pos, ed_ano desc ";
 
 		$query = $this -> db -> query($sql);
 		$query = $query -> result();

@@ -340,6 +340,37 @@ class authors extends CI_model {
 		}
 		return ($nm);
 	}
+	
+	function author_editar($id='',$tp='')
+		{
+			$id = strzero($id,10);
+			$sql = "select * from brapci_article_author 
+					INNER JOIN brapci_autor ON autor_codigo = ae_author
+					WHERE ae_article = '$id' 
+					order by ae_position";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			$sx = '<span class="big"><b>Autores</b></span>';
+			$sx .= '<ul class="big">';
+			$sa = '';
+			for ($r=0;$r < count($rlt);$r++)
+				{
+					$line = $rlt[$r];
+					$sx .= '<li>'.$line['autor_nome'].'</li>';
+					$sa .= trim($line['autor_nome']).cr();
+				}
+			$sx .= '</ul>';
+			$sx .= '<a class="btn btn-default" onclick="newxy(\''.base_url('index.php/admin/article_author_editar/'.$id).'\',800,600);">';
+			$sx .= 'Editar autores';
+			$sx .= '</a>';
+			$sx .= '<br>';
+			if ($tp=='1')
+				{
+					return($sa);
+				}
+			return($sx);
+			//exit;
+		}
 
 }
 ?>

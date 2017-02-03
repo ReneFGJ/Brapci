@@ -38,9 +38,11 @@
     <div role="tabpanel" class="tab-pane" id="cited">RDF</div>
     <?php
 	if (perfil("#BIB")) {
-		echo '<div role="tabpanel" class="tab-pane" id="setting">' . $tab_editar . '</div>';
+		echo '<div role="tabpanel" class="tab-pane" id="setting">' . $tab_author .$tab_editar . '</div>';
 		if (isset($tab_support)) {
-			echo '<div role="tabpanel" class="tab-pane" id="support">' . $tab_support . '</div>';
+			echo '<div role="tabpanel" class="tab-pane" id="support">' .		 
+				$tab_support . 
+			'</div>';
 		}
 	}
     ?>    

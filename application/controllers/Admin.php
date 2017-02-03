@@ -291,6 +291,7 @@ class admin extends CI_Controller {
 		$data['tab_refer'] = $this -> load -> view('admin/article_view_refer', $data, true);
 		$data['tab_support'] = $this -> articles-> supports($id);
 		$data['tab_support'] .= $this -> articles-> supports_novo($id);
+		$data['tab_author'] = $this -> authors -> author_editar($id,$jid);
 
 		if ($this -> articles -> saved > 0) {
 			redirect(base_url('index.php/admin/article_view/' . $id . '/' . checkpost_link($id)));
@@ -306,6 +307,42 @@ class admin extends CI_Controller {
 		$this -> load -> view('header/foot_admin', $data);
 
 	}
+
+	function article_author_editar($id='')
+		{
+			$this->load->model('authors');
+			
+			$this->load->view('header/header',null);
+			$form = new form;
+			$cp = array();
+			
+			if (strlen(get("acao")) == 0)
+				{
+					$authors = $this->authors->author_editar($id,'1');
+					$_POST['dd2'] = $authors;
+				}
+			
+			array_push($cp,array('$H8','','',False,False));
+			array_push($cp,array('$HV','',$id,False,False));
+			array_push($cp,array('$T80:5','','Autores',True,False));
+			array_push($cp,array('$B8','',msg('save'),False,False));
+			$tela = $form->editar($cp,'');
+			$data['content'] = $tela;
+			$data['title'] = '';
+			
+			if ($form->saved > 0)
+				{
+					$au = get("dd2");
+					$this->authors->save_AUTHORS($id, $au);
+					$this->load->view('wclose',null);					
+				} else {
+					$this->load->view('content',$data);		
+				}
+			
+			
+			
+			
+		}
 
 	function support_cancelar($id=0,$conf='')
 		{
