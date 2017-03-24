@@ -38,7 +38,7 @@ class author extends CI_Controller {
 	 */
 
 	function index() {
-
+		$this -> load -> model('Search');
 		$data['title'] = 'Brapci : Admin - Authors';
 		$data['title_page'] = 'ADMIN - Author';
 		$this -> load -> view("header/cab_admin", $data);
@@ -51,6 +51,7 @@ class author extends CI_Controller {
 	}
 
 	public function row($id=1) {
+		$this -> load -> model('Search');
 		$this -> load -> model('authors');
 
 		$data['title'] = 'Brapci : Admin - Authors';
@@ -79,6 +80,7 @@ class author extends CI_Controller {
 	}
 
 	function edit($id = 0) {
+		$this -> load -> model('Search');
 		$data['title'] = 'Brapci : Admin - Authors';
 		$data['title_page'] = 'ADMIN - Author';
 		$this -> load -> view("header/cab_admin", $data);
@@ -112,7 +114,7 @@ class author extends CI_Controller {
 	}
 
 	function view($id = 0) {
-
+		$this -> load -> model('Search');
 		$data['title'] = 'Brapci : Admin - Authors';
 		$data['title_page'] = 'ADMIN - Author';
 		$this -> load -> view("header/cab_admin", $data);

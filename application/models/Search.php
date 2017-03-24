@@ -1809,7 +1809,7 @@ class search extends CI_model {
 		$sx .= '<TR valign="top">';
 		$sx .= '<td>';
 		//$sx .= msg('find') . '<B> ' . $dd[2] . '</B>';
-		//$sx .= $this -> result_article_selected($this -> session());
+		$sx .= $this -> result_article_selected($this -> session());
 
 		$sx .= '<td width="120">';
 		$sa = $this -> result_journals();

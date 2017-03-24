@@ -35,6 +35,7 @@ class tool extends CI_Controller {
 
 	function index() {
 		/* Model */
+		$this -> load -> model('Search');
 		$this -> load -> view("header/cab");
 
 		/* Mostra rodape */
@@ -43,6 +44,7 @@ class tool extends CI_Controller {
 	
 	function matrix() {
 		/* Model */
+		$this -> load -> model('Search');
 		$this->load->model('tools');
 		$this -> load -> view("header/cab");
 		
@@ -68,6 +70,7 @@ class tool extends CI_Controller {
 	}	
 	function change01() {
 		/* Model */
+		$this -> load -> model('Search');
 		$this->load->model('tools');
 
 		$data['link'] = base_url('index.php/tool/change01');
@@ -93,6 +96,7 @@ class tool extends CI_Controller {
 	}
 	function change02() {
 		/* Model */
+		$this -> load -> model('Search');
 		$this->load->model('tools');
 
 		$data['link'] = base_url('index.php/tool/change02');
@@ -117,6 +121,7 @@ class tool extends CI_Controller {
 	}
 	function change03() {
 		/* Model */
+		$this -> load -> model('Search');
 		$this->load->model('tools');
 
 		$data['link'] = base_url('index.php/tool/change03');
@@ -140,6 +145,7 @@ class tool extends CI_Controller {
 		$this -> load -> view("header/foot");
 	}
 	function change04() {
+		$this -> load -> model('Search');
 		/* Model */
 		$this->load->model('tools');
 

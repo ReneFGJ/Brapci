@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @category	Helpers
  * @author		Rene F. Gabriel Junior <renefgj@gmail.com>
  * @link		http://www.sisdoc.com.br/CodIgniter
- * @version		v0.16.18
+ * @version		v0.17.02.23
  */
 $dd = array();
 
@@ -120,7 +120,6 @@ function normalizarNome($nome) {
  * @version 0.16.01
  */
 function page_count() {
-	return('');
 	if (isset($_SERVER['PATH_INFO']) and (strlen($_SERVER['PATH_INFO']) > 0)) {
 		$info = $_SERVER['PATH_INFO'] . '/';
 	} else {
@@ -252,6 +251,17 @@ function brtosql($dt) {
 	$dt = brtos($dt);
 	$dt = substr($dt, 0, 4) . '-' . substr($dt, 4, 2) . '-' . substr($dt, 6, 2);
 	return ($dt);
+}
+
+function data_completa($data) {
+	$dt = sonumero($data);
+	$ano = substr($dt, 0, 4);
+	$mes = round(substr($dt, 4, 2));
+	$dia = round(substr($dt, 6, 2));
+	if ($dia == '1') { $dia = '1º';
+	}
+	$txt = $dia . ' de ' . meses($mes) . ' de ' . $ano . '.';
+	return ($txt);
 }
 
 function meses($id = 0) {
@@ -386,7 +396,7 @@ function strzero($ddx, $ttz) {
 }
 
 function UpperCase($d) {
-
+	
 	$d = troca($d, 'ç', 'Ç');
 
 	$d = troca($d, 'á', 'Á');
@@ -492,8 +502,14 @@ function validaCPF($cpf = null) {
 
 function mask_cpf($cpf) {
 	$cpf = sonumero($cpf);
-	strzero($cpf, 12);
-	$cpf = substr($cpf, 0, 3) . '.' . substr($cpf, 3, 3) . '.' . substr($cpf, 6, 3) . '-' . substr($cpf, 9, 2);
+	if (strlen($cpf) > 12) {
+		strzero($cpf, 12);
+		$cpf = substr($cpf, 0, 2) . '.' . substr($cpf, 2, 3) . '.' . substr($cpf, 5, 3) . '/' . substr($cpf, 8, 4).'-'.substr($cpf,12,2);
+	} else {
+		strzero($cpf, 12);
+		$cpf = substr($cpf, 0, 3) . '.' . substr($cpf, 3, 3) . '.' . substr($cpf, 6, 3) . '-' . substr($cpf, 9, 2);
+	}
+
 	return ($cpf);
 }
 
@@ -578,7 +594,7 @@ function DateAdd($ddf, $ddi, $ddt) {
 		$ddt = mktime(0, 0, 0, $ddmes, $dddia + $ddi, $ddano);
 	}
 	if ($ddf == 'w') {
-		$ddt = mktime(0, 0, 0, $ddmes, $dddia + 7, $ddano);
+		$ddt = mktime(0, 0, 0, $ddmes, $dddia + $ddi*7, $ddano);
 	}
 	if ($ddf == 'm') {
 		$ddt = mktime(0, 0, 0, $ddmes + $ddi, $dddia, $ddano);
@@ -704,12 +720,12 @@ function nbr_autor($xa, $tp) {
 		if ($tp == 2) { $xa = UpperCase(trim(trim($xp1) . ', ' . trim($xp2)));
 		}
 	}
-	if (($tp == 3) or ($tp == 4)) {
+	if (($tp == 3) or ($tp == 4) or ($tp == 9)) {
 		if ($tp == 4) { $xa = UpperCase($xa);
 		}
 	}
 
-	if (($tp >= 5) or ($tp <= 6)) {
+	if ((($tp >= 5) and ($tp <= 6)) or ($tp==9)) {
 		$xp2a = str_word_count(LowerCase($xp2), 1);
 		$xp2 = '';
 		for ($k = 0; $k < count($xp2a); $k++) {
@@ -723,12 +739,20 @@ function nbr_autor($xa, $tp) {
 			}
 			if ($xp2a[$k] == 'de') { $xp2a[$k] = '';
 			}
-			if (strlen($xp2a[$k]) > 0) { $xp2 = $xp2 . substr($xp2a[$k], 0, 1) . '. ';
-			}
+			if ($tp==9)
+				{
+						if (strlen($xp2a[$k]) > 0) { $xp2 = $xp2 . $xp2a[$k] . ' ';
+						}
+				} else {
+						if (strlen($xp2a[$k]) > 0) { $xp2 = $xp2 . substr($xp2a[$k], 0, 1) . '. ';
+						}
+				}
 		}
 		$xp2 = trim($xp2);
 		if ($tp == 6) { $xa = UpperCase(trim(trim($xp2) . ' ' . trim($xp1)));
 		}
+		if ($tp == 9) { $xa = UpperCase(trim(trim($xp2) . ' ' . trim($xp1)));
+		}		
 		if ($tp == 5) { $xa = UpperCase(trim(trim($xp1) . ', ' . trim($xp2)));
 		}
 	}
@@ -842,6 +866,7 @@ function highlight($text, $words) {
 
 function UpperCaseSQL($d) {
 	//$d = strtoupper($d);
+
 	/* acentos agudos */
 	$d = (str_replace(array('á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú'), array('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'), $d));
 
@@ -1027,20 +1052,20 @@ function npag($obj, $blank = 1, $tot = 10, $offset = 20) {
 	$link = $obj -> row;
 
 	$pagi = $npage;
-	$pagf = $npage + 10;
+	$pagf = $npage + 6;
 
 	if ($pagi > 5) {
-		$pagi = $pagi - 5;
-		$pagf = $pagf - 5;
+		$pagi = $pagi - 3;
+		$pagf = $pagf - 3;
 	} else {
 		$pagi = 1;
 	}
 
 	$sx = '<table class="table lt2" width="100%">';
-	$sx .= '<tr valign="middle"><td width="50%">';
+	$sx .= '<tr valign="middle"><td width="35%" class="visible-lg">';
 	$sx .= '<ul id="npag" class="npag">';
 	if ($pagi > 1) {
-		$linka = '<A HREF="' . $link . '/' . ($pagi - 1) . '">';
+		$linka = '<A HREF="' . $link . '/' . ($pagi - 1) . '" class="link lt1 small">';
 		$sx .= $linka . '<li><<</li></A> ';
 	}
 
@@ -1048,16 +1073,18 @@ function npag($obj, $blank = 1, $tot = 10, $offset = 20) {
 	if ($pagf > $tot) { $pagf = $tot;
 	}
 	for ($r = $pagi; $r < ($pagf + 1); $r++) {
-		$linka = '<A HREF="' . $link . '/' . $r . '" class="link lt1">';
+		$linka = '<A HREF="' . $link . '/' . $r . '" class="link lt1 small">';
 		$sx .= $linka . '<li class="lt1">' . $r . '</li></a>' . chr(10) . chr(13);
 	}
 	/* */
 	if ($pagf < $pagm) {
-		$linka = '<A HREF="' . $link . '/' . $r . '">';
+		$linka = '<A HREF="' . $link . '/' . $r . '" class="link lt1 small">';
 		$sx .= $linka . '<li>>></li></A>';
 	}
+	$sx .= '</ul>' . cr();
+	$sx .= '</td><td>';
+
 	/* */
-	//$sx .= '</td><td>';
 	$sx .= ' Page:';
 	$linka = $link . '/';
 	$sx .= '<select onChange="location=\'' . $linka . '\'+this.options[this.selectedIndex].value;">';
@@ -1088,11 +1115,11 @@ function npag($obj, $blank = 1, $tot = 10, $offset = 20) {
 	$data = array('name' => 'dd1', 'id' => 'dd1', 'value' => $vlr, 'maxlength' => '100', 'size' => '100', 'style' => 'width:150px', );
 	$sx .= form_input($data);
 	//$sx .= form_submit('acao', msg('bt_search'));
-	$sx .= '<a href="' . ($link) . '"><input type="submit" name="acao" value="' . msg('bt_search') . '" class="btn">';
+	$sx .= '&nbsp;<a href="' . ($link) . '"><input type="submit" name="acao" value="' . msg('bt_search') . '" class="btn">';
 
 	if (strlen($term) > 0) {
 		//$sx .= form_submit('acao', msg('bt_clear'));
-		$sx .= '<a href="' . ($link) . '"><input type="submit" name="acao" value="' . msg('bt_clear') . '" class="btn">';
+		$sx .= '&nbsp;<a href="' . ($link) . '"><input type="submit" name="acao" value="' . msg('bt_clear') . '" class="btn">';
 	}
 	$sx .= '</nobr>';
 
@@ -1346,12 +1373,27 @@ if (!function_exists('form_edit')) {
 
 		$url_pre = $obj -> row_view;
 
+		/* PRE */
+		$active = 0;
+		for ($r = 0; $r < count($mk); $r++) {
+			if ($mk[$r] == 'A') {
+				$active = $r;
+			}
+		}
+
 		foreach ($query->result_array() as $row) {
 			/* recupera ID */
 			$flds = trim($fd[0]);
 			$id = $row[$flds];
 
 			/* mostra resultado da query */
+			$style = '';
+			if ($active > 0) {
+				$flds = trim($fd[$active]);
+				if ($row[$flds] == 0) {
+					$style = ' style="color: #ff0000;" ';
+				}
+			}
 			$data .= '<tr>';
 			for ($r = 1; $r < count($fd); $r++) {
 				/* mascara */
@@ -1370,7 +1412,16 @@ if (!function_exists('form_edit')) {
 						$mskm = ' align="left" ';
 						break;
 					case 'R' :
-						$mskm = ' align-"right" ';
+						$mskm = ' align="right" ';
+						break;
+					case 'A' :
+						$mskm = ' align="center" ';
+						if ($row[$flds] == '0') {
+							$row[$flds] = '<font color="red">Inativo</font>';
+						} else {
+							$row[$flds] = '<font color="green">Ativo</font>';
+						}
+
 						break;
 				}
 
@@ -1382,11 +1433,11 @@ if (!function_exists('form_edit')) {
 					$link = '';
 					$linkf = '';
 				}
-				$data .= chr(15) . '<td ' . $mskm . '>' . $link . trim($row[$flds]) . $linkf . '</td>';
+				$data .= '<td ' . $mskm . '>' . $link . '<font ' . $style . '>' . trim($row[$flds]) . '</font>' . $linkf . '</td>';
 			}
 			if ($obj -> edit == True) {
 				$idr = trim($row[$fd[0]]);
-				$data .= chr(15) . '<td width="1%" align="center"><A HREF="' . $obj -> row_edit . '/' . $idr . '/' . checkpost_link($idr) . '"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>';
+				$data .= '<td width="1%" align="center"><A HREF="' . $obj -> row_edit . '/' . $idr . '/' . checkpost_link($idr) . '"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>';
 			}
 			$data .= '</tr>' . chr(13) . chr(10);
 		}
@@ -1662,7 +1713,7 @@ if (!function_exists('form_edit')) {
 
 		if (strlen($acao) == 0) { $recupera = 1;
 		}
-		
+
 		/* Save in table */
 		if ($recupera == 0) {
 			/* Valida */
@@ -1680,9 +1731,9 @@ if (!function_exists('form_edit')) {
 				<td>' . form_open() . '</td>
 			</tr>
 			';
-		
+
 		if ($recupera == 1) {
-			
+
 			/* recupera dados do banco */
 			if (strlen($obj -> tabela) > 0) {
 				$data = le_dados($obj);
@@ -1767,6 +1818,8 @@ if (!function_exists('form_edit')) {
 		}
 		if (substr($type, 0, 3) == '$UF') { $tt = 'UF';
 		}
+		if (substr($type, 0, 4) == '$RDF') { $tt = 'RDF';
+		}		
 
 		/* form */
 		$max = 100;
@@ -1841,7 +1894,7 @@ if (!function_exists('form_edit')) {
 				}
 
 				/* recupera dados */
-				$dados = array('name' => $dn, 'id' => $dn, 'size' => 1, 'class' => 'form_select ');
+				$dados = array('name' => $dn, 'id' => $dn, 'size' => 1, 'class' => 'form-control ');
 
 				$tela .= $tr;
 
@@ -1861,7 +1914,7 @@ if (!function_exists('form_edit')) {
 					/* TR da tabela */
 					$tela .= $tr;
 					$nr = round(sonumero($type));
-					if ($nr < 1) { $nr = '1';
+					if ($nr < 1) { $nr = '3';
 					}
 
 					if (substr($tdl, 0, 3) == '<td') {
@@ -1942,7 +1995,8 @@ if (!function_exists('form_edit')) {
 				$dados = array('name' => $dn, 'id' => $dn, 'value' => '1', 'class' => 'form_checkbox ');
 				if ($readonly == false) { $dados['readonly'] = 'readonly';
 				}
-				$tela .= '<td align="right">' . form_checkbox($dados, 'accept', $vlr); ;
+				$tela .= '<td align="right">' . form_checkbox($dados, 'accept', $vlr);
+				;
 
 				/* label */
 				if (strlen($label) > 0) {
@@ -2077,7 +2131,7 @@ if (!function_exists('form_edit')) {
 				}
 
 				/* recupera dados */
-				$dados = array('name' => $dn, 'id' => $dn, 'size' => 1, 'class' => 'form_select  ');
+				$dados = array('name' => $dn, 'id' => $dn, 'size' => 1, 'class' => 'form-control  ');
 
 				$tela .= $tr;
 
@@ -2111,7 +2165,7 @@ if (!function_exists('form_edit')) {
 					$options[$flds] = $vlrs;
 				}
 
-				$dados = array('name' => $dn, 'id' => $dn, 'size' => 1, 'class' => 'form_select  ');
+				$dados = array('name' => $dn, 'id' => $dn, 'size' => 1, 'class' => 'form-control  ');
 
 				$tela .= $tr;
 
@@ -2147,7 +2201,8 @@ if (!function_exists('form_edit')) {
 					$vlrs = $row[$vlrs];
 					$options[$flds] = $vlrs;
 					$checked = '';
-					$dados = array('name' => $dn, 'id' => $dn, 'value' => $flds, 'class' => 'form_select  ', 'checked' => $checked);
+					//$dados = array('name' => $dn, 'id' => $dn, 'value' => $flds, 'class' => 'form-control  ', 'checked' => $checked);
+					$dados = array('name' => $dn, 'id' => $dn, 'value' => $flds,  'checked' => $checked);
 					$form .= form_radio($dados) . ' ' . $vlrs . '<br>';
 				}
 
@@ -2166,7 +2221,7 @@ if (!function_exists('form_edit')) {
 			/* String */
 			case 'R' :
 				$ntype = trim(substr($type, 2, strlen($type)));
-				$ntype = troca($ntype, '&', ';') . ';';
+				$ntype = troca($ntype, '&', ';') . ';';	
 				$param = splitx(';', $ntype);
 				$form = '<table width="100%" border=0>';
 
@@ -2324,12 +2379,47 @@ if (!function_exists('form_edit')) {
 
 				$size = sonumero($type);
 
-				$dados = array('name' => $dn, 'id' => $dn, 'value' => $vlr, 'maxlenght' => $max, 'size' => $size, 'placeholder' => $label, 'class' => 'form_string form_s'.$size);
+				$dados = array('name' => $dn, 'id' => $dn, 'value' => $vlr, 'maxlenght' => $max, 'size' => $size, 'placeholder' => $label, 'class' => 'form-control form_string form_s' . $size, 'style'=>'width: '.$size.'%;');
 				if ($readonly == false) { $dados['readonly'] = 'readonly';
 				}
 				$tela .= $td . form_input($dados);
 				$tela .= $tdn . $trn;
 				break;
+				
+			/* RDF */
+			case 'RDF' :
+				
+				$ntype = trim(substr($type, 4, strlen($type)));
+				$ntype = troca($ntype, ':', ';') . ';';
+				$param = splitx(';', $ntype);
+				$options = array('' => msg('::select an option::'));
+
+				/* recupera dados */
+				$sql = "select * from rdf as tabela
+							where rdf_class = '".$param[0]."' 
+							order by rdf_value";
+				$CI = &get_instance();
+				$query = $CI -> db -> query($sql);
+				foreach ($query->result_array() as $row) {
+					/* recupera ID */
+					$flds = $row['rdf_resource'];
+					$vlrs = $row['rdf_value'];
+					$options[$flds] = $vlrs;
+				}
+
+				$dados = array('name' => $dn, 'id' => $dn, 'size' => 1, 'class' => 'form-control  ');
+
+				$tela .= $tr;
+
+				/* label */
+				if (strlen($label) > 0) {
+					$tela .= $tdl . $label . ' ';
+				}
+				if ($required == 1) { $tela .= ' <font color="red">*</font> ';
+				}
+				$tela .= '<TD>';
+				$tela .= form_dropdown($dados, $options, $vlr);
+				break;				
 
 			case 'SW' :
 				{
@@ -2400,7 +2490,7 @@ if (!function_exists('form_edit')) {
 				if ($required == 1) { $tela .= ' <font color="red">*</font> ';
 				}
 
-				$data = array('name' => $dn, 'id' => $dn, 'value' => $vlr, 'rows' => $param[1], 'cols' => $param[0], 'class' => 'form_textarea ');
+				$data = array('name' => $dn, 'id' => $dn, 'value' => $vlr, 'rows' => $param[1], 'cols' => $param[0], 'class' => 'form-control form_textarea ');
 				$tela .= $td . form_textarea($data);
 				$tela .= $tdn . $trn;
 				break;
@@ -2441,36 +2531,34 @@ if (!function_exists('form_edit')) {
 		}
 	}
 
-}
+	function mask_fone($fone) {
+		$fone = sonumero($fone);
+		$fone_m = $fone;
+		if (strlen($fone) <= 8) {
+			$fone_m = substr($fone, 0, 4) . '.' . substr($fone, 4, 4);
+		}
+		if (strlen($fone) == 9) {
+			$fone_m = substr($fone, 0, 5) . '.' . substr($fone, 5, 4);
+		}
+		if ((strlen($fone) > 9) and (strlen($fone) < 13)) {
+			$fone_m = '(' . substr($fone, 0, 2) . ')' . substr($fone, 2, 4) . '.' . substr($fone, 6, 5);
+		}
+		return ($fone_m);
+	}
 
-function hex_dump($data, $newline="\n")
-{
- $sx ='';
-  static $from = '';
-  static $to = '';
+	function mask_cep($cep) {
+		$cep = strzero(sonumero($cep), 8);
+		$cep = substr($cep, 0, 2) . '.' . substr($cep, 2, 3) . '-' . substr($cep, 5, 3);
+		return ($cep);
+	}
 
-  static $width = 32; # number of bytes per line
+	function name_weekday($day) {
+		$wk = array('Domingo', 'Segunda-Feira', 'Terça-Feira', 'Quarta-Feira', 'Quinta-Feira', 'Sexta-Feira', 'Sábado');
+		$day = round($day);
+		if ($day > 6) { $day = 0;
+		}
+		return ($wk[$day]);
+	}
 
-  static $pad = '.'; # padding for non-visible characters
-
-  if ($from==='')
-  {
-    for ($i=0; $i<=0xFF; $i++)
-    {
-      $from .= chr($i);
-      $to .= ($i >= 0x20 && $i <= 0x7E) ? chr($i) : $pad;
-    }
-  }
-
-  $hex = str_split(bin2hex($data), $width*2);
-  $chars = str_split(strtr($data, $from, $to), $width);
-
-  $offset = 0;
-  foreach ($hex as $i => $line)
-  {
-    $sx .=  sprintf('%6X',$offset).' : '.implode(' ', str_split($line,2)) . ' [' . $chars[$i] . ']' . $newline;
-    $offset += $width;
-  }
-  return($sx);
 }
 ?>

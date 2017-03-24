@@ -65,6 +65,7 @@ class social extends CI_Controller {
 	}
 
 	function cab($data = array()) {
+		$this -> load -> model('Search');
 		$js = array();
 		$css = array();
 		array_push($js, 'form_sisdoc.js');

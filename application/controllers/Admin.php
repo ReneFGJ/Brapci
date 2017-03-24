@@ -44,6 +44,7 @@ class admin extends CI_Controller {
 	}
 
 	function cab() {
+		$this -> load -> model('Search');
 		$this -> load -> model('users');
 		$data = array();
 		$data['title_page'] = 'Brapci :: ADMIN';

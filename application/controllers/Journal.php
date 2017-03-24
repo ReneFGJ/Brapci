@@ -38,6 +38,7 @@ class journal extends CI_Controller {
 		form_sisdoc_getpost();
 	
 		$this->session->userdata('search');		
+		$this -> load -> model('Search');
 		$this -> load -> view("header/cab");
 		
 		/* */
@@ -56,6 +57,7 @@ class journal extends CI_Controller {
 	
 	function issue($id=0) {
 		/* Models */
+		$this -> load -> model('Search');
 		$this->load->model('journals');
 		$this->load->model('editions');
 
@@ -92,7 +94,8 @@ class journal extends CI_Controller {
 		global $dd;
 		
 		form_sisdoc_getpost();
-	
+		
+		$this -> load -> model('Search');	
 		$this->session->userdata('search');		
 		$this -> load -> view("header/cab");
 	

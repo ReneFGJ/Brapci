@@ -254,6 +254,8 @@ class home extends CI_Controller {
 		$session = $this -> Search -> session();
 		
 		$this -> load -> view("header/cab");
+		
+
 
 		$this -> load -> view("brapci/content");
 		//$this -> load -> view("brapci/search_form");
@@ -263,15 +265,17 @@ class home extends CI_Controller {
 		$this -> load -> view("brapci/session_cab", $data);
 
 		$data['tela'] = $this -> Search -> session_set($id);
-
+		
 		$data = array();
 		/* Usuario logado */
-		if (isset($_SESSION['email'])) {
-
+		
+		if ((isset($_SESSION['email'])) and (strlen($_SESSION['email']) > 0)) {
 			$data['tela'] = $this -> Search -> result_search_selected($session);
+		} else {
+			$data['tela'] = '';
 		}
-
-		$data['tela'] = $this -> Search -> result_search_selected($session);
+		
+		//$data['tela'] = $this -> Search -> result_search_selected($session);
 
 		/* Mostra resultado */
 		$this -> load -> view("brapci/search_result", $data);
