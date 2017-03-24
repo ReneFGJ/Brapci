@@ -173,6 +173,19 @@ if (strlen($user) > 0) {
 				</form>
 				-->
 				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<img src="<?php echo base_url('img/icon/icon_basket.png');?>" style="height: 42px; padding: 5px 0px 0px 0px;" title="Trabalhos selecionados">						
+					</li>
+					<li>
+						<a href="<?php
+							// home/selection/a00bdb05a5/8ca472e83bf5dde1458c1e7cf6091505
+							echo base_url('index.php/home/selection/'.$_SESSION['bp_session']); ?>" class="superbig"><div id="basket">
+							<?php echo $this->Search->selected(); ?>
+						</div></a>
+					</li>
+					<li>
+						&nbsp;
+					</li>
 					<!---
 					<li>
 						<a href="#">Link</a>

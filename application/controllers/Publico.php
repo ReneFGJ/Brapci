@@ -97,7 +97,7 @@ class publico extends CI_controller {
 		$line = $rlt[0];
 		$total = $line['total'];
 
-		echo '<img src="' . base_url('img/icone_my_library.png') . '" height="20">';
+		//echo '<img src="' . base_url('img/icone_my_library.png') . '" height="20">';
 		echo ' ' . $total . ' ' . msg('SELECTED');
 	}
 

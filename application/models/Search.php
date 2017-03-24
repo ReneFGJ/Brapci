@@ -95,15 +95,10 @@ class search extends CI_model {
 		$line = $rlt[0];
 		$total = $line['total'];
 		/* comando para fechar o HREF se pertinente */
-		$link_off = '';
-		if ($total > 0) {
-			echo '<A href="' . base_url('index.php/home/selection/' . $session . '/' . checkpost_link($session)) . '" class="link_menu">';
-			/* ativa o fechar a tag */
-			$link_off = '</a>';
-		}
-		echo '<img src="' . base_url('img/icone_my_library.png') . '" height="20">';
-		echo ' ' . $total . ' ' . msg('Selected');
-		echo $link_off;
+
+		$sx = ' ' . $total . ' ' . msg('Selected');
+
+		return($sx);
 	}
 
 	function metodo_pontos($titulo, $resumo, $keyword, $rla) {
@@ -583,6 +578,63 @@ class search extends CI_model {
 		return ($sx);
 
 	}
+
+	function result_article_cited($data = '') {
+		global $db_public, $db_base;
+		$term_code = $data['dd4'];
+
+		//$total = $this->result_total_articles($term,$datai,$dataf);
+
+		//$term = utf8_decode($term);
+
+		$sessao = $this -> sessao;
+
+		$sql = "SELECT * FROM 
+						( select distinct kw_article from brapci_keyword 
+								INNER JOIN brapci_article_keyword ON kw_use = kw_keyword 
+								WHERE kw_word_asc LIKE '%$term_code%'
+						) as tabela					 
+					INNER JOIN brapci_publico.artigos on ar_codigo = kw_article 
+					INNER JOIN brapci_journal ON ar_journal_id = jnl_codigo
+					LEFT JOIN  brapci_publico.usuario_selecao on ar_codigo = sel_work and sel_sessao = '$sessao'
+				";
+		$sql .= " order by ar_ano desc ";
+		$sql .= " limit 100 offset 0 ";
+		$sql = "select * FROM mar_works WHERE m_ref like '%$term_code%' ";
+		$sql .= " order by m_ref desc ";
+		//$sql .= " limit 100 offset 0 ";
+		//echo $sql;
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		$total = count($rlt);
+		$sx = chr(13) . chr(10);
+		/* total */
+
+		$sx .= ', found ' . $total;
+
+		$sx .= '<div id="result_select">' . msg('result_search') . '</div>';
+		$sx .= '<table width="100%" class="lt1">';
+		$id = 0;
+		$wh = '';
+		for ($r=0;$r < count($rlt);$r++)
+			{
+				$line = $rlt[$r];
+				$sx .= '<tr><td>'.$line['m_ref'].'</td></tr>';
+				if (strlen($wh) > 0) { $wh .= ' or ';
+				}
+				$wh .= " ar_codigo = '" . trim($line['m_work']) . "' ";
+			} 	
+		
+		$sx .= '</table>';
+		$sx .= chr(13) . chr(10);
+		$sx .= $this -> js;
+		$sx .= chr(13) . chr(10);
+		$this -> query = $wh;
+
+		return ($sx);
+
+	}
+
 
 	function result_autor_key($data = '') {
 		global $db_public, $db_base;
@@ -1505,6 +1557,46 @@ class search extends CI_model {
 		return ($data);
 	}
 
+	function busca_form_cited($data = array()) {
+		global $dd, $SESSION;
+
+		$SESSION = array();
+		$SESSION['ssid'] = '';
+		$SESSION['srcid'] = '1';
+		for ($r = 0; $r < 100; $r++) {
+			$SESSION['srcid' . $r] = '1';
+		}
+
+		if (isset($data['anoi'])) {
+			$data1 = $data['anoi'];
+			$data2 = $data['anof'];
+		} else {
+			$data1 = 1970;
+			$data2 = (date("Y") + 1);
+		}
+		$sx = '';
+		/* registra consulta */
+
+		if (strlen($dd[1])) {
+			//$this -> registra_consulta($dd[2]);
+		}
+		$sa = '';
+		if (strlen($data['dd4']) > 0) {
+			$sr = $this -> result_search_cited($data, $data1, $data2);
+			if (strlen($this -> query) > 0) {
+
+				$sa = $this -> result_journals($data);
+				$sa .= $this -> result_year();
+				$sa .= $this -> result_author();
+				$sa .= $this -> result_keyword();
+			}
+			$sx .= $this -> realce($sr, $data['dd4']);
+		}
+		$data['tela1'] = $sx;
+		$data['tela2'] = $sa;
+		return ($data);
+	}
+
 	function busca_form_autor($data = array()) {
 		global $dd, $SESSION;
 
@@ -1676,6 +1768,13 @@ class search extends CI_model {
 		return ($sx);
 	}
 
+	function result_search_cited($key_cod = '') {
+		$sx = '';
+		$sx .= $this -> lang -> line('form_found') . ' <B> ' . $key_cod['dd4'] . '</B>';
+		$sx .= $this -> result_article_cited($key_cod);
+		return ($sx);
+	}
+
 	function result_search_autor($key_cod = '') {
 		$sx = '';
 		$sx .= $this -> lang -> line('form_found') . ' <B> ' . $key_cod['dd4'] . '</B>';
@@ -1706,11 +1805,11 @@ class search extends CI_model {
 
 	function result_search_selected() {
 		global $dd, $acao;
-		$sx = '<table border=1 class="lt1" width="100%">';
+		$sx = '<table border=0 class="table" width="100%">';
 		$sx .= '<TR valign="top">';
 		$sx .= '<td>';
-		$sx .= msg('find') . '<B> ' . $dd[2] . '</B>';
-		$sx .= $this -> result_article_selected($this -> session());
+		//$sx .= msg('find') . '<B> ' . $dd[2] . '</B>';
+		//$sx .= $this -> result_article_selected($this -> session());
 
 		$sx .= '<td width="120">';
 		$sa = $this -> result_journals();

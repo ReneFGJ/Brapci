@@ -26,6 +26,8 @@ class authority extends CI_Controller {
 	}
 
 	function cab() {
+		/* Model */
+		$this -> load -> model('Search');
 		$this -> load -> view('header/cab');
 	}
 

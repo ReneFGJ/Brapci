@@ -120,7 +120,7 @@ class home extends CI_Controller {
 		$data['pag'] = $pag;
 
 		//$this -> load -> view("brapci/content");
-		$this -> load -> view("brapci/search_form", $data);
+		$this -> load -> view("brapci/search_form_2017", $data);
 
 		/* Busca */
 		/* Tipos de Busca */
@@ -142,6 +142,11 @@ class home extends CI_Controller {
 					break;
 				case '3' :
 					$telax = $this -> Search -> busca_form_keyword($data);
+					$data = array('tela' => $telax['tela1'], 'tela2' => $telax['tela2']);
+					break;
+				case '5' :
+					/* REFERENCIAS */
+					$telax = $this -> Search -> busca_form_cited($data);
 					$data = array('tela' => $telax['tela1'], 'tela2' => $telax['tela2']);
 					break;
 				default :
@@ -243,10 +248,11 @@ class home extends CI_Controller {
 	}
 
 	function selection($id) {
+		
 		/* Model */
 		$this -> load -> model('Search');
 		$session = $this -> Search -> session();
-
+		
 		$this -> load -> view("header/cab");
 
 		$this -> load -> view("brapci/content");

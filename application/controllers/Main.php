@@ -40,6 +40,8 @@ class main extends CI_Controller {
 	function about()
 		{
 		$id = 1;
+		/* Model */
+		$this -> load -> model('Search');
 		$this -> load -> view("header/cab");
 
 			
@@ -49,6 +51,8 @@ class main extends CI_Controller {
 	function tutorial($id = 0)
 		{
 		$id = 1;
+		/* Model */
+		$this -> load -> model('Search');
 		$this -> load -> view("header/cab");
 		$this -> load -> view("brapci/content");
 		
