@@ -259,6 +259,7 @@ class oai extends CI_controller {
 	}
 
 	function cab() {
+		$this -> load -> model('Search');
 		$this->load->model('users');
 		$data = array();
 		$data['title'] = 'Brapci : OAI-PMH';
@@ -305,6 +306,7 @@ class oai extends CI_controller {
 	}
 
 	function Harvesting($id = 0) {
+		
 		$this -> load -> model('oai_pmh');
 		$this -> cab();
 		$data = array();
@@ -374,6 +376,7 @@ class oai extends CI_controller {
 	}
 
 	function Identify($id = 0) {
+		
 		$this -> cab();
 
 		$this -> load -> model('journals');
@@ -421,8 +424,9 @@ class oai extends CI_controller {
 	}
 
 	function ListIdentifiers($id = 0) {
-
+		
 		$this -> cab();
+		
 		$data = array();
 		$data['id'] = $id;
 		$this -> load -> view('oai/oai_verbs', $data);
