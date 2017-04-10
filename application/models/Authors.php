@@ -371,6 +371,65 @@ class authors extends CI_model {
 			return($sx);
 			//exit;
 		}
+	function check_equals_name($id='15')
+		{
+			$sql = "select nome, max, min, A1.autor_nome as nome1, A2.autor_nome as nome2, 
+						A1.autor_codigo as cod1,
+						A2.autor_codigo as cod2
+						from (
+						select nome, max(id_autor) as max, min(id_autor) as min,
+							count(*) as total
+							from (
+						select substr(autor_nome,1,$id) as nome, id_autor
+										from brapci_autor
+										where autor_codigo = autor_alias
+						    ) as tabela
+						 group by nome
+						    ) as result
+						    
+						 INNER JOIN brapci_autor as A1 ON A1.id_autor = min
+						 INNER JOIN brapci_autor as A2 ON A2.id_autor = max 
+						    where total > 1
+						    order by nome";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			$sx = '<table width="100%" class="table">';
+			$id = 0;
+			$id1 = 0;
+			$id2 = 0;
+			$id3 = 0;
+			for ($r=0;$r < count($rlt);$r++)
+				{
+					$line = $rlt[$r];
+					
+					$link1 = '<a href="'.base_url('index.php/admin/author_eq_name/'.$line['cod1'].'/'.$line['cod2'].'/'.checkpost_link($line['cod1'].$line['cod2'].date("dH"))).'#'.$id.'">';
+					$link2 = '<a href="'.base_url('index.php/admin/author_eq_name/'.$line['cod2'].'/'.$line['cod1'].'/'.checkpost_link($line['cod2'].$line['cod1'].date("dH"))).'#'.$id.'">';
+					$id = $id1;
+					$id1 = $id2;
+					//$id2 = $id3;
+					$id2 = $line['cod1'];
+					$sx .= '<tr>';
+					$sx .= '<td>';
+					$sx .= '<a name="'.$line['cod1'].'"></a>';
+					$sx .= $link1.$line['nome1'].'</a>';
+					$sx .= '<br/>';
+
+					$sx .= $link2.$line['nome2'].'</a>';
+					$sx .= '</td>';
+
+					$sx .= '</tr>';
+				}
+				$sx .= '</table>';
+				return($sx);
+		}
+		
+		function set_remissive_author($us1,$us2)
+			{
+				$sql = "update brapci_autor set
+							autor_alias = '$us1'
+						WHERE autor_codigo = '$us2'";
+				$rlt = $this->db->query($sql);
+			}
 
 }
 ?>

@@ -216,10 +216,11 @@ abstract class OAuth2_Provider
 		{
 			throw new OAuth2_Exception($return);
 		}
-		
 		switch ($params['grant_type'])
 		{
 			case 'authorization_code':
+				$return = json_decode($response, true);
+
 				return OAuth2_Token::factory('access', $return);
 			break;
 

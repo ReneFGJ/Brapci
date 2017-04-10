@@ -44,6 +44,7 @@ class cited extends CI_Controller {
 	}
 
 	function cab() {
+		$this -> load -> model('Search');
 		$data = array();
 		$data['title'] = 'Brapci : Admin - Citações';
 		$data['title_page'] = 'ADMIN - Citações';
@@ -85,6 +86,20 @@ class cited extends CI_Controller {
 		$this -> cab();
 		$this -> load -> view('brapci/article_simple', $data);
 		$this -> load -> view('cited/cited_import');
+
+		$this -> load -> view('header/foot_admin', $data);
+
+	}
+	
+	function find_bdoi($id = 0) {
+		$data = array();
+		$this -> load -> model('articles');
+		$this -> load -> model('cites');
+
+		$this -> cab();
+		$tela = $this->cites->bdoi_find();
+		$data['content'] = $tela;
+		$this->load->view('content',$data);
 
 		$this -> load -> view('header/foot_admin', $data);
 

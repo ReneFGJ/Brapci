@@ -50,9 +50,13 @@ $lang['bt_home'] = 'HOME';
 $lang['bt_sign_out'] = 'logout';
 $lang['bt_sign_in'] = 'fazer login';
 $lang['bt_about'] = 'sobre a brapci';
-$lang['admin_home'] = 'ADMIN HOME';
-$lang['menu_admin'] = 'ADMIN';
+
 $lang['last_update'] = 'Útima atualização';
+$lang['admin_tools'] = 'Ferramentas de coleta';
+$lang['ADMIN'] = 'Admin';
+$lang['ADMIN_HOME'] = 'Ferramentas de administração';
+$lang['ADMIN_TASK'] = 'Trabalhos para revisão';
+$lang['ADMIN_AUTH'] = 'Ferramentas de autoridades';
 
 $lang['to index'] = 'indexando';
 $lang['finished'] = 'finalizado';

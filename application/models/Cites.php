@@ -15,10 +15,54 @@
 /* @author: Rene Faustino Gabriel Junior <renefgj@gmail.com>
  * @date: 2015-12-01
  */
-class cited extends CI_Model {
+class cites extends CI_Model {
 	function inport_cited_text($s) {
 
 	}
+	
+	function bdoi_find()
+		{
+			$sql = "update bdoi_doi set doi_use = id_doi where doi_use = 0";
+			$rlt = $this->db->query($sql);
+			
+			$sql = "select * from bdoi_doi";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			$sx = '';
+			for ($r=0;$r < count($rlt);$r++)
+				{
+					$line = $rlt[$r];
+					$id_bdoi = $line['doi_use'];
+					
+					$t = trim($line['doi_strategy']);
+					$t = troca($t,' ',';');
+					$t = troca($t,'_',' ');
+					$tr = splitx(';',$t);
+					$wh = '';
+					$sx .= '<h5>'.$line['doi_ref'].'</h5>';
+					for ($t=0;$t < count($tr);$t++)
+						{
+							$tt = $tr[$t];
+							if (strlen($wh) > 0) { $wh .= ' AND '; }
+							$wh .= "(m_ref like '%$tt%') ";
+						}
+					$sql = "select * from mar_works
+							WHERE $wh
+							AND (m_obra_bdoi = 0 or m_obra_bdoi IS NULL)
+							";
+					$qrlt = $this->db->query($sql);
+					$qrlt = $qrlt->result_array();
+					for ($t=0;$t < count($qrlt);$t++)
+						{
+							$qline = $qrlt[$t];
+							$sx .= $qline['id_m'].' seted.<br>';
+							$sql = "update mar_works set m_obra_bdoi = $id_bdoi where id_m = ".$qline['id_m'].';';
+							$xrlt = $this->db->query($sql);
+						}
+							
+				}
+			return($sx);
+		}
 	
 	function index()
 		{

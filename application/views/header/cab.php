@@ -1,28 +1,4 @@
 <?php
-/* Datas comemorativas */
-if ((date("md") >= 1215) and (date("md") < 1226))
-	{
-		//echo '<script type="text/javascript" src="http://blogparts.giffy.me/0017/parts.js" />'.cr();
-		//echo '<script type="text/javascript" src="http://blogparts.giffy.me/0001/parts.js" />'.cr();
-		//echo '<script type="text/javascript" src="http://blogparts.giffy.me/0002/parts.js" />'.cr();
-		//echo '<script type="text/javascript" src="http://blogparts.giffy.me/0035/parts.js" />'.cr();
-		//echo '<script type="text/javascript" src="http://blogparts.giffy.me/0003/parts.js" />'.cr();
-	}
-
-/* aNO NOVO */
-if ((date("md") == 0101))
-	{
-		echo '<script type="text/javascript" src="http://blogparts.giffy.me/0026/parts.js" />'.cr();
-	}
-
-/* DIAS DOS NAMORADOS */
-if ((date("md") == 0612))
-	{
-		echo '<script type="text/javascript" src="http://blogparts.giffy.me/0015/parts.js" />'.cr();
-		//echo '<script type="text/javascript" src="http://blogparts.giffy.me/0010/parts.js" />'.cr();
-	}	
-	
-	
 /***********************************************************************************/
 if (!isset($title_page))
 	{
@@ -92,7 +68,7 @@ if (strlen($user) > 0) {
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-					<span class="sr-only">Toggle navigation</span>
+					<span class="sr-only">Brapci</span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
@@ -106,22 +82,29 @@ if (strlen($user) > 0) {
 					<li>
 						<a href="<?php echo base_url('index.php');?>">HOME <span class="sr-only">(current)</span></a>
 					</li>
-					
+					<!--
 					<li>
 						<a href="<?php echo base_url('index.php/main/about');?>">Sobre a Brapci</a>
-					</li>					
+					</li>
+					-->					
 					<!--
 					<li>
 						<a href="#">Link</a>
 					</li>
 					-->
-					<?php if (strlen($user) > 0) { ?>
+					<?php if ((strlen($user) > 0) and($nivel >= 9)) { ?>
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo msg('menu_admin');?><span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo msg('ADMIN');?><span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li>
-								<a href="<?php echo base_url('index.php/admin');?>"><?php echo msg('admin_home');?></a>
+								<a href="<?php echo base_url('index.php/admin');?>"><?php echo msg('ADMIN_HOME');?></a>
 							</li>
+							<li>
+								<a href="<?php echo base_url('index.php/admin/tools');?>"><?php echo msg('admin_tools');?></a>
+							</li>
+							<li>
+								<a href="<?php echo base_url('index.php/admin/author_tools');?>"><?php echo msg('ADMIN_AUTH');?></a>
+							</li>							
 							<li>
 								<a href="<?php echo base_url('index.php/admin/resumo_status/0');?>"><?php echo msg('ADMIN_TASK');?></a>
 							</li>

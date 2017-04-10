@@ -600,8 +600,11 @@ class search extends CI_model {
 				";
 		$sql .= " order by ar_ano desc ";
 		$sql .= " limit 100 offset 0 ";
-		$sql = "select * FROM mar_works WHERE m_ref like '%$term_code%' ";
-		$sql .= " order by m_ref desc ";
+		
+		$sql = "select * FROM mar_works 
+					LEFT JOIN bdoi_doi ON id_doi = m_obra_bdoi
+					WHERE m_ref like '%$term_code%' ";
+		$sql .= " order by doi_ref, m_ref desc ";
 		//$sql .= " limit 100 offset 0 ";
 		//echo $sql;
 		$rlt = $this -> db -> query($sql);
@@ -616,10 +619,24 @@ class search extends CI_model {
 		$sx .= '<table width="100%" class="lt1">';
 		$id = 0;
 		$wh = '';
+		$xref = '';
 		for ($r=0;$r < count($rlt);$r++)
 			{
 				$line = $rlt[$r];
-				$sx .= '<tr><td>'.$line['m_ref'].'</td></tr>';
+				$ref = $line['doi_ref'];
+				if ($ref != $xref)
+					{
+						$xref = $ref;
+						$sx .= '<tr><td colspan=5 class="big">'.$ref.'</td></tr>'.cr();		
+					}
+				$idx = round($line['doi_use']);
+				if ($idx > 0)
+					{ $idxm = '*'; }
+					else
+					{ $idxm = '&nbsp;'; }
+				$sx .= '<tr valign="top">
+						<td>'.$idxm.'</td>
+						<td>'.$line['m_ref'].'</td></tr>';
 				if (strlen($wh) > 0) { $wh .= ' or ';
 				}
 				$wh .= " ar_codigo = '" . trim($line['m_work']) . "' ";

@@ -155,7 +155,6 @@ class social extends CI_Controller {
 			$app_id = $this -> face_id;
 			//$app_secret = $this -> config -> item('fb_appsecret');
 			$app_secret = $this -> face_app;
-
 			$provider = $this -> oauth2 -> provider($provider, array('id' => $app_id, 'secret' => $app_secret, ));
 		}
 		//google
