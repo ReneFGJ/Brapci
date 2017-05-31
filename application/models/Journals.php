@@ -49,14 +49,24 @@ class journals extends CI_model {
 		array_push($cp, array('$S14', 'jnl_issn_eletronico', 'ISSN Eletrônico', False, True));
 		array_push($cp, array('$S100', 'jnl_url', 'URL da publicação', False, True));
 		
-		$sqltp = 'select * from brapci_journal_tipo where jtp_ativo = 1 order by jtp_ordem';
-		array_push($cp, array('$Q jtp_codigo:jtp_descricao:'.$sqltp, 'jnl_tipo', 'Tipo da publicação', True, True));
-		
 		$sqltp = 'select * from ajax_cidade where cidade_ativo = 1 order by cidade_nome';
 		array_push($cp, array('$Q cidade_codigo:cidade_nome:'.$sqltp, 'jnl_cidade', 'Cidade', True, True));
+        
+        array_push($cp, array('$Q peri_codigo:peri_nome:select * from brapci_periodicidade order by peri_nome', 'jnl_periodicidade', 'Periodicidade', True, True));
+
+        array_push($cp, array('$O A:Vigente&B:Encerrado&X:Cancelado', 'jnl_status', 'Situação', True, True));              
 
 		//array_push($cp, array('$O 1:Ativo&0:Inativo', 'jnl_oai_from', 'OAI Ativo', False, True));
 		array_push($cp, array('$S20', 'jnl_patch', 'Atalho', False, True));
+        
+
+        /* COLEÇÃO */
+        array_push($cp, array('${', '', 'Coleção', False, True));
+        $sqltp = 'select * from brapci_journal_tipo where jtp_ativo = 1 order by jtp_ordem';
+        array_push($cp, array('$Q jtp_codigo:jtp_descricao:'.$sqltp, 'jnl_tipo', 'Tipo da publicação', True, True));
+        
+        array_push($cp, array('$Q id_cl:cl_name:select * from collections', 'jnl_collection', 'Coleção', True, True));
+        array_push($cp, array('$}', '', 'Coleção', False, True));
 
 		array_push($cp, array('${', '', 'OAI', False, True));
 		array_push($cp, array('$S100', 'jnl_url_oai', 'Link do OAI-PMH', False, True));
@@ -70,11 +80,6 @@ class journals extends CI_model {
 		array_push($cp, array('$O 0:Não&1:Sim', 'jnl_scielo', 'Indexado no Scielo', False, True));
 		array_push($cp, array('$}', '', 'Indexadores', False, True));
 		
-		array_push($cp, array('$O A:Vigente&B:Encerrado&X:Cancelado', 'jnl_status', 'Situação', True, True));		
-
-
-		array_push($cp, array('$Q peri_codigo:peri_nome:select * from brapci_periodicidade order by peri_nome', 'jnl_periodicidade', 'Periodicidade', True, True));
-
 		/* Botao */
 		array_push($cp, array('$B8', '', 'Gravar >>>', False, True));
 		return ($cp);

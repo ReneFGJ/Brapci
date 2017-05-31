@@ -159,8 +159,18 @@ class oai extends CI_controller {
 		if (strlen($link) > 0) {
 
 			/* Try One */
-			/* If "/view/" in link */
-			if ((strpos($link, '/view/')) or (strpos($link, '/viewFile/')) or (strpos($link, '/viewArticle/'))) {
+			
+			/* If "/view/" in link */			
+			if ((strpos($link, '/view/')) or (strpos($link, '/viewFile/')) or (strpos($link, '/viewArticle/')) or (strpos($link, '/download/'))) {
+				/* tratar */
+				if (strpos($link, '/download/'))
+					{
+						if (!(strpos($link, '/download/')))
+							{
+								$link .= 'pdf';
+							}
+					}
+				
 				$txt = load_page($link);
 				$txt = $txt['content'];
 
@@ -185,7 +195,7 @@ class oai extends CI_controller {
 					} else {
 						$sql = "update brapci_article_suporte set bs_status = 'T' where id_bs = '$id'";
 						$rlt = $this->db->query($sql);						
-						echo '<font color="red">Invalid link</font>';
+						echo '<br><font color="red">Invalid link</font>';
 						return ('');
 					}
 				}
@@ -423,7 +433,7 @@ class oai extends CI_controller {
 
 	}
 
-	function ListIdentifiers($id = 0) {
+	function ListIdentifiers($id = 0,$token='') {
 		
 		$this -> cab();
 		
@@ -453,6 +463,10 @@ class oai extends CI_controller {
 			}
 			$link .= '&from=' . $dt;
 		}
+        if (strlen($token) > 0)
+            {
+                $link .= '&resumptionToken='.trim($token);                
+            }
 		$data['content'] = $link;
 
 		$this -> load -> view('oai/oai_content', $data);
@@ -467,6 +481,11 @@ class oai extends CI_controller {
 				$data['content'] .= $this -> oai_pmh -> ListIdentifiers_Method_1($link);
 				$data['title'] = '';
 				$this->load->view('content',$data);
+                
+                if (strlen($this->oai_pmh->token) > 0)
+                    {
+                        echo '<meta http-equiv="refresh" content="5;URL='.base_url('index.php/oai/ListIdentifiers/'.$id.'/'.$this->oai_pmh->token).'">';                        
+                    }
 				break;
 		}
 	}

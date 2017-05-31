@@ -53,7 +53,7 @@ class v extends CI_controller {
 		$this -> load -> model('keywords');
 		$this -> load -> model('authors');
 		$this -> load -> model('archives');
-		$this -> load -> model('cited');
+		$this -> load -> model('cites');
 		$this -> load -> model('tools/tools');
 		$this -> load -> model('metodologias');
 
@@ -72,7 +72,7 @@ class v extends CI_controller {
 
 
 		$data['archives'] = $this -> archives -> show_files($id);
-		$data['citeds'] = $this -> cited -> show_cited($id);
+		$data['citeds'] = $this -> cites -> show_cited($id);
 
 		/* Barra de status da indexação */
 		$data['progress_bar'] = $this -> tools -> progress_bar($data['ar_status']);
@@ -131,13 +131,12 @@ class v extends CI_controller {
 		//$data['tab_marc21'] = '';
 		$data['tab_editar'] = '';
 		$data['tab_refer'] = $this -> load -> view('admin/article_view_refer', $data, true);
-
+        $data['tab_rdf'] = 'em construção';
+        $data['link_rdf'] = 'em construção';
 		$this -> load -> view('article/article_view', $data);
 
-		$data['content'] = '</table><br><br>';
 
-		$this -> load -> view('content', $data);
-		$this -> load -> view('header/foot_admin', $data);
+		$this -> load -> view('header/foot', $data);
 	}
 
 }

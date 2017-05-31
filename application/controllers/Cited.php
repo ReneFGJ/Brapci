@@ -102,8 +102,27 @@ class cited extends CI_Controller {
 		$this->load->view('content',$data);
 
 		$this -> load -> view('header/foot_admin', $data);
-
 	}
+	
+	function ref_edit($id = 0) {
+		$data = array();
+		$this -> load -> model('articles');
+		$this -> load -> model('cites');
 
+		$this -> cab();
+		$form = new form;
+		$form->table = 'mar_works';
+		$form->id = $id;
+		$cp = array();
+		array_push($cp,array('$H8','id_m','',false,false));
+		array_push($cp,array('$T80:5','m_ref','',true,true));
+		array_push($cp,array('$HV','m_status','A',true,true));
+		
+		$tela = $form->editar($cp,$form->table);
+		
+		$data['content'] = $tela;
+		$data['title'] = '';
+		$this->load->view('content',$data);
+	}
 }
 ?>

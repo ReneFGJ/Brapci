@@ -1,4 +1,4 @@
-<div id="loading" ><center>Pocessando busca...<BR><BR><img src="<?php base_url('img/icone_ajax_waiting.gif');?>"></center></div>
+<div id="loading" ><center>Processando busca...<BR><BR><img src="<?php base_url('img/icone_ajax_waiting.gif');?>"></center></div>
 
 <style>
 #loading

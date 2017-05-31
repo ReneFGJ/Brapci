@@ -25,14 +25,19 @@ class cites extends CI_Model {
 			$sql = "update bdoi_doi set doi_use = id_doi where doi_use = 0";
 			$rlt = $this->db->query($sql);
 			
-			$sql = "select * from bdoi_doi";
+			$sql = "select * from bdoi_doi order by id_doi";
 			$rlt = $this->db->query($sql);
 			$rlt = $rlt->result_array();
 			$sx = '';
+			
 			for ($r=0;$r < count($rlt);$r++)
 				{
 					$line = $rlt[$r];
 					$id_bdoi = $line['doi_use'];
+					IF ($id_bdoi == 0)
+						{
+							$id_bdoi = $line['id_doi'];
+						}
 					
 					$t = trim($line['doi_strategy']);
 					$t = troca($t,' ',';');
@@ -162,9 +167,27 @@ class cites extends CI_Model {
 		$rlt = $this -> db -> query($sql);
 		$rlt = $rlt -> result_array();
 		$sx = '<ul>' . cr();
+		$admin = 0;
+		if (isset($_SESSION['nivel']))
+			{
+				if ($_SESSION['nivel'] > 1)
+					{
+						$admin = 1;				
+					}
+			}
+		
+		$link = '';
+		$link_a = '';
+		
 		for ($r = 0; $r < count($rlt); $r++) {
 			$line = $rlt[$r];
-			$sx .= '<li>' . $line['m_ref'] . '</li>' . cr();
+			
+			if ($admin == 1)
+				{
+					$link = '<a href="#" onclick="newwin(\''.base_url('index.php/cited/ref_edit/'.$line['id_m'].'/'.checkpost_link($line['id_m'])).'\',600,800);">';
+					$link_a = '</a>';
+				}
+			$sx .= '<li>' . $link. $line['m_ref'] . $link_a. '</li>' . cr();
 		}
 		$sx .= '</ul>' . cr();
 		return ($sx);

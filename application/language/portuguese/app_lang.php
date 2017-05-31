@@ -28,15 +28,19 @@ if (!function_exists(('msg')))
 					}
 			}
 	}
+
+
+
 /* Cited */
 $lang['bt_thesauros'] = 'tesauros';
 $lang['how_to_cite'] = 'Como citar este trabalho';
 $lang['mes_01a'] = 'Jan.';
 $lang['mes_02a'] = 'Fev.';
 $lang['mes_03a'] = 'Mar.';
-$lang['mes_04a'] = 'Maio';
-$lang['mes_05a'] = 'Jun.';
-$lang['mes_06a'] = 'Jul';
+$lang['mes_04a'] = 'Abr.';
+$lang['mes_05a'] = 'Maio';
+$lang['mes_06a'] = 'Jun.';
+$lang['mes_07a'] = 'Jul';
 $lang['mes_08a'] = 'Ago.';
 $lang['mes_09a'] = 'Set.';
 $lang['mes_10a'] = 'Out.';

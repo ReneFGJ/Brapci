@@ -220,9 +220,11 @@ class admin extends CI_Controller {
 		$this -> load -> model('keywords');
 		$this -> load -> model('authors');
 		$this -> load -> model('archives');
-		$this -> load -> model('cited');
+		
 		$this -> load -> model('tools/tools');
 		$this -> load -> model('metodologias');
+		
+		$this -> load -> model('cites');
 
 		$data = $this -> articles -> le($id);
 		if (strlen($data['ar_key1']) == 0) {
@@ -231,7 +233,7 @@ class admin extends CI_Controller {
 		}
 
 		$data['archives'] = $this -> archives -> show_files($id);
-		$data['citeds'] = $this -> cited -> show_cited($id);
+		$data['citeds'] = $this -> cites -> show_cited($id);
 
 		/* Barra de status da indexação */
 		$data['progress_bar'] = $this -> tools -> progress_bar($data['ar_status']);
@@ -269,7 +271,7 @@ class admin extends CI_Controller {
 				break;
 			case 'CITED' :
 				if (get("dd63") == '1') {
-					$data['tela'] = $this -> cited -> save_ref($id, get("dd62"));
+					$data['tela'] = $this -> cites -> save_ref($id, get("dd62"));
 					redirect(base_url('index.php/v/a/' . $id . '/' . checkpost_link($id)));
 				}
 				break;
@@ -411,7 +413,7 @@ class admin extends CI_Controller {
 	}
 
 	function refer($ar = '') {
-		$this -> load -> model("cited");
+		$this -> load -> model("cites");
 
 		$data['nocab'] = true;
 		$this -> load -> view('header/header', $data);
@@ -424,10 +426,10 @@ class admin extends CI_Controller {
 		$tela = $form -> editar($cp, '');
 
 		if ($form -> saved > 0) {
-			$this -> cited -> save_ref($ar, get("dd1"));
+			$this -> cites -> save_ref($ar, get("dd1"));
 			$tela = '<script> wclose(); </script>';
 		} else {
-			$ln = $this -> cited -> save_ref_pre(get("dd1"));
+			$ln = $this -> cites -> save_ref_pre(get("dd1"));
 			$tela .= '<ul>';
 			for ($r = 0; $r < count($ln); $r++) {
 				if (strlen($ln[$r]) > 5) {
@@ -764,6 +766,19 @@ class admin extends CI_Controller {
 		$data['content'] = $this -> keywords -> check_keywords_language();
 		$this -> load -> view('content', $data);
 	}
+	
+	function file2pdf()
+		{
+		$this -> load -> model('Oai_pmh');
+		$this -> cab();
+
+		$sx = $this -> Oai_pmh -> artcle_wifout_file();
+
+		$data['content'] = $sx;
+		$data['title'] = 'Para coletar PDF';
+		$this -> load -> view('content', $data);
+			
+		}
 
 	function fileexist_pdf($pag = 0) {
 		$this -> load -> model('Oai_pmh');
@@ -899,6 +914,7 @@ class admin extends CI_Controller {
 		array_push($menu, array(msg('PDF'), msg('Harvesting PDF'), 'ITE', '/admin/harvesting_pdf'));
 		array_push($menu, array(msg('PDF'), msg('Convert PDF'), 'ITE', '/admin/harvesting_pdf_convert'));
 		array_push($menu, array(msg('PDF'), msg('File Exist'), 'ITE', '/admin/fileexist_pdf'));
+		array_push($menu, array(msg('PDF'), msg('Incorporar PDF'), 'ITE', '/admin/file2pdf'));
 		array_push($menu, array(msg('OAI'), msg('Harvesting all publications'), 'ITE', '/oai/harvest'));
 		array_push($menu, array(msg('OAI'), msg('Resume all harvesting'), 'ITE', '/oai/harvesting'));
 		array_push($menu, array(msg('OAI'), msg('Reset OAI cached'), 'ITE', '/oai/cache_reset'));

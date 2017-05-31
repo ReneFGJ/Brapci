@@ -50,6 +50,16 @@ class search extends CI_model {
 
 		$db_public = 'brapci_publico.';
 	}
+    
+    function colletions()
+        {
+            $sql = "select * from collections
+                        where cl_ativo = 1 
+                        order by id_cl";
+            $rlt = $this->db->query($sql);
+            $rlt = $rlt->result_array();
+            return($rlt);
+        }
 
 	function save_session() {
 		$loged = 0;
@@ -579,7 +589,7 @@ class search extends CI_model {
 
 	}
 
-	function result_article_cited($data = '') {
+	function result_article_titles($data = '') {
 		global $db_public, $db_base;
 		$term_code = $data['dd4'];
 
@@ -589,18 +599,97 @@ class search extends CI_model {
 
 		$sessao = $this -> sessao;
 
-		$sql = "SELECT * FROM 
-						( select distinct kw_article from brapci_keyword 
-								INNER JOIN brapci_article_keyword ON kw_use = kw_keyword 
-								WHERE kw_word_asc LIKE '%$term_code%'
-						) as tabela					 
-					INNER JOIN brapci_publico.artigos on ar_codigo = kw_article 
+		$sql = "SELECT * FROM brapci_publico.artigos
 					INNER JOIN brapci_journal ON ar_journal_id = jnl_codigo
-					LEFT JOIN  brapci_publico.usuario_selecao on ar_codigo = sel_work and sel_sessao = '$sessao'
+					LEFT JOIN brapci_publico.usuario_selecao on ar_codigo = sel_work and sel_sessao = '$sessao'
+					WHERE Article_title like '%$term_code%'
 				";
 		$sql .= " order by ar_ano desc ";
 		$sql .= " limit 100 offset 0 ";
-		
+
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		$total = count($rlt);
+		$sx = chr(13) . chr(10);
+		/* total */
+
+		$sx .= ', found ' . $total;
+
+		$sx .= '<div id="result_select">' . msg('result_search') . '</div>';
+		$sx .= '<table width="100%" class="lt1">';
+		$id = 0;
+		$wh = '';
+		while ($line = db_read($rlt)) {
+			$sx .= $this -> show_article_mini($line);
+			if (strlen($wh) > 0) { $wh .= ' or ';
+			}
+			$wh .= " ar_codigo = '" . trim($line['ar_codigo']) . "' ";
+		}
+		$sx .= '</table>';
+		$sx .= chr(13) . chr(10);
+		$sx .= $this -> js;
+		$sx .= chr(13) . chr(10);
+		$this -> query = $wh;
+
+		return ($sx);
+
+	}
+
+	function result_article_resumos($data = '') {
+		global $db_public, $db_base;
+		$term_code = $data['dd4'];
+
+		//$total = $this->result_total_articles($term,$datai,$dataf);
+
+		//$term = utf8_decode($term);
+
+		$sessao = $this -> sessao;
+
+		$sql = "SELECT * FROM brapci_publico.artigos
+					INNER JOIN brapci_journal ON ar_journal_id = jnl_codigo
+					LEFT JOIN brapci_publico.usuario_selecao on ar_codigo = sel_work and sel_sessao = '$sessao'
+					WHERE Abstract like '%$term_code%'
+				";
+		$sql .= " order by ar_ano desc ";
+		$sql .= " limit 100 offset 0 ";
+
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		$total = count($rlt);
+		$sx = chr(13) . chr(10);
+		/* total */
+
+		$sx .= ', found ' . $total;
+
+		$sx .= '<div id="result_select">' . msg('result_search') . '</div>';
+		$sx .= '<table width="100%" class="lt1">';
+		$id = 0;
+		$wh = '';
+		while ($line = db_read($rlt)) {
+			$sx .= $this -> show_article_mini($line);
+			if (strlen($wh) > 0) { $wh .= ' or ';
+			}
+			$wh .= " ar_codigo = '" . trim($line['ar_codigo']) . "' ";
+		}
+		$sx .= '</table>';
+		$sx .= chr(13) . chr(10);
+		$sx .= $this -> js;
+		$sx .= chr(13) . chr(10);
+		$this -> query = $wh;
+
+		return ($sx);
+
+	}
+	function result_article_cited($data = '') {
+		global $db_public, $db_base;
+		$term_code = $data['dd4'];
+
+		//$total = $this->result_total_articles($term,$datai,$dataf);
+
+		//$term = utf8_decode($term);
+
+		$sessao = $this -> sessao;
+	
 		$sql = "select * FROM mar_works 
 					LEFT JOIN bdoi_doi ON id_doi = m_obra_bdoi
 					WHERE m_ref like '%$term_code%' ";
@@ -620,10 +709,33 @@ class search extends CI_model {
 		$id = 0;
 		$wh = '';
 		$xref = '';
+		$tot = 0;
+		$ida = 0;
 		for ($r=0;$r < count($rlt);$r++)
 			{
 				$line = $rlt[$r];
+				$idx = $line['m_obra_bdoi'];
+				$link = '<a href="'.base_url('index.php/article/view/'.$line['m_work']).'" target="_new'.$r.'">';
+				if (isset($_SESSION['nivel']))
+					{
+						if ($_SESSION['nivel'] > 1)
+							{
+								$link = '<a href="'.base_url('index.php/admin/article_view/'.$line['m_work'].'/'.checkpost_link($line['m_work'])).'" target="_new'.$r.'">';
+							}
+					}
+			
 				$ref = $line['doi_ref'];
+				
+				if ($idx != $ida)
+					{
+						$ida = $idx;
+						if ($tot > 1)
+							{
+								$sx .= '<tr><td align="left" colspan=5">Total: '.$tot.' trabalhos.</td></tr>';
+							}
+						$tot = 0;
+					}
+									
 				if ($ref != $xref)
 					{
 						$xref = $ref;
@@ -636,10 +748,12 @@ class search extends CI_model {
 					{ $idxm = '&nbsp;'; }
 				$sx .= '<tr valign="top">
 						<td>'.$idxm.'</td>
-						<td>'.$line['m_ref'].'</td></tr>';
+						<td>'.$link.$line['m_ref'].'</a>'.'</td></tr>';
 				if (strlen($wh) > 0) { $wh .= ' or ';
 				}
 				$wh .= " ar_codigo = '" . trim($line['m_work']) . "' ";
+
+				$tot++;
 			} 	
 		
 		$sx .= '</table>';
@@ -652,6 +766,45 @@ class search extends CI_model {
 
 	}
 
+	function busca_form_title($data = '') {
+		global $dd, $SESSION;
+
+		$SESSION = array();
+		$SESSION['ssid'] = '';
+		$SESSION['srcid'] = '1';
+		for ($r = 0; $r < 100; $r++) {
+			$SESSION['srcid' . $r] = '1';
+		}
+
+		if (isset($data['anoi'])) {
+			$data1 = $data['anoi'];
+			$data2 = $data['anof'];
+		} else {
+			$data1 = 1970;
+			$data2 = (date("Y") + 1);
+		}
+		$sx = '';
+		/* registra consulta */
+
+		if (strlen($dd[1])) {
+			//$this -> registra_consulta($dd[2]);
+		}
+		$sa = '';
+		if (strlen($data['dd4']) > 0) {
+			$sr = $this -> result_search_title($data, $data1, $data2);
+			if (strlen($this -> query) > 0) {
+
+				$sa = $this -> result_journals($data);
+				$sa .= $this -> result_year();
+				$sa .= $this -> result_author();
+				$sa .= $this -> result_keyword();
+			}
+			$sx .= $this -> realce($sr, $data['dd4']);
+		}
+		$data['tela1'] = $sx;
+		$data['tela2'] = $sa;
+		return ($data);
+	}
 
 	function result_autor_key($data = '') {
 		global $db_public, $db_base;
@@ -1356,6 +1509,35 @@ class search extends CI_model {
 		}
 		return ($sx);
 	}
+	
+	function result_articles()
+		{
+			$wh = $this->query;
+			$sql = "select * from brapci_publico.artigos
+						WHERE ".$wh."
+					ORDER BY ar_ano, Date_Publication ";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			$sx = '';
+			for ($r=0;$r < count($rlt);$r++)
+				{
+					$line = $rlt[$r];
+					
+					$link = '<a href="'.base_url('index.php/article/view/'.$line['ar_codigo']).'" target="_new_'.$r.'">';
+					$sx .= '<br>';
+					$sx .= ($r+1).') ';
+					$sx .= $link;
+					$sx .= $line['Author_Analytic'].'. ';;
+					$sx .= $line['ar_titulo_1'].'. ';
+					$sx .= $line['Journal_Title'].', ';
+					$sx .= $line['Volume_ID'];', ';
+					$sx .= $line['Issue_ID'].', ';;
+					$sx .= $line['Date_Publication'].'. ';
+					$sx .= $line['Pages'];
+					$sx .= '</a>';
+				}
+			return($sx);
+		}
 
 	function result_keyword() {
 		global $db_base, $db_public;
@@ -1598,6 +1780,7 @@ class search extends CI_model {
 			//$this -> registra_consulta($dd[2]);
 		}
 		$sa = '';
+		$sb = '';
 		if (strlen($data['dd4']) > 0) {
 			$sr = $this -> result_search_cited($data, $data1, $data2);
 			if (strlen($this -> query) > 0) {
@@ -1606,13 +1789,17 @@ class search extends CI_model {
 				$sa .= $this -> result_year();
 				$sa .= $this -> result_author();
 				$sa .= $this -> result_keyword();
+				
+				$sb = $this -> result_articles();
 			}
 			$sx .= $this -> realce($sr, $data['dd4']);
 		}
 		$data['tela1'] = $sx;
 		$data['tela2'] = $sa;
+		$data['tela3'] = $sb;
 		return ($data);
 	}
+	
 
 	function busca_form_autor($data = array()) {
 		global $dd, $SESSION;
@@ -1775,6 +1962,20 @@ class search extends CI_model {
 
 		$sx .= $this -> result_article($post['dd4'], $data1, $data2, $post);
 
+		return ($sx);
+	}
+
+	function result_search_title($key_cod = '') {
+		$sx = '';
+		$sx .= $this -> lang -> line('form_found') . ' <B> ' . $key_cod['dd4'] . '</B>';
+		$sx .= $this -> result_article_titles($key_cod);
+		return ($sx);
+	}
+
+	function result_search_abstract($key_cod = '') {
+		$sx = '';
+		$sx .= $this -> lang -> line('form_found') . ' <B> ' . $key_cod['dd4'] . '</B>';
+		$sx .= $this -> result_article_abstracts($key_cod);
 		return ($sx);
 	}
 

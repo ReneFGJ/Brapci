@@ -1,9 +1,26 @@
 <div class="container">
 	<div class="row">
-		<div class="col-md-12">
-			<?php echo $tela; ?>
-		</div>
-
+		<?php 
+		if (isset($tela2))
+			{
+				echo '
+					<div class="col-md-9 col-sx-12">'.$tela.'</div>
+					<div class="col-md-3 col-sx-12">'.$tela2.'</div>
+				'; 			
+			} else {
+				echo '
+					<div class="col-md-12">'.$tela.'</div>
+				'; 				
+			}
+			
+			if (isset($tela3))
+				{
+				echo '
+					<div class="col-md-12"><h3>Obras citantes</h3></div>
+					<div class="col-md-12">'.$tela3.'</div>
+					';	
+				}
+		?>
 	</div>
 </div>
 <script>

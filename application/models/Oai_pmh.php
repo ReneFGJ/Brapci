@@ -18,6 +18,7 @@
 
 class oai_pmh extends CI_model {
 	var $issue;
+    var $token='';
 	function repository_list() {
 		$sql = "select * from brapci_journal 
 						where jnl_status <> 'X'
@@ -85,16 +86,37 @@ class oai_pmh extends CI_model {
 		$xml_rs = $rs['content'];
 		$xml = simplexml_load_string($xml_rs);
 
+        $token = $xml->ListIdentifiers -> resumptionToken;
+        $this->token = $token;
+        
 		$xml = $xml -> ListIdentifiers -> header;
 		$sx = '<ul>';
+        $status = 'ok';
 		for ($r = 0; $r < count($xml); $r++) {
-			$ida = $xml[$r] -> identifier;
-			$date = $xml[$r] -> datestamp;
-			$setSpec = $xml[$r] -> setSpec;
-			$rt = $this -> oai_listset($ida, $setSpec, $date);
-			$sx .= '<li>'.$ida.' - '.$rt.'</li>';
+            foreach($xml[$r]->attributes() as $a => $b) {
+                if ($a == 'status')
+                    {
+                        $status = $b;
+                    }
+            }
+        $ida = $xml[$r] -> identifier;
+        $date = $xml[$r] -> datestamp;
+        $setSpec = $xml[$r] -> setSpec;
+            		        
+	    if ($status == 'deleted')
+                {
+                     $rt = '<span class="label label-important">deleted</span>';
+                     $sx .= '<li>'.$ida.' - '.$rt.'</li>'; 
+                    
+                } else {
+                     $rt = $this -> oai_listset($ida, $setSpec, $date);
+                     $sx .= '<li>'.$ida.' - '.$rt.'</li>';
+                }
 		}
 		$sx .= '</ul>';
+		
+        $sx .= '<br>'.$token;
+		
 		return ($sx);
 
 	}
@@ -732,14 +754,63 @@ class oai_pmh extends CI_model {
 			return (0);
 		}
 	}
+	
+	function artcle_wifout_file($pag=0)
+		{
+			$off = $pag*50;
+			$sql = "select count(*) as total from brapci_article
+					LEFT JOIN (
+						select count(*) as total, bs_article from brapci_article_suporte 
+								where bs_status <> 'X' and bs_type = 'PDF' 
+								group by bs_article
+						) as tabela ON bs_article = ar_codigo
+					WHERE TOTAL is null AND ar_status <> 'X' 
+					limit 50 offset $off";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			$sx = '<h4>'.$rlt[0]['total'].'</h4>';
+			
+			$sql = "select ar_codigo, ar_titulo_1, jnl_nome from brapci_article
+					LEFT JOIN (
+						select count(*) as total, bs_article from brapci_article_suporte 
+								where bs_status <> 'X' and bs_type = 'PDF' 
+								group by bs_article
+						) as tabela
+					ON bs_article = ar_codigo
+					INNER JOIN brapci_journal ON jnl_codigo = ar_journal_id
+					
+					WHERE TOTAL is null AND ar_status <> 'X'					
+					ORDER BY jnl_nome, ar_codigo
+					limit 50 offset $off";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+
+			$sx .= '<ul>';
+			$jnl = '';
+			for ($r=0;$r < count($rlt);$r++)
+				{
+					$line = $rlt[$r];
+					$xjnl = $line['jnl_nome'];
+					if ($jnl != $xjnl)
+						{
+							$sx .= '<h4>'.$xjnl.'</h4>';
+							$jnl = $xjnl;
+						}
+					$link = '<a href="'.base_url('index.php/admin/article_view/'.$line['ar_codigo'].'/'.checkpost_link($line['ar_codigo'])).'">';
+					$sx .= '<li>'.$link.$line['ar_titulo_1'].'</a></li>';
+				}
+			$sx .= '</ul>';
+			return($sx);
+		}
 
 	function fileExistPDFlink($pag = 0) {
 		$sz = 30;
 		$OFFSET = ($pag * 100);
 		$data = date("Ymd");
 		$sql = "select * from brapci_article_suporte 
-					WHERE bs_update <> '$data'
-					and bs_type = 'PDF'
+					WHERE bs_update <> '$data' 
+						and bs_status <> 'X'
+						and bs_type = 'PDF'
 					order by id_bs 
 					LIMIT 100 OFFSET $OFFSET
 					
@@ -757,6 +828,8 @@ class oai_pmh extends CI_model {
 				$sx .= ' <b><font color="green">OK</font></b>' . cr();
 			} else {
 				$sx .= ' <b><font color="red">file not found</font></b>' . cr();
+				$sql = "update brapci_article_suporte set bs_status = 'X', bs_update = '".date("Ymd")."' where id_bs = ".$line['id_bs'];
+				$rla = $this->db->query($sql);
 			}
 		}
 		if (count($rlt) > 0) {

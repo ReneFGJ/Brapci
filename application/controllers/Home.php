@@ -140,14 +140,22 @@ class home extends CI_Controller {
 					$telax = $this -> Search -> busca_form_autor($data);
 					$data = array('tela' => $telax['tela1'], 'tela2' => $telax['tela2']);
 					break;
+				case '2' :
+					$telax = $this -> Search -> busca_form_title($data);
+					$data = array('tela' => $telax['tela1'], 'tela2' => $telax['tela2']);
+					break;
 				case '3' :
 					$telax = $this -> Search -> busca_form_keyword($data);
+					$data = array('tela' => $telax['tela1'], 'tela2' => $telax['tela2']);
+					break;
+				case '4' :
+					$telax = $this -> Search -> busca_form_abstract($data);
 					$data = array('tela' => $telax['tela1'], 'tela2' => $telax['tela2']);
 					break;
 				case '5' :
 					/* REFERENCIAS */
 					$telax = $this -> Search -> busca_form_cited($data);
-					$data = array('tela' => $telax['tela1'], 'tela2' => $telax['tela2']);
+					$data = array('tela' => $telax['tela1'], 'tela2' => $telax['tela2'], 'tela3' => $telax['tela3']);
 					break;
 				default :
 					$tela = '';

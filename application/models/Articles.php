@@ -106,17 +106,22 @@ class articles extends CI_model {
 		$rlt = $this -> db -> query($sql);
 		$rlt = $rlt -> result_array();
 
-		$sx = '<table class="table">';
+		$sx = '<table class="table" border=5>';
 		$sx .= '<tr>
 						<th>tipo</th>
 						<th>endereço</th>
 						<th>sit.</th>
+						<th width="3%">#</th>
+						<th width="20%">status</th>
 						<th>atual.</th>
-						<th width="180">ação</th>
+						<th width="4%">ação</th>
 					</tr>' . cr();
 		for ($r = 0; $r < count($rlt); $r++) {
 			$line = $rlt[$r];
-			$sx .= '<tr>';
+			$id = $line['id_bs'];
+			
+			$sx .= '<tr bgcolor="#f0f0f0">';
+			
 			$sx .= '<td>';
 			$sx .= $line['bs_type'];
 			$sx .= '</td>';
@@ -128,12 +133,43 @@ class articles extends CI_model {
 			$sx .= '<td>';
 			$sx .= $line['bs_status'];
 			$sx .= '</td>';
+			
+			$divm = 'id' . $r;
+			
+			$sx .= '<td align="right">';
+			$link = '<a href="#">';
+			$sx .= $link.'<span id="' . $divm . 'a"  class="glyphicon glyphicon-refresh" aria-hidden="true"></span>'.'</a>';
+						
+			$pag= '1';			
+			$sx .= '</td>';
+			
+			$sx .= '<td>';
+			$sx .= '<div id="' . $divm . '" style="width:150px; height: 30px; border:1px solid #333;" class="lt1"></div>';
+			$sx .= '</td>' . cr();
+
+			$sx .= '<script>' . cr();
+			$sx .= '
+				$("#' . $divm . 'a").click(function() {
+						$("#' . $divm . '").html("Coletando...");					
+						$.ajax({
+		  					method: "POST",
+		  					url: "' . base_url('index.php/oai/coletar_pdf/' . $id . '/' . ($pag + 1)) . '",
+		  					data: { name: "OAI", location: "PDF" }
+							})
+		  					.done(function( data ) {
+		    						$("#' . $divm . '").html(data);
+		  					});
+					});
+			' . cr();
+			$sx .= '</script>' . cr();			
+					
+			$sx .= '</td>';			
 
 			$sx .= '<td>';
 			$sx .= stodbr($line['bs_update']);
 			$sx .= '</td>';
+						
 			$sx .= '<td align="right">';
-
 			$link = 'onclick="newxy(\'' . base_url('index.php/admin/support_editar/' . $line['id_bs'] . '/' . $line['bs_article']) . '\',600,400);"';
 			$sx .= '<span ' . $link . ' class="btn btn-primary">editar</span>';
 			
@@ -148,7 +184,7 @@ class articles extends CI_model {
 	function task_next($id) {
 		$sql = "select * from brapci_article 
 						where ar_status = '$id'
-						order by id_ar
+						order by ar_section, id_ar desc
 						limit 50
 					";
 		$rlt = $this -> db -> query($sql);

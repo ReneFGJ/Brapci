@@ -47,8 +47,51 @@ class article extends CI_Controller {
 		global $dd;
 		$this -> load -> view("brapci/article");
 	}
+	
+	function test()
+		{
+			$sql = "SELECT * FROM `mar_works` 
+						left join bdoi_doi ON m_obra_bdoi = id_doi
+						WHERE m_ref like '%BOURDIEU%' and m_obra_bdoi > 0";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			$ar = '';
+			for ($r=0;$r < count($rlt);$r++)
+				{
+					$line = $rlt[$r];
+					$arx = $line['m_work'];
+					$ref = $line['doi_ref'];
+					$ref = troca($ref,';','-');
+					
+					if ($ar != $arx)
+						{
+							$ar = $arx;
+							echo cr();
+							//echo $arx.';';
+						}
+					echo $ref.';';
+				}
+			
+			return('');			
+			$sql = "SELECT doi_ref, autor_nome_abrev 
+					FROM `mar_works`
+					INNER JOIN brapci_article_author on m_work = ae_article
+					INNER JOIN brapci_autor ON ae_author = autor_codigo
+					INNER JOIN bdoi_doi ON m_obra_bdoi = id_doi
+					WHERE m_ref like '%BOURDIEU%' and m_obra_bdoi > 0";
+			$rlt = $this->db->query($sql);
+			$rlt = $rlt->result_array();
+			for ($r=0;$r < count($rlt);$r++)
+				{
+					$line = $rlt[$r];
+					echo '"'.trim($line['doi_ref']).'"';
+					echo ';';
+					echo '"'.trim($line['autor_nome_abrev']).'"';
+					echo cr();
+				}
+		}
 
-	function view($id, $check, $status = '') {
+	function view($id, $check='', $status = '') {
 		global $dd, $acao;
 		$this -> load -> model('Search');
 		$this -> Search -> registra_visualizacao($id);
@@ -58,7 +101,7 @@ class article extends CI_Controller {
 		$this -> load -> model('keywords');
 		$this -> load -> model('authors');
 		$this -> load -> model('archives');
-		$this -> load -> model('cited');
+		$this -> load -> model('cites');
 		$this -> load -> model('tools/tools');
 		$this -> load -> model('metodologias');
 
@@ -76,7 +119,7 @@ class article extends CI_Controller {
 		$this -> cab($data);
 
 		$data['archives'] = $this -> archives -> show_files($id);
-		$data['citeds'] = $this -> cited -> show_cited($id);
+		$data['citeds'] = $this -> cites -> show_cited($id);
 
 		/* Barra de status da indexação */
 		$data['progress_bar'] = $this -> tools -> progress_bar($data['ar_status']);

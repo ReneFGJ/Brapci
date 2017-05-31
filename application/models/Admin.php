@@ -204,7 +204,7 @@ class admins extends CI_model {
 		$tela .= '<TD width="90%">';
 		$tela .= $tela_articles;
 		/* Botao novo */
-		$tela .= '<span class="btn btn-primary" onclick="article_new();">NOVO TRABALHO</span>;
+		$tela .= '<span class="btn btn-primary" onclick="article_new();">NOVO TRABALHO</span>';
 		$tela .= '
 				<script>
 					function article_new()
