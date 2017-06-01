@@ -61,6 +61,18 @@ for ($r = 0; $r < count($links); $r++) {
 		echo $link;
 	}
 }
+
+/********* GOOGLE *********/
+$link_google = '<BR><a href="https://www.google.com.br/search?q='.$ar_titulo_1.'" target="_new_'.date("YmdHis").'">Google</a>';
+echo $link_google;
+
+/********* OAI ID *********/
+if (strlen($ar_oai_id) > 0)
+    {
+        $link_oai_id = '<BR><a href="'.base_url('index.php/oai/reharvesting/'.$id_ar).'" target="_new_'.date("YmdHis").'">OAI-ID</a>';
+        echo $link_oai_id;
+    }
+
 if (perfil("#BIB") == 1) {
 	echo '<div>';
 	echo '<br>';

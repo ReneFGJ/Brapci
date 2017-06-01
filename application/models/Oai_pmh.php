@@ -19,6 +19,45 @@
 class oai_pmh extends CI_model {
 	var $issue;
     var $token='';
+    
+    function le_oaiid($oai_id)
+        {
+            $sql = "select * from oai_cache where cache_oai_id = '$oai_id'";
+            $rlt = $this->db->query($sql);
+            $rlt = $rlt->result_array();
+            if (count($rlt) > 0)
+                {
+                    $rlt = $rlt[0];
+                }
+            return($rlt);
+        }
+    
+    function rescan_xml($id)
+        {
+            $file = 'ma/oai/'.strzero($id,7).'.xml';
+            if (!file_exists($file))
+                {
+                    return(0);
+                }
+                
+            /* LE O XML */
+            $dom = new DOMDocument("1.0", "ISO-8859-15");
+            $dom -> preserveWhiteSpace = False;
+            $dom -> load($file);
+            
+            $dcUri2   = $dom->lookupNamespaceUri('oai_dc');
+            $items = $dom->getElementsByTagNameNS($dcUri2,'dc');
+            echo '<pre>';
+            $dcUri   = $dom->lookupNamespaceUri('dc');
+            $authors = $items->getElementsByTagNameNS($dcUri, 'creator');
+            print_r($authors);
+            //$author  = $authors->item(0)->nodeValue;
+            echo '</pre>';
+ 
+
+            
+            exit;
+        }
 	function repository_list() {
 		$sql = "select * from brapci_journal 
 						where jnl_status <> 'X'
@@ -96,7 +135,7 @@ class oai_pmh extends CI_model {
             foreach($xml[$r]->attributes() as $a => $b) {
                 if ($a == 'status')
                     {
-                        $status = $b;
+                        //$status = $b;
                     }
             }
         $ida = $xml[$r] -> identifier;
@@ -106,7 +145,7 @@ class oai_pmh extends CI_model {
 	    if ($status == 'deleted')
                 {
                      $rt = '<span class="label label-important">deleted</span>';
-                     $sx .= '<li>'.$ida.' - '.$rt.'</li>'; 
+                     $sx .= '<li>'.$ida.' - '.$status.'</li>'; 
                     
                 } else {
                      $rt = $this -> oai_listset($ida, $setSpec, $date);
@@ -114,9 +153,7 @@ class oai_pmh extends CI_model {
                 }
 		}
 		$sx .= '</ul>';
-		
-        $sx .= '<br>'.$token;
-		
+			
 		return ($sx);
 
 	}

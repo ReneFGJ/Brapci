@@ -76,6 +76,9 @@ class keywords extends CI_model {
 		/* pt-BR */
 		$sql = "update brapci_keyword set kw_idioma = 'pt_BR' where kw_idioma = 'pt-BR' ";
 		$rlt = $this -> db -> query($sql);
+        /* pt-BR */
+        $sql = "update brapci_keyword set kw_idioma = 'pt_BR' where kw_idioma = 'pt-PT' ";
+        $rlt = $this -> db -> query($sql);        
 
 		/* us */
 		$sql = "update brapci_keyword set kw_idioma = 'en' where kw_idioma = 'us' ";

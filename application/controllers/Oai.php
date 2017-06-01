@@ -455,7 +455,7 @@ class oai extends CI_controller {
 		/* part I */
 		$link .= '?';
 		$link .= 'verb=ListIdentifiers';
-		$link .= '&metadataPrefix=oai_dc';
+		
 
 		if (strlen(trim($data['jnl_token_from'])) > 0) {
 			$dt = trim($data['jnl_token_from']);
@@ -466,6 +466,8 @@ class oai extends CI_controller {
         if (strlen($token) > 0)
             {
                 $link .= '&resumptionToken='.trim($token);                
+            } else {
+                $link .= '&metadataPrefix=oai_dc';
             }
 		$data['content'] = $link;
 
@@ -479,6 +481,7 @@ class oai extends CI_controller {
 		switch ($meth1) {
 			case '1' :
 				$data['content'] .= $this -> oai_pmh -> ListIdentifiers_Method_1($link);
+                $data['content'] .= '=TOKEN=>'.$this->oai_pmh->token;
 				$data['title'] = '';
 				$this->load->view('content',$data);
                 
@@ -489,6 +492,20 @@ class oai extends CI_controller {
 				break;
 		}
 	}
+
+    function reharvesting($id=0)
+        {
+        $this->load->model('articles');
+        $this->load->model('oai_pmh');
+        $this -> cab();
+        $data = array();  
+        $article = $this->articles->le($id);
+        $oai_cache = $this->oai_pmh->le_oaiid($article['ar_oai_id']);
+        $idc = $oai_cache['id_cache'];
+        
+        $this->oai_pmh->rescan_xml($idc);
+        
+        }
 	
 	function ReScan($id = 0,$conf='') {
 		$this->load->model('oai_pmh');

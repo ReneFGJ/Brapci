@@ -15,6 +15,8 @@
 	echo ' | ';
 	echo '<A HREF="'.base_url('index.php/oai/ProcessRecords/'.$id).'">ProcessRecords</A>';	
 	echo ' | ';
-	echo '<A HREF="'.base_url('index.php/oai/ReScan/'.$id).'">ReScan</A>';	
+	echo '<A HREF="'.base_url('index.php/oai/ReScan/'.$id).'">ReScan</A>';
+    echo ' | ';
+    echo '<A HREF="'.base_url('index.php/admin/journal_view/'.round($id).'/'.checkpost_link(round($id))).'">Journal</A>';	
 	?>
 </div>
