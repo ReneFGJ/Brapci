@@ -56,7 +56,8 @@ if (strlen($link_pdf)) {
 /* Links externos */
 for ($r = 0; $r < count($links); $r++) {
 	$type = trim($links[$r]['bs_type']);
-	if ($type == 'URL') {
+	$status = trim($links[$r]['bs_status']);
+	if (($type == 'URL') and ($status != 'X')) {
 		$link = '<a href="' . $links[$r]['bs_adress'] . '" target="_blank">' . msg('view_source') . '</a><br>';
 		echo $link;
 	}
@@ -69,7 +70,7 @@ echo $link_google;
 /********* OAI ID *********/
 if (strlen($ar_oai_id) > 0)
     {
-        $link_oai_id = '<BR><a href="'.base_url('index.php/oai/reharvesting/'.$id_ar).'" target="_new_'.date("YmdHis").'">OAI-ID</a>';
+        $link_oai_id = '<BR><a href="'.base_url('index.php/oai/reharvesting/'.$id_ar).'">OAI-ID</a>';
         echo $link_oai_id;
     }
 

@@ -318,7 +318,7 @@ class home extends CI_Controller {
 		$data['tela'] = $this -> Search -> session_set($id);
 
 		$data = array();
-		$data['content'] = $this -> Search -> result_search_selected_xls($session);
+		$data['content'] = utf8_decode($this -> Search -> result_search_selected_xls($session));
 		$data['filename'] = 'xls_selection_' . date("YmdHis") . '.xls';
 		$this -> load -> view("content_xls", $data);
 	}

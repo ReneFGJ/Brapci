@@ -150,17 +150,22 @@ class keywords extends CI_model {
 		$akeys = array();
 		$nkeys = '';
 		for ($r = 0; $r < count($keys); $r++) {
+		    $keys[$r] = troca($keys[$r],'‒','-');
 			if (strlen($keys[$r]) > 0) {
 				$name = substr($keys[$r], 0, 100);
 				$name = UpperCaseSql($name);
 				if (!isset($akeys[$name])) {
 					$akeys[$name] = 0;
-					if (strlen($nkeys) > 0) { $nkeys .= ', ';
-					}
+					
 					$xkeys = troca($keys[$r], "'", "´");
 					$xkeys = troca($xkeys,'─','-');
 					$xkeys = troca($xkeys,'ś','S');
-					$nkeys .= "'" . UpperCaseSql($xkeys) . "' ";
+                    $xkeys = troca($xkeys,'‒','-');
+                    if (strlen($xkeys) > 2)
+                        {
+                           if (strlen($nkeys) > 0) { $nkeys .= ', '; }
+					       $nkeys .= "'" . UpperCaseSql($xkeys) . "' ";
+                        }
 				}
 			}
 		}

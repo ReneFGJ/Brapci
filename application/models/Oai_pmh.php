@@ -18,46 +18,50 @@
 
 class oai_pmh extends CI_model {
 	var $issue;
-    var $token='';
-    
-    function le_oaiid($oai_id)
-        {
-            $sql = "select * from oai_cache where cache_oai_id = '$oai_id'";
-            $rlt = $this->db->query($sql);
-            $rlt = $rlt->result_array();
-            if (count($rlt) > 0)
-                {
-                    $rlt = $rlt[0];
-                }
-            return($rlt);
-        }
-    
-    function rescan_xml($id)
-        {
-            $file = 'ma/oai/'.strzero($id,7).'.xml';
-            if (!file_exists($file))
-                {
-                    return(0);
-                }
-                
-            /* LE O XML */
-            $dom = new DOMDocument("1.0", "ISO-8859-15");
-            $dom -> preserveWhiteSpace = False;
-            $dom -> load($file);
-            
-            $dcUri2   = $dom->lookupNamespaceUri('oai_dc');
-            $items = $dom->getElementsByTagNameNS($dcUri2,'dc');
-            echo '<pre>';
-            $dcUri   = $dom->lookupNamespaceUri('dc');
-            $authors = $items->getElementsByTagNameNS($dcUri, 'creator');
-            print_r($authors);
-            //$author  = $authors->item(0)->nodeValue;
-            echo '</pre>';
- 
+	var $token = '';
 
-            
-            exit;
-        }
+	function le_oaiid($oai_id) {
+		$sql = "select * from oai_cache where cache_oai_id = '$oai_id'";
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		if (count($rlt) > 0) {
+			$rlt = $rlt[0];
+		}
+		return ($rlt);
+	}
+
+	function rescan_xml($id,$art) {
+		$art = strzero($art,10);
+		$idx = strzero($id,7);
+		$file = 'ma/oai/' . $idx . '.xml';
+		$txt = load_file_local($file);
+		$sx = '<dc:identifier>';
+		$txt = substr($txt, strpos($txt, $sx) + strlen($sx), strlen($txt));
+		$txt = trim(substr($txt, 0, strpos($txt, '<')));
+
+		if (substr($txt, 0, 4) == 'http') {
+			$data['content'] = '==>' . $txt . '<==';
+			$sql = "select * from brapci_article_suporte where bs_adress = '$txt' and bs_article = '$idx' ";
+			$rlt = $this -> db -> query($sql);
+			$rlt = $rlt->result_array();
+			if (count($rlt) == 0)
+				{			
+				$this -> load -> view('content', $data);
+				$sql = "insert brapci_article_suporte 
+						(
+						bs_status, bs_article, bs_type, 
+						bs_adress, bs_journal_id, bs_update
+						) values (
+						'@','$art','URL',
+						'$txt',''," . date("Ymd") . ')';
+						$this -> db -> query($sql);
+				} else {
+				}
+		} else {
+		}
+		redirect(base_url('index.php/article/view/'.$art));
+	}
+
 	function repository_list() {
 		$sql = "select * from brapci_journal 
 						where jnl_status <> 'X'
@@ -97,13 +101,13 @@ class oai_pmh extends CI_model {
 		$line = $rlt -> result_array();
 
 		if (count($line) > 0) {
-			return('<span class="label label-warning">Already!</span>');
+			return ('<span class="label label-warning">Already!</span>');
 			/* já existe */
 		} else {
-			$data = date("Ymd");		
+			$data = date("Ymd");
 			$sql = "update brapci_journal set jnl_last_harvesting = '$data', jnl_update = '$data' where id_jnl = $jid ";
 			$rlt = $this -> db -> query($sql);
-			
+
 			/* Insere na agenda */
 			$sql = "insert into oai_cache (
 					cache_oai_id, cache_status, cache_journal, 
@@ -115,7 +119,7 @@ class oai_pmh extends CI_model {
 					0
 					)";
 			$this -> db -> query($sql);
-			return('<span class="label label-success">Insert!</span>');
+			return ('<span class="label label-success">Insert!</span>');
 		}
 	}
 
@@ -125,35 +129,33 @@ class oai_pmh extends CI_model {
 		$xml_rs = $rs['content'];
 		$xml = simplexml_load_string($xml_rs);
 
-        $token = $xml->ListIdentifiers -> resumptionToken;
-        $this->token = $token;
-        
+		$token = $xml -> ListIdentifiers -> resumptionToken;
+		$this -> token = $token;
+
 		$xml = $xml -> ListIdentifiers -> header;
 		$sx = '<ul>';
-        $status = 'ok';
+		$status = 'ok';
 		for ($r = 0; $r < count($xml); $r++) {
-            foreach($xml[$r]->attributes() as $a => $b) {
-                if ($a == 'status')
-                    {
-                        //$status = $b;
-                    }
-            }
-        $ida = $xml[$r] -> identifier;
-        $date = $xml[$r] -> datestamp;
-        $setSpec = $xml[$r] -> setSpec;
-            		        
-	    if ($status == 'deleted')
-                {
-                     $rt = '<span class="label label-important">deleted</span>';
-                     $sx .= '<li>'.$ida.' - '.$status.'</li>'; 
-                    
-                } else {
-                     $rt = $this -> oai_listset($ida, $setSpec, $date);
-                     $sx .= '<li>'.$ida.' - '.$rt.'</li>';
-                }
+			foreach ($xml[$r]->attributes() as $a => $b) {
+				if ($a == 'status') {
+					//$status = $b;
+				}
+			}
+			$ida = $xml[$r] -> identifier;
+			$date = $xml[$r] -> datestamp;
+			$setSpec = $xml[$r] -> setSpec;
+
+			if ($status == 'deleted') {
+				$rt = '<span class="label label-important">deleted</span>';
+				$sx .= '<li>' . $ida . ' - ' . $status . '</li>';
+
+			} else {
+				$rt = $this -> oai_listset($ida, $setSpec, $date);
+				$sx .= '<li>' . $ida . ' - ' . $rt . '</li>';
+			}
 		}
 		$sx .= '</ul>';
-			
+
 		return ($sx);
 
 	}
@@ -248,7 +250,7 @@ class oai_pmh extends CI_model {
 						and 
 						(ar_titulo_1 like '$titulo%' or ar_titulo_2 like '$titulo%')
 						and 
-						ar_journal_id = '".strzero($jid, 7)."'
+						ar_journal_id = '" . strzero($jid, 7) . "'
 				";
 				$article['section'] = '';
 				$rlt = db_query($sql);
@@ -259,9 +261,9 @@ class oai_pmh extends CI_model {
 					$this -> load -> view("oai/oai_process", $article);
 				} else {
 					if ($article['issue_id'] != '0000000') {
-						$article['setSpec'] = troca($article['setSpec'],'+','_');
-						$article['setSpec'] = troca($article['setSpec'],':','_');
-						
+						$article['setSpec'] = troca($article['setSpec'], '+', '_');
+						$article['setSpec'] = troca($article['setSpec'], ':', '_');
+
 						/* Bloqueado */
 						if ($article['issue_id'] == '9999999') {
 							$this -> altera_status_chache($idc, 'F');
@@ -279,14 +281,13 @@ class oai_pmh extends CI_model {
 								$data['links'] = $article['links'];
 
 								$sql = "select * from brapci_section order by se_descricao ";
-								$rlt = $this->db->query($sql);
-								$rlt = $rlt->result_array();
-								
+								$rlt = $this -> db -> query($sql);
+								$rlt = $rlt -> result_array();
+
 								$sx = '<table width="100%" class="tabela01"><tr valign="top"><td>';
 								$id = 0;
-								$div = round(count($rlt)/4)+1;
-								for ($r=0;$r < count($rlt);$r++)
-								{
+								$div = round(count($rlt) / 4) + 1;
+								for ($r = 0; $r < count($rlt); $r++) {
 									$line = $rlt[$r];
 									if ($id > $div) { $sx .= '</td><td width="25%">';
 										$id = 0;
@@ -379,12 +380,14 @@ class oai_pmh extends CI_model {
 	 ******************************************************************************/
 	function recupera_nr($s) {
 		$nr = '';
-		$s = troca($s,'esp.','');
-		$s = troca($s,'Esp.','');
-		$s = troca($s,'esp','');
+		$s = troca($s, 'esp.', '');
+		$s = troca($s, 'Esp.', '');
+		$s = troca($s, 'esp', '');
 		if (strpos($s, 'n.')) { $nr = substr($s, strpos($s, 'n.'), strlen($s));
 		}
 		if (strpos($s, 'No ')) { $nr = substr($s, strpos($s, 'No ') + 3, strlen($s));
+		}
+		if (strpos($s, 'No. ')) { $nr = substr($s, strpos($s, 'No. ') + 4, strlen($s));
 		}
 		if (strlen($nr) > 0) {
 			if (strpos($nr, ',') > 0) { $nr = substr($nr, 0, strpos($nr, ','));
@@ -527,9 +530,9 @@ class oai_pmh extends CI_model {
 		foreach ($headers as $header) {
 			$setSpec = $header -> nodeValue;
 		}
-		$setSpec = troca($setSpec,':','_');
-		$setSpec = troca($setSpec,' ','_');
-		$setSpec = troca($setSpec,'+','_');
+		$setSpec = troca($setSpec, ':', '_');
+		$setSpec = troca($setSpec, ' ', '_');
+		$setSpec = troca($setSpec, '+', '_');
 		$doc['setSpec'] = $setSpec;
 
 		/* setSpec */
@@ -714,13 +717,12 @@ class oai_pmh extends CI_model {
 		}
 		return ($sx);
 	}
-	
-	function oai_resset_cache($id)
-		{
-			$sql = "update oai_cache set cache_status = '@' where cache_journal = '".strzero($id,7)."'";
-			$rlt = $this->db->query($sql);
-			return(1);
-		}
+
+	function oai_resset_cache($id) {
+		$sql = "update oai_cache set cache_status = '@' where cache_journal = '" . strzero($id, 7) . "'";
+		$rlt = $this -> db -> query($sql);
+		return (1);
+	}
 
 	function oai_resumo($jid = 0) {
 		$wh = ' 1 = 1 ';
@@ -750,14 +752,14 @@ class oai_pmh extends CI_model {
 					break;
 			}
 		}
-		
+
 		$sx = '';
 		$sx .= 'OAI-PMH Status';
 		$sx .= '<ul class="nav nav-tabs nav-justified">';
-		$sx .= '<li><a href="#">para coletar <span class="badge">'.number_format($t[0], 0, ',', '.').'</span></a></li>';
-		$sx .= '<li><a href="#">coletado <span class="badge">'.number_format($t[2], 0, ',', '.').'</span></a></li>';
-		$sx .= '<li><a href="#">processado <span class="badge">'.number_format(($t[1] + $t[3]), 0, ',', '.').'</span></a></li>';
-		$sx .= '<li><a href="#">total <span class="badge">'.number_format(($t[0] + $t[1] + $t[2] + $t[3]), 0, ',', '.').'</span></a></li>';
+		$sx .= '<li><a href="#">para coletar <span class="badge">' . number_format($t[0], 0, ',', '.') . '</span></a></li>';
+		$sx .= '<li><a href="#">coletado <span class="badge">' . number_format($t[2], 0, ',', '.') . '</span></a></li>';
+		$sx .= '<li><a href="#">processado <span class="badge">' . number_format(($t[1] + $t[3]), 0, ',', '.') . '</span></a></li>';
+		$sx .= '<li><a href="#">total <span class="badge">' . number_format(($t[0] + $t[1] + $t[2] + $t[3]), 0, ',', '.') . '</span></a></li>';
 		$sx .= '</ul>';
 		return ($sx);
 	}
@@ -791,11 +793,10 @@ class oai_pmh extends CI_model {
 			return (0);
 		}
 	}
-	
-	function artcle_wifout_file($pag=0)
-		{
-			$off = $pag*50;
-			$sql = "select count(*) as total from brapci_article
+
+	function artcle_wifout_file($pag = 0) {
+		$off = $pag * 350;
+		$sql = "select count(*) as total from brapci_article
 					LEFT JOIN (
 						select count(*) as total, bs_article from brapci_article_suporte 
 								where bs_status <> 'X' and bs_type = 'PDF' 
@@ -803,11 +804,11 @@ class oai_pmh extends CI_model {
 						) as tabela ON bs_article = ar_codigo
 					WHERE TOTAL is null AND ar_status <> 'X' 
 					limit 50 offset $off";
-			$rlt = $this->db->query($sql);
-			$rlt = $rlt->result_array();
-			$sx = '<h4>'.$rlt[0]['total'].'</h4>';
-			
-			$sql = "select ar_codigo, ar_titulo_1, jnl_nome from brapci_article
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
+		$sx = '<h4>' . $rlt[0]['total'] . '</h4>';
+
+		$sql = "select ar_codigo, ar_titulo_1, jnl_nome from brapci_article
 					LEFT JOIN (
 						select count(*) as total, bs_article from brapci_article_suporte 
 								where bs_status <> 'X' and bs_type = 'PDF' 
@@ -818,27 +819,25 @@ class oai_pmh extends CI_model {
 					
 					WHERE TOTAL is null AND ar_status <> 'X'					
 					ORDER BY jnl_nome, ar_codigo
-					limit 50 offset $off";
-			$rlt = $this->db->query($sql);
-			$rlt = $rlt->result_array();
+					limit 350 offset $off";
+		$rlt = $this -> db -> query($sql);
+		$rlt = $rlt -> result_array();
 
-			$sx .= '<ul>';
-			$jnl = '';
-			for ($r=0;$r < count($rlt);$r++)
-				{
-					$line = $rlt[$r];
-					$xjnl = $line['jnl_nome'];
-					if ($jnl != $xjnl)
-						{
-							$sx .= '<h4>'.$xjnl.'</h4>';
-							$jnl = $xjnl;
-						}
-					$link = '<a href="'.base_url('index.php/admin/article_view/'.$line['ar_codigo'].'/'.checkpost_link($line['ar_codigo'])).'">';
-					$sx .= '<li>'.$link.$line['ar_titulo_1'].'</a></li>';
-				}
-			$sx .= '</ul>';
-			return($sx);
+		$sx .= '<ul>';
+		$jnl = '';
+		for ($r = 0; $r < count($rlt); $r++) {
+			$line = $rlt[$r];
+			$xjnl = $line['jnl_nome'];
+			if ($jnl != $xjnl) {
+				$sx .= '<h4>' . $xjnl . '</h4>';
+				$jnl = $xjnl;
+			}
+			$link = '<a href="' . base_url('index.php/admin/article_view/' . $line['ar_codigo'] . '/' . checkpost_link($line['ar_codigo'])) . '">';
+			$sx .= '<li>' . $link . $line['ar_titulo_1'] . '</a></li>';
 		}
+		$sx .= '</ul>';
+		return ($sx);
+	}
 
 	function fileExistPDFlink($pag = 0) {
 		$sz = 30;
@@ -865,8 +864,8 @@ class oai_pmh extends CI_model {
 				$sx .= ' <b><font color="green">OK</font></b>' . cr();
 			} else {
 				$sx .= ' <b><font color="red">file not found</font></b>' . cr();
-				$sql = "update brapci_article_suporte set bs_status = 'X', bs_update = '".date("Ymd")."' where id_bs = ".$line['id_bs'];
-				$rla = $this->db->query($sql);
+				$sql = "update brapci_article_suporte set bs_status = 'X', bs_update = '" . date("Ymd") . "' where id_bs = " . $line['id_bs'];
+				$rla = $this -> db -> query($sql);
 			}
 		}
 		if (count($rlt) > 0) {

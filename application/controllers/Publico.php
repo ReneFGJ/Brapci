@@ -29,7 +29,7 @@ class publico extends CI_controller {
 		$this -> load -> helper('form_sisdoc');
 		$this -> load -> helper('url');
 		$this -> load -> helper('xml');
-		/* $this -> lang -> load("app", "portuguese"); */
+		$this -> lang -> load("app", "portuguese");
 		$this -> load -> library('session');
 
 		$db_public = 'brapci_publico.';
@@ -98,7 +98,7 @@ class publico extends CI_controller {
 		$total = $line['total'];
 
 		//echo '<img src="' . base_url('img/icone_my_library.png') . '" height="20">';
-		echo ' ' . $total . ' ' . msg('SELECTED');
+		echo ' ' . $total . ' ' . msg('Selected');
 	}
 
 	function index($id = 0, $ts = 0) {

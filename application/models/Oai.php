@@ -136,10 +136,6 @@ class oai extends CI_controller {
 			$sc = 'http://inseer.ibict.br/ancib/index.php/tpbci/article/view/';
 			if (substr($link, 0, strlen($sc)) == $sc) { $link = troca($link, '/view/', '/viewFile/');
 			}
-			/* Biblos */
-			$sc = 'http://www.seer.furg.br/ojs/index.php/biblos';
-			if (substr($link, 0, strlen($sc)) == $sc) { $link = troca($link, 'http://www.seer.furg.br/ojs/index.php/biblos', 'https://www.seer.furg.br/biblos');
-			}			
 
 			$arti = trim($line['bs_article']);
 			$jour = trim($line['bs_journal_id']);
@@ -200,7 +196,6 @@ class oai extends CI_controller {
 						$sql = "update brapci_article_suporte set bs_status = 'T' where id_bs = '$id'";
 						$rlt = $this->db->query($sql);						
 						echo '<br><font color="red">Invalid link</font>';
-						echo ' '.$link;
 						return ('');
 					}
 				}
@@ -460,7 +455,7 @@ class oai extends CI_controller {
 		/* part I */
 		$link .= '?';
 		$link .= 'verb=ListIdentifiers';
-		
+		$link .= '&metadataPrefix=oai_dc';
 
 		if (strlen(trim($data['jnl_token_from'])) > 0) {
 			$dt = trim($data['jnl_token_from']);
@@ -471,8 +466,6 @@ class oai extends CI_controller {
         if (strlen($token) > 0)
             {
                 $link .= '&resumptionToken='.trim($token);                
-            } else {
-                $link .= '&metadataPrefix=oai_dc';
             }
 		$data['content'] = $link;
 
@@ -486,7 +479,6 @@ class oai extends CI_controller {
 		switch ($meth1) {
 			case '1' :
 				$data['content'] .= $this -> oai_pmh -> ListIdentifiers_Method_1($link);
-                $data['content'] .= '=TOKEN=>'.$this->oai_pmh->token;
 				$data['title'] = '';
 				$this->load->view('content',$data);
                 
@@ -497,20 +489,6 @@ class oai extends CI_controller {
 				break;
 		}
 	}
-
-    function reharvesting($id=0)
-        {
-        $this->load->model('articles');
-        $this->load->model('oai_pmh');
-        $this -> cab();
-        $data = array();  
-        $article = $this->articles->le($id);
-        $oai_cache = $this->oai_pmh->le_oaiid($article['ar_oai_id']);
-        $idc = $oai_cache['id_cache'];
-        
-        $this->oai_pmh->rescan_xml($idc,$id);
-        
-        }
 	
 	function ReScan($id = 0,$conf='') {
 		$this->load->model('oai_pmh');

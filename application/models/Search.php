@@ -993,9 +993,13 @@ class search extends CI_model {
 		return ($sx);
 	}
 
-	function result_cited_selected($session) {
+	function result_cited_selected($session,$pag='1') {
 		global $db_public, $db_base, $pag;
-		$pag = $_GET['pag'];
+		if (isset($_GET['pag']))
+		{
+			$pag = $_GET['pag'];
+		}
+		
 
 		$offset = 100 * (round($pag));
 
@@ -1016,7 +1020,6 @@ class search extends CI_model {
 
 		$sx = chr(13) . chr(10);
 		/* total */
-		$sx .= ', found ' . $total;
 
 		$sx .= '<div id="result_select">selection</div>';
 		$sx .= '<table width="100%" class="lt1">';
@@ -2040,6 +2043,8 @@ class search extends CI_model {
 		$sx .= $this -> result_author_network();
 		$sx .= '<HR>';
 		$sx .= $this -> result_keyword_network();
+		$sx .= '<HR>';
+		$sx .= $this -> result_cited_selected($this -> session());
 		return ($sx);
 	}
 
