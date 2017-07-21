@@ -96,9 +96,7 @@ class journals extends CI_model {
 			 ";
 			$rlt = db_query($sql);
 			$line = db_read($rlt);
-			
-			if (strlen(trim($line['jnl_issn_eletronico']))==0) { $line['jnl_issn_eletronico'] = '<font color="grey">não cadastrado</font>'; }
-			
+					
 			$line['na'] = 0;
 			
 			$line['desde'] = $line['jnl_ano_inicio'];

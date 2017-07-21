@@ -18,6 +18,41 @@
 class editions extends CI_model {
 	var $tabela = 'brapci_edition';
 	var $row = '';
+    
+    function last_editions($total=5)
+        {
+            $sql = "select * from brapci_edition
+                        INNER JOIN brapci_journal ON ed_journal_id = jnl_codigo 
+                        order by ed_created desc
+                        limit $total ";
+            $rlt = $this->db->query($sql);
+            $rlt = $rlt->result_array();
+            $sx = '<span class="big"><b>'.msg('last_update').'</b></span>'.cr();
+            $sx .= '<br>'.cr();
+            $sx .= '<br>'.cr();
+            $sx .= '<ul>'.cr();
+            for ($r=0;$r < count($rlt);$r++)
+                {
+                    $line = $rlt[$r];
+                    
+                    $link = $this->rdf->link_issue($line);
+                    
+                    $sx .= '<li>';
+                    $sx .= '<a href="'.$link.'">';
+                    $sx .= $line['jnl_nome'];
+                    
+                    $sx .= ', v.' . $line['ed_vol'];
+                    $sx .= ', n.' . $line['ed_nr'];
+                    $sx .= ', ' . $line['ed_ano'];
+                    $sx .= '.';
+                    
+                    $sx .= '</a>';
+                    
+                    $sx .= '</li>';
+                }
+            $sx .= '</ul>'.cr();
+            return($sx);
+        }
 
 	function update_status($id) {
 		$ide = strzero($id, 7);

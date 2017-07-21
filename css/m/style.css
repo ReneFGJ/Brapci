@@ -1,0 +1,36 @@
+body {
+    /* background-color: #2076A7; */
+    /* background-color: #4791d2; */
+   background-color: #ffffff;
+}
+
+.body_margin
+    {
+        margin-top: 50px;    
+    }
+
+
+.search {
+    background-image: url("../../img/background/back_00.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    
+}
+
+.cnt
+    {
+        border: 2px solid #000000;
+        border-radius: 20px;
+        background-color: #ffffff;
+        padding: 10px;
+        
+    }
+/* MARGNS */
+
+/* Fontes */
+.big
+    {
+        font-size: 130%;
+    }

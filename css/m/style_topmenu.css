@@ -1,0 +1,46 @@
+/* override bootstrap styles */
+
+.navbar-default .navbar-nav > li > a {
+	color: #f0f0f0;
+}
+.navbar-default .navbar-nav > li > a:hover {
+	color: #87d1f2;
+	background-color: #004677;
+}
+
+.navbar-nav2:hover {
+	color: #ffffff;
+	background-color: #AD6704;
+}
+
+.open > .dropdown-menu {
+	-webkit-transform: scale(1, 1);
+	transform: scale(1, 1);
+	opacity: 1;
+}
+.navbar-default {
+	background-color: #105687;
+	border: 0px;
+}
+
+.dropdown-menu {
+	opacity: .3;
+	-webkit-transform-origin: top;
+	transform-origin: top;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	-webkit-transform: scale(1, 0);
+	display: block;
+	transition: all 0.1s linear;
+	-webkit-transition: all 0.1s linear;
+}
+
+/* Custom container */
+.container-fixed {
+	margin: 10% auto;
+	max-width: 480px;
+}
+
+.img_cover {
+	max-width: 150px;
+}

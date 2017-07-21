@@ -765,6 +765,8 @@ function nbr_autor($xa, $tp) {
         $xa = troca($xa, 'De ', 'de ');
         $xa = troca($xa, 'Da ', 'da ');
         $xa = troca($xa, 'Do ', 'do ');
+        $xa = troca($xa, 'Das ', 'das ');
+        $xa = troca($xa, 'Dos ', 'dos ');
         $xa = troca($xa, ' E ', ' e ');
     }
     return $xa;
