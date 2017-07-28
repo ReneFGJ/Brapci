@@ -55,7 +55,7 @@ $lang['bt_sign_out'] = 'logout';
 $lang['bt_sign_in'] = 'fazer login';
 $lang['bt_about'] = 'sobre a brapci';
 
-$lang['last_update'] = 'Útima atualização';
+$lang['last_update'] = 'Útimas atualizações';
 $lang['admin_tools'] = 'Ferramentas de coleta';
 $lang['ADMIN'] = 'Admin';
 $lang['ADMIN_HOME'] = 'Ferramentas de administração';

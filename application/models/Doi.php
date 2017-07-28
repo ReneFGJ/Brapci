@@ -25,8 +25,8 @@ class doi extends CI_model {
 		$sql = "select * from brapci_article_suporte
 						INNER JOIN brapci_article
 						ON bs_article = ar_codigo
-					where ar_doi = '' and bs_type = 'DOI'
-					limit 10
+					where ar_doi = '' and (bs_type = 'DOI' or  bs_adress like '10.%')
+					limit 50
 					";
 		$rlt = $this -> db -> query($sql);
 		$rlt = $rlt -> result_array();

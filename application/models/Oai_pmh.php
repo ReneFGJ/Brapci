@@ -818,8 +818,9 @@ class oai_pmh extends CI_model {
 					INNER JOIN brapci_journal ON jnl_codigo = ar_journal_id
 					
 					WHERE TOTAL is null AND ar_status <> 'X'					
-					ORDER BY jnl_nome, ar_codigo
-					limit 350 offset $off";
+					ORDER BY jnl_nome, ar_codigo";
+                    /* removido em 27/07/2017 - limit 350 offset $off"; */
+					
 		$rlt = $this -> db -> query($sql);
 		$rlt = $rlt -> result_array();
 

@@ -1,15 +1,17 @@
 <div class="container">
 	<div class="row">
-		<div class="col-md-8">
+		<div class="col-md-9">
 			<h3><?php echo $jnl_nome; ?></h3>
 			<a href="<?php echo base_url('index.php//admin/issue_view/' . round($ar_edition) . '/' . checkpost_link(round($ar_edition))); ?>">
 			<span class="middle">v. <?php echo $ed_vol . ', n.' . $ed_nr . ', ' . $ed_ano . $pages; ?></span>
 			</a>
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-3 text-right">
 			<br>
-			BDOI: <?php echo $ar_bdoi; ?><BR>
+			<span class="btn btn-default"><?php echo $se_descricao;?></span></br>
+			BDOI: <a href="<?php echo base_url('index.php/m/a/'.$ar_codigo);?>">brapci:a<?php echo $ar_codigo; ?></a></br>
 			DOI: <?php echo $ar_doi; ?>
+			
 		</div>
 	</div>
 </br>
