@@ -1028,7 +1028,9 @@ class search extends CI_model {
 		while ($line = db_read($rlt)) {
 			$id++;
 			$sx .= '<BR>';
+			$sx .= '['.$line['m_work'].']';
 			$sx .= $line['m_ref'];
+			
 			//if (strlen($wh) > 0) { $wh .= ' or '; }
 			//$wh .= " ar_codigo = '".trim($line['ar_codigo'])."' ";
 		}
