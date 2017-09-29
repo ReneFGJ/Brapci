@@ -149,6 +149,7 @@ class keywords extends CI_model {
 		$keys = $this -> trata_keywords($keys);
 		$akeys = array();
 		$nkeys = '';
+
 		for ($r = 0; $r < count($keys); $r++) {
 		    $keys[$r] = troca($keys[$r],'‒','-');
 			if (strlen($keys[$r]) > 0) {
@@ -161,6 +162,8 @@ class keywords extends CI_model {
 					$xkeys = troca($xkeys,'─','-');
 					$xkeys = troca($xkeys,'ś','S');
                     $xkeys = troca($xkeys,'‒','-');
+                    $xkeys = troca($xkeys,'Ç','C');
+                    $xkeys = troca($xkeys,'Ã','A');
                     if (strlen($xkeys) > 2)
                         {
                            if (strlen($nkeys) > 0) { $nkeys .= ', '; }

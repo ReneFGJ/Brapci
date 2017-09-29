@@ -95,10 +95,10 @@ class indicadores extends CI_Model {
 	function colaboracao() {
 		$sql = "
 				select count(*) as soma, autores, ar_ano from (
-					select ae_article, count(*) as autores, ar_ano from brapci_article_author
-					LEFT JOIN brapci_article on ae_article = ar_codigo
-					WHERE not ar_codigo is null and ar_status <> 'X' and ar_ano > 1900
-					group by ae_article, ar_ano
+    					select ae_article, count(*) as autores, ar_ano from brapci_article_author
+    					LEFT JOIN brapci_article on ae_article = ar_codigo
+    					WHERE not ar_codigo is null and ar_status <> 'X' and ar_ano > 1900
+    					group by ae_article, ar_ano
 					) as tabela 
 					group by autores, ar_ano
 					order by ar_ano, autores
