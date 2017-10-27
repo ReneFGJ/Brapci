@@ -37,7 +37,7 @@ class indicador extends CI_Controller {
 		redirect(base_url('index.php/indicador/report/' . $tp));
 	}
 
-	function report($tp = '') {
+	function report($tp = '',$arg='') {
 		/* Model */
 		$this -> load -> model('Search');
 		$this -> load -> model('indicadores');
@@ -53,16 +53,16 @@ class indicador extends CI_Controller {
 		$tela = $this -> load -> view('grapho/grapho_header.php', null, true);
 		switch ($tp) {
 			case '1' :
-				$tela .= $this -> indicadores -> indicador_producao_journals_ano();
+				$tela .= $this -> indicadores -> indicador_producao_journals_ano($arg);
 				break;
 			case '2' :
-				$tela .= $this -> indicadores -> indicador_autores_producao();
+				$tela .= $this -> indicadores -> indicador_autores_producao($arg);
 				break;
 			case '3' :
-				$tela .= $this -> indicadores -> colaboracao();
+				$tela .= $this -> indicadores -> colaboracao($arg);
 				break;
 			case '4':
-				$tela .= $this -> indicadores -> indicador_producao_ano();
+				$tela .= $this -> indicadores -> indicador_producao_ano($arg);
 				break;							
 			default :
 				$tela = $this -> load->view('grapho/menu_indicators',null,true);
