@@ -32,7 +32,7 @@ class Pesquisa extends CI_controller {
 		$this -> load -> helper('xml');
 		/* $this -> lang -> load("app", "portuguese"); */
 		$this -> load -> library('session');
-		$db_public = 'brapci_publico.';
+		$db_public = 'brapc607_public.';
 		date_default_timezone_set('America/Sao_Paulo');
 	}
 

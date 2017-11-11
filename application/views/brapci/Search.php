@@ -24,7 +24,7 @@ class search extends CI_model {
 	function __construct() {
 		global $db_public;
 
-		$db_public = 'brapci_publico.';
+		$db_public = 'brapc607_public.';
 		parent::__construct();
 		$this -> lang -> load("app", "portuguese");
 		$this -> load -> database();
@@ -46,7 +46,7 @@ class search extends CI_model {
 		$this -> ssid = $session;
 		$this -> sessao = $session;
 
-		$db_public = 'brapci_publico.';
+		$db_public = 'brapc607_public.';
 	}
 
 	function save_session() {

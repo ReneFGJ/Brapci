@@ -46,7 +46,7 @@ class social extends CI_Controller {
 	function __construct() {
 		global $db_public;
 
-		$db_public = 'brapci_publico.';
+		$db_public = 'brapc607_public.';
 		parent::__construct();
 
 		$this -> lang -> load("app", "portuguese");
@@ -190,7 +190,12 @@ class social extends CI_Controller {
 				$ss_email = trim($user['email']);
 				$ss_image = $user['image'];
 				$ss_nome = $user['name'];
-				$ss_link = $user['urls']['Facebook'];
+				if (isset($user['urls']['Facebook']))
+					{
+						$ss_link = $user['urls']['Facebook'];
+					} else {
+						$ss_link = '';
+					}
 				$ss_nivel = 0;
 
 				$sql = "select * from users where us_email = '$ss_email' ";
@@ -252,7 +257,7 @@ class social extends CI_Controller {
 				} elseif ($this -> uri -> segment(3) == 'foursquare') {
 					// your code stuff here
 				}
-
+				$message = 'Welcome';
 				$this -> session -> set_flashdata('info', $message);
 				redirect('social?tabindex=s&status=sucess');
 

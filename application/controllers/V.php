@@ -3,7 +3,7 @@ class v extends CI_controller {
 	function __construct() {
 		global $db_public;
 
-		$db_public = 'brapci_publico.';
+		$db_public = 'brapc607_public.';
 		parent::__construct();
 		$this -> lang -> load("app", "portuguese");
 		$this -> load -> library('form_validation');
