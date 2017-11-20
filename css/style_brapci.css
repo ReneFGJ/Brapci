@@ -3,6 +3,23 @@ body {
 	background-color: #4791d2;
 	margin-top: 50px;
 }
+.css_title a
+    {
+        font-size: 150%;
+        color: #FF1111;
+    }
+.css
+    {
+        color: #333333;
+    }
+.css_resumo
+    {
+        color: #4791d2;
+    }
+.css:hover a
+    {
+        color: #000000;
+    }    
 .container
 	{
 		background-color: #ffffff;

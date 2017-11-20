@@ -633,7 +633,7 @@ class admin extends CI_Controller {
 		/* Gerar arquivo */
 		if ($id == 'file') {
 			echo '==>' . $id;
-			//$this -> export -> exporta_texto();
+			$this -> export -> exporta_texto();
 			$data['tela'] = '<center><h1><font color="green">Finalizado com sucesso (text)!</font></h1></center>';
 			$this -> load -> view('form/form', $data);
 			return (0);

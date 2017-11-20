@@ -58,7 +58,7 @@ class export extends CI_model {
 									}
 								}
 						}
-					fwrite($flt,'			"'.$line['autor_codigo'].'" :'.$txt.cr());
+					fwrite($flt,'"'.$line['autor_codigo'].'" :'.$txt.cr());
 					}
 					$sx .= '<tt>'.'#'.strzero($r,5).' - '.$txt.'</tt><br>'.cr();
 				}
@@ -134,6 +134,7 @@ class export extends CI_model {
 
 	function exporta_texto() {
 		global $db_public;
+        $i = 0;
 		$cp = ' * ';
 		$sql = "select $cp from " . $db_public . "artigos ";
 		$sql .= " order by ar_ano, ar_titulo_1, ar_vol, ar_nr ";
@@ -146,7 +147,7 @@ class export extends CI_model {
 
 		/* Tipo 1 - titulos, Resumo, Palavra-chaves, Autores */
 
-		$fl = fopen('search.src', 'w+');
+		$flq = fopen('search.txt', 'w+');
 
 		/* */
 		$row = $query -> result_array();
@@ -157,29 +158,69 @@ class export extends CI_model {
 		/* Articles */
 		for ($r = 0; $r < count($row); $r++) {
 			$tote++;
+
 			//$row = $row[$r];
 			$line = $row[$r];
+            $cod = trim($line['ar_codigo']);
 
 			$st = ' ';
 
-			$sq =  (trim(($line['ar_codigo']))).';';
-			$sq =  (trim(($line['ar_titulo_1']))).' ';
-			$sq .= (trim(($line['ar_titulo_2']))).' ';
-			$sq .= (trim(($line['ar_resumo_1']))).' ';
-			$sq .= (trim(($line['ar_resumo_2']))).' ';
-			$sq .= (trim(($line['Journal_Title']))).' ';
-			$sq .= (trim(($line['ar_keyword_1']))).' ';
-			$sq .= (trim(($line['ar_keyword_2']))).' ';
-			$sq .= (trim(($line['Author_Analytic'])));								 				
-			
+			$sq =  '[['.(trim(($line['ar_codigo']))).']]';
+			$sq .= '['.(trim(($line['ar_titulo_1']))).']';
+			$sq .= '['.(trim(($line['ar_titulo_2']))).']';
+			$sq .= '['.(trim(($line['ar_resumo_1']))).']';
+			$sq .= '['.(trim(($line['ar_resumo_2']))).']';
+			$sq .= '['.(trim(($line['Journal_Title']))).']';
+			$sq .= '['.(trim(($line['ar_keyword_1']))).']';
+			$sq .= '['.(trim(($line['ar_keyword_2']))).']';
+			$sq .= '['.(trim(($line['Author_Analytic']))).']';
 			$sq = troca($sq,chr(13),' ');
 			$sq = troca($sq,chr(10),'');	
 			
-			$sq = utf8_decode($sq);
+			//print_r($line);
+			$link = '<a href="$url/'.$cod.'" class="css_title">';
+            $linka = '</a>';
+            
+            $fl = '<div id="ard'.$cod.'" class="css css_article">';
+			$fl .= '<b>'.$link.trim($line['ar_titulo_1']).$linka.'</b>';
+            $fl .= '<br><span class="css_author css">'.trim(($line['Author_Analytic'])).'</span>';            
+            $fl .= '<br>';
+            
+            /**************************************************** JOURNAL *********/
+            $jnl = trim(trim(($line['Journal_Title'])));
+            $nro = trim($line['ar_nr']);
+            $vol = trim($line['ar_vol']);
+            $ano = trim($line['ar_ano']);
+            if (strlen($nro.$vol.$ano) > 0) { $jnl .= ', '; }
+            if (strlen($nro) > 0) { $jnl .= 'n. '.$nro; }
+            if (strlen($vol) > 0) { $jnl .= ', v. '.$vol; }
+            if (strlen($nro) > 0) { $jnl .= ', '.$ano; }
+            $fl .= $jnl.'.';
+            $abs = trim($line['ar_resumo_1']);
+            $abs = troca($abs,chr(13),' ');
+            $abs = troca($abs,chr(10),' '); 
+            $fl .= '<br><span id="rr'.$line['ar_codigo'].'" class="css_resumo css">ver resumo</span>';                    
+            $fl .= '<div id="rs'.$line['ar_codigo'].'" class="text-justify css_abstract" style="display: none;">'.$abs;
+            if (strlen($line['ar_keyword_1'])>0)
+                {            
+                    $fl .= '<br>Palavras-chaves: <b>'.trim(($line['ar_keyword_1'])).'</b></div></div>';
+                }
+  
+            $dir = substr($cod,0,7);
+            if (!is_dir('_search/'.$dir))
+                {
+                    mkdir('_search/'.$dir);        
+                }
+            
+            $fln = fopen('_search/'.$dir.'/'.$cod.'.htm','w');
+            fwrite($fln,$fl);
+            fclose($fln);  
+            //echo $fl;
+            
+            //if (($i++) > 10) { return(''); }                 
 			
-			
-			$sq = iconv("ISO-8859-1", "ASCII//TRANSLIT", $sq);
-			
+			$sq = utf8_decode($sq);	
+			$sq = iconv("ISO-8859-1", "ASCII//TRANSLIT", $sq);			
 			$sq = troca($sq,"'",'');
 			$sq = troca($sq,"`",'');
 			$sq = troca($sq,"´",'');
@@ -201,12 +242,12 @@ class export extends CI_model {
 			$sq = troca($sq,"£",'');
 			$sq = strtolower($sq);
 			
-			$st .= $sq.' £';
+			$st .= $sq.cr();
 			
 			//$txt = $st . chr(13) . chr(10);
-			fwrite($fl, $st);
+			fwrite($flq, $st);
 		}
-		fclose($fl);
+		fclose($flq);
 	}
 
 
