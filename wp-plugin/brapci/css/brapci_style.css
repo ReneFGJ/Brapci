@@ -1,0 +1,36 @@
+.css_article
+    {
+        margin-bottom: 10px;
+    }
+.css_resumo
+    {
+        font-size: 75%;
+    }
+.css_title a, .css_title 
+    {
+        font-size: 130%;
+        color: #111111;
+    }
+.css
+    {
+        color: #333333;        
+    }  
+    
+.css_resumo, .css_resumo a:hover 
+    {
+        color: #cc6600;
+        cursor: pointer;
+    }
+.css:hover a, .css:hover
+    {
+        color: #000000;
+    }
+.css_author
+    {
+        font-style: italic;
+        font-size: 85%;
+    }
+.css_abstract
+    {
+        font-size: 80%;   
+    }
