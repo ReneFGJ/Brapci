@@ -137,7 +137,7 @@ class export extends CI_model {
         $i = 0;
 		$cp = ' * ';
 		$sql = "select $cp from " . $db_public . "artigos ";
-		$sql .= " order by ar_ano, ar_titulo_1, ar_vol, ar_nr ";
+		$sql .= " order by ar_ano desc, ID desc, ar_titulo_1, ar_vol, ar_nr ";
 		//$sql .= " limit 200";
 
 		$query = $this -> db -> query($sql);
@@ -171,21 +171,16 @@ class export extends CI_model {
 			$sq .= '['.(trim(($line['ar_resumo_1']))).']';
 			$sq .= '['.(trim(($line['ar_resumo_2']))).']';
 			$sq .= '['.(trim(($line['Journal_Title']))).']';
-			$sq .= '['.(trim(($line['ar_keyword_1']))).']';
+			$sq .= '['.(trim(($line['Keywords']))).']';
 			$sq .= '['.(trim(($line['ar_keyword_2']))).']';
 			$sq .= '['.(trim(($line['Author_Analytic']))).']';
+			$sq .= '[J'.(trim(($line['ar_journal_id']))).']';
+            $sq .= '[S'.(trim(($line['Medium_Designator']))).']';
+            $sq .= '[Y'.(trim(($line['ar_ano']))).']';
 			$sq = troca($sq,chr(13),' ');
 			$sq = troca($sq,chr(10),'');	
 			
 			//print_r($line);
-			$link = '<a href="$url/'.$cod.'" class="css_title">';
-            $linka = '</a>';
-            
-            $fl = '<div id="ard'.$cod.'" class="css css_article">';
-			$fl .= '<b>'.$link.trim($line['ar_titulo_1']).$linka.'</b>';
-            $fl .= '<br><span class="css_author css">'.trim(($line['Author_Analytic'])).'</span>';            
-            $fl .= '<br>';
-            
             /**************************************************** JOURNAL *********/
             $jnl = trim(trim(($line['Journal_Title'])));
             $nro = trim($line['ar_nr']);
@@ -195,17 +190,30 @@ class export extends CI_model {
             if (strlen($nro) > 0) { $jnl .= 'n. '.$nro; }
             if (strlen($vol) > 0) { $jnl .= ', v. '.$vol; }
             if (strlen($nro) > 0) { $jnl .= ', '.$ano; }
-            $fl .= $jnl.'.';
+            
             $abs = trim($line['ar_resumo_1']);
             $abs = troca($abs,chr(13),' ');
             $abs = troca($abs,chr(10),' '); 
-            $fl .= '<br><span id="rr'.$line['ar_codigo'].'" class="css_resumo css">ver resumo</span>';                    
-            $fl .= '<div id="rs'.$line['ar_codigo'].'" class="text-justify css_abstract" style="display: none;">'.$abs;
+            
+            $link = '<a href="$url/'.$cod.'" class="css_title">';
+            $linka = '</a>';
+            
+            $fl = '<div id="ard'.$cod.'" class="css css_article">'.cr();
+            $fl .= '    <div class="css_check">';
+            $fl .= '        <input type="checkbox" id="ca'.$line['ar_codigo'].'"  onchange="basket(\''.$line['ar_codigo'].'\')">';
+            $fl .= '    </div>'.cr();
+            $fl .= '    <div class="css_title">'.$link.trim($line['ar_titulo_1']).$linka.'</div>'.cr();
+            $fl .= '    <div class="css_author">'.trim(($line['Author_Analytic'])).'</div>'.cr(); 
+            $fl .= '    <div class="css_journal">'.$jnl.'.</div>'.cr();                      
+            $fl .= '    <div id="rr'.$line['ar_codigo'].'" class="css_resumo css">ver resumo</div>'.cr();                    
+            $fl .= '    <div id="rs'.$line['ar_codigo'].'" class="text-justify css_abstract" style="display: none;">'.cr();
+            $fl .= '        '.$abs.cr();
             if (strlen($line['ar_keyword_1'])>0)
                 {            
-                    $fl .= '<br>Palavras-chaves: <b>'.trim(($line['ar_keyword_1'])).'</b></div></div>';
+                    $fl .= '        <br>Palavras-chaves: <b>'.trim(($line['ar_keyword_1'])).'</b>'.cr();
                 }
-  
+            $fl .= '    </div>'.cr();                
+            $fl .= '</div>'.cr();  
             $dir = substr($cod,0,7);
             if (!is_dir('_search/'.$dir))
                 {
@@ -438,8 +446,9 @@ class export extends CI_model {
 			/* KEYWORDS */
 			$sqla = "select * from brapci_article_keyword ";
 			$sqla .= " inner join brapci_keyword on kw_codigo = kw_keyword ";
-			$sqla .= " where kw_article = '" . $line['ar_codigo'] . "' and kw_idioma = 'en' ";
-			$sqla .= " order by kw_idioma,  kw_ord ";
+			$sqla .= " where kw_article = '" . $line['ar_codigo'] . "' ";
+			//$sqla .= " and kw_idioma = 'en' ";
+			$sqla .= " order by kw_idioma desc ,  kw_ord, kw_word ";
 
 			$rlta = $this -> db -> query($sqla);
 			$rowa = $rlta -> result_array();
@@ -447,7 +456,7 @@ class export extends CI_model {
 			$key1 = '';
 			for ($ra = 0; $ra < count($rowa); $ra++) {
 				$aline = $rowa[$ra];
-				if (strlen($key1) > 0) { $key1 .= ' / ';
+				if (strlen($key1) > 0) { $key1 .= '. ';
 				}
 				$key1 .= trim($aline['kw_word']);
 			}
