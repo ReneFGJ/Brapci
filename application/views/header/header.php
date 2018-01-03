@@ -25,7 +25,8 @@ if (!isset($css)) { $css = array();
     <META NAME="City" content="Curitiba">
     <META NAME="State" content="PR - Paraná">
     <META NAME="revisit-after" CONTENT="7 days">
-    <META HTTP-EQUIV="Content-Language" CONTENT="pt_BR">	
+    <META HTTP-EQUIV="Content-Language" CONTENT="pt_BR">
+    <meta name="google-site-verification" content="VZpzNVBfl5kOEtr9Upjmed96smfsO9p4N79DZT38toA" />	
 </header>
 
 	<?php echo $metadata; ?>

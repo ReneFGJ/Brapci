@@ -126,7 +126,10 @@ if (strlen($user) > 0) {
 							</li>
 							<li>
 								<a href="<?php echo base_url('index.php/tool/change04');?>"><?php echo msg('gerar_pajek');?></a>
-							</li>							
+							</li>
+							<li>
+                                <a href="<?php echo base_url('index.php/tool/wordtools');?>"><?php echo msg('wordtools');?></a>
+                            </li>							
 						</ul>
 					</li>
 					<?php } ?>	

@@ -222,7 +222,12 @@ class export extends CI_model {
             
             $fln = fopen('_search/'.$dir.'/'.$cod.'.htm','w');
             fwrite($fln,$fl);
-            fclose($fln);  
+            fclose($fln); 
+            
+            $tela = $this->load->view('article/article_view_export',$line,true);
+            $fln = fopen('_search/'.$dir.'/'.$cod.'ar.htm','w');
+            fwrite($fln,$tela);
+            fclose($fln);             
             //echo $fl;
             
             //if (($i++) > 10) { return(''); }                 
@@ -356,6 +361,7 @@ class export extends CI_model {
 		$sql .= "id_ar, se_cod, ";
 
 		$sql .= 'ed_mes_inicial, ed_mes_final, ';
+		$sql .= 'se_descricao, ';
 		$sql .= "ar_status as ar_status ";
 
 		$sql .= " FROM brapci_article ";
@@ -422,6 +428,11 @@ class export extends CI_model {
 			}
 			if (strlen($p) > 0) { $a = $p;
 			}
+            if (strlen($line['se_descricao']) > 0)
+                {
+                    $a .= ' ('.$line['se_descricao'].')';
+                }
+                
 			/* AUTOR */
 			$sqla = "select * from brapci_article_author ";
 			$sqla .= " inner join brapci_autor on autor_codigo = ae_author ";

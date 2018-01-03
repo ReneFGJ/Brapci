@@ -541,9 +541,9 @@ class search extends CI_model {
 								INNER JOIN brapci_article_keyword ON kw_use = kw_keyword 
 								WHERE kw_word_asc LIKE '%$term_code%'
 						) as tabela					 
-					INNER JOIN brapci_publico.artigos on ar_codigo = kw_article 
+					INNER JOIN brapc607_public.artigos on ar_codigo = kw_article 
 					INNER JOIN brapci_journal ON ar_journal_id = jnl_codigo
-					LEFT JOIN  brapci_publico.usuario_selecao on ar_codigo = sel_work and sel_sessao = '$sessao'
+					LEFT JOIN  brapc607_public.usuario_selecao on ar_codigo = sel_work and sel_sessao = '$sessao'
 				";
 		$sql .= " order by ar_ano desc ";
 		$sql .= " limit 100 offset 0 ";
@@ -581,13 +581,13 @@ class search extends CI_model {
 		$term_code = $data['dd4'];
 		$sessao = $this -> sessao;
 		$sql = "SELECT * FROM 
-						( select distinct ae_article from brapci_base.brapci_autor 
-								INNER JOIN brapci_base.brapci_article_author ON autor_alias = ae_author 
+						( select distinct ae_article from brapc607_base.brapci_autor 
+								INNER JOIN brapc607_base.brapci_article_author ON autor_alias = ae_author 
 								WHERE autor_nome_asc LIKE '%$term_code%'
 						) as tabela					 
-					INNER JOIN brapci_publico.artigos on ar_codigo = ae_article 
-					INNER JOIN brapci_base.brapci_journal ON ar_journal_id = jnl_codigo
-					LEFT JOIN  brapci_publico.usuario_selecao on ar_codigo = sel_work and sel_sessao = '$sessao'
+					INNER JOIN brapc607_public.artigos on ar_codigo = ae_article 
+					INNER JOIN brapc607_base.brapci_journal ON ar_journal_id = jnl_codigo
+					LEFT JOIN  brapc607_public.usuario_selecao on ar_codigo = sel_work and sel_sessao = '$sessao'
 				";
 		$sql .= " order by ar_ano desc ";
 		$sql .= " limit 100 offset 0 ";

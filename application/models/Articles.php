@@ -706,8 +706,6 @@ class articles extends CI_model {
 
 		$this -> saved = $form -> saved;
 		
-		echo '<hr>'.$form -> saved.'</hr>';
-
 		if ($form -> saved > 0) {
 			/* delete */
 			$this -> keywords -> delete_KWYWORDS($id);

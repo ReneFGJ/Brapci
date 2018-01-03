@@ -1,3 +1,4 @@
+#!/usr/bin/python
 print("Hello World!")
 print("<hr>")
 x=0

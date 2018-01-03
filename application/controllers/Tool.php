@@ -37,10 +37,39 @@ class tool extends CI_Controller {
 		/* Model */
 		$this -> load -> model('Search');
 		$this -> load -> view("header/cab");
-
+        
 		/* Mostra rodape */
 		$this -> load -> view("header/foot");
 	}
+    
+    function wordtools()
+        {
+        /* Model */
+        $this -> load -> model('Search');
+        $this -> load -> view("header/cab");
+
+        $form = new form;
+        $cp = array();
+        array_push($cp,array('$H8','','',false,true));
+        array_push($cp,array('$T80:20','','Texto',true,true));
+        array_push($cp,array('$T80:20','','Texto',true,true));
+        array_push($cp,array('$B8','','Processar dados>>>',false,true));
+        $tela = $form->editar($cp,'');
+        
+        if ($form->saved > 0)
+            {
+                $dd1 = get("dd1");
+                $dd2 = get("dd2");
+                $tela .= $this->Search->wcount($dd1,$dd2);
+            }
+        
+        $data['content'] = $tela;
+        $data['title'] = '';
+        $this->load->view('content',$data);
+
+        /* Mostra rodape */
+        $this -> load -> view("header/foot");  
+        }
 	
 	function matrix() {
 		/* Model */
