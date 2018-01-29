@@ -86,6 +86,10 @@ $lang['status_article_D'] = 'revisado';
 
 $lang['issue_new'] = 'novo fascículo';
 
+$lang['keyword_pt_BR'] = 'Palavras-chave';
+$lang['keyword_us'] = 'Keywords';
+$lang['keyword_es'] = 'Palabras-clave';
+
 /* Top Menu */
 $lang['sign_in'] = 'ACESSAR';
 

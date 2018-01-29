@@ -15,22 +15,26 @@
 /* @author: Rene Faustino Gabriel Junior <renefgj@gmail.com>
  * @date: 2015-12-01
  */
+
 class vocabulario extends CI_Controller {
 	
 	var $tabela = "brapci_keyword";
+    
+    function __construct() {
+        global $db_public;
 
-	function __construct() {
-		date_default_timezone_set('GMT');
-		parent::__construct();
-		$this -> load -> library('form_validation');
-		$this -> load -> database();
-		$this -> load -> helper('form');
-		$this -> load -> helper('form_sisdoc');
-		$this -> load -> helper('url');
-		/* $this -> lang -> load("app", "portuguese"); */
-		$this -> load -> library('session');
-		date_default_timezone_set('America/Sao_Paulo');
-	}
+        parent::__construct();
+        $this -> lang -> load("app", "portuguese");
+        $this -> load -> library('form_validation');
+        $this -> load -> database();
+        $this -> load -> helper('form');
+        $this -> load -> helper('form_sisdoc');
+        $this -> load -> helper('url');
+        $this -> load -> helper('xml');
+        $this -> load -> library('session');
+        $db_public = 'brapc607_public.';
+        date_default_timezone_set('America/Sao_Paulo');
+    }
 
 	/*
 	 * Authors
@@ -50,6 +54,7 @@ class vocabulario extends CI_Controller {
 	}
 
 	public function row($id=1) {
+	    $this -> load -> model('Search');
 		$this -> load -> model('terms');
 
 		$data['title'] = 'Brapci : Admin - Authors';
@@ -74,6 +79,7 @@ class vocabulario extends CI_Controller {
 	}
 
 	function edit($id = 0) {
+	    $this -> load -> model('Search');
 		$data['title'] = 'Brapci : Admin - Vocabulário';
 		$data['title_page'] = 'ADMIN - Keywords';
 		$this -> load -> view("header/cab_admin", $data);
@@ -104,7 +110,7 @@ class vocabulario extends CI_Controller {
 	}
 
 	function view($id = 0) {
-
+        $this -> load -> model('Search');
 		$data['title'] = 'Brapci : Admin - Authors';
 		$data['title_page'] = 'ADMIN - Author';
 		$this -> load -> view("header/cab_admin", $data);

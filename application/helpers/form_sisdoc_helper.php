@@ -388,7 +388,8 @@ function strzero($ddx, $ttz) {
     return ($ddx);
 }
 
-function UpperCase($d) {
+function UpperCase($d) { 
+    
     
     $d = troca($d, 'ç', 'Ç');
 
@@ -862,6 +863,7 @@ function highlight($text, $words) {
 function UpperCaseSQL($d) {
     //$d = strtoupper($d);
 
+
     /* acentos agudos */
     $d = (str_replace(array('á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú'), array('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'), $d));
 
@@ -1161,7 +1163,6 @@ if (!function_exists('troca')) {
         }
         return (str_replace(array($qc), array($qt), $qutf));
     }
-
 }
 
 if (!function_exists('splitx')) {

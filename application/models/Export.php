@@ -135,6 +135,42 @@ class export extends CI_model {
 	function exporta_texto() {
 		global $db_public;
         $i = 0;
+        
+        /************************* JOURNAL */
+        $sql = "select * from brapci_journal 
+                    WHERE jnl_status = 'A' or jnl_status = 'B'
+                    ORDER BY jnl_tipo, jnl_nome ";
+        $rlt = $this->db->query($sql);
+        $rlt = $rlt->result_array();
+        $sq = '';
+        for ($r=0;$r < count($rlt);$r++)
+            {
+                $line = $rlt[$r];
+                $sq .= $line['jnl_codigo'].':'.trim($line['jnl_nome']).chr(13).chr(10);
+            }
+        $fla = fopen('_search/journals.htm','w');
+        fwrite($fla,$sq);
+        fclose($fla);           
+                    
+        /************************* JOURNAL */
+        $sql = "select * from brapci_section 
+                    WHERE (se_tipo = 'A' or se_tipo = 'B') and (se_ativo = 1)
+                    ORDER BY se_ordem, se_descricao ";
+        $rlt = $this->db->query($sql);
+        $rlt = $rlt->result_array();
+        $sq = '';
+        for ($r=0;$r < count($rlt);$r++)
+            {
+                $line = $rlt[$r];
+                $sq .= $line['se_codigo'].':'.trim($line['se_descricao']).chr(13).chr(10);
+            }
+        $fla = fopen('_search/sections.htm','w');
+        fwrite($fla,$sq);
+        fclose($fla);           
+        
+        
+        
+        
 		$cp = ' * ';
 		$sql = "select $cp from " . $db_public . "artigos ";
 		$sql .= " order by ar_ano desc, ID desc, ar_titulo_1, ar_vol, ar_nr ";
@@ -303,7 +339,9 @@ class export extends CI_model {
 		$sqli .= "ar_resumo_1 , ar_resumo_2 , ar_section , ";
 		$sqli .= "ar_journal_id , ar_keyword_1 , ar_keyword_2, ";
 		$sqli .= "ar_ano, ar_vol, ar_nr, ";
-		$sqli .= "ar_local, ar_ref ";
+		$sqli .= "ar_local, ar_ref, ";
+        $sqli .= "ar_linguage_1, ar_linguage_2, ";
+        $sqli .= 'ar_secao';
 		$sqli .= " ) values ";
 
 		$sqls = '';
@@ -326,6 +364,8 @@ class export extends CI_model {
 		$sql .= "'' as IssueID,";
 		$sql .= "'' as Pages,";
 		$sql .= "ar_idioma_1 as Idioma,";
+        $sql .= "ar_idioma_1 as idioma_1,";
+        $sql .= "ar_idioma_2 as idioma_2,";
 
 		$sql .= "'' as Availability,";
 		$sql .= "'' as URL,";
@@ -362,7 +402,8 @@ class export extends CI_model {
 
 		$sql .= 'ed_mes_inicial, ed_mes_final, ';
 		$sql .= 'se_descricao, ';
-		$sql .= "ar_status as ar_status ";
+		$sql .= "ar_status as ar_status, ";
+		$sql .= "se_descricao as ar_secao ";
 
 		$sql .= " FROM brapci_article ";
 		$sql .= " left join brapci_journal on ar_journal_id = id_jnl ";
@@ -372,7 +413,6 @@ class export extends CI_model {
 		$sql .= " where ar_status <> 'X' and (
 							se_tipo <> '-' and 
 							se_tipo <> 'Z' and 
-							se_tipo <> 'E' and 
 							se_tipo <> 'H'
 							)";
 		//$sql .= " and ar_codigo = '0000000506' ";
@@ -588,7 +628,12 @@ class export extends CI_model {
 
 			$sqlq .= "'" . $line['ar_local'] . "',";
 
-			$sqlq .= "'" . $ref . "'";
+			$sqlq .= "'" . $ref . "',";
+            $sqlq .= "'" . $line['idioma_1'] . "',";
+            $sqlq .= "'" . $line['idioma_2'] . "',";
+            
+            $sqlq .= "'" . $line['ar_secao'] . "'";
+            
 			$sqlq .= ")";
 
 			if ($lnk == 8) {

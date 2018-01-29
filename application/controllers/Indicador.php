@@ -76,7 +76,5 @@ class indicador extends CI_Controller {
 		/* Mostra rodape */
 		$this -> load -> view("header/foot");
 	}
-
 }
 ?>
-

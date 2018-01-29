@@ -163,9 +163,6 @@ class keywords extends CI_model {
                     $xkeys = troca($xkeys, 'Ã', 'A');
                     if (strlen($xkeys) > 2) {
                         $k = UpperCaseSql($xkeys);
-                        if (mb_detect_encoding($k) == 'UTF-8') {
-                            $k = utf8_decode($k);
-                        }
                         if (strlen($nkeys) > 0) { $nkeys .= ', ';
                         }
                         $nkeys .= "'" . UpperCaseSql($xkeys) . "' ";
@@ -232,8 +229,15 @@ class keywords extends CI_model {
         $term = troca($term, "'", "´");
         $term = troca($term, '─', '-');
         $k = UpperCaseSql($term);
-        if (mb_detect_encoding($k) == 'UTF-8') {
+        //echo $term . '--' . mb_detect_encoding($k) . '<br>';
+        $ov = 0;
+        while ((mb_detect_encoding($k) == 'UTF-8') and (($ov++) < 2)) {
             $term = utf8_decode($term);
+        }
+        echo $term . '--' . mb_detect_encoding($k) . '<br>';
+        if ($ov > 5) {
+            echo 'OPS, loop termo';
+            exit ;
         }
         $sql = "select * from brapci_keyword where kw_word_asc = '" . ($term) . "' and kw_idioma = '$idioma' ";
         $query = $this -> db -> query($sql);
@@ -290,6 +294,21 @@ class keywords extends CI_model {
     }
 
     function trata_keywords($keys) {
+        $d = $keys;
+        if (mb_detect_encoding($d) == 'UFT-8') {
+            $d = utf8_decode($d);
+        }
+        /* Limpa */
+        $s = $d;
+        $d = '';
+        for ($r = 0; $r < strlen($s); $r++) {
+            $as = ord(substr($s, $r, 1));
+            if ($as < 128) {
+                $d .= chr($as);
+            }
+        }
+        $keys = $d;
+
         /* Keywords */
         $keys = troca($keys, chr(13), ' ');
         $keys = troca($keys, chr(10), '');
