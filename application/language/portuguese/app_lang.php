@@ -119,6 +119,7 @@ $lang['gerar_list_nomes'] = 'Extrair nomes de uma Matrix';
 $lang['gerar_matriz'] = 'Gerar Matrix';
 $lang['gerar_pajek'] = 'Gerar arquivo para o Pajek (.pjk)';
 $lang['wordtools'] = 'Words Tools';
+$lang['from_to'] = 'Palavras (troca de para)';
 
 $lang['idioma_01'] = 'Idioma preferencial';
 $lang['idioma_02'] = 'Idioma alternativo #1';

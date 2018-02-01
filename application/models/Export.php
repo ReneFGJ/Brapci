@@ -132,17 +132,21 @@ class export extends CI_model {
 			return($sx);
 		}
 
-	function exporta_texto() {
+	function exporta_texto($pg) {
 		global $db_public;
         $i = 0;
+        $limit = 10;
+        $offset = $pg*$limit;
         
         /************************* JOURNAL */
         $sql = "select * from brapci_journal 
                     WHERE jnl_status = 'A' or jnl_status = 'B'
-                    ORDER BY jnl_tipo, jnl_nome ";
+                    ORDER BY jnl_tipo, jnl_nome                     
+                    ";
         $rlt = $this->db->query($sql);
         $rlt = $rlt->result_array();
         $sq = '';
+        $ok = 0;
         for ($r=0;$r < count($rlt);$r++)
             {
                 $line = $rlt[$r];
@@ -169,11 +173,13 @@ class export extends CI_model {
         fclose($fla);           
         
         
-        
+        echo "OK";
+        exit;
         
 		$cp = ' * ';
 		$sql = "select $cp from " . $db_public . "artigos ";
-		$sql .= " order by ar_ano desc, ID desc, ar_titulo_1, ar_vol, ar_nr ";
+		$sql .= " order by ar_ano desc, ID desc, ar_titulo_1, ar_vol, ar_nr 
+		          LIMIT $limit OFFSET $offset";
 		//$sql .= " limit 200";
 
 		$query = $this -> db -> query($sql);
@@ -183,7 +189,7 @@ class export extends CI_model {
 
 		/* Tipo 1 - titulos, Resumo, Palavra-chaves, Autores */
 
-		$flq = fopen('search.txt', 'w+');
+		$flq = fopen('search-'.strzero($pg,4).'.txt', 'w+');
 
 		/* */
 		$row = $query -> result_array();
@@ -194,7 +200,7 @@ class export extends CI_model {
 		/* Articles */
 		for ($r = 0; $r < count($row); $r++) {
 			$tote++;
-
+            $ok = 1;
 			//$row = $row[$r];
 			$line = $row[$r];
             $cod = trim($line['ar_codigo']);
@@ -297,6 +303,7 @@ class export extends CI_model {
 			fwrite($flq, $st);
 		}
 		fclose($flq);
+        return($ok);
 	}
 
 

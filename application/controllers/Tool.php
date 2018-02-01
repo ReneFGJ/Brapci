@@ -197,6 +197,51 @@ class tool extends CI_Controller {
 
 		/* Mostra rodape */
 		$this -> load -> view("header/foot");
-	}			
+	}	
+    function from_to()
+        {
+        /* Model */
+        $this -> load -> model('Search');
+        $this -> load -> view("header/cab");
+
+        $form = new form;
+        $cp = array();
+        array_push($cp,array('$H8','','',false,true));
+        array_push($cp,array('$T80:20','','Texto Original',true,true));
+        array_push($cp,array('$T80:20','','Matrix de troca',true,true));
+        array_push($cp,array('$B8','','Processar dados>>>',false,true));
+        $tela = $form->editar($cp,'');
+        
+        if ($form->saved > 0)
+            {
+                $dd1 = get("dd1");
+                $dd2 = get("dd2");
+                
+                $dd2 = troca($dd2,'=>','¢');
+                $dd2 = troca($dd2,';','¢');
+                $dd2 = troca($dd2,'"','');
+                $dd2 = troca($dd2,chr(13),';');
+                $dd2 = troca($dd2,chr(10),'');
+                $words = splitx(';',$dd2);
+                for ($r=0;$r < count($words);$r++)
+                    {
+                        $ln = $words[$r];
+                        $ln = troca($ln,'¢',';');
+                        $ln = splitx(';',$ln);
+                        if (isset($ln[1]))
+                            {
+                                $dd1 = troca($dd1,$ln[0],$ln[1]);
+                            }
+                    }
+                $tela = '<h3>Resultado</h3><textarea rows=15 class="form-control">'.$dd1.'</textarea><br>'.$tela;
+            }
+        
+        $data['content'] = $tela;
+        $data['title'] = '';
+        $this->load->view('content',$data);
+
+        /* Mostra rodape */
+        $this -> load -> view("header/foot");   
+        }		
 }
 ?>

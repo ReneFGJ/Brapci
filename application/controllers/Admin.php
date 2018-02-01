@@ -612,18 +612,27 @@ class admin extends CI_Controller {
 
     }
 
-    function export_file() {
+    function export_file($pg='') {
         $exp = 150;
+        if (strlen($pg)==0)
+            {
+                $pg = '0';
+            }
         $this -> cab();
 
         $this -> load -> model('export');
-        $this -> export -> exporta_texto();
+        $ok = $this -> export -> exporta_texto($pg);
         $data['tela'] = '<center><h1><font color="green">Finalizado com sucesso (text)!</font></h1></center>';
         $this -> load -> view('form/form', $data);
 
         $data['content'] = $this -> load -> view('success', null, true);
         $data['title'] = 'Export to resumo';
         $this -> load -> view('content', $data);
+        
+        if ($ok > 0)
+            {
+                echo '<meta http-equiv="refresh" content="5;'.base_url('index.php/admin/export_file/'.($pg++)).'" />';
+            }
     }
 
     function export_resume() {

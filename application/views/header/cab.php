@@ -130,6 +130,9 @@ if (strlen($user) > 0) {
 							<li>
                                 <a href="<?php echo base_url('index.php/tool/wordtools');?>"><?php echo msg('wordtools');?></a>
                             </li>							
+                            <li>
+                                <a href="<?php echo base_url('index.php/tool/from_to');?>"><?php echo msg('from_to');?></a>
+                            </li>                           
 						</ul>
 					</li>
 					<?php } ?>	
