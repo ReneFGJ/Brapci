@@ -219,3 +219,5 @@ pip-log.txt
 *.xml
 *.htm
 application/models/Geds.php
+__documentos/BPR/database.php
+__documentos/BPR/config.php

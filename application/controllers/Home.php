@@ -15,6 +15,7 @@
 /* @author: Rene Faustino Gabriel Junior <renefgj@gmail.com>
  * @date: 2015-12-01
  */
+DEFINE('BASE_PUBLIC',"brapc607_public.");
 
 class home extends CI_Controller {
 	function __construct() {
