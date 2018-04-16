@@ -456,6 +456,10 @@ class oai extends CI_controller {
 		$link .= '?';
 		$link .= 'verb=ListIdentifiers';
 		$link .= '&metadataPrefix=oai_dc';
+        if (strlen($line['jnl_oai_set']) > 0)
+            {
+                $link = '&set='.trim($line['jnl_oai_set']);
+            }
 
 		if (strlen(trim($data['jnl_token_from'])) > 0) {
 			$dt = trim($data['jnl_token_from']);
@@ -468,7 +472,8 @@ class oai extends CI_controller {
                 $link .= '&resumptionToken='.trim($token);                
             }
 		$data['content'] = $link;
-
+        echo $link;
+        exit;
 		$this -> load -> view('oai/oai_content', $data);
 
 		$meth1 = '1';

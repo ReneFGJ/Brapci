@@ -474,6 +474,10 @@ class oai extends CI_controller {
             } else {
                 $link .= '&metadataPrefix=oai_dc';
             }
+        if (strlen($data['jnl_oai_set']) > 0)
+            {
+                $link .= '&set='.trim($data['jnl_oai_set']);
+            }
 		$data['content'] = $link;
 
 		$this -> load -> view('oai/oai_content', $data);

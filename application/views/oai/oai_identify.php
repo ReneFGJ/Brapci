@@ -1,3 +1,7 @@
+<?php
+if (!isset($compression)) { $compression = 'none'; }
+if (!isset($description)) { $description = 'none'; }
+?>
 <div class="container">
 <table width="100%" class="tabela01 lt1">
 	<TR><TD align="right" width="20%">repositoryName</TD>		<TD class="lt2"><B><?php echo $repositoryName; ?></B></TD></TR>

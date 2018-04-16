@@ -71,6 +71,7 @@ class journals extends CI_model {
 		array_push($cp, array('${', '', 'OAI', False, True));
 		array_push($cp, array('$S100', 'jnl_url_oai', 'Link do OAI-PMH', False, True));
 		array_push($cp, array('$S100', 'jnl_token', 'Token', False, True));
+        array_push($cp, array('$S100', 'jnl_oai_set', 'Set OAI-PMH', False, True));
 		array_push($cp, array('$[1900-'.date("Y").']D', 'jnl_token_from', 'harvsting from', False, True));
 		
 		array_push($cp, array('$}', '', 'OAI', False, True));
