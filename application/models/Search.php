@@ -634,9 +634,9 @@ class search extends CI_model {
 								INNER JOIN brapci_article_keyword ON kw_use = kw_keyword 
 								WHERE kw_word_asc LIKE '%$term_code%'
 						) as tabela					 
-					INNER JOIN brapci_publico.artigos on ar_codigo = kw_article 
+					INNER JOIN " . BASE_PUBLIC . "artigos on ar_codigo = kw_article 
 					INNER JOIN brapci_journal ON ar_journal_id = jnl_codigo
-					LEFT JOIN  brapci_publico.usuario_selecao on ar_codigo = sel_work and sel_sessao = '$sessao'
+					LEFT JOIN  " . BASE_PUBLIC . "usuario_selecao on ar_codigo = sel_work and sel_sessao = '$sessao'
 				";
         $sql .= " order by ar_ano desc ";
         $sql .= " limit 100 offset 0 ";
@@ -668,7 +668,54 @@ class search extends CI_model {
         return ($sx);
 
     }
+    
+    
+    function result_article_abstracts($data = '') {
+        global $db_public, $db_base;
+        $term_code = $data['dd4'];
 
+        //$total = $this->result_total_articles($term,$datai,$dataf);
+
+        //$term = utf8_decode($term);
+
+        $sessao = $this -> sessao;
+
+        $sql = "SELECT * FROM " . BASE_PUBLIC . "artigos
+					INNER JOIN brapci_journal ON ar_journal_id = jnl_codigo
+					LEFT JOIN " . BASE_PUBLIC . "usuario_selecao on ar_codigo = sel_work and sel_sessao = '$sessao'
+					WHERE Abstract like '%$term_code%'
+				";
+        $sql .= " order by ar_ano desc ";
+        $sql .= " limit 100 offset 0 ";
+
+        $rlt = $this -> db -> query($sql);
+        $rlt = $rlt -> result_array();
+        $total = count($rlt);
+        $sx = chr(13) . chr(10);
+        /* total */
+
+        $sx .= ', found ' . $total;
+
+        $sx .= '<div id="result_select">' . msg('result_search') . '</div>';
+        $sx .= '<table width="100%" class="lt1">';
+        $id = 0;
+        $wh = '';
+        while ($line = db_read($rlt)) {
+            $sx .= $this -> show_article_mini($line);
+            if (strlen($wh) > 0) { $wh .= ' or ';
+            }
+            $wh .= " ar_codigo = '" . trim($line['ar_codigo']) . "' ";
+        }
+        $sx .= '</table>';
+        $sx .= chr(13) . chr(10);
+        $sx .= $this -> js;
+        $sx .= chr(13) . chr(10);
+        $this -> query = $wh;
+
+        return ($sx);
+
+    }
+    
     function result_article_titles($data = '') {
         global $db_public, $db_base;
         $term_code = $data['dd4'];
@@ -679,9 +726,9 @@ class search extends CI_model {
 
         $sessao = $this -> sessao;
 
-        $sql = "SELECT * FROM brapci_publico.artigos
+        $sql = "SELECT * FROM " . BASE_PUBLIC . "artigos
 					INNER JOIN brapci_journal ON ar_journal_id = jnl_codigo
-					LEFT JOIN brapci_publico.usuario_selecao on ar_codigo = sel_work and sel_sessao = '$sessao'
+					LEFT JOIN " . BASE_PUBLIC . "usuario_selecao on ar_codigo = sel_work and sel_sessao = '$sessao'
 					WHERE Article_title like '%$term_code%'
 				";
         $sql .= " order by ar_ano desc ";
@@ -880,18 +927,58 @@ class search extends CI_model {
         return ($data);
     }
 
+    function busca_form_abstract($data = '') {
+        global $dd, $SESSION;
+
+        $SESSION = array();
+        $SESSION['ssid'] = '';
+        $SESSION['srcid'] = '1';
+        for ($r = 0; $r < 100; $r++) {
+            $SESSION['srcid' . $r] = '1';
+        }
+
+        if (isset($data['anoi'])) {
+            $data1 = $data['anoi'];
+            $data2 = $data['anof'];
+        } else {
+            $data1 = 1970;
+            $data2 = (date("Y") + 1);
+        }
+        $sx = '';
+        /* registra consulta */
+
+        if (strlen($dd[1])) {
+            //$this -> registra_consulta($dd[2]);
+        }
+        $sa = '';
+        if (strlen($data['dd4']) > 0) {
+            $sr = $this -> result_search_abstract($data, $data1, $data2);
+            if (strlen($this -> query) > 0) {
+
+                $sa = $this -> result_journals($data);
+                $sa .= $this -> result_year();
+                $sa .= $this -> result_author();
+                $sa .= $this -> result_keyword();
+            }
+            $sx .= $this -> realce($sr, $data['dd4']);
+        }
+        $data['tela1'] = $sx;
+        $data['tela2'] = $sa;
+        return ($data);
+    }
+
     function result_autor_key($data = '') {
         global $db_public, $db_base;
         $term_code = $data['dd4'];
         $sessao = $this -> sessao;
         $sql = "SELECT * FROM 
-						( select distinct ae_article from brapci_base.brapci_autor 
-								INNER JOIN brapci_base.brapci_article_author ON autor_alias = ae_author 
+						( select distinct ae_article from brapci_autor 
+								INNER JOIN brapci_article_author ON autor_alias = ae_author 
 								WHERE autor_nome_asc LIKE '%$term_code%'
 						) as tabela					 
-					INNER JOIN brapci_publico.artigos on ar_codigo = ae_article 
-					INNER JOIN brapci_base.brapci_journal ON ar_journal_id = jnl_codigo
-					LEFT JOIN  brapci_publico.usuario_selecao on ar_codigo = sel_work and sel_sessao = '$sessao'
+					INNER JOIN " . BASE_PUBLIC . "artigos on ar_codigo = ae_article 
+					INNER JOIN brapci_journal ON ar_journal_id = jnl_codigo
+					LEFT JOIN  " . BASE_PUBLIC . "usuario_selecao on ar_codigo = sel_work and sel_sessao = '$sessao'
 				";
         $sql .= " order by ar_ano desc ";
         $sql .= " limit 100 offset 0 ";

@@ -24,7 +24,7 @@ class references extends CI_model {
 		$autor = troca($ln['authores_row'], chr(13), ';') . ';';
 		$au = splitx(';', $autor);
 		$autor = '';
-
+	
 		$vol = trim($ln['ed_vol']);
 		$num = trim($ln['ed_nr']);
 		$ano = trim($ln['ed_ano']);

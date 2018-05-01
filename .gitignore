@@ -219,4 +219,9 @@ pip-log.txt
 *.xml
 *.htm
 application/models/Geds.php
+<<<<<<< HEAD
 search.txt
+=======
+__documentos/BPR/database.php
+__documentos/BPR/config.php
+>>>>>>> origin/master

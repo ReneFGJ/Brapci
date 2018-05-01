@@ -706,6 +706,7 @@ function nbr_autor($xa, $tp) {
 
     ////////// 1 e 2
     $xp2a = LowerCase($xp2);
+
     $xa = trim(trim($xp2) . ' ' . trim($xp1));
     if (($tp == 1) or ($tp == 2)) {
         if ($tp == 1) { $xp1 = UpperCase($xp1);
@@ -718,7 +719,6 @@ function nbr_autor($xa, $tp) {
         if ($tp == 4) { $xa = UpperCase($xa);
         }
     }
-
     if ((($tp >= 5) and ($tp <= 6)) or ($tp==9)) {
         $xp2a = str_word_count(LowerCase($xp2), 1);
         $xp2 = '';
