@@ -1,0 +1,33 @@
+{% include 'header.html' %}
+<body>
+	{% include 'menu_top.html' %}
+	<div class="container">
+		<div class="row text-left">
+			<div class="col-12">
+				<h2>Journals</h2>
+				<ul>
+					{% if source_list %}
+					<ul>
+						{% for jnl in source_list %}
+						<li>
+							<a href="{% url 'identify_detail' jnl.id_jnl %}">{{ jnl.jnl_name }} ({{ jnl.jnl_name_abrev }})</a>
+							
+						</li>
+						{% endfor %}
+					</ul>
+					{% else %}
+					<p>
+						No Journals are available.
+					</p>
+					{% endif %}
+				</ul>
+				{% if new %}
+					<a href="{% url 'identify_register' %}" class="btn btn-outline-primary">New Source</a>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	
+	{% include 'footer.html' %}
+</body>
+

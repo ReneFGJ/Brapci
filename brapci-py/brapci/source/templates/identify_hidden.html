@@ -1,0 +1,79 @@
+{% include 'header.html' %}
+<body>
+	{% include 'menu_top.html' %}
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<h1>{{ jnl.jnl_name }}</h1>
+				<h6>{{ jnl.jnl_name_abrev }}</h6>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-2">
+				<span class="small">ISSN</span>
+				<br/>
+				<span>{{ jnl.jnl_issn_impresso }}</span>
+			</div>
+
+			<div class="col-2">
+				<span class="small">eISSN</span>
+				<br/>
+				<span>{{ jnl.jnl_issn_eletronico }}</span>
+			</div>
+
+			<div class="col-8">
+				<span class="small">URL</span>
+				<br/>
+				<span><a href="{{ jnl.jnl_url}}" target="_new">{{ jnl.jnl_url }}</a></span>
+			</div>
+		</div>
+
+		<div class="row margin30">
+			<div class="col-2">
+				<span class="small">Viência</span>
+				<br/>
+				<span>{{ jnl.jnl_ano_inicio }}-{{ jnl.jnl_ano_fim}}</span>
+			</div>
+
+			<div class="col-2">
+				<span class="small">Active</span>
+				<br/>
+				<span>{{ jnl.jnl_active }}</span>
+			</div>
+
+			<div class="col-2">
+				<span class="small">Collection</span>
+				<br/>
+				<span>{{ jnl.jnl_collection }}</span>
+			</div>
+
+			<div class="col-2">
+				<span class="small">Frequency</span>
+				<br/>
+				<span>{{ jnl.jnl_periodicidade }}</span>
+			</div>
+
+			<div class="col-4">
+				<span class="small">Update</span>
+				<br/>
+				<span>{{ jnl.update_at }}</span>
+			</div>
+		</div>
+
+		<div class="row margin30">
+			<div class="col-12">
+				<form method="POST">
+					{% csrf_token %}
+					{{ form }}
+					<button type="submit" class="btn btn-outline-danger">
+						Confirm remove
+					</button>
+					<a href="{% url 'identify' %}" class="btn btn-outline-secondary">Return</a>
+				</form>
+			</div>
+		</div>
+	</div>
+	{% include 'footer.html' %}
+</body>
+

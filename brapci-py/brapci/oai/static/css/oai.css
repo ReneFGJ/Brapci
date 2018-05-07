@@ -1,0 +1,14 @@
+.small {
+    font-size: 60%;
+    text-transform: uppercase;
+}
+.margin30 {
+    margin-top: 30px;
+}
+
+.mastfoot {
+    position: fixed;
+    bottom: 0px;
+    padding: 0px 20px;
+    border-top: 1px solid #808080;
+}
