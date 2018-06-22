@@ -283,6 +283,12 @@ class oai extends CI_controller {
 		$this -> users->security();
 	}
 
+	function oai($id='') {
+		$this -> load -> model('oai_pmh');
+		$this->oai_pmh->header_xml($id);
+	}
+
+
 	function index() {
 		$this -> cab();
 		$img = 'lg_oai.jpg';
