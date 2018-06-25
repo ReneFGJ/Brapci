@@ -21,6 +21,11 @@ class oai_pmh extends CI_model {
     var $token = '';
 
     /**************** server *************/
+    function xmlEscape($string) {
+        $s = str_replace(array('&', '<', '>', '\'', '"'), array('&amp;', '&lt;', '&gt;', '&apos;', '&quot;'), $string);
+        return($s);
+    }
+
     function header_xml($id = '') {
         $this -> load -> model('journals');
         $verb = get("verb");
@@ -37,6 +42,15 @@ class oai_pmh extends CI_model {
         $xml .= '<responseDate>' . date("Y-m-d") . 'T' . date("H:i:s") . 'Z</responseDate>' . cr();
         $content = '';
         switch($verb) {
+            case 'utf8':
+                        /*************************************************************************/
+                        $this -> load -> model('articles');
+                        $idf = sonumero(get("identifier"));
+                        $data = $this -> articles -> le($idf);
+                        
+                        //echo '<pre>';
+                        //print_r($data);
+                        break;  
             case 'GetRecord' :
                 $meta = get("metadataPrefix");
                 switch($meta) {
@@ -65,27 +79,29 @@ class oai_pmh extends CI_model {
                                     article-type="Avaliado por Pares"   xml:lang="PT">
                                     <front>
                                         <journal-meta>
-                                            <journal-id journal-id-type="other">' . $data['jnl_nome'] . '</journal-id>
-                                            <journal-title>' . $data['jnl_nome'] . '</journal-title>
-                                            <trans-title xml:lang="PT">' . $data['jnl_nome'] . '</trans-title>
-                                            <trans-title xml:lang="EN">' . $data['jnl_nome'] . '</trans-title>
-                                            <issn pub-type="epub">' . $data['jnl_issn_impresso'] . '</issn>
-                                            <issn pub-type="ppub">' . $data['jnl_issn_eletronico'] . '</issn>          
+                                            <journal-id journal-id-type="other">' . $this->xmlEscape($data['jnl_nome']) . '</journal-id>
+                                            <journal-title>' . $this->xmlEscape($data['jnl_nome']) . '</journal-title>
+                                            <trans-title xml:lang="PT">' . $this->xmlEscape($data['jnl_nome']) . '</trans-title>
+                                            <trans-title xml:lang="EN">' . $this->xmlEscape($data['jnl_nome']) . '</trans-title>
+                                            <issn pub-type="epub">' . $this->xmlEscape($data['jnl_issn_impresso']) . '</issn>
+                                            <issn pub-type="ppub">' . $this->xmlEscape($data['jnl_issn_eletronico']) . '</issn>          
                                             <publisher><publisher-name>Brapci.inf.br</publisher-name></publisher>
                                         </journal-meta>
                                         <article-meta>
                                             <article-id pub-id-type="other">' . $idf . '</article-id>
-                                            <article-id pub-id-type="doi">' . $data['ar_doi'] . '</article-id>
+                                            <article-id pub-id-type="doi">' . $this->xmlEscape($data['ar_doi']) . '</article-id>
                                             <article-categories>
                                                 <subj-group subj-group-type="heading">
-                                                    <subject>' . $data['se_descricao'] . '</subject>
+                                                    <subject>' . $this->xmlEscape($data['se_descricao']) . '</subject>
                                                 </subj-group>
                                             </article-categories>
                                             <title-group>
                                                 <article-title>' . $data['ar_titulo_1'] . '</article-title>
-                                                <trans-title xml:lang="' . $data['ar_idioma_1'] . '">' . $data['ar_titulo_1'] . '</trans-title>
-                                                <trans-title xml:lang="' . $data['ar_idioma_2'] . '">' . $data['ar_titulo_2'] . '</trans-title>
+                                                <trans-title xml:lang="' . $data['ar_idioma_1'] . '">' . $this->xmlEscape($data['ar_titulo_1']) . '</trans-title>
+                                                <trans-title xml:lang="' . $data['ar_idioma_2'] . '">' . $this->xmlEscape($data['ar_titulo_2']) . '</trans-title>
                                             </title-group>
+                                            <volume>'.$data['ed_vol'].'</volume>
+                                            <issue>'.$data['ed_nr'].'</issue>                                            
                                             <contrib-group>';
                         for ($r = 0; $r < count($data['authors']); $r++) {
                             $nm = utf8_encode($data['authors'][$r]['autor_nome']);
@@ -95,9 +111,9 @@ class oai_pmh extends CI_model {
                                                     <name name-style="western">
                                                         <surname>' . utf8_decode(trim(substr($nm, strpos($nm, ',') + 1, strlen($nm)))) . '</surname>
                                                         <given-names>' . trim(substr($nm, 0, strpos($nm, ','))) . '</given-names>
-                                                        <utf8>'.mb_detect_encoding($nm).'</utf8>
+                                                        <utf8>' . mb_detect_encoding($nm) . '</utf8>
                                                     </name>
-                                                    <aff>' . utf8_decode($data['authors'][$r]['ae_bio']) . '</aff>
+                                                    <aff></aff>
                                                     <email></email>
                                                 </contrib>
                                         
@@ -121,10 +137,10 @@ class oai_pmh extends CI_model {
                                                 </license>
                                             </permissions>
                                             <self-uri xlink:href="http://www.brapci.inf.br/index.php/article/view/' . strzero($idf, 10) . '" />
-                                            <self-uri content-type="application/pdf" xlink:href="' . $data['link_pdf'] . '" />
-                                            <abstract xml:lang="' . $data['ar_idioma_1'] . '"><p>Este artigo tece um breve histórico do MERCOSUL e do MERCOSUL Cultural, órgão responsável pela promoção e divulgação dos valores e tradições culturais dos países integrantes do bloco. O estudo propôs-se a investigar as ações do MERCOSUL Cultural com vistas à preservação do patrimônio documental bibliográfico. Seguindo uma abordagem qualitativa, fez uso das revisões bibliográfica e documental para a construção teórica. Os resultados da pesquisa demonstram que a cultura, de uma maneira geral, não tem ocupado posição de destaque nas ações e iniciativas do MERCOSUL. A presença dessa lacuna evidencia a necessidade de estímulo a estudos e pesquisas referentes à busca pela integração entre os países, dando a devida consideração às questões de ordem cultural, trazendo à tona a importância dos estudos voltados à preservação e à valorização do patrimônio cultural das nações.</p></abstract>
-                                                <abstract-trans xml:lang="' . $data['ar_idioma_1'] . '"><p>' . $data['ar_resumo_1'] . '</p></abstract-trans>
-                                                <abstract-trans xml:lang="' . $data['ar_idioma_2'] . '"><p>' . $data['ar_resumo_2'] . '</p></abstract-trans>
+                                            <self-uri content-type="application/pdf" xlink:href="' . $this->xmlEscape($data['link_pdf']) . '" />
+                                            <abstract xml:lang="' . $data['ar_idioma_1'] . '"><p>' . $this->xmlEscape($data['ar_resumo_1']) . '</p></abstract>
+                                                <abstract-trans xml:lang="' . $data['ar_idioma_1'] . '"><p>' . $this->xmlEscape($data['ar_resumo_1']) . '</p></abstract-trans>
+                                                <abstract-trans xml:lang="' . $data['ar_idioma_2'] . '"><p>' . $this->xmlEscape($data['ar_resumo_2']) . '</p></abstract-trans>
                                             
                                             ';
                         /************************************************ KEYWORDS *********************/
@@ -153,7 +169,7 @@ class oai_pmh extends CI_model {
                                     <header>
                                         <identifier>oai:brapci.inf.br:article/' . round($idf) . '</identifier>
                                         <datestamp>' . substr($data['ed_data_publicacao'], 0, 4) . '-' . substr($data['ed_data_publicacao'], 4, 2) . '/' . substr($data['ed_data_publicacao'], 6, 2) . 'T00:00:00Z</datestamp>
-                                        <setSpec>EmQuestao:ART</setSpec>
+                                        <setSpec>SEC_Brapci:' . $data['ar_section'] . '</setSpec>
                                     </header>
                                     <metadata>                
                                     <oai_dc:dc
@@ -162,57 +178,69 @@ class oai_pmh extends CI_model {
                                         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                                         xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
                                         http://www.openarchives.org/OAI/2.0/oai_dc.xsd">';
-                                /************************************************ TITULO **********************/
-                                for ($r = 1; $r <= 3; $r++) {
-                                    $tit = (trim($data['ar_titulo_' . $r]));
-                                    if (strlen($tit) > 0) {
-                                        $content .= '<dc:title xml:lang="' . $data['ar_idioma_' . $r] . '">' . $data['ar_titulo_' . $r] . '</dc:title>' . cr();
-                                    }
-                                }
-                                /************************************************ AUTORES *********************/
-                                for ($r = 0; $r < count($data['authors']); $r++) {
-                                    $content .= '<dc:creator>' . $data['authors'][$r]['autor_nome'] . ';' . utf8_decode($data['authors'][$r]['ae_bio']) . '</dc:creator>' . cr();
-                                }
-                                /************************************************ KEYWORDS *********************/
-                                for ($r = 0; $r < count($data['keywords']); $r++) {
-                                    $content .= '<dc:subject xml:lang="' . $data['keywords'][$r]['kw_idioma'] . '">' . $data['keywords'][$r]['kw_word'] . '</dc:subject>' . cr();
-                                }
-                                /************************************************ TITULO **********************/
-                                for ($r = 1; $r <= 3; $r++) {
-                                    $tit = (strlen(trim($data['ar_resumo_' . $r])));
-                                    if (strlen($tit) > 0) {
-                                        $content .= '<dc:description xml:lang="' . $data['ar_idioma_1'] . '">' . $data['ar_resumo_' . $r] . '</dc:description>' . cr();
-                                    }
-                                }
-                                /************************************************ JOURNAL *********************/
-                                $content .= '<dc:publisher xml:lang="pt-BR">Brapci</dc:publisher>';
-                                $content .= '<dc:date>' . substr($data['ed_data_publicacao'], 0, 4) . '-' . substr($data['ed_data_publicacao'], 4, 2) . '/' . substr($data['ed_data_publicacao'], 6, 2) . '</dc:date>';
-                                $ed = 'v.' . $data['ed_vol'];
-                                $ed .= ', n.' . $data['ed_nr'];
-                                $ed .= ', ' . $data['ed_ano'];
-                                $ed .= '; ' . $data['ar_pg_inicial'] . '-' . $data['ar_pg_final'];
-                                /* v. 1, n. 1 (2003); 69-78 */
-                                $content .= '<dc:source xml:lang="pt-BR">' . $data['jnl_nome'] . ';' . $ed . '</dc:source>' . cr();
-                                $content .= '<dc:type>info:eu-repo/semantics/' . $data['ar_section'] . '</dc:type>' . cr();
-                                $content .= '<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>' . cr();
-                                $content .= '<dc:format>application/pdf</dc:format>' . cr();
-                                $content .= '<dc:type xml:lang="pt-BR">Avaliado por Pares</dc:type>' . cr();
-        
-                                $content .= '<dc:identifier>http://www.brapci.inf.br/index.php/article/view/' . $data['ar_codigo'] . '</dc:identifier>';
-                                if (substr($data['ar_doi'], 0, 2) == '10') {
-                                    $content .= '<dc:identifier>' . trim($data['ar_doi']) . '</dc:identifier>';
-                                }
-        
-                                if (strlen(trim($data['link_pdf'])) > 0) {
-                                    $content .= '<dc:relation>' . trim($data['link_pdf']) . '</dc:relation>' . cr();
-                                }
-                                /************************************************ TITULO **********************/
-                                for ($r = 0; $r < count($data['links']); $r++) {
-                                    $content .= '<dc:relation>' . trim($data['links'][$r]['bs_type']) . ':';
-                                    $content .= trim($data['links'][$r]['bs_adress']);
-                                    $content .= '</dc:relation>' . cr();
-                                }
-                                $content .= '
+                        /************************************************ TITULO **********************/
+                        for ($r = 1; $r <= 3; $r++) {
+                            $tit = (trim($data['ar_titulo_' . $r]));
+                            if (strlen($tit) > 0) {
+                                $content .= '<dc:title xml:lang="' . $data['ar_idioma_' . $r] . '">' . $this->xmlEscape($data['ar_titulo_' . $r]) . '</dc:title>' . cr();
+                            }
+                        }
+                        /************************************************ AUTORES *********************/
+                        for ($r = 0; $r < count($data['authors']); $r++) {
+                            $content .= '<dc:creator>' . $data['authors'][$r]['autor_nome']; 
+                            //$content .= ';' . $this->xmlEscape(utf8_decode($data['authors'][$r]['ae_bio']));
+                            $content .= '</dc:creator>' . cr();
+                        }
+                        /************************************************ KEYWORDS *********************/
+                        for ($r = 0; $r < count($data['keywords']); $r++) {
+                            $content .= '<dc:subject xml:lang="' . $data['keywords'][$r]['kw_idioma'] . '">' . $this->xmlEscape($data['keywords'][$r]['kw_word']) . '</dc:subject>' . cr();
+                        }
+                        /************************************************ ABSTRACR **********************/
+                        for ($r = 1; $r <= 3; $r++) {
+                            $tit = (strlen(trim($data['ar_resumo_' . $r])));
+                            if ($tit > 10) {
+                                $content .= '<dc:description xml:lang="' . $data['ar_idioma_'.$r] . '">' . $this->xmlEscape($data['ar_resumo_' . $r]) . '</dc:description>' . cr();
+                            }
+                        }
+                        /************************************************ JOURNAL *********************/
+                        $content .= '<dc:publisher xml:lang="pt-BR">Brapci</dc:publisher>';
+                        $ddd = sonumero($data['ed_data_publicacao']);
+                        $content .= '<dc:date>' . substr($ddd, 0, 4) . '-' . substr($ddd, 4, 2) . '-' . substr($ddd, 6, 2) . '</dc:date>';
+                        $ed = 'v. ' . $data['ed_vol'];
+                        $ed .= ', n. ' . $data['ed_nr'];
+                        $ed .= ', ' . $data['ed_ano'];
+                        if (strlen($data['ar_pg_inicial']) > 0)
+                            {
+                                $ed .= ', p. ' . $data['ar_pg_inicial'];
+                            
+                        if ((strlen(trim($data['ar_pg_final'])) > 0) and ($data['ar_pg_final'] != '00'))
+                            {
+                                $ed .= '-' . $data['ar_pg_final'];
+                            }
+                            }
+                        $ed .= '.';
+                        /* v. 1, n. 1 (2003); 69-78 */
+                        $content .= '<dc:source xml:lang="pt-BR">' . $this->xmlEscape($data['jnl_nome']) . ', ' . $ed . '</dc:source>' . cr();
+                        $content .= '<dc:type>info:eu-repo/semantics/' . $this->xmlEscape($data['ar_section']) . '</dc:type>' . cr();
+                        $content .= '<dc:type>info:eu-repo/semantics/publishedVersion</dc:type>' . cr();
+                        $content .= '<dc:format>application/pdf</dc:format>' . cr();
+                        $content .= '<dc:type xml:lang="pt-BR">Avaliado por Pares</dc:type>' . cr();
+
+                        $content .= '<dc:identifier>http://www.brapci.inf.br/index.php/article/view/' . $data['ar_codigo'] . '</dc:identifier>';
+                        if (substr($data['ar_doi'], 0, 2) == '10') {
+                            $content .= '<dc:identifier>' . trim($data['ar_doi']) . '</dc:identifier>';
+                        }
+
+                        if (strlen(trim($data['link_pdf'])) > 0) {
+                            $content .= '<dc:relation>' . trim($data['link_pdf']) . '</dc:relation>' . cr();
+                        }
+                        /************************************************ TITULO **********************/
+                        for ($r = 0; $r < count($data['links']); $r++) {
+                            $content .= '<dc:relation>' . trim($data['links'][$r]['bs_type']) . ':';
+                            $content .= trim($data['links'][$r]['bs_adress']);
+                            $content .= '</dc:relation>' . cr();
+                        }
+                        $content .= '
                                     </oai_dc:dc>
                                 </metadata>
                             </record>
@@ -231,6 +259,10 @@ class oai_pmh extends CI_model {
                 for ($r = 0; $r < count($rlt); $r++) {
                     $line = $rlt[$r];
                     $dt = substr($line['ar_disponibilidade'], 0, 4) . '-' . substr($line['ar_disponibilidade'], 4, 2) . '-' . substr($line['ar_disponibilidade'], 6, 2);
+                    if (strlen($line['ar_disponibilidade']) == 0)
+                        {
+                            $dt = date("Y-m-d");
+                        }
                     $content .= '<header>';
                     $content .= '<identifier>oai:brapci.inf.br:article/' . $line['id_ar'] . '</identifier>';
                     $content .= '<datestamp>' . $dt . 'T' . date("H:i:s") . 'Z</datestamp>';
@@ -290,6 +322,38 @@ class oai_pmh extends CI_model {
                 $content .= '</metadataFormat>' . cr();
                 $content .= '</ListMetadataFormats>';
 
+                break;
+            case 'ListSets':
+                $content .= '<request verb="ListSets">http://wwww.brapci.inf.br/index.php/oai/oai/' . $id . '</request>';
+                $content .= '<ListSets>';
+
+                $sql = "select distinct se_codigo, se_descricao from brapci_article
+                            INNER JOIN brapci_section ON ar_section = se_codigo
+                            where se_ativo = 1 AND 
+                            ar_journal_id = '" . strzero($id, 7) . "' and ar_status <> 'X';
+                            ";
+                $rlt = $this -> db -> query($sql);
+                $rlt = $rlt -> result_array();
+                for ($r = 0; $r < count($rlt); $r++) {
+                    $line = $rlt[$r];
+                    $content .= '<set>';
+                    $content .= '
+                                    <setSpec>SEC_Brapci:'.$line['se_codigo'].'</setSpec>
+                                    <setName>'.$line['se_descricao'].'</setName>
+                                    <setDescription>
+                                        <oai_dc:dc
+                                            xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+                                            xmlns:dc="http://purl.org/dc/elements/1.1/"
+                                            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                            xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+                                                http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+                                            <dc:description></dc:description>
+                                        </oai_dc:dc>
+                                    </setDescription>';
+                    $content .= '</set>';
+                }
+                $content .= '</ListSets>';
+                
                 break;
             default :
                 $xml .= '<request>' . base_url('index.php/oai') . '</request>' . cr();
