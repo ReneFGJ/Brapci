@@ -222,10 +222,15 @@ class tool extends CI_Controller {
 			for ($r = 0; $r < count($words); $r++) {
 				$ln = $words[$r];
 				$ln = troca($ln, '¢', ';');
+				while (strpos($ln, '  ')) { $ln = troca($ln, '  ', ' ');
+				}
 				$ln = splitx(';', $ln);
 				if (isset($ln[1])) {
 					$wd = UpperCaseSql($ln[0]);
-					$wk[$wd] = $ln[1];
+					$wd = mb_convert_encoding($wd, "UTF-8", "ASCII");
+					$wd = UpperCaseSql($wd);
+					$nm = trim($ln[1]);
+					$wk[$wd] = $nm;
 				}
 			}
 			/* LINHAS */
@@ -235,15 +240,45 @@ class tool extends CI_Controller {
 			$dd1 = '';
 			for ($n = 0; $n < count($lns); $n++) {
 				$t = $lns[$n];
+				if (strpos($t,'-'))
+					{
+						$t = substr($t,0,strpos($t,'-'));
+					}
 				$tn = UpperCaseSql($t);
+				$tn = mb_convert_encoding($t, "UTF-8", "ASCII");
+				$tn = trim(UpperCaseSql($tn));
+				while (strpos($tn, '  ')) { $tn = troca($ln, '  ', ' ');
+				}
+				$tm = '';
+				for ($i=0;$i < strlen($tn);$i++)
+					{
+						if (ord($tn[$i]) < 128) { $tm .= $tn[$i]; }
+					}
+				$tn = $tm;
 				$q = $t;
-				if (isset($wk[$tn])) { $q = $wk[$tn]; }
-				echo '<br>'.$t.'=>'.$q;
-				$dd1 .= $q.chr(13);
+				if (isset($wk[$tn])) { $q = $wk[$tn];
+				}
+				/* echo '<br>' . $tn . '=>' . $q . '<br>';
+				for ($i = 0; $i < strlen($tn); $i++) {
+					echo '<tt>' . str_pad(dechex(ord($tn[$i])), 2, '0', STR_PAD_LEFT) . '</tt>';
+				}
+				
+				foreach ($wk as $key => $value) {
+					echo '<br><tt>';
+					for ($i = 0; $i < strlen($tn); $i++) {
+						echo str_pad(dechex(ord($key[$i])), 2, '0', STR_PAD_LEFT);
+					}
+					echo $key;
+					echo '</tt><br>';
+				}
+
+				echo '<hr>';
+				 */
+				$dd1 .= $q . chr(13);
 			}
 			$tela = '<h3>Resultado</h3><textarea rows=15 class="form-control">' . $dd1 . '</textarea><br>' . $tela;
 		}
-//exit;
+		//exit;
 		$data['content'] = $tela;
 		$data['title'] = '';
 		$this -> load -> view('content', $data);

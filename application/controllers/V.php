@@ -12,13 +12,14 @@ class v extends CI_controller {
 		$this -> load -> helper('form_sisdoc');
 		$this -> load -> helper('email');
 		$this -> load -> helper('url');
-		$this -> load -> library('session');
+		$this -> load -> library('session');		
 
 		date_default_timezone_set('America/Sao_Paulo');
 	}
 
 	function cab($data=array()) {
 		$this -> load -> model('users');
+		$this -> load -> model('Search');
 		if (isset($data['title']))
 			{
 				$data['title_page'] = $data['title'];

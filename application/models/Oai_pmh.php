@@ -162,13 +162,13 @@ class oai_pmh extends CI_model {
                         $this -> load -> model('articles');
                         $idf = sonumero(get("identifier"));
                         $data = $this -> articles -> le($idf);
-
+                        $dt = $data['ar_ano'].'0101';
                         $content .= '
                             <GetRecord>
                                 <record>
                                     <header>
                                         <identifier>oai:brapci.inf.br:article/' . round($idf) . '</identifier>
-                                        <datestamp>' . substr($data['ed_data_publicacao'], 0, 4) . '-' . substr($data['ed_data_publicacao'], 4, 2) . '/' . substr($data['ed_data_publicacao'], 6, 2) . 'T00:00:00Z</datestamp>
+                                        <datestamp>' . substr($dt, 0, 4) . '-' . substr($dt, 4, 2) . '-' . substr($dt, 6, 2) . 'T00:00:00Z</datestamp>
                                         <setSpec>SEC_Brapci:' . $data['ar_section'] . '</setSpec>
                                     </header>
                                     <metadata>                
@@ -204,7 +204,7 @@ class oai_pmh extends CI_model {
                         }
                         /************************************************ JOURNAL *********************/
                         $content .= '<dc:publisher xml:lang="pt-BR">Brapci</dc:publisher>';
-                        $ddd = sonumero($data['ed_data_publicacao']);
+                        $ddd = sonumero($data['ar_ano'].'0101');
                         $content .= '<dc:date>' . substr($ddd, 0, 4) . '-' . substr($ddd, 4, 2) . '-' . substr($ddd, 6, 2) . '</dc:date>';
                         $ed = 'v. ' . $data['ed_vol'];
                         $ed .= ', n. ' . $data['ed_nr'];

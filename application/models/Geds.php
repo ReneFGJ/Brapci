@@ -56,11 +56,50 @@ class geds extends CI_model {
 			echo "PossÃ­vel ataque de upload de arquivo!\n";
 		}
 
-		echo 'Aqui estÃ¡ mais informaÃ§Ãµes de debug:';
+		echo 'Aqui está¡ mais informações de debug:';
 		print_r($_FILES);
 
 		print "</pre>";
 	}
 
+	function save_post($id,$type='JPG') {
+
+		/* Prepara o nome do arquivo */
+		$arti = 0;
+		$filename = '_repositorio';
+		$this -> check_dir($filename);
+		$filename .= '/' . date("Y");
+		$this -> check_dir($filename);
+		$filename .= '/' . date("m");
+		$this -> check_dir($filename);
+		$filename .= '/cover_' . substr(md5(date("Ymdis")), 10, 10) . '_' . $id . '.jpg';
+		while (file_exists($filename))
+			{
+				$arti++;
+				$filename .= '/cover_' . substr(md5(date("Ymdis")), 10, 10) . '_' . $id . '.jpg';
+			}
+
+		echo '<pre>';
+		if (move_uploaded_file($_FILES['userfile']['tmp_name'], $filename)) {
+
+				/* Novo registro do PDF */
+				$jour = '0000000';
+				$sql = "insert brapci_article_suporte 
+						(
+						bs_status, bs_article, bs_type, 
+						bs_adress, bs_journal_id, bs_update
+						) values (
+						'B','$id','JPG',
+						'$filename','$jour'," . date("Ymd") . ')';
+				$this -> db -> query($sql);
+		} else {
+			echo "Possível ataque de upload de arquivo!\n";
+		}
+
+		echo 'Aqui está¡ mais informações de debug:';
+		print_r($_FILES);
+
+		print "</pre>";
+	}
 }
 ?>

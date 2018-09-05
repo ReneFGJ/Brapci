@@ -94,9 +94,12 @@ class articles extends CI_model {
 		$id = strzero($id, 10);
 		$link = ' onclick="newxy(\'' . base_url('index.php/admin/support_editar/0/' . $id) . '\',600,300);" ';
 		$link2 = ' onclick="newxy(\'' . base_url('index.php/admin/support_upload/' . $id) . '\',600,300);" ';
+		$link3 = ' onclick="newxy(\'' . base_url('index.php/admin/cover_upload/' . $id) . '\',600,300);" ';
 		$sx = '<br><br><span class="btn btn-primary" ' . $link . '>Inserir Suporte</span>';
 		$sx .= '&nbsp;';
 		$sx .= '<span class="btn btn-primary" ' . $link2 . '>Upload de PDF</span>';
+		$sx .= '&nbsp;';
+		$sx .= '<span class="btn btn-primary" ' . $link3 . '>Upload de Capa</span>';
 		return ($sx);
 	}
 

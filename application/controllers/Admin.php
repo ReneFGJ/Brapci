@@ -104,27 +104,6 @@ class admin extends CI_Controller {
         //$this -> load -> view('content', $data);
 
     }
-	
-	function cover_upload($id = 0, $art = '') {
-		$this -> load -> model("articles");
-		$this -> load -> model("geds");
-		$data['nocab'] = true;
-		$this -> load -> view('header/header', $data);
-
-		$data['content'] = $this -> geds -> upload($id);
-		$data['title'] = '';
-
-		if (isset($_FILES['userfile']) and (strlen($_FILES['userfile']['name']) > 0)) {
-			$this -> geds -> save_post($id,'cover');
-			//$this->articles->excluir_suportes();
-			echo '
-					<script> 
-						close(); 
-					</script>';
-		}
-
-		$this -> load -> view('content', $data);
-	}	
 
     function games() {
         $this -> load -> model('articles');
